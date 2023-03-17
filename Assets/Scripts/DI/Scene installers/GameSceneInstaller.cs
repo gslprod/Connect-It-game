@@ -1,9 +1,12 @@
 using UnityEngine;
 using Zenject;
 
-public class GameSceneInstaller : MonoInstaller
+namespace ConnectIt.DI.Installers
 {
-    public override void InstallBindings()
+    public class GameSceneInstaller : MonoInstaller
     {
+        public override void InstallBindings()
+        {
+        }
     }
 }
