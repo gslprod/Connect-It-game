@@ -12,6 +12,12 @@ namespace ConnectIt.Utilities
                 ThrowNullArgEx();
         }
 
+        public static void IsNotNull(object obj1, object obj2)
+        {
+            IsNotNull(obj1);
+            IsNotNull(obj2);
+        }
+
         public static void That(bool condition)
         {
             if (!condition)
