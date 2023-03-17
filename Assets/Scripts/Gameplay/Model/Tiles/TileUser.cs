@@ -1,17 +1,64 @@
-﻿namespace ConnectIt.Model
+﻿using ConnectIt.Utilities;
+
+namespace ConnectIt.Model
 {
-    public abstract class TileUser
+    public class TileUser
     {
-        public Tile Tile { get; }
+        public bool HasTile => Tile != null;
 
-        public abstract bool CanBeRemoved { get; }
+        public Tile Tile { get; private set; }
+        public TileLayers Layer { get; private set; }
 
-        public TileUser(Tile tile)
+        public TileUser(TileLayers layer)
         {
+            Layer = layer;
+        }
+
+        public TileUser(Tile tile, TileLayers layer)
+        {
+            Tile = tile;
+            Layer = layer;
+        }
+
+        public void SetTile(Tile tile)
+        {
+            Assert.IsNotNull(tile);
+            Assert.That(!HasTile);
+
+            Tile.AddUser(this);
             Tile = tile;
         }
 
-        public virtual bool CanBeOtherUserAdded(TileUser other)
-            => false;
+        public void ChangeTile(Tile tile)
+        {
+            if (HasTile)
+                ResetTile();
+
+            SetTile(tile);
+        }
+
+        public void ResetTile()
+        {
+            Assert.That(HasTile);
+
+            Tile.RemoveUser(this);
+            Tile = null;
+        }
+
+        public void SetLayer(TileLayers newLayer)
+        {
+            if (Layer == newLayer)
+                return;
+
+            Assert.That(CanLayerBeChangedTo(newLayer));
+
+            Layer = newLayer;
+        }
+
+        public bool CanLayerBeChangedTo(TileLayers newLayer)
+            => !IsLayerIsBusy(newLayer);
+
+        private bool IsLayerIsBusy(TileLayers layer)
+            => HasTile && Tile.UserInLayerExists(layer);
     }
 }

@@ -1,44 +1,58 @@
-﻿using System.Collections.Generic;
+﻿using ConnectIt.Utilities;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ConnectIt.Model
 {
+    public enum TileLayers
+    {
+        Main = 1,
+        Line
+    }
+
     public class Tile
     {
-        public Vector2 LocationInMap { get; }
+        public Vector2 LocationInTileMap { get; }
 
         private List<TileUser> _users;
 
-        public Tile(Vector2 locationInMap)
+        public Tile(Vector2 locationInTileMap)
         {
-            LocationInMap = locationInMap;
+            LocationInTileMap = locationInTileMap;
         }
 
-        public bool TryAddUser(TileUser toAdd)
+        public void AddUser(TileUser toAdd)
         {
-            if (toAdd == null)
-                return false;
+            Assert.That(CanUserBeAdded(toAdd));
 
-            bool canBeAdded = _users.TrueForAll(user => user.CanBeOtherUserAdded(toAdd));
-            if (canBeAdded)
-                _users.Add(toAdd);
-
-            return canBeAdded;
+            _users.Add(toAdd);
         }
 
-        public bool TryRemoveUser(TileUser toRemove)
+        public void RemoveUser(TileUser toRemove)
         {
-            if (!ContainsUser(toRemove))
-                return false;
+            Assert.That(CanUserBeRemoved(toRemove));
 
-            bool canBeRemoved = toRemove.CanBeRemoved;
-            if (canBeRemoved)
-                _users.Remove(toRemove);
+            _users.Remove(toRemove);
+        }
 
-            return canBeRemoved;
+        public bool CanUserBeAdded(TileUser user)
+        {
+            return
+                user != null &&
+                UserInLayerExists(user.Layer);
+        }
+
+        public bool CanUserBeRemoved(TileUser user)
+        {
+            return
+                ContainsUser(user);
         }
 
         public bool ContainsUser(TileUser toCheck)
-            => _users.Contains(toCheck);
+            => toCheck != null &&
+            _users.Contains(toCheck);
+
+        public bool UserInLayerExists(TileLayers layer)
+            => _users.Exists(user => user.Layer == layer);
     }
 }
