@@ -16,8 +16,9 @@ namespace ConnectIt.Model
 
         public TileUser(Tile tile, TileLayers layer)
         {
-            Tile = tile;
             Layer = layer;
+
+            SetTile(tile);
         }
 
         public void SetTile(Tile tile)

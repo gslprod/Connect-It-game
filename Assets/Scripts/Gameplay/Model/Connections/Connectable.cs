@@ -4,7 +4,7 @@ namespace ConnectIt.Model
 {
     public class Connectable : IConnectable
     {
-        public bool Connected => Connection != null;
+        public bool HasConnection => Connection != null;
 
         public Connection Connection { get; private set; }
         public int CompatibilityIndex { get; }
@@ -17,14 +17,14 @@ namespace ConnectIt.Model
         public void SetConnection(Connection connection)
         {
             Assert.IsNotNull(connection);
-            Assert.That(!Connected);
+            Assert.That(!HasConnection);
 
             Connection = connection;
         }
 
         public void ResetConnection()
         {
-            Assert.That(Connected);
+            Assert.That(HasConnection);
 
             Connection = null;
         }

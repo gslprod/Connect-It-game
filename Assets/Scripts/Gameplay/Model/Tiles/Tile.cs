@@ -14,7 +14,7 @@ namespace ConnectIt.Model
     {
         public Vector2 LocationInTileMap { get; }
 
-        private List<TileUser> _users;
+        private List<TileUser> _users = new();
 
         public Tile(Vector2 locationInTileMap)
         {

@@ -3,7 +3,7 @@
     public interface IConnectable
     {
         Connection Connection { get; }
-        bool Connected { get; }
+        bool HasConnection { get; }
         int CompatibilityIndex { get; }
 
         void SetConnection(Connection connection);
