@@ -4,7 +4,7 @@ namespace ConnectIt.Model
 {
     public class ConnectionLine
     {
-        private List<TileUser> _usingTiles = new();
+        private readonly List<TileUser> _usingTiles = new();
         private Connection _connection;
 
         public ConnectionLine(Port start)
@@ -16,7 +16,7 @@ namespace ConnectIt.Model
 
         public void ExpandLine(Tile toTile)
         {
-            TileUser tileUser = new(toTile, TileLayers.Line);
+            TileUser tileUser = new(toTile, TileLayer.Line);
 
             _usingTiles.Add(tileUser);
         }

@@ -7,14 +7,14 @@ namespace ConnectIt.Model
         public bool HasTile => Tile != null;
 
         public Tile Tile { get; private set; }
-        public TileLayers Layer { get; private set; }
+        public TileLayer Layer { get; private set; }
 
-        public TileUser(TileLayers layer)
+        public TileUser(TileLayer layer)
         {
             Layer = layer;
         }
 
-        public TileUser(Tile tile, TileLayers layer)
+        public TileUser(Tile tile, TileLayer layer)
         {
             Layer = layer;
 
@@ -46,7 +46,7 @@ namespace ConnectIt.Model
             Tile = null;
         }
 
-        public void SetLayer(TileLayers newLayer)
+        public void SetLayer(TileLayer newLayer)
         {
             if (Layer == newLayer)
                 return;
@@ -56,10 +56,10 @@ namespace ConnectIt.Model
             Layer = newLayer;
         }
 
-        public bool CanLayerBeChangedTo(TileLayers newLayer)
+        public bool CanLayerBeChangedTo(TileLayer newLayer)
             => !IsLayerIsBusy(newLayer);
 
-        private bool IsLayerIsBusy(TileLayers layer)
+        private bool IsLayerIsBusy(TileLayer layer)
             => HasTile && Tile.UserInLayerExists(layer);
     }
 }

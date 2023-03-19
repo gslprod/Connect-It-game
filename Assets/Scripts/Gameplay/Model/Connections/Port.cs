@@ -7,7 +7,7 @@
 
         public Port(Tile position, int compatibilityIndex)
         {
-            UsingTile = new TileUser(position, TileLayers.Main);
+            UsingTile = new TileUser(position, TileLayer.Main);
             Connectable = new Connectable(compatibilityIndex);
         }
     }
