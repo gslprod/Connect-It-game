@@ -1,9 +1,8 @@
 ﻿using ConnectIt.Utilities;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace ConnectIt.Model
 {
@@ -16,32 +15,24 @@ namespace ConnectIt.Model
 
     public class Tile
     {
-        public Vector2 LocationInTileMap { get; }
+        public event Action<Tile, TileLayer> TileBaseChanged;
 
+        public Vector3Int LocationInTileMap { get; }
+
+        private readonly Tilemaps _tilemaps;
         private readonly List<TileUser> _users = new();
-        private readonly TileAndLayerSet[] _tilesAndLayers;
 
-        public Tile(TileAndLayerSet[] tilesAndLayers)
+        public Tile(Tilemaps tilemaps, Vector3Int locationInTileMap)
         {
-            Validate(tilesAndLayers);
+            _tilemaps = tilemaps;
+            LocationInTileMap = locationInTileMap;
 
-            _tilesAndLayers = tilesAndLayers;
+            tilemaps.OnTileBaseChanged += OnTileBaseChanged;
         }
 
-        public TileBase GetTileBase(TileLayer layer)
+        public void ChangeTileBaseOnLayer(TileLayer layer, TileBase tileBase)
         {
-            TileAndLayerSet found = FindSetByLayer(layer);
-            Assert.IsNotNull(found);
-
-            return found.Tile;
-        }
-
-        public bool TryGetTileBase(TileLayer layer, out TileBase tile)
-        {
-            TileAndLayerSet found = FindSetByLayer(layer);
-
-            tile = found?.Tile;
-            return tile != null;
+            _tilemaps.SetTileBaseToLayer(layer, tileBase, this);
         }
 
         public void AddUser(TileUser toAdd)
@@ -78,33 +69,17 @@ namespace ConnectIt.Model
         public bool UserInLayerExists(TileLayer layer)
             => _users.Exists(user => user.Layer == layer);
 
-        private TileAndLayerSet FindSetByLayer(TileLayer layer)
-            => _tilesAndLayers.First(set => set.Layer == layer);
-
-        private void Validate(TileAndLayerSet[] tilesAndLayers)
+        public void OnDestroy()
         {
-            IEnumerable<IGrouping<TileLayer, TileAndLayerSet>> groupsByLayer = tilesAndLayers.GroupBy(set => set.Layer);
-            
-            int groupsWithDuplicateLayersCount =
-                groupsByLayer.Where(group => group.Count() > 1)
-                .Count();
-
-            bool containsMapLayer = groupsByLayer.Any(group => group.Key == TileLayer.Map);
-
-            Assert.That(groupsWithDuplicateLayersCount == 0 &&
-                containsMapLayer);
+            _tilemaps.OnTileBaseChanged -= OnTileBaseChanged;
         }
-    }
 
-    public class TileAndLayerSet
-    {
-        public TileBase Tile { get; }
-        public TileLayer Layer { get; }
-
-        public TileAndLayerSet(TileBase tile, TileLayer layer)
+        private void OnTileBaseChanged(Tile tile, TileLayer layer)
         {
-            Tile = tile;
-            Layer = layer;
+            if (this != tile)
+                return;
+
+            TileBaseChanged?.Invoke(this, layer);
         }
     }
 }
