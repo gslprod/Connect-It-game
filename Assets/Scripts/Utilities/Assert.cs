@@ -24,6 +24,12 @@ namespace ConnectIt.Utilities
                 ThrowInvalidOperationEx();
         }
 
+        public static void That(bool condition1, bool condition2)
+        {
+            That(condition1);
+            That(condition2);
+        }
+
         private static void ThrowNullArgEx()
         {
             throw new ArgumentNullException(DefaultMessage);

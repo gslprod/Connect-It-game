@@ -30,9 +30,14 @@ namespace ConnectIt.Model
             tilemaps.OnTileBaseChanged += OnTileBaseChanged;
         }
 
-        public void ChangeTileBaseOnLayer(TileLayer layer, TileBase tileBase)
+        public void SetTileBaseOnLayer(TileLayer layer, TileBase tileBase)
         {
-            _tilemaps.SetTileBaseToLayer(layer, tileBase, this);
+            _tilemaps.SetTileBaseOnLayer(layer, tileBase, this);
+        }
+
+        public T GetTileOnLayer<T>(TileLayer layer) where T : TileBase
+        {
+            return _tilemaps.GetTileOnLayer<T>(layer, this);
         }
 
         public void AddUser(TileUser toAdd)
