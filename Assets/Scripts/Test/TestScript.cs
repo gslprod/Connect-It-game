@@ -17,12 +17,14 @@ namespace ConnectIt.Test
 
         private void Start()
         {
-            TileBase[] tiles = new TileBase[] { _tile1, _tile2 };
-            foreach (TileBase tile in tiles)
-            {
-                TileData data = new TileData();
-                
-            }
+            //TileBase[] tiles = new TileBase[] { _tile1, _tile2 };
+            //foreach (TileBase tile in tiles)
+            //{
+            //    TileData data = new TileData();
+
+            //}
+
+            print(_tile1 == _tile2);
 
             _tilemap = GetComponent<Tilemap>();
             _camera = Camera.main;
@@ -44,7 +46,7 @@ namespace ConnectIt.Test
             Vector3 worldPosition = _camera.ScreenToWorldPoint(interactionPosition);
             Vector3Int selectedCell = _tilemap.WorldToCell(worldPosition);
 
-            print(selectedCell);
+            print(_tilemap.GetTile(selectedCell) == null);
         }
 
         private void OnDestroy()

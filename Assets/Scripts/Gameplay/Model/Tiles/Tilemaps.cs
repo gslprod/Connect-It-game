@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static ConnectIt.Model.SpriteAndObjectInfoSet;
+using static ConnectIt.Model.TileBaseAndObjectInfoSet;
 
 namespace ConnectIt.Model
 {
@@ -14,12 +14,12 @@ namespace ConnectIt.Model
 
         private readonly TilemapLayerSet[] _maps;
         private Tile[] _tiles;
-        private readonly SpriteAndObjectInfoSet[] _spriteAndObjectTypeSets;
+        private readonly TileBaseAndObjectInfoSet[] _spriteAndObjectTypeSets;
 
         private readonly Dictionary<int, int> _xCoordinateArrayPointers = new();
 
         public Tilemaps(TilemapLayerSet[] maps,
-            SpriteAndObjectInfoSet[] spriteAndObjectTypeSets)
+            TileBaseAndObjectInfoSet[] spriteAndObjectTypeSets)
         {
             Validate(maps);
             _maps = maps;
@@ -103,11 +103,11 @@ namespace ConnectIt.Model
                 containsMapLayer);
         }
 
-        private void Validate(SpriteAndObjectInfoSet[] tileBaseAndObjectTypeSets)
+        private void Validate(TileBaseAndObjectInfoSet[] tileBaseAndObjectTypeSets)
         {
             Assert.IsNotNull(tileBaseAndObjectTypeSets);
 
-            var groupsBySprite = tileBaseAndObjectTypeSets.GroupBy(set => set.Sprite);
+            var groupsBySprite = tileBaseAndObjectTypeSets.GroupBy(set => set.TileBase);
 
             int groupsWithDuplicateSpritesCount =
                 groupsBySprite.Where(group => group.Count() > 1)
@@ -170,13 +170,12 @@ namespace ConnectIt.Model
                     {
                         var currentCellPosition = new Vector3Int(x, y, z);
 
-                        TileData tileData = new();
-                        mainObjectsTilemap.GetTile(currentCellPosition).GetTileData(currentCellPosition, mainObjectsTilemap, ref tileData);
+                        TileBase tileBase = mainObjectsTilemap.GetTile(currentCellPosition);
 
-                        if (tileData.sprite == null)
+                        if (tileBase == null)
                             continue;
 
-                        SpriteAndObjectInfoSet set = _spriteAndObjectTypeSets.First(set => set.Sprite == tileData.sprite);
+                        TileBaseAndObjectInfoSet set = _spriteAndObjectTypeSets.First(set => set.TileBase == tileBase);
                         Assert.That(set != null);
 
                         CreateObjectOnMap(set, currentCellPosition);
@@ -185,7 +184,7 @@ namespace ConnectIt.Model
             }
         }
 
-        private void CreateObjectOnMap(SpriteAndObjectInfoSet infoSet, Vector3Int cellPosition)
+        private void CreateObjectOnMap(TileBaseAndObjectInfoSet infoSet, Vector3Int cellPosition)
         {
             switch (infoSet.ObjectType)
             {
@@ -262,18 +261,18 @@ namespace ConnectIt.Model
     }
 
     [Serializable]
-    public class SpriteAndObjectInfoSet
+    public class TileBaseAndObjectInfoSet
     {
         public enum SpriteObjectType
         {
             Port = 1
         }
 
-        public Sprite Sprite => _sprite;
+        public TileBase TileBase => _tileBase;
         public SpriteObjectType ObjectType => _objectType;
         public PortObjectInfo PortInfo => _portObjectInfo;
 
-        [SerializeField] private Sprite _sprite;
+        [SerializeField] private TileBase _tileBase;
         [SerializeField] private SpriteObjectType _objectType;
         [SerializeField] private PortObjectInfo _portObjectInfo;
 
