@@ -1,9 +1,12 @@
 ﻿using ConnectIt.Utilities;
+using System;
 
 namespace ConnectIt.Model
 {
     public class TileUser
     {
+        public event Func<TileUser, object> TileUserInfoRequest;
+
         public bool HasTile => Tile != null;
 
         public Tile Tile { get; private set; }
@@ -26,8 +29,10 @@ namespace ConnectIt.Model
             Assert.IsNotNull(tile);
             Assert.That(!HasTile);
 
-            Tile.AddUser(this);
             Tile = tile;
+
+            Tile.AddUser(this);
+            SubscribeToTile();
         }
 
         public void ChangeTile(Tile tile)
@@ -43,6 +48,8 @@ namespace ConnectIt.Model
             Assert.That(HasTile);
 
             Tile.RemoveUser(this);
+            UnsubscribeFromTile();
+
             Tile = null;
         }
 
@@ -61,5 +68,20 @@ namespace ConnectIt.Model
 
         private bool IsLayerIsBusy(TileLayer layer)
             => HasTile && Tile.UserInLayerExists(layer);
+
+        private void SubscribeToTile()
+        {
+            Tile.TileUsersInfoRequest += OnTileUsersRequest;
+        }
+
+        private void UnsubscribeFromTile()
+        {
+            Tile.TileUsersInfoRequest -= OnTileUsersRequest;
+        }
+
+        private object OnTileUsersRequest()
+        {
+            return TileUserInfoRequest?.Invoke(this);
+        }
     }
 }

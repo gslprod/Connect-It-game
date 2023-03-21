@@ -16,6 +16,7 @@ namespace ConnectIt.Model
     public class Tile
     {
         public event Action<Tile, TileLayer> TileBaseChanged;
+        public event Func<object> TileUsersInfoRequest; 
 
         public Vector3Int LocationInTileMap { get; }
 
@@ -28,6 +29,11 @@ namespace ConnectIt.Model
             LocationInTileMap = locationInTileMap;
 
             tilemaps.OnTileBaseChanged += OnTileBaseChanged;
+        }
+
+        public object[] RequestUsersInfo()
+        {
+            return TileUsersInfoRequest?.InvokeAllAndGetResults();
         }
 
         public void SetTileBaseOnLayer(TileLayer layer, TileBase tileBase)

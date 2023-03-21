@@ -1,4 +1,5 @@
 ﻿using ConnectIt.Input;
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -24,7 +25,24 @@ namespace ConnectIt.Test
 
             //}
 
-            print(_tile1 == _tile2);
+            Func<string> func = TestFunc;
+            func += TestFunc2;
+
+            string TestFunc()
+            {
+                return "some string";
+            }
+
+            string TestFunc2()
+            {
+                return "some string2";
+            }
+
+            var d = func.GetInvocationList()[1];
+
+            print(d.DynamicInvoke());
+
+            //print(_tile1 == _tile2);
 
             _tilemap = GetComponent<Tilemap>();
             _camera = Camera.main;

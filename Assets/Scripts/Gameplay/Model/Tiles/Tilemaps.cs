@@ -72,7 +72,7 @@ namespace ConnectIt.Model
             Assert.IsNotNull(tileBase);
             Assert.That(ContainsTile(tile));
 
-           Tilemap tilemap = GetTilemapOnLayer(layer);
+            Tilemap tilemap = GetTilemapOnLayer(layer);
 
             tilemap.SetTile(tile.LocationInTileMap, tileBase);
             OnTileBaseChanged?.Invoke(tile, layer);
@@ -81,6 +81,7 @@ namespace ConnectIt.Model
         public T GetTileOnLayer<T>(TileLayer layer, Tile tile) where T : TileBase
         {
             Assert.IsNotNull(tile);
+            Assert.That(ContainsTile(tile));
 
             Tilemap tilemap = GetTilemapOnLayer(layer);
 
@@ -140,11 +141,12 @@ namespace ConnectIt.Model
                     {
                         var currentCellPosition = new Vector3Int(x, y, z);
 
-                        TileData tileData = new();
-                        mapTilemap.GetTile(currentCellPosition).GetTileData(currentCellPosition, mapTilemap, ref tileData);
+                        TileBase tileBase = mapTilemap.GetTile(currentCellPosition);
 
-                        if (tileData.sprite != null)
-                            _tiles[index++] = new Tile(this, currentCellPosition);
+                        if (tileBase == null)
+                            continue;
+
+                        _tiles[index++] = new Tile(this, currentCellPosition);
                     }
                 }
             }

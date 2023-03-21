@@ -1,4 +1,4 @@
-using UnityEngine;
+using ConnectIt.Model;
 using Zenject;
 
 namespace ConnectIt.DI.Installers
@@ -7,6 +7,15 @@ namespace ConnectIt.DI.Installers
     {
         public override void InstallBindings()
         {
+            BindTilemaps();
+        }
+
+        private void BindTilemaps()
+        {
+            Container.Bind<Tilemaps>()
+                     .FromInstance(null)
+                     .AsSingle()
+                     .NonLazy();
         }
     }
 }

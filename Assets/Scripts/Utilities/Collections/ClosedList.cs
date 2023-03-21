@@ -52,14 +52,23 @@ namespace ConnectIt.Utilities.Collections
                 insertAction += InsertItem;
         }
 
+        public T this[int index]
+            => _elementsList[index];
+
+        public int IndexOf(T element)
+        {
+            int index = _elementsList.IndexOf(element);
+
+            Assert.That(index != -1);
+
+            return index;
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
             => _elementsList.GetEnumerator();
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
             => _elementsList.GetEnumerator();
-
-        public T this[int index]
-            => _elementsList[index];
 
         private void AddItem(T item)
         {
