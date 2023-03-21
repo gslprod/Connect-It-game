@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: connector circle white1
+  m_Name: connector circle green
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 4e1b4b240dbdbe34abc56f56a36be851, type: 3}
-  m_Color: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 1}
+  m_Color: {r: 0, g: 0.64705884, b: 0, a: 1}
   m_Transform:
     e00: 1
     e01: 0
