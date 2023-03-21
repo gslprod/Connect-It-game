@@ -1,3 +1,4 @@
+using ConnectIt.Input;
 using ConnectIt.Model;
 using Zenject;
 
@@ -8,6 +9,22 @@ namespace ConnectIt.DI.Installers
         public override void InstallBindings()
         {
             BindTilemaps();
+            BindGameplayInput();
+            BindGameplayInputRouter();
+        }
+
+        private void BindGameplayInputRouter()
+        {
+            Container.Bind<GameplayInputRouter>()
+                     .FromNew()
+                     .AsSingle();
+        }
+
+        private void BindGameplayInput()
+        {
+            Container.Bind<GameplayInput>()
+                     .FromNew()
+                     .AsTransient();
         }
 
         private void BindTilemaps()

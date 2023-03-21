@@ -1,4 +1,4 @@
-using UnityEngine;
+using ConnectIt.Model;
 using Zenject;
 
 namespace ConnectIt.DI.Installers
@@ -7,7 +7,14 @@ namespace ConnectIt.DI.Installers
     {
         public override void InstallBindings()
         {
+            BindRenderCameraProvider();
+        }
 
+        private void BindRenderCameraProvider()
+        {
+            Container.Bind<RenderCameraProvider>()
+                     .FromNew()
+                     .AsSingle();
         }
     }
 }

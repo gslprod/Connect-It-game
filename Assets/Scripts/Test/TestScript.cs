@@ -12,7 +12,7 @@ namespace ConnectIt.Test
         [SerializeField] private TileBase _tile1;
         [SerializeField] private TileBase _tile2;
 
-        private MainInput _input;
+        private GameplayInput _input;
         private Tilemap _tilemap;
         private Camera _camera;
 
@@ -46,7 +46,7 @@ namespace ConnectIt.Test
 
             _tilemap = GetComponent<Tilemap>();
             _camera = Camera.main;
-            _input = new MainInput();
+            _input = new GameplayInput();
 
             _input.Enable();
             _input.Main.InteractionPosition.performed += InteractionPosition_performed;
