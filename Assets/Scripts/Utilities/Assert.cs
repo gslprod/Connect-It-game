@@ -30,6 +30,11 @@ namespace ConnectIt.Utilities
             That(condition2);
         }
 
+        public static void Fail()
+        {
+            ThrowInvalidOperationEx();
+        }
+
         private static void ThrowNullArgEx()
         {
             throw new ArgumentNullException(DefaultMessage);

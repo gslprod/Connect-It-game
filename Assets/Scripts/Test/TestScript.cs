@@ -8,6 +8,8 @@ namespace ConnectIt.Test
     public class TestScript : MonoBehaviour
     {
         [SerializeField] private bool _skip;
+        [SerializeField] private TileBase _tile1;
+        [SerializeField] private TileBase _tile2;
 
         private MainInput _input;
         private Tilemap _tilemap;
@@ -15,6 +17,13 @@ namespace ConnectIt.Test
 
         private void Start()
         {
+            TileBase[] tiles = new TileBase[] { _tile1, _tile2 };
+            foreach (TileBase tile in tiles)
+            {
+                TileData data = new TileData();
+                
+            }
+
             _tilemap = GetComponent<Tilemap>();
             _camera = Camera.main;
             _input = new MainInput();

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static ConnectIt.Model.SpriteAndObjectInfoSet;
 
 namespace ConnectIt.Model
 {
@@ -13,15 +14,21 @@ namespace ConnectIt.Model
 
         private readonly TilemapLayerSet[] _maps;
         private Tile[] _tiles;
+        private readonly SpriteAndObjectInfoSet[] _spriteAndObjectTypeSets;
 
-        private Dictionary<int, int> _xCoordinateArrayPointers = new();
+        private readonly Dictionary<int, int> _xCoordinateArrayPointers = new();
 
-        public Tilemaps(TilemapLayerSet[] maps)
+        public Tilemaps(TilemapLayerSet[] maps,
+            SpriteAndObjectInfoSet[] spriteAndObjectTypeSets)
         {
             Validate(maps);
             _maps = maps;
 
+            Validate(spriteAndObjectTypeSets);
+            _spriteAndObjectTypeSets = spriteAndObjectTypeSets;
+
             CreateTiles();
+            CreateObjectsOnMap();
         }
 
         public Tile GetTileAtWorldPosition(Vector3 worldPosition)
@@ -33,12 +40,19 @@ namespace ConnectIt.Model
 
         public bool TryGetTileAtWorldPosition(Vector3 worldPosition, out Tile tile)
         {
-            Tilemap mapTilemap = FindSetByLayer(TileLayer.Map).Tilemap;
+            Tilemap mapTilemap = GetTilemapOnLayer(TileLayer.Map);
 
             Vector3Int cellPosition = mapTilemap.WorldToCell(worldPosition);
             tile = FindTileAtCellPosition(cellPosition);
 
             return tile != null;
+        }
+
+        public Vector3 GetWorldPositionOfTile(Tile tile)
+        {
+            Assert.That(ContainsTile(tile));
+
+            return GetTilemapOnLayer(TileLayer.Map).CellToWorld(tile.LocationInTileMap);
         }
 
         public bool HasTileAtWorldPosition(Vector3 worldPosition)
@@ -58,7 +72,7 @@ namespace ConnectIt.Model
             Assert.IsNotNull(tileBase);
             Assert.That(ContainsTile(tile));
 
-            Assert.That(TryGetTilemapOnLayer(layer, out Tilemap tilemap));
+           Tilemap tilemap = GetTilemapOnLayer(layer);
 
             tilemap.SetTile(tile.LocationInTileMap, tileBase);
             OnTileBaseChanged?.Invoke(tile, layer);
@@ -68,13 +82,15 @@ namespace ConnectIt.Model
         {
             Assert.IsNotNull(tile);
 
-            Assert.That(TryGetTilemapOnLayer(layer, out Tilemap tilemap));
+            Tilemap tilemap = GetTilemapOnLayer(layer);
 
             return tilemap.GetTile<T>(tile.LocationInTileMap);
         }
 
         private void Validate(TilemapLayerSet[] maps)
         {
+            Assert.IsNotNull(maps);
+
             IEnumerable<IGrouping<TileLayer, TilemapLayerSet>> groupsByLayer = maps.GroupBy(set => set.Layer);
 
             int groupsWithDuplicateLayersCount =
@@ -87,9 +103,22 @@ namespace ConnectIt.Model
                 containsMapLayer);
         }
 
+        private void Validate(SpriteAndObjectInfoSet[] tileBaseAndObjectTypeSets)
+        {
+            Assert.IsNotNull(tileBaseAndObjectTypeSets);
+
+            var groupsBySprite = tileBaseAndObjectTypeSets.GroupBy(set => set.Sprite);
+
+            int groupsWithDuplicateSpritesCount =
+                groupsBySprite.Where(group => group.Count() > 1)
+                .Count();
+
+            Assert.That(groupsWithDuplicateSpritesCount == 0);
+        }
+
         private void CreateTiles()
         {
-            Tilemap mapTilemap = FindSetByLayer(TileLayer.Map).Tilemap;
+            Tilemap mapTilemap = GetTilemapOnLayer(TileLayer.Map);
 
             mapTilemap.CompressBounds();
             BoundsInt mapCellBounds = mapTilemap.cellBounds;
@@ -123,6 +152,59 @@ namespace ConnectIt.Model
             Array.Resize(ref _tiles, index);
         }
 
+        private void CreateObjectsOnMap()
+        {
+            Tilemap mainObjectsTilemap = GetTilemapOnLayer(TileLayer.Main);
+
+            mainObjectsTilemap.CompressBounds();
+            BoundsInt mainObjectsCellBounds = mainObjectsTilemap.cellBounds;
+
+            Vector3Int maxCellsPosition = mainObjectsCellBounds.max - Vector3Int.one;
+            Vector3Int minCellsPosition = mainObjectsCellBounds.min;
+
+            for (int x = minCellsPosition.x; x <= maxCellsPosition.x; x++)
+            {
+                for (int y = minCellsPosition.y; y <= maxCellsPosition.y; y++)
+                {
+                    for (int z = minCellsPosition.z; z <= maxCellsPosition.z; z++)
+                    {
+                        var currentCellPosition = new Vector3Int(x, y, z);
+
+                        TileData tileData = new();
+                        mainObjectsTilemap.GetTile(currentCellPosition).GetTileData(currentCellPosition, mainObjectsTilemap, ref tileData);
+
+                        if (tileData.sprite == null)
+                            continue;
+
+                        SpriteAndObjectInfoSet set = _spriteAndObjectTypeSets.First(set => set.Sprite == tileData.sprite);
+                        Assert.That(set != null);
+
+                        CreateObjectOnMap(set, currentCellPosition);
+                    }
+                }
+            }
+        }
+
+        private void CreateObjectOnMap(SpriteAndObjectInfoSet infoSet, Vector3Int cellPosition)
+        {
+            switch (infoSet.ObjectType)
+            {
+                case SpriteObjectType.Port:
+                    CreatePortOnMap(infoSet.PortInfo, cellPosition);
+                    break;
+                default:
+                    Assert.Fail();
+                    break;
+            }
+        }
+
+        private Port CreatePortOnMap(PortObjectInfo info, Vector3Int cellPosition)
+        {
+            Tile targetTile = FindTileAtCellPosition(cellPosition);
+
+            return new Port(targetTile, info.CompatibilityIndex);
+        }
+
         private Tile FindTileAtCellPosition(Vector3Int cellPosition)
         {
             return FastFindTileByXCoordinate(cellPosition.x, tile => tile.LocationInTileMap == cellPosition);
@@ -147,9 +229,16 @@ namespace ConnectIt.Model
 
         private bool TryGetTilemapOnLayer(TileLayer layer, out Tilemap tilemap)
         {
-            tilemap = FindSetByLayer(layer).Tilemap;
+            tilemap = FindSetByLayer(layer)?.Tilemap;
 
             return tilemap != null;
+        }
+
+        private Tilemap GetTilemapOnLayer(TileLayer layer)
+        {
+            Assert.That(TryGetTilemapOnLayer(layer, out Tilemap tilemap));
+
+            return tilemap;
         }
 
         private TilemapLayerSet FindSetByLayer(TileLayer layer)
@@ -169,6 +258,31 @@ namespace ConnectIt.Model
         {
             _tilemap = tilemap;
             _layer = layer;
+        }
+    }
+
+    [Serializable]
+    public class SpriteAndObjectInfoSet
+    {
+        public enum SpriteObjectType
+        {
+            Port = 1
+        }
+
+        public Sprite Sprite => _sprite;
+        public SpriteObjectType ObjectType => _objectType;
+        public PortObjectInfo PortInfo => _portObjectInfo;
+
+        [SerializeField] private Sprite _sprite;
+        [SerializeField] private SpriteObjectType _objectType;
+        [SerializeField] private PortObjectInfo _portObjectInfo;
+
+        [Serializable]
+        public class PortObjectInfo
+        {
+            public int CompatibilityIndex { get; }
+
+            [SerializeField] private int _compatibilityIndex;
         }
     }
 }

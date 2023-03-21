@@ -40,6 +40,11 @@ namespace ConnectIt.Model
             return _tilemaps.GetTileOnLayer<T>(layer, this);
         }
 
+        public Vector3 GetWorldPosition()
+        {
+            return _tilemaps.GetWorldPositionOfTile(this);
+        }
+
         public void AddUser(TileUser toAdd)
         {
             Assert.That(CanUserBeAdded(toAdd));
@@ -58,7 +63,7 @@ namespace ConnectIt.Model
         {
             return
                 user != null &&
-                UserInLayerExists(user.Layer);
+                !UserInLayerExists(user.Layer);
         }
 
         public bool CanUserBeRemoved(TileUser user)
