@@ -281,7 +281,7 @@ namespace ConnectIt.Model
         [Serializable]
         public class PortObjectInfo
         {
-            public int CompatibilityIndex { get; }
+            public int CompatibilityIndex => _compatibilityIndex;
 
             [SerializeField] private int _compatibilityIndex;
         }

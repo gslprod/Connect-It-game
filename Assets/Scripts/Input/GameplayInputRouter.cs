@@ -1,22 +1,30 @@
-﻿using ConnectIt.Input.GameplayInputRouterStates;
-using ConnectIt.Model;
-using UnityEngine;
+﻿using ConnectIt.Infrastructure.Factories;
+using ConnectIt.Input.GameplayInputRouterStates;
+using ConnectIt.Utilities;
+using System;
 using UnityEngine.InputSystem;
 
 namespace ConnectIt.Input
 {
     public class GameplayInputRouter
     {
-        private IGameplayInputRouterState _state;
+        public event Action StateChanged;
+
+        public GameplayInputRouterState State { get; private set; }
 
         private readonly GameplayInput _input;
-        private readonly RenderCameraProvider _cameraProvider;
+        private readonly IFactory<ConnectionsGameplayInputRouterState> _connectionsStateFactory;
 
-        public GameplayInputRouter(GameplayInput gameplayInput,
-            RenderCameraProvider cameraProvider)
+        public GameplayInputRouter(
+            GameplayInput gameplayInput,
+            IFactory<ConnectionsGameplayInputRouterState> connectionsStateFactory)
         {
             _input = gameplayInput;
-            _cameraProvider = cameraProvider;
+            _connectionsStateFactory = connectionsStateFactory;
+
+            ResetState();
+            //to remove
+            Enable();
         }
 
         public void Enable()
@@ -35,28 +43,40 @@ namespace ConnectIt.Input
 
         public void Update()
         {
+            State.Update();
+        }
 
+        public void SetState(GameplayInputRouterState newState)
+        {
+            Assert.IsNotNull(newState);
+
+            if (State == newState)
+                return;
+
+            State?.StateExit();
+            State = newState;
+
+            StateChanged?.Invoke();
+        }
+
+        public void ResetState()
+        {
+            SetState(_connectionsStateFactory.Create());
         }
 
         private void OnInteractionClick(InputAction.CallbackContext context)
         {
-            //Vector3 worldPosition = _cameraProvider.Current.ScreenToWorldPoint(positionOnScreen);
-
-            //Tile interactedTile = _tilemaps.GetTileAtWorldPosition(worldPosition);
-            //if (interactedTile == null)
-            //    return;
-
-
+            State.OnInteractionClick(context);
         }
 
         private void OnInteractionPressPerformed(InputAction.CallbackContext context)
         {
-            
+            State.OnInteractionPressPerformed(context);
         }
 
         private void OnInteractionPressCanceled(InputAction.CallbackContext context)
         {
-            
+            State.OnInteractionPressCanceled(context);
         }
 
         private void SubscribeToInput()

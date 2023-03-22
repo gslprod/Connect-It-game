@@ -40,7 +40,7 @@ namespace ConnectIt.Test
 
             var d = func.GetInvocationList()[1];
 
-            print(d.DynamicInvoke());
+            //print(d.DynamicInvoke());
 
             //print(_tile1 == _tile2);
 
@@ -52,7 +52,7 @@ namespace ConnectIt.Test
             _input.Main.InteractionPosition.performed += InteractionPosition_performed;
 
             _tilemap.CompressBounds();
-            print($"{_tilemap.cellBounds} {_tilemap.cellBounds.max} {_tilemap.cellBounds.min} {_tilemap.cellBounds.center}");
+            //print($"{_tilemap.cellBounds} {_tilemap.cellBounds.max} {_tilemap.cellBounds.min} {_tilemap.cellBounds.center}");
         }
 
         private void InteractionPosition_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

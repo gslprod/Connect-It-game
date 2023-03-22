@@ -1,4 +1,5 @@
 ﻿using ConnectIt.Utilities;
+using ConnectIt.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,8 +16,9 @@ namespace ConnectIt.Model
 
     public class Tile
     {
+        public event Action<Tile> UsersChanged;
         public event Action<Tile, TileLayer> TileBaseChanged;
-        public event Func<object> TileUsersInfoRequest; 
+        public event Func<object> TileUsersInfoRequest;
 
         public Vector3Int LocationInTileMap { get; }
 
@@ -56,6 +58,7 @@ namespace ConnectIt.Model
             Assert.That(CanUserBeAdded(toAdd));
 
             _users.Add(toAdd);
+            UsersChanged?.Invoke(this);
         }
 
         public void RemoveUser(TileUser toRemove)
@@ -63,6 +66,7 @@ namespace ConnectIt.Model
             Assert.That(CanUserBeRemoved(toRemove));
 
             _users.Remove(toRemove);
+            UsersChanged?.Invoke(this);
         }
 
         public bool CanUserBeAdded(TileUser user)

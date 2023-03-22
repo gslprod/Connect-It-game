@@ -6,18 +6,17 @@ namespace ConnectIt
 {
     public class RenderCameraProvider
     {
-        public Camera Current {  get; private set; }
+        public Camera RenderCamera {  get; private set; }
 
         private List<Camera> _camerasList = new();
 
         public void RegisterCamera(Camera camera)
         {
-            _camerasList.Add(camera);
             Assert.That(!_camerasList.Contains(camera));
 
             _camerasList.Add(camera);
 
-            if (Current == null)
+            if (RenderCamera == null)
                 SetRenderCamera(camera);
         }
 
@@ -26,9 +25,9 @@ namespace ConnectIt
             Assert.IsNotNull(camera);
             Assert.That(_camerasList.Remove(camera));
 
-            if (Current == camera)
+            if (RenderCamera == camera)
             {
-                Current = null;
+                RenderCamera = null;
 
                 if (_camerasList.Count != 0)
                     SetRenderCamera(_camerasList[0]);
@@ -48,7 +47,7 @@ namespace ConnectIt
                     camera.enabled = true;
             }
 
-            Current = toSet;
+            RenderCamera = toSet;
         }
     }
 }

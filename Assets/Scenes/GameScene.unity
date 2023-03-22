@@ -302,6 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1820269a4e593d4baf50a0b4ce1d443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tilemapsMonoWrapper: {fileID: 603125921}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

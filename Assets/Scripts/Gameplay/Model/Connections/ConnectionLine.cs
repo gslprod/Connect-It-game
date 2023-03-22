@@ -10,6 +10,7 @@ namespace ConnectIt.Model
 
         public ClosedList<TileUser> UsingTiles { get; set; }
         public int CompatibilityIndex => _connection.First.CompatibilityIndex;
+        public bool ConnectionCompleted => _connection.ConnectionCompleted;
 
         private readonly Connection _connection;
         private readonly Action<TileUser> _addTileUserAction;
