@@ -10,20 +10,20 @@ namespace ConnectIt.Input
     {
         public event Action StateChanged;
 
-        public GameplayInputRouterState State { get; private set; }
+        public BaseState State { get; private set; }
 
         private readonly GameplayInput _input;
-        private readonly IFactory<ConnectionsGameplayInputRouterState> _connectionsStateFactory;
+        private readonly IFactory<IdleTilemapsInteractionState> _idleStateFactory;
 
         public GameplayInputRouter(
             GameplayInput gameplayInput,
-            IFactory<ConnectionsGameplayInputRouterState> connectionsStateFactory)
+            IFactory<IdleTilemapsInteractionState> idleStateFactory)
         {
             _input = gameplayInput;
-            _connectionsStateFactory = connectionsStateFactory;
+            _idleStateFactory = idleStateFactory;
 
             ResetState();
-            //to remove
+            //todo
             Enable();
         }
 
@@ -46,7 +46,7 @@ namespace ConnectIt.Input
             State.Update();
         }
 
-        public void SetState(GameplayInputRouterState newState)
+        public void SetState(BaseTilemapsInteractionState newState)
         {
             Assert.IsNotNull(newState);
 
@@ -61,7 +61,7 @@ namespace ConnectIt.Input
 
         public void ResetState()
         {
-            SetState(_connectionsStateFactory.Create());
+            SetState(_idleStateFactory.Create());
         }
 
         private void OnInteractionClick(InputAction.CallbackContext context)

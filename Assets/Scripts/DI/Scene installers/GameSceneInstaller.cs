@@ -32,14 +32,25 @@ namespace ConnectIt.DI.Installers
 
         private void BindGameplayInputRouterStateFactories()
         {
-            Container.Bind<Factories.IFactory<ConnectionsGameplayInputRouterState>>()
-                     .To<Factories.DIFactory<ConnectionsGameplayInputRouterState>>()
+            Container.Bind<Factories.IFactory<CreatingConnectionLineState>>()
+                     .To<Factories.DIFactory<CreatingConnectionLineState>>()
+                     .FromNew()
+                     .AsTransient();
+
+            Container.Bind<Factories.IFactory<RemovingConnectionLineState>>()
+                     .To<Factories.DIFactory<RemovingConnectionLineState>>()
+                     .FromNew()
+                     .AsTransient();
+
+            Container.Bind<Factories.IFactory<IdleTilemapsInteractionState>>()
+                     .To<Factories.DIFactory<IdleTilemapsInteractionState>>()
                      .FromNew()
                      .AsTransient();
         }
 
         private void BindGameplayInputRouter()
         {
+            //todo
             Container.Bind<GameplayInputRouter>()
                      .FromNew()
                      .AsSingle()
@@ -55,6 +66,7 @@ namespace ConnectIt.DI.Installers
 
         private void BindTilemaps()
         {
+            //todo
             Container.Bind<Tilemaps>()
                      .FromInstance(_tilemapsMonoWrapper.Model)
                      .AsSingle()
