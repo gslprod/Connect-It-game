@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ConnectIt.Utilities
+namespace ConnectIt.Utilities.Extensions
 {
-    public static class DelegateUtilities
+    public static class DelegateExtensions
     {
         public enum InvokeOrder
         {
