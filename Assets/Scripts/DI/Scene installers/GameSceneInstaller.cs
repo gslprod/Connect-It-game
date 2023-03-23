@@ -50,11 +50,9 @@ namespace ConnectIt.DI.Installers
 
         private void BindGameplayInputRouter()
         {
-            //todo
             Container.Bind<GameplayInputRouter>()
                      .FromNew()
-                     .AsSingle()
-                     .NonLazy();
+                     .AsSingle();
         }
 
         private void BindGameplayInput()

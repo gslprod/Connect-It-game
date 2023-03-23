@@ -22,6 +22,13 @@ namespace ConnectIt.Model
             Assert.IsNotNull(connection);
             Assert.That(!HasConnection);
 
+            if (connection.ConnectionCompleted)
+            {
+                IConnectable other = connection.GetOther(this);
+
+                Assert.That(CompatibleWith(other));
+            }
+
             Connection = connection;
 
             ConnectionChanged?.Invoke(this);
@@ -34,6 +41,30 @@ namespace ConnectIt.Model
             Connection = null;
 
             ConnectionChanged?.Invoke(this);
+        }
+
+        public bool CanBeConnectedWith(IConnectable other)
+        {
+            Assert.IsNotNull(other);
+
+            bool alreadyConnected = HasConnection && Connection.ConnectionCompleted;
+            if (alreadyConnected)
+                return false;
+
+            bool otherAlreadyConnected = other.HasConnection && other.Connection.ConnectionCompleted;
+            if (otherAlreadyConnected)
+                return false;
+
+            return CompatibleWith(other);
+        }
+
+        public bool CompatibleWith(IConnectable other)
+        {
+            Assert.IsNotNull(other);
+
+            return
+                this != other &&
+                CompatibilityIndex == other.CompatibilityIndex;
         }
     }
 }

@@ -1,3 +1,4 @@
+using ConnectIt.Config;
 using ConnectIt.Model;
 using Zenject;
 
@@ -8,6 +9,14 @@ namespace ConnectIt.DI.Installers
         public override void InstallBindings()
         {
             BindRenderCameraProvider();
+            BindGameplayConfig();
+        }
+
+        private void BindGameplayConfig()
+        {
+            Container.Bind<GameplayConfig>()
+                     .FromNew()
+                     .AsSingle();
         }
 
         private void BindRenderCameraProvider()

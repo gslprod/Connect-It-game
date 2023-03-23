@@ -13,20 +13,19 @@ namespace ConnectIt.Model
         {
             Assert.IsNotNull(first);
 
-            first.SetConnection(this);
-
             First = first;
+            first.SetConnection(this);
         }
 
         public Connection(IConnectable first, IConnectable second)
         {
             Assert.IsNotNull(first, second);
 
-            first.SetConnection(this);
-            second.SetConnection(this);
-
             First = first;
+            first.SetConnection(this);
+
             Second = second;
+            second.SetConnection(this);
         }
 
         public void CompleteConnection(IConnectable second)
@@ -34,8 +33,8 @@ namespace ConnectIt.Model
             Assert.IsNotNull(second);
             Assert.That(!ConnectionCompleted);
 
-            second.SetConnection(this);
             Second = second;
+            second.SetConnection(this);
         }
 
         public IConnectable GetOther(IConnectable original)

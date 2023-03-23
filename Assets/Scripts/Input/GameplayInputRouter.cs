@@ -21,10 +21,6 @@ namespace ConnectIt.Input
         {
             _input = gameplayInput;
             _idleStateFactory = idleStateFactory;
-
-            ResetState();
-            //todo
-            Enable();
         }
 
         public void Enable()

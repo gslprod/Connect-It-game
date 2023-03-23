@@ -20,6 +20,12 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             this.tilemaps = tilemaps;
         }
 
+        public override void StateExit()
+        {
+            if (lastOnUpdateInteractedTile != null)
+                ResetLastOnUpdateInteractedTile();
+        }
+
         protected bool TryGetTileByPositionOnScreen(out Tile tile)
         {
             Vector2 positionOnScreen = input.Main.InteractionPosition.ReadValue<Vector2>();
@@ -50,6 +56,9 @@ namespace ConnectIt.Input.GameplayInputRouterStates
 
         protected void SetLastOnUpdateInteractedTile(Tile tile)
         {
+            if (lastOnUpdateInteractedTile != null)
+                ResetLastOnUpdateInteractedTile();
+
             lastOnUpdateInteractedTile = tile;
             lastOnUpdateInteractedTile.UsersChanged += OnLastInteractedTileUserChanged;
         }

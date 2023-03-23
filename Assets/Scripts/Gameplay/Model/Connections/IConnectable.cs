@@ -8,5 +8,7 @@
 
         void SetConnection(Connection connection);
         void ResetConnection();
+        bool CanBeConnectedWith(IConnectable other);
+        bool CompatibleWith(IConnectable other);
     }
 }

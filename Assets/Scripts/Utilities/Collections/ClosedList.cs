@@ -9,47 +9,38 @@ namespace ConnectIt.Utilities.Collections
         private readonly List<T> _elementsList;
 
         public ClosedList(IEnumerable<T> elements,
-            Action<T> addAction = null,
-            Action<T> removeAction = null,
-            Action<T, int> insertAction = null)
+            ref Action<T> addAction,
+            ref Action<T> removeAction,
+            ref Action<T, int> insertAction)
         {
             _elementsList = new(elements);
 
-            if (addAction != null)
-                addAction += AddItem;
-            if (removeAction != null)
-                removeAction += RemoveItem;
-            if (insertAction != null)
-                insertAction += InsertItem;
+            addAction += AddItem;
+            removeAction += RemoveItem;
+            insertAction += InsertItem;
         }
 
         public ClosedList(T firstElement,
-            Action<T> addAction = null,
-            Action<T> removeAction = null,
-            Action<T, int> insertAction = null)
+            ref Action<T> addAction,
+            ref Action<T> removeAction,
+            ref Action<T, int> insertAction)
         {
             _elementsList = new() { firstElement };
 
-            if (addAction != null)
-                addAction += AddItem;
-            if (removeAction != null)
-                removeAction += RemoveItem;
-            if (insertAction != null)
-                insertAction += InsertItem;
+            addAction += AddItem;
+            removeAction += RemoveItem;
+            insertAction += InsertItem;
         }
 
-        public ClosedList(Action<T> addAction = null,
-            Action<T> removeAction = null,
-            Action<T, int> insertAction = null)
+        public ClosedList(ref Action<T> addAction,
+            ref Action<T> removeAction,
+            ref Action<T, int> insertAction)
         {
             _elementsList = new();
 
-            if (addAction != null)
-                addAction += AddItem;
-            if (removeAction != null)
-                removeAction += RemoveItem;
-            if (insertAction != null)
-                insertAction += InsertItem;
+            addAction += AddItem;
+            removeAction += RemoveItem;
+            insertAction += InsertItem;
         }
 
         public T this[int index]

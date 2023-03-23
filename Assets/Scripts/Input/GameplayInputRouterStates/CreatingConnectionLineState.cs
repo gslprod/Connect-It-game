@@ -1,5 +1,4 @@
-﻿using ConnectIt.Infrastructure.CreatedObjectNotifiers;
-using ConnectIt.Model;
+﻿using ConnectIt.Model;
 using ConnectIt.Utilities.Extensions;
 using System.Linq;
 using UnityEngine.InputSystem;
@@ -51,7 +50,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
 
             Port port = portInfo.Port;
 
-            if (port.Connectable.HasConnection)
+            if (!_creatableLine.CanBeCompletedWith(port))
                 return;
 
             _creatableLine.CompleteConnection(port);
@@ -61,6 +60,8 @@ namespace ConnectIt.Input.GameplayInputRouterStates
 
         public override void StateExit()
         {
+            base.StateExit();
+
             if (_creatableLine.ConnectionCompleted)
                 return;
 

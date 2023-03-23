@@ -213,7 +213,9 @@ namespace ConnectIt.Model
 
         private Tile FastFindTileByXCoordinate(int xCoordinate, Func<Tile, bool> condition)
         {
-            int xStartIndex = _xCoordinateArrayPointers[xCoordinate];
+            if (!_xCoordinateArrayPointers.TryGetValue(xCoordinate, out int xStartIndex))
+                return null;
+
             if (!_xCoordinateArrayPointers.TryGetValue(xCoordinate + 1, out int xLastIndex))
                 xLastIndex = _tiles.Length;
 

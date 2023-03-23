@@ -14,11 +14,13 @@ namespace ConnectIt.Model
 
         private readonly Connection _connection;
         private readonly Action<TileUser> _addTileUserAction;
+        private readonly Action<TileUser> _removeTileUserAction;
+        private readonly Action<TileUser, int> _insertTileUserAction;
 
         public ConnectionLine(Port start)
         {
             _connection = new(start.Connectable);
-            UsingTiles = new(_addTileUserAction);
+            UsingTiles = new(ref _addTileUserAction, ref _removeTileUserAction, ref _insertTileUserAction);
 
             ExpandLine(start.UsingTile.Tile);
         }
@@ -31,6 +33,11 @@ namespace ConnectIt.Model
             tileUser.TileUserInfoRequest += OnTileUserInfoRequest;
 
             UsingTilesChanged?.Invoke(this);
+        }
+
+        public bool CanBeCompletedWith(Port port)
+        {
+            return _connection.First.CanBeConnectedWith(port.Connectable);
         }
 
         public void CompleteConnection(Port end)
