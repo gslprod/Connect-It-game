@@ -9,8 +9,8 @@ namespace ConnectIt.Input.GameplayInputRouterStates
 {
     public class IdleTilemapsInteractionState : BaseTilemapsInteractionState
     {
-        private readonly IFactory<CreatingConnectionLineState> _creatingLineStateFactory;
-        private readonly IFactory<RemovingConnectionLineState> _removingLineStateFactory;
+        private readonly CreatingConnectionLineState.IFactory _creatingLineStateFactory;
+        private readonly RemovingConnectionLineState.IFactory _removingLineStateFactory;
         private readonly ICreatedObjectNotifier<ConnectionLine> _createdConnectionLineNotifier;
 
         public IdleTilemapsInteractionState(
@@ -18,8 +18,8 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             GameplayInputRouter inputRouter,
             RenderCameraProvider cameraProvider,
             Tilemaps tilemaps,
-            IFactory<CreatingConnectionLineState> creatingLineStateFactory,
-            IFactory<RemovingConnectionLineState> removingLineStateFactory,
+            CreatingConnectionLineState.IFactory creatingLineStateFactory,
+            RemovingConnectionLineState.IFactory removingLineStateFactory,
             ICreatedObjectNotifier<ConnectionLine> createdConnectionLineNotifier) : base(input, inputRouter, cameraProvider, tilemaps)
         {
             _creatingLineStateFactory = creatingLineStateFactory;
@@ -52,7 +52,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             ConnectionLine createdLine = new(port);
             _createdConnectionLineNotifier.SendNotification(createdLine);
 
-            inputRouter.SetState(_creatingLineStateFactory.Create(new object[] { createdLine }));
+            inputRouter.SetState(_creatingLineStateFactory.Create(createdLine));
 
             return true;
         }
@@ -62,9 +62,11 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             if (!TryGetObjectInfoFromTile(tile, out ConnectionLineTileUserObjectInfo connectionLineInfo))
                 return false;
 
-            inputRouter.SetState(_removingLineStateFactory.Create(new object[] { connectionLineInfo.ConnectionLine }));
+            inputRouter.SetState(_removingLineStateFactory.Create(connectionLineInfo.ConnectionLine));
 
             return true;
         }
+
+        public interface IFactory : IFactory<IdleTilemapsInteractionState> { }
     }
 }

@@ -3,7 +3,7 @@ using Zenject;
 
 namespace ConnectIt.Infrastructure.Factories
 {
-    public class DIFactory<T> : IFactory<T>
+    public class DIFactory<T> : IFactory<T>, IValidatable
     {
         protected readonly IInstantiator instantiator;
 
@@ -12,12 +12,13 @@ namespace ConnectIt.Infrastructure.Factories
             this.instantiator = instantiator;
         }
 
-        public T Create() => CreateInternal();
+        public T Create() => instantiator.Instantiate<T>();
 
-        public T Create(IEnumerable<object> args) => CreateInternal(args);
+        public T Create(IEnumerable<object> args) => instantiator.Instantiate<T>(args);
 
-        protected T CreateInternal() => instantiator.Instantiate<T>();
-
-        protected T CreateInternal(IEnumerable<object> args) => instantiator.Instantiate<T>(args);
+        public virtual void Validate()
+        {
+            instantiator.Instantiate<T>();
+        }
     }
 }

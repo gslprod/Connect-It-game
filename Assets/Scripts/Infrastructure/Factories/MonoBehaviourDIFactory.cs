@@ -6,59 +6,56 @@ namespace ConnectIt.Infrastructure.Factories
 {
     public class MonoBehaviourDIFactory<T> : IMonoBehaviourFactory<T> where T : MonoBehaviour
     {
-        public bool PrefabLoaded => _prefab != null;
-
         protected readonly IInstantiator instantiator;
+        protected readonly T prefab;
 
-        protected T _prefab;
-
-        public MonoBehaviourDIFactory(IInstantiator instantiator)
+        public MonoBehaviourDIFactory(IInstantiator instantiator,
+            T prefab)
         {
             this.instantiator = instantiator;
+            this.prefab = prefab;
         }
 
-        public virtual T Create()
+        public T Create()
         {
-            Assert.That(PrefabLoaded);
-
-            return instantiator.InstantiatePrefabForComponent<T>(_prefab);
+            return instantiator.InstantiatePrefabForComponent<T>(prefab);
         }
 
-        public virtual T Create(Transform parent)
+        public virtual T Create(T original)
         {
-            Assert.IsNotNull(parent);
-            Assert.That(PrefabLoaded);
+            Assert.IsNotNull(original);
 
-            return instantiator.InstantiatePrefabForComponent<T>(_prefab, parent);
+            return instantiator.InstantiatePrefabForComponent<T>(original);
         }
 
-        public virtual T Create(Transform parent, Vector3 position, Quaternion rotation)
+        public T Create(Transform parent)
         {
             Assert.IsNotNull(parent);
-            Assert.That(PrefabLoaded);
 
-            return instantiator.InstantiatePrefabForComponent<T>(_prefab, position, rotation, parent);
+            return instantiator.InstantiatePrefabForComponent<T>(prefab, parent);
         }
 
-        public virtual void Destroy(T instance)
+        public virtual T Create(T original, Transform parent)
         {
-            Assert.IsNotNull(instance);
+            Assert.IsNotNull(original);
+            Assert.IsNotNull(parent);
 
-            Object.Destroy(instance);
+            return instantiator.InstantiatePrefabForComponent<T>(original, parent);
         }
 
-        public virtual void DestroyWithGameObject(T instance)
+        public T Create(Transform parent, Vector3 position, Quaternion rotation)
         {
-            Assert.IsNotNull(instance);
+            Assert.IsNotNull(parent);
 
-            Object.Destroy(instance.gameObject);
+            return instantiator.InstantiatePrefabForComponent<T>(prefab, parent);
         }
 
-        public virtual void LoadPrefab(T prefab)
+        public virtual T Create(T original, Transform parent, Vector3 position, Quaternion rotation)
         {
-            Assert.IsNotNull(prefab);
+            Assert.IsNotNull(original);
+            Assert.IsNotNull(parent);
 
-            _prefab = prefab;
+            return instantiator.InstantiatePrefabForComponent<T>(original, position, rotation, parent);
         }
     }
 }

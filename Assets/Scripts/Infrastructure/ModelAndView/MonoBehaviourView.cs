@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ConnectIt.Infrastructure.ViewAndModel
+namespace ConnectIt.Infrastructure.ModelAndView
 {
     public abstract class MonoBehaviourView<TModel> : MonoBehaviour, IView<TModel>
     {

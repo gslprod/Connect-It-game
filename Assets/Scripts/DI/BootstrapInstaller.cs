@@ -15,14 +15,12 @@ namespace ConnectIt.DI.Installers
         private void BindGameplayConfig()
         {
             Container.Bind<GameplayConfig>()
-                     .FromNew()
                      .AsSingle();
         }
 
         private void BindRenderCameraProvider()
         {
             Container.Bind<RenderCameraProvider>()
-                     .FromNew()
                      .AsSingle();
         }
     }

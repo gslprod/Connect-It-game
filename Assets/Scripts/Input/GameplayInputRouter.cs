@@ -1,26 +1,34 @@
-﻿using ConnectIt.Infrastructure.Factories;
-using ConnectIt.Input.GameplayInputRouterStates;
+﻿using ConnectIt.Input.GameplayInputRouterStates;
 using ConnectIt.Utilities;
 using System;
 using UnityEngine.InputSystem;
+using Zenject;
+using Factories = ConnectIt.Infrastructure.Factories;
 
 namespace ConnectIt.Input
 {
-    public class GameplayInputRouter
+    public class GameplayInputRouter : IInitializable, ITickable
     {
         public event Action StateChanged;
 
         public BaseState State { get; private set; }
 
         private readonly GameplayInput _input;
-        private readonly IFactory<IdleTilemapsInteractionState> _idleStateFactory;
+        private readonly Factories.IFactory<IdleTilemapsInteractionState> _idleStateFactory;
 
         public GameplayInputRouter(
             GameplayInput gameplayInput,
-            IFactory<IdleTilemapsInteractionState> idleStateFactory)
+            Factories.IFactory<IdleTilemapsInteractionState> idleStateFactory)
         {
             _input = gameplayInput;
             _idleStateFactory = idleStateFactory;
+        }
+
+        public void Initialize()
+        {
+            ResetState();
+
+            Enable();
         }
 
         public void Enable()
@@ -37,7 +45,7 @@ namespace ConnectIt.Input
             UnsubscribeFromInput();
         }
 
-        public void Update()
+        public void Tick()
         {
             State.Update();
         }

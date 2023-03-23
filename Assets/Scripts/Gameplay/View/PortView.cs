@@ -1,17 +1,19 @@
-﻿using ConnectIt.Model;
-using UnityEngine;
+﻿using ConnectIt.Infrastructure.ModelAndView;
+using ConnectIt.Model;
 
 namespace ConnectIt.View
 {
-    public class PortView : MonoBehaviour
+    public class PortView : MonoBehaviourView<Port>
     {
+        public override Port Model => _portModel;
+
         private Port _portModel;
 
-        public void Init(Port model)
+        public override void Init(Port model)
         {
             _portModel = model;
+
+            print(_portModel.Connectable.CompatibilityIndex);
         }
-
-
     }
 }

@@ -1,6 +1,5 @@
-﻿using ConnectIt.Infrastructure.ViewAndModel;
+﻿using ConnectIt.Infrastructure.ModelAndView;
 using ConnectIt.Utilities;
-using System.Collections.Generic;
 using Zenject;
 
 namespace ConnectIt.Infrastructure.Factories
@@ -8,9 +7,9 @@ namespace ConnectIt.Infrastructure.Factories
     public class MonoBehaviourViewFromModelDIFactory<TModel, TView> : MonoBehaviourDIFactory<TView>, IViewFromModelFactory<TModel, TView> 
         where TView : MonoBehaviourView<TModel>
     {
-        private readonly Dictionary<TModel, TView> _views = new();
-
-        public MonoBehaviourViewFromModelDIFactory(IInstantiator instantiator) : base(instantiator) { }
+        public MonoBehaviourViewFromModelDIFactory(
+            IInstantiator instantiator,
+            TView prefab) : base(instantiator, prefab) { }
 
         public virtual TView Create(TModel model)
         {
@@ -19,20 +18,7 @@ namespace ConnectIt.Infrastructure.Factories
             TView view = Create();
             view.Init(model);
 
-            _views.Add(model, view);
-
             return view;
-        }
-
-        public virtual void Destroy(TModel model)
-        {
-            Assert.IsNotNull(model);
-
-            TView view = _views[model];
-
-            _views.Remove(model);
-
-            Destroy(view);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ConnectIt.Infrastructure.ViewAndModel
+﻿namespace ConnectIt.Infrastructure.ModelAndView
 {
     public interface IView<TModel>
     {

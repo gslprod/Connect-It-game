@@ -16,8 +16,12 @@ namespace ConnectIt.MonoWrappers
             }
         }
 
+        public TilemapLayerSet[] TilemapLayers => _tilemapLayers;
+        public TileBaseAndObjectInfoSet[] ObjectsInfo => _objectsInfo;
+
         [SerializeField] private TilemapLayerSet[] _tilemapLayers;
         [SerializeField] private TileBaseAndObjectInfoSet[] _objectsInfo;
+
 
         private Tilemaps _model;
 

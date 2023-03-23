@@ -203,7 +203,10 @@ namespace ConnectIt.Model
         {
             Tile targetTile = FindTileAtCellPosition(cellPosition);
 
-            return new Port(targetTile, info.CompatibilityIndex);
+            Port createdPort = new Port(targetTile, info.CompatibilityIndex);
+
+
+            return createdPort;
         }
 
         private Tile FindTileAtCellPosition(Vector3Int cellPosition)

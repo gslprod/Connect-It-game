@@ -1,4 +1,5 @@
-﻿using ConnectIt.Model;
+﻿using ConnectIt.Infrastructure.Factories;
+using ConnectIt.Model;
 using ConnectIt.Utilities.Extensions;
 using System.Linq;
 using UnityEngine.InputSystem;
@@ -67,5 +68,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
 
             _creatableLine.Remove();
         }
+
+        public interface IFactory : IFactory<ConnectionLine, CreatingConnectionLineState> { }
     }
 }
