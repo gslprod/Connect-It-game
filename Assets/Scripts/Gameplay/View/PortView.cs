@@ -1,5 +1,6 @@
 ﻿using ConnectIt.Infrastructure.ModelAndView;
 using ConnectIt.Model;
+using Zenject;
 
 namespace ConnectIt.View
 {
@@ -15,5 +16,7 @@ namespace ConnectIt.View
 
             print(_portModel.Connectable.CompatibilityIndex);
         }
+
+        public class Factory : PlaceholderFactory<Port, PortView> { }
     }
 }

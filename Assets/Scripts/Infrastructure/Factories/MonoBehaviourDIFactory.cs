@@ -4,7 +4,7 @@ using Zenject;
 
 namespace ConnectIt.Infrastructure.Factories
 {
-    public class MonoBehaviourDIFactory<T> : IMonoBehaviourFactory<T> where T : MonoBehaviour
+    public class MonoBehaviourDIFactory<T> : IMonoBehaviourFactory<T>, IDIFactory where T : MonoBehaviour
     {
         protected readonly IInstantiator instantiator;
         protected readonly T prefab;
@@ -56,6 +56,11 @@ namespace ConnectIt.Infrastructure.Factories
             Assert.IsNotNull(parent);
 
             return instantiator.InstantiatePrefabForComponent<T>(original, position, rotation, parent);
+        }
+
+        public void Validate()
+        {
+            instantiator.InstantiatePrefabForComponent<T>(prefab);
         }
     }
 }

@@ -7,7 +7,6 @@ using ConnectIt.MonoWrappers;
 using ConnectIt.View;
 using UnityEngine;
 using Zenject;
-using Factories = ConnectIt.Infrastructure.Factories;
 
 namespace ConnectIt.DI.Installers
 {
@@ -23,7 +22,7 @@ namespace ConnectIt.DI.Installers
             BindGameplayInputRouter();
             BindGameplayInputRouterStateFactories();
             BindCreatedObjectsNotifiers();
-            BindViewFromModelFactories();
+            BindViewFactories();
             BindPortViewPrefab();
         }
 
@@ -34,12 +33,10 @@ namespace ConnectIt.DI.Installers
                      .AsSingle();
         }
 
-        private void BindViewFromModelFactories()
+        private void BindViewFactories()
         {
-            Container.Bind<IViewFromModelFactory<Port, PortView>>()
-                     .To<MonoBehaviourViewFromModelDIAutoFactory<Port, PortView>>()
-                     .AsSingle()
-                     .NonLazy();
+            Container.BindFactory<Port, PortView, PortView.Factory>()
+                     .FromFactory<PrimitiveDIViewFromModelFactory<Port, PortView>>();
         }
 
         private void BindCreatedObjectsNotifiers()
@@ -55,18 +52,14 @@ namespace ConnectIt.DI.Installers
 
         private void BindGameplayInputRouterStateFactories()
         {
-            //Container.Bind<CreatingConnectionLineState.IFactory>()
-            //         .To<PrimitiveDIFactory<ConnectionLine, CreatingConnectionLineState>>()
-            //         .AsCached();
-
-            Container.Bind<Factories.IFactory<RemovingConnectionLineState>>()
-                     .To<Factories.DIFactory<RemovingConnectionLineState>>()
+            Container.BindFactory<ConnectionLine, CreatingConnectionLineState, CreatingConnectionLineState.Factory>()
                      .AsCached();
 
-            Container.Bind<Factories.IFactory<IdleTilemapsInteractionState>>()
-                     .To<Factories.DIFactory<IdleTilemapsInteractionState>>()
+            Container.BindFactory<ConnectionLine, RemovingConnectionLineState, RemovingConnectionLineState.Factory>()
                      .AsCached();
 
+            Container.BindFactory<IdleTilemapsInteractionState, IdleTilemapsInteractionState.Factory>()
+                     .AsCached();
         }
 
         private void BindGameplayInputRouter()
@@ -89,7 +82,6 @@ namespace ConnectIt.DI.Installers
                      .FromInstance(_tilemapsMonoWrapper.Model)
                      .AsSingle()
                      .NonLazy();
-            
         }
     }
 }

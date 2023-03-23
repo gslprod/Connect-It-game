@@ -3,7 +3,6 @@ using ConnectIt.Utilities;
 using System;
 using UnityEngine.InputSystem;
 using Zenject;
-using Factories = ConnectIt.Infrastructure.Factories;
 
 namespace ConnectIt.Input
 {
@@ -14,11 +13,11 @@ namespace ConnectIt.Input
         public BaseState State { get; private set; }
 
         private readonly GameplayInput _input;
-        private readonly Factories.IFactory<IdleTilemapsInteractionState> _idleStateFactory;
+        private readonly IdleTilemapsInteractionState.Factory _idleStateFactory;
 
         public GameplayInputRouter(
             GameplayInput gameplayInput,
-            Factories.IFactory<IdleTilemapsInteractionState> idleStateFactory)
+            IdleTilemapsInteractionState.Factory idleStateFactory)
         {
             _input = gameplayInput;
             _idleStateFactory = idleStateFactory;

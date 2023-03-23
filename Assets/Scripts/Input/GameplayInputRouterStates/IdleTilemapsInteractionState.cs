@@ -1,7 +1,7 @@
 ﻿using ConnectIt.Infrastructure.CreatedObjectNotifiers;
-using ConnectIt.Infrastructure.Factories;
 using ConnectIt.Model;
 using UnityEngine.InputSystem;
+using Zenject;
 using static ConnectIt.Model.ConnectionLine;
 using static ConnectIt.Model.Port;
 
@@ -9,8 +9,8 @@ namespace ConnectIt.Input.GameplayInputRouterStates
 {
     public class IdleTilemapsInteractionState : BaseTilemapsInteractionState
     {
-        private readonly CreatingConnectionLineState.IFactory _creatingLineStateFactory;
-        private readonly RemovingConnectionLineState.IFactory _removingLineStateFactory;
+        private readonly CreatingConnectionLineState.Factory _creatingLineStateFactory;
+        private readonly RemovingConnectionLineState.Factory _removingLineStateFactory;
         private readonly ICreatedObjectNotifier<ConnectionLine> _createdConnectionLineNotifier;
 
         public IdleTilemapsInteractionState(
@@ -18,8 +18,8 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             GameplayInputRouter inputRouter,
             RenderCameraProvider cameraProvider,
             Tilemaps tilemaps,
-            CreatingConnectionLineState.IFactory creatingLineStateFactory,
-            RemovingConnectionLineState.IFactory removingLineStateFactory,
+            CreatingConnectionLineState.Factory creatingLineStateFactory,
+            RemovingConnectionLineState.Factory removingLineStateFactory,
             ICreatedObjectNotifier<ConnectionLine> createdConnectionLineNotifier) : base(input, inputRouter, cameraProvider, tilemaps)
         {
             _creatingLineStateFactory = creatingLineStateFactory;
@@ -67,6 +67,6 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             return true;
         }
 
-        public interface IFactory : IFactory<IdleTilemapsInteractionState> { }
+        public class Factory : PlaceholderFactory<IdleTilemapsInteractionState> { }
     }
 }

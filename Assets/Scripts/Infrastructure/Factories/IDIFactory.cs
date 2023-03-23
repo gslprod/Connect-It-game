@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace Assets.Scripts.Infrastructure.Factories
+namespace ConnectIt.Infrastructure.Factories
 {
     public interface IDIFactory : IValidatable { }
 }

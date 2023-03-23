@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Zenject;
 
-namespace Assets.Scripts.Infrastructure.Factories
+namespace ConnectIt.Infrastructure.Factories
 {
     public abstract class DIFactoryBase<T> : IDIFactory
     {
