@@ -1,25 +1,29 @@
-﻿using ConnectIt.Utilities;
+﻿using ConnectIt.Infrastructure.CreatedObjectNotifiers;
+using ConnectIt.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Zenject;
 using static ConnectIt.Model.TileBaseAndObjectInfoSet;
 
 namespace ConnectIt.Model
 {
-    public class Tilemaps
+    public class Tilemaps : IInitializable
     {
         public event Action<Tile, TileLayer> OnTileBaseChanged;
 
         private readonly TilemapLayerSet[] _maps;
-        private Tile[] _tiles;
         private readonly TileBaseAndObjectInfoSet[] _spriteAndObjectTypeSets;
+        private readonly ICreatedObjectNotifier<Port> _createdPortNotifier;
 
         private readonly Dictionary<int, int> _xCoordinateArrayPointers = new();
+        private Tile[] _tiles;
 
         public Tilemaps(TilemapLayerSet[] maps,
-            TileBaseAndObjectInfoSet[] spriteAndObjectTypeSets)
+            TileBaseAndObjectInfoSet[] spriteAndObjectTypeSets,
+            ICreatedObjectNotifier<Port> createdPortNotifier)
         {
             Validate(maps);
             _maps = maps;
@@ -27,6 +31,11 @@ namespace ConnectIt.Model
             Validate(spriteAndObjectTypeSets);
             _spriteAndObjectTypeSets = spriteAndObjectTypeSets;
 
+            _createdPortNotifier = createdPortNotifier;
+        }
+
+        public void Initialize()
+        {
             CreateTiles();
             CreateObjectsOnMap();
         }
@@ -203,8 +212,8 @@ namespace ConnectIt.Model
         {
             Tile targetTile = FindTileAtCellPosition(cellPosition);
 
-            Port createdPort = new Port(targetTile, info.CompatibilityIndex);
-
+            Port createdPort = new(targetTile, info.CompatibilityIndex);
+            _createdPortNotifier.SendNotification(createdPort);
 
             return createdPort;
         }

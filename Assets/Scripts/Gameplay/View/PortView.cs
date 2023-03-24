@@ -4,17 +4,15 @@ using Zenject;
 
 namespace ConnectIt.View
 {
-    public class PortView : MonoBehaviourView<Port>
+    public class PortView : IView<Port>
     {
-        public override Port Model => _portModel;
+        public Port Model => _portModel;
 
         private Port _portModel;
 
-        public override void Init(Port model)
+        public void Init(Port model)
         {
             _portModel = model;
-
-            print(_portModel.Connectable.CompatibilityIndex);
         }
 
         public class Factory : PlaceholderFactory<Port, PortView> { }

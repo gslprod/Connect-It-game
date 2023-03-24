@@ -77,7 +77,7 @@ namespace ConnectIt.Test
 
         private void Update()
         {
-            if (_connectionLine != null && _connectionLine.UsingTiles.Last() != null)
+            if (_connectionLine != null && _connectionLine.UsingTiles.Last().Tile != null)
             {
                 print(_connectionLine.UsingTiles.Last().Tile.LocationInTileMap);
             }

@@ -1,5 +1,7 @@
+using Assets.Scripts.DI.CustomInstallers;
 using ConnectIt.Infrastructure.CreatedObjectNotifiers;
 using ConnectIt.Infrastructure.Factories;
+using ConnectIt.Infrastructure.Spawners;
 using ConnectIt.Input;
 using ConnectIt.Input.GameplayInputRouterStates;
 using ConnectIt.Model;
@@ -13,41 +15,46 @@ namespace ConnectIt.DI.Installers
     public class GameSceneInstaller : MonoInstaller
     {
         [SerializeField] private TilemapsMonoWrapper _tilemapsMonoWrapper;
-        [SerializeField] private PortView _portViewPrefab;
 
         public override void InstallBindings()
         {
             BindTilemaps();
             BindGameplayInput();
-            BindGameplayInputRouter();
-            BindGameplayInputRouterStateFactories();
-            BindCreatedObjectsNotifiers();
-            BindViewFactories();
-            BindPortViewPrefab();
+            BindConnectionLine();
+            BindPort();
         }
 
-        private void BindPortViewPrefab()
+        private void BindPort()
         {
-            Container.Bind<PortView>()
-                     .FromInstance(_portViewPrefab)
+            Container.Bind<ICreatedObjectNotifier<Port>>()
+                     .To<CreatedObjectNotifier<Port>>()
                      .AsSingle();
-        }
 
-        private void BindViewFactories()
-        {
             Container.BindFactory<Port, PortView, PortView.Factory>()
                      .FromFactory<PrimitiveDIViewFromModelFactory<Port, PortView>>();
+
+            Container.BindInterfacesTo<ViewFromModelSpawner<Port, PortView, PortView.Factory>>()
+                     .AsSingle();
+
+            Container.BindInitializableExecutionOrder<ViewFromModelSpawner<Port, PortView, PortView.Factory>>(-10);
         }
 
-        private void BindCreatedObjectsNotifiers()
+        private void BindConnectionLine()
         {
             Container.Bind<ICreatedObjectNotifier<ConnectionLine>>()
                      .To<CreatedObjectNotifier<ConnectionLine>>()
                      .AsSingle();
+        }
 
-            Container.Bind<ICreatedObjectNotifier<Port>>()
-                     .To<CreatedObjectNotifier<Port>>()
+        private void BindGameplayInput()
+        {
+            Container.Bind<GameplayInput>()
                      .AsSingle();
+
+            Container.BindInterfacesAndSelfTo<GameplayInputRouter>()
+                     .AsSingle();
+
+            BindGameplayInputRouterStateFactories();
         }
 
         private void BindGameplayInputRouterStateFactories()
@@ -62,24 +69,17 @@ namespace ConnectIt.DI.Installers
                      .AsCached();
         }
 
-        private void BindGameplayInputRouter()
-        {
-            Container.BindInterfacesAndSelfTo<GameplayInputRouter>()
-                     .AsSingle()
-                     .NonLazy();
-        }
-
-        private void BindGameplayInput()
-        {
-            Container.Bind<GameplayInput>()
-                     .AsSingle();
-        }
-
         private void BindTilemaps()
         {
+            Container.BindInterfacesAndSelfTo<Tilemaps>()
+                     .FromSubContainerResolve()
+                     .ByInstaller<TilemapsInstaller>()
+                     .AsSingle()
+                     .NonLazy();
+
             //todo
-            Container.Bind<Tilemaps>()
-                     .FromInstance(_tilemapsMonoWrapper.Model)
+            Container.Bind<TilemapsMonoWrapper>()
+                     .FromInstance(_tilemapsMonoWrapper)
                      .AsSingle()
                      .NonLazy();
         }
