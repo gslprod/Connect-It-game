@@ -1,18 +1,15 @@
-﻿using ConnectIt.Infrastructure.ModelAndView;
-using ConnectIt.Model;
+﻿using ConnectIt.Model;
 using Zenject;
 
 namespace ConnectIt.View
 {
-    public class PortView : IView<Port>
+    public class PortView
     {
-        public Port Model => _portModel;
-
         private Port _portModel;
 
-        public void Init(Port model)
+        public PortView(Port portModel)
         {
-            _portModel = model;
+            _portModel = portModel;
         }
 
         public class Factory : PlaceholderFactory<Port, PortView> { }

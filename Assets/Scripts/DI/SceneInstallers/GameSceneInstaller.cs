@@ -15,6 +15,7 @@ namespace ConnectIt.DI.Installers
     public class GameSceneInstaller : MonoInstaller
     {
         [SerializeField] private TilemapsMonoWrapper _tilemapsMonoWrapper;
+        [SerializeField] private ConnectionLineView _connectionLinePrefab;
 
         public override void InstallBindings()
         {
@@ -30,8 +31,7 @@ namespace ConnectIt.DI.Installers
                      .To<CreatedObjectNotifier<Port>>()
                      .AsSingle();
 
-            Container.BindFactory<Port, PortView, PortView.Factory>()
-                     .FromFactory<PrimitiveDIViewFromModelFactory<Port, PortView>>();
+            Container.BindFactory<Port, PortView, PortView.Factory>();
 
             Container.BindInterfacesTo<ViewFromModelSpawner<Port, PortView, PortView.Factory>>()
                      .AsSingle();
@@ -41,9 +41,21 @@ namespace ConnectIt.DI.Installers
 
         private void BindConnectionLine()
         {
+            Container.Bind<ConnectionLineView>()
+                     .FromInstance(_connectionLinePrefab)
+                     .AsSingle();
+
             Container.Bind<ICreatedObjectNotifier<ConnectionLine>>()
                      .To<CreatedObjectNotifier<ConnectionLine>>()
                      .AsSingle();
+
+            Container.BindFactory<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>()
+                     .FromFactory<PrimitiveMonoBehaviourDIFactory<ConnectionLine, ConnectionLineView>>();
+
+            Container.BindInterfacesTo<ViewFromModelSpawner<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>>()
+                     .AsSingle();
+
+            Container.BindInitializableExecutionOrder<ViewFromModelSpawner<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>>(-10);
         }
 
         private void BindGameplayInput()

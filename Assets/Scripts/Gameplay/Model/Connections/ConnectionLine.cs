@@ -8,7 +8,7 @@ namespace ConnectIt.Model
         public event Action<ConnectionLine> Removed;
         public event Action<ConnectionLine> UsingTilesChanged;
 
-        public ClosedList<TileUser> UsingTiles { get; set; }
+        public ClosedList<TileUser> UsingTiles { get; }
         public int CompatibilityIndex => _connection.First.CompatibilityIndex;
         public bool ConnectionCompleted => _connection.ConnectionCompleted;
 

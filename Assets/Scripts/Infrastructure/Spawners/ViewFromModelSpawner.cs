@@ -1,12 +1,10 @@
 ﻿using ConnectIt.Infrastructure.CreatedObjectNotifiers;
-using ConnectIt.Infrastructure.ModelAndView;
 using System;
 using Zenject;
 
 namespace ConnectIt.Infrastructure.Spawners
 {
     public class ViewFromModelSpawner<TModel, TView, TViewFactory> : IInitializable, IDisposable
-        where TView : IView<TModel>
         where TViewFactory : PlaceholderFactory<TModel, TView>
     {
         protected readonly TViewFactory viewFactory;

@@ -334,6 +334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tilemapsMonoWrapper: {fileID: 603125921}
+  _connectionLinePrefab: {fileID: 5734703630601993068, guid: 0d2b1bb7c21d8824e8c80b838a8b1085, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
