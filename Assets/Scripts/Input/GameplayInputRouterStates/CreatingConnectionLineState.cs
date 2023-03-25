@@ -66,7 +66,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             if (_creatableLine.ConnectionCompleted)
                 return;
 
-            _creatableLine.Remove();
+            _creatableLine.Dispose();
         }
 
         public class Factory : PlaceholderFactory<ConnectionLine, CreatingConnectionLineState> { }

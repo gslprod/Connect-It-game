@@ -10,7 +10,7 @@ using static ConnectIt.Model.TileBaseAndObjectInfoSet;
 
 namespace ConnectIt.Model
 {
-    public class Tilemaps : IInitializable
+    public class Tilemaps : IInitializable, IDisposable
     {
         public event Action<Tile, TileLayer> OnTileBaseChanged;
 
@@ -61,7 +61,12 @@ namespace ConnectIt.Model
         {
             Assert.That(ContainsTile(tile));
 
-            return GetTilemapOnLayer(TileLayer.Map).CellToWorld(tile.LocationInTileMap);
+            Tilemap mapTilemap = GetTilemapOnLayer(TileLayer.Map);
+
+            Vector3 tilePosition = mapTilemap.CellToWorld(tile.LocationInTileMap);
+            tilePosition += mapTilemap.cellSize / 2;
+
+            return tilePosition;
         }
 
         public bool HasTileAtWorldPosition(Vector3 worldPosition)
@@ -95,6 +100,14 @@ namespace ConnectIt.Model
             Tilemap tilemap = GetTilemapOnLayer(layer);
 
             return tilemap.GetTile<T>(tile.LocationInTileMap);
+        }
+
+        public void Dispose()
+        {
+            foreach (var tile in _tiles)
+            {
+                tile.Dispose();
+            }
         }
 
         private void Validate(TilemapLayerSet[] maps)

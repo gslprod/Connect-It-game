@@ -66,5 +66,11 @@ namespace ConnectIt.Model
                 this != other &&
                 CompatibilityIndex == other.CompatibilityIndex;
         }
+
+        public void Dispose()
+        {
+            if (HasConnection)
+              ResetConnection();
+        }
     }
 }

@@ -3,9 +3,9 @@ using System;
 
 namespace ConnectIt.Model
 {
-    public class ConnectionLine
+    public class ConnectionLine : IDisposable
     {
-        public event Action<ConnectionLine> Removed;
+        public event Action<ConnectionLine> Disposing;
         public event Action<ConnectionLine> UsingTilesChanged;
 
         public ClosedList<TileUser> UsingTiles { get; }
@@ -47,17 +47,17 @@ namespace ConnectIt.Model
             ExpandLine(end.UsingTile.Tile);
         }
 
-        public void Remove()
+        public void Dispose()
         {
-            _connection.RemoveConnection();
+            _connection.Dispose();
             
             foreach (TileUser tileUser in UsingTiles)
             {
-                tileUser.ResetTile();
+                tileUser.Dispose();
                 tileUser.TileUserInfoRequest -= OnTileUserInfoRequest;
             }
 
-            Removed?.Invoke(this);
+            Disposing?.Invoke(this);
         }
 
         private object OnTileUserInfoRequest(TileUser usingTile)

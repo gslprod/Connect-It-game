@@ -1,7 +1,11 @@
-﻿namespace ConnectIt.Model
+﻿using System;
+
+namespace ConnectIt.Model
 {
-    public class Port
+    public class Port : IDisposable
     {
+        public event Action<Port> Disposing;
+
         public Connectable Connectable { get; }
         public TileUser UsingTile { get; }
 
@@ -13,9 +17,14 @@
             UsingTile.TileUserInfoRequest += OnTileUserInfoRequest;
         }
 
-        public void OnDestroy()
+        public void Dispose()
         {
             UsingTile.TileUserInfoRequest -= OnTileUserInfoRequest;
+
+            Connectable.Dispose();
+            UsingTile.Dispose();
+
+            Disposing?.Invoke(this);
         }
 
         private object OnTileUserInfoRequest(TileUser usingTile)

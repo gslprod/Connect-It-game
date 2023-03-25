@@ -1,8 +1,9 @@
 ﻿using ConnectIt.Utilities;
+using System;
 
 namespace ConnectIt.Model
 {
-    public class Connection
+    public class Connection : IDisposable
     {
         public bool ConnectionCompleted => First != null && Second != null;
 
@@ -45,7 +46,7 @@ namespace ConnectIt.Model
             return original == First ? Second : First;
         }
 
-        public void RemoveConnection()
+        public void Dispose()
         {
             First?.ResetConnection();
             Second?.ResetConnection();

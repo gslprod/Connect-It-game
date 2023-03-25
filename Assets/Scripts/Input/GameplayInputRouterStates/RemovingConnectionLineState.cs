@@ -8,7 +8,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
 {
     public class RemovingConnectionLineState : BaseTilemapsInteractionState
     {
-        private readonly GameplayConfig _gameplayConfig;
+        private readonly GameplayLogicConfig _gameplayConfig;
         private readonly ConnectionLine _removingLine;
 
         private float _expiredTimeSec;
@@ -18,7 +18,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             GameplayInputRouter inputRouter,
             RenderCameraProvider cameraProvider,
             Tilemaps tilemaps,
-            GameplayConfig gameplayConfig,
+            GameplayLogicConfig gameplayConfig,
             ConnectionLine removingLine) : base(input, inputRouter, cameraProvider, tilemaps)
         {
             _gameplayConfig = gameplayConfig;
@@ -36,7 +36,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
 
             if (_expiredTimeSec >= _gameplayConfig.RemoveConnectionLineHoldDurationSec)
             {
-                _removingLine.Remove();
+                _removingLine.Dispose();
 
                 inputRouter.ResetState();
             }

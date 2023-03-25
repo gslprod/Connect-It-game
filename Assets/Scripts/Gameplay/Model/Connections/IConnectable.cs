@@ -1,6 +1,8 @@
-﻿namespace ConnectIt.Model
+﻿using System;
+
+namespace ConnectIt.Model
 {
-    public interface IConnectable
+    public interface IConnectable : IDisposable
     {
         Connection Connection { get; }
         bool HasConnection { get; }

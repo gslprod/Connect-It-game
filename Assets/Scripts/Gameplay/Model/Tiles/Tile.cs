@@ -14,7 +14,7 @@ namespace ConnectIt.Model
         Line
     }
 
-    public class Tile
+    public class Tile : IDisposable
     {
         public event Action<Tile> UsersChanged;
         public event Action<Tile, TileLayer> TileBaseChanged;
@@ -89,7 +89,7 @@ namespace ConnectIt.Model
         public bool UserInLayerExists(TileLayer layer)
             => _users.Exists(user => user.Layer == layer);
 
-        public void OnDestroy()
+        public void Dispose()
         {
             _tilemaps.OnTileBaseChanged -= OnTileBaseChanged;
         }

@@ -3,7 +3,7 @@ using System;
 
 namespace ConnectIt.Model
 {
-    public class TileUser
+    public class TileUser : IDisposable
     {
         public event Func<TileUser, object> TileUserInfoRequest;
 
@@ -65,6 +65,12 @@ namespace ConnectIt.Model
 
         public bool CanLayerBeChangedTo(TileLayer newLayer)
             => !IsLayerIsBusy(newLayer);
+
+        public void Dispose()
+        {
+            if (HasTile)
+                ResetTile();
+        }
 
         private bool IsLayerIsBusy(TileLayer layer)
             => HasTile && Tile.UserInLayerExists(layer);

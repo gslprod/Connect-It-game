@@ -1,4 +1,5 @@
-﻿using ConnectIt.Model;
+﻿using ConnectIt.Config;
+using ConnectIt.Model;
 using System.Linq;
 using UnityEngine;
 using Zenject;
@@ -8,12 +9,16 @@ namespace ConnectIt.View
     public class ConnectionLineView : MonoBehaviour
     {
         private ConnectionLine _connectionLineModel;
+        private GameplayViewConfig _gameplayViewConfig;
+
         private LineRenderer _lineRenderer;
 
         [Inject]
-        public void Constructor(ConnectionLine model)
+        public void Constructor(ConnectionLine model,
+            GameplayViewConfig gameplayViewConfig)
         {
             _connectionLineModel = model;
+            _gameplayViewConfig = gameplayViewConfig;
         }
 
         private void Awake()
@@ -21,11 +26,15 @@ namespace ConnectIt.View
             _lineRenderer = GetComponent<LineRenderer>();
         }
 
+        private void Start()
+        {
+            _connectionLineModel.Disposing += OnModelDisposing;
+
+            UpdateColor();
+        }
+
         private void OnEnable()
         {
-            if (_connectionLineModel == null)
-                return;
-
             _connectionLineModel.UsingTilesChanged += OnUsingTilesChanged;
 
             UpdateView();
@@ -36,7 +45,17 @@ namespace ConnectIt.View
             _connectionLineModel.UsingTilesChanged += OnUsingTilesChanged;
         }
 
+        private void OnDestroy()
+        {
+            _connectionLineModel.Disposing -= OnModelDisposing;
+        }
+
         private void UpdateView()
+        {
+            UpdateLineVerticles();
+        }
+
+        private void UpdateLineVerticles()
         {
             int usingTilesCount = _connectionLineModel.UsingTiles.Count();
 
@@ -50,9 +69,22 @@ namespace ConnectIt.View
             }
         }
 
+        private void UpdateColor()
+        {
+            Color mainColor = _gameplayViewConfig.GetColorByCompatibilityIndex(_connectionLineModel.CompatibilityIndex);
+
+            _lineRenderer.startColor = mainColor;
+            _lineRenderer.endColor = mainColor;
+        }
+
         private void OnUsingTilesChanged(ConnectionLine line)
         {
             UpdateView();
+        }
+
+        private void OnModelDisposing(ConnectionLine obj)
+        {
+            Destroy(gameObject);
         }
 
         public class Factory : PlaceholderFactory<ConnectionLine, ConnectionLineView> { }
