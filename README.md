@@ -4,7 +4,7 @@
 
 **This is my final graduation project.**
 
-This repo contains source files for mobile game "ConnectIt!".
+This repo contains source files for mobile game "Connect It!".
 
 I create it in order to test my skills on:
 
@@ -12,6 +12,7 @@ I create it in order to test my skills on:
 - Using Design Patterns and SOLID principles.
 - Using Dependency Injection (Zenject Framework).
 - Writing clean (readable and maintainable) code.
+- Using Version Control System (Git).
 - Using some plugins: DoTween, UIToolkit, SimpleLocalization (partially).
 - Using MV* Patterns.
 
