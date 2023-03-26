@@ -2,7 +2,7 @@
 using ConnectIt.MonoWrappers;
 using Zenject;
 
-namespace Assets.Scripts.DI.CustomInstallers
+namespace ConnectIt.DI.Installers.Custom
 {
     public class TilemapsInstaller : Installer<TilemapsInstaller>
     {

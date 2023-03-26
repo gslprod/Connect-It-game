@@ -1,26 +1,25 @@
-﻿using ConnectIt.Utilities.Collections;
+﻿using ConnectIt.Infrastructure.Dispose;
+using ConnectIt.Utilities.Extensions;
 using System;
+using System.Collections.Generic;
 
 namespace ConnectIt.Model
 {
-    public class ConnectionLine : IDisposable
+    public class ConnectionLine : IDisposeNotifier<ConnectionLine>
     {
         public event Action<ConnectionLine> Disposing;
         public event Action<ConnectionLine> UsingTilesChanged;
 
-        public ClosedList<TileUser> UsingTiles { get; }
+        public IEnumerable<TileUser> UsingTiles => _usingTiles;
         public int CompatibilityIndex => _connection.First.CompatibilityIndex;
         public bool ConnectionCompleted => _connection.ConnectionCompleted;
 
+        private readonly List<TileUser> _usingTiles = new();
         private readonly Connection _connection;
-        private readonly Action<TileUser> _addTileUserAction;
-        private readonly Action<TileUser> _removeTileUserAction;
-        private readonly Action<TileUser, int> _insertTileUserAction;
 
         public ConnectionLine(Port start)
         {
             _connection = new(start.Connectable);
-            UsingTiles = new(ref _addTileUserAction, ref _removeTileUserAction, ref _insertTileUserAction);
 
             ExpandLine(start.UsingTile.Tile);
         }
@@ -29,7 +28,7 @@ namespace ConnectIt.Model
         {
             TileUser tileUser = new(toTile, TileLayer.Line);
 
-            _addTileUserAction(tileUser);
+            _usingTiles.Add(tileUser);
             tileUser.TileUserInfoRequest += OnTileUserInfoRequest;
 
             UsingTilesChanged?.Invoke(this);

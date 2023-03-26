@@ -1,5 +1,8 @@
 ﻿using ConnectIt.Utilities;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using Zenject;
 
@@ -7,14 +10,21 @@ namespace ConnectIt.Infrastructure.Factories
 {
     public abstract class MonoBehaviourDIFactoryBase<T> : IDIFactory, IMonoBehaviourFactory<T> where T : MonoBehaviour
     {
-        protected readonly IInstantiator instantiator;
-        protected readonly T prefab;
+        protected abstract IEnumerable<Type> ParamTypes { get; }
 
-        public MonoBehaviourDIFactoryBase(IInstantiator instantiator,
-            T prefab)
+        protected IInstantiator Instantiator { get; private set; }
+        protected T Prefab { get; private set; }
+
+        private DiContainer diContainer;
+
+        [Inject]
+        void Constructor(T prefab,
+            IInstantiator instantiator,
+            DiContainer diContainer)
         {
-            this.instantiator = instantiator;
-            this.prefab = prefab;
+            this.diContainer = diContainer;
+            Instantiator = instantiator;
+            Prefab = prefab;
         }
 
         public virtual T Create()
@@ -49,21 +59,21 @@ namespace ConnectIt.Infrastructure.Factories
 
         protected T CreateInternal()
         {
-            return instantiator.InstantiatePrefabForComponent<T>(prefab);
+            return Instantiator.InstantiatePrefabForComponent<T>(Prefab);
         }
 
         protected T CreateInternal(IEnumerable<object> args)
         {
             Assert.IsNotNull(args);
 
-            return instantiator.InstantiatePrefabForComponent<T>(prefab, args);
+            return Instantiator.InstantiatePrefabForComponent<T>(Prefab, args);
         }
 
         protected T CreateInternal(T customPrefab)
         {
             Assert.IsNotNull(customPrefab);
 
-            return instantiator.InstantiatePrefabForComponent<T>(customPrefab);
+            return Instantiator.InstantiatePrefabForComponent<T>(customPrefab);
         }
 
         protected T CreateInternal(T customPrefab, IEnumerable<object> args)
@@ -71,14 +81,14 @@ namespace ConnectIt.Infrastructure.Factories
             Assert.IsNotNull(customPrefab);
             Assert.IsNotNull(args);
 
-            return instantiator.InstantiatePrefabForComponent<T>(customPrefab, args);
+            return Instantiator.InstantiatePrefabForComponent<T>(customPrefab, args);
         }
 
         protected T CreateInternal(Transform parent)
         {
             Assert.IsNotNull(parent);
 
-            return instantiator.InstantiatePrefabForComponent<T>(prefab, parent);
+            return Instantiator.InstantiatePrefabForComponent<T>(Prefab, parent);
         }
 
         protected T CreateInternal(Transform parent, IEnumerable<object> args)
@@ -86,7 +96,7 @@ namespace ConnectIt.Infrastructure.Factories
             Assert.IsNotNull(parent);
             Assert.IsNotNull(args);
 
-            return instantiator.InstantiatePrefabForComponent<T>(prefab, parent, args);
+            return Instantiator.InstantiatePrefabForComponent<T>(Prefab, parent, args);
         }
 
         protected T CreateInternal(T customPrefab, Transform parent)
@@ -94,7 +104,7 @@ namespace ConnectIt.Infrastructure.Factories
             Assert.IsNotNull(parent);
             Assert.IsNotNull(customPrefab);
 
-            return instantiator.InstantiatePrefabForComponent<T>(customPrefab, parent);
+            return Instantiator.InstantiatePrefabForComponent<T>(customPrefab, parent);
         }
 
         protected T CreateInternal(T customPrefab, Transform parent, IEnumerable<object> args)
@@ -103,14 +113,14 @@ namespace ConnectIt.Infrastructure.Factories
             Assert.IsNotNull(customPrefab);
             Assert.IsNotNull(args);
 
-            return instantiator.InstantiatePrefabForComponent<T>(customPrefab, parent, args);
+            return Instantiator.InstantiatePrefabForComponent<T>(customPrefab, parent, args);
         }
 
         protected T CreateInternal(Transform parent, Vector3 position, Quaternion rotation)
         {
             Assert.IsNotNull(parent);
 
-            return instantiator.InstantiatePrefabForComponent<T>(prefab, position, rotation, parent);
+            return Instantiator.InstantiatePrefabForComponent<T>(Prefab, position, rotation, parent);
         }
 
         protected T CreateInternal(Transform parent, Vector3 position, Quaternion rotation, IEnumerable<object> args)
@@ -118,7 +128,7 @@ namespace ConnectIt.Infrastructure.Factories
             Assert.IsNotNull(parent);
             Assert.IsNotNull(args);
 
-            return instantiator.InstantiatePrefabForComponent<T>(prefab, position, rotation, parent, args);
+            return Instantiator.InstantiatePrefabForComponent<T>(Prefab, position, rotation, parent, args);
         }
 
         protected T CreateInternal(T customPrefab, Transform parent, Vector3 position, Quaternion rotation)
@@ -126,7 +136,7 @@ namespace ConnectIt.Infrastructure.Factories
             Assert.IsNotNull(customPrefab);
             Assert.IsNotNull(parent);
 
-            return instantiator.InstantiatePrefabForComponent<T>(customPrefab, position, rotation, parent);
+            return Instantiator.InstantiatePrefabForComponent<T>(customPrefab, position, rotation, parent);
         }
 
         protected T CreateInternal(T customPrefab, Transform parent, Vector3 position, Quaternion rotation, IEnumerable<object> args)
@@ -135,12 +145,12 @@ namespace ConnectIt.Infrastructure.Factories
             Assert.IsNotNull(parent);
             Assert.IsNotNull(args);
 
-            return instantiator.InstantiatePrefabForComponent<T>(customPrefab, position, rotation, parent, args);
+            return Instantiator.InstantiatePrefabForComponent<T>(customPrefab, position, rotation, parent, args);
         }
 
-        public virtual void Validate()
+        public void Validate()
         {
-            instantiator.InstantiatePrefabForComponent<T>(prefab);
+            diContainer.InstantiatePrefabForComponentExplicit(typeof(T), Prefab, ValidationUtil.CreateDefaultArgs(ParamTypes.ToArray()));
         }
     }
 }

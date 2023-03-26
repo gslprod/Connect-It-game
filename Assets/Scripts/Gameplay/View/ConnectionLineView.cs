@@ -63,7 +63,7 @@ namespace ConnectIt.View
 
             for (int i = 0; i < _connectionLineModel.UsingTiles.Count(); i++)
             {
-                Vector3 position = _connectionLineModel.UsingTiles[i].Tile.GetWorldPosition();
+                Vector3 position = _connectionLineModel.UsingTiles.ElementAt(i).Tile.GetWorldPosition();
 
                 _lineRenderer.SetPosition(i, position);
             }

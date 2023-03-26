@@ -1,6 +1,8 @@
-using Assets.Scripts.DI.CustomInstallers;
+using ConnectIt.DI.Installers.Custom;
 using ConnectIt.Infrastructure.CreatedObjectNotifiers;
+using ConnectIt.Infrastructure.Dispose;
 using ConnectIt.Infrastructure.Factories;
+using ConnectIt.Infrastructure.Registrators;
 using ConnectIt.Infrastructure.Spawners;
 using ConnectIt.Input;
 using ConnectIt.Input.GameplayInputRouterStates;
@@ -16,6 +18,7 @@ namespace ConnectIt.DI.Installers
     {
         [SerializeField] private TilemapsMonoWrapper _tilemapsMonoWrapper;
         [SerializeField] private ConnectionLineView _connectionLinePrefab;
+        [SerializeField] private Transform _connectionLineParent;
 
         public override void InstallBindings()
         {
@@ -33,10 +36,28 @@ namespace ConnectIt.DI.Installers
 
             Container.BindFactory<Port, PortView, PortView.Factory>();
 
-            Container.BindInterfacesTo<ViewFromModelSpawner<Port, PortView, PortView.Factory>>()
+            BindViewFromModelSpawner();
+
+            BindRegistrator();
+
+            Container.BindInterfacesTo<Disposer<Port>>()
                      .AsSingle();
 
-            Container.BindInitializableExecutionOrder<ViewFromModelSpawner<Port, PortView, PortView.Factory>>(-10);
+            void BindViewFromModelSpawner()
+            {
+                Container.BindInterfacesTo<ViewFromModelSpawner<Port, PortView, PortView.Factory>>()
+                         .AsSingle();
+
+                Container.BindInitializableExecutionOrder<ViewFromModelSpawner<Port, PortView, PortView.Factory>>(-10);
+            }
+
+            void BindRegistrator()
+            {
+                Container.BindInterfacesTo<CreatedObjectsRegistrator<Port>>()
+                         .AsSingle();
+
+                Container.BindInitializableExecutionOrder<CreatedObjectsRegistrator<Port>>(-10);
+            }
         }
 
         private void BindConnectionLine()
@@ -50,7 +71,10 @@ namespace ConnectIt.DI.Installers
                      .AsSingle();
 
             Container.BindFactory<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>()
-                     .FromFactory<PrimitiveMonoBehaviourDIFactory<ConnectionLine, ConnectionLineView>>();
+                     .FromIFactory(binder =>
+                     binder.To<ParentingMonoBehaviourDIFactory<ConnectionLine, ConnectionLineView>>()
+                           .AsCached()
+                           .WithArguments(_connectionLineParent));
 
             Container.BindInterfacesTo<ViewFromModelSpawner<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>>()
                      .AsSingle();

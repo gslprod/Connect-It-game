@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ConnectIt.Infrastructure.Dispose;
+using System;
 
 namespace ConnectIt.Model
 {
-    public class Port : IDisposable
+    public class Port : IDisposeNotifier<Port>
     {
         public event Action<Port> Disposing;
 
