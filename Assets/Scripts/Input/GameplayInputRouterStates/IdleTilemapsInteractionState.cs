@@ -11,7 +11,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
     {
         private readonly CreatingConnectionLineState.Factory _creatingLineStateFactory;
         private readonly RemovingConnectionLineState.Factory _removingLineStateFactory;
-        private readonly ICreatedObjectNotifier<ConnectionLine> _createdConnectionLineNotifier;
+        private readonly ConnectionLine.Factory _connectionLineFactory;
 
         public IdleTilemapsInteractionState(
             GameplayInput input,
@@ -20,11 +20,11 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             Tilemaps tilemaps,
             CreatingConnectionLineState.Factory creatingLineStateFactory,
             RemovingConnectionLineState.Factory removingLineStateFactory,
-            ICreatedObjectNotifier<ConnectionLine> createdConnectionLineNotifier) : base(input, inputRouter, cameraProvider, tilemaps)
+            ConnectionLine.Factory connectionLineFactory) : base(input, inputRouter, cameraProvider, tilemaps)
         {
             _creatingLineStateFactory = creatingLineStateFactory;
             _removingLineStateFactory = removingLineStateFactory;
-            _createdConnectionLineNotifier = createdConnectionLineNotifier;
+            _connectionLineFactory = connectionLineFactory;
         }
 
         public override void OnInteractionPressPerformed(InputAction.CallbackContext context)
@@ -49,8 +49,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             if (port.Connectable.HasConnection)
                 return false;
 
-            ConnectionLine createdLine = new(port);
-            _createdConnectionLineNotifier.SendNotification(createdLine);
+            ConnectionLine createdLine = _connectionLineFactory.Create(port);
 
             inputRouter.SetState(_creatingLineStateFactory.Create(createdLine));
 

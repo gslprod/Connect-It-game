@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using Zenject;
 
@@ -15,14 +14,14 @@ namespace ConnectIt.Infrastructure.Factories
         protected IInstantiator Instantiator { get; private set; }
         protected T Prefab { get; private set; }
 
-        private DiContainer diContainer;
+        private DiContainer _diContainer;
 
         [Inject]
         void Constructor(T prefab,
             IInstantiator instantiator,
             DiContainer diContainer)
         {
-            this.diContainer = diContainer;
+            _diContainer = diContainer;
             Instantiator = instantiator;
             Prefab = prefab;
         }
@@ -150,7 +149,7 @@ namespace ConnectIt.Infrastructure.Factories
 
         public void Validate()
         {
-            diContainer.InstantiatePrefabForComponentExplicit(typeof(T), Prefab, ValidationUtil.CreateDefaultArgs(ParamTypes.ToArray()));
+            _diContainer.InstantiatePrefabForComponentExplicit(typeof(T), Prefab, ValidationUtil.CreateDefaultArgs(ParamTypes.ToArray()));
         }
     }
 }

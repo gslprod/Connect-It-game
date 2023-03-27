@@ -16,14 +16,14 @@ namespace ConnectIt.Model
 
         private readonly TilemapLayerSet[] _maps;
         private readonly TileBaseAndObjectInfoSet[] _spriteAndObjectTypeSets;
-        private readonly ICreatedObjectNotifier<Port> _createdPortNotifier;
+        private readonly Port.Factory _portFactory;
 
         private readonly Dictionary<int, int> _xCoordinateArrayPointers = new();
         private Tile[] _tiles;
 
         public Tilemaps(TilemapLayerSet[] maps,
             TileBaseAndObjectInfoSet[] spriteAndObjectTypeSets,
-            ICreatedObjectNotifier<Port> createdPortNotifier)
+            Port.Factory portFactory)
         {
             Validate(maps);
             _maps = maps;
@@ -31,7 +31,7 @@ namespace ConnectIt.Model
             Validate(spriteAndObjectTypeSets);
             _spriteAndObjectTypeSets = spriteAndObjectTypeSets;
 
-            _createdPortNotifier = createdPortNotifier;
+            _portFactory = portFactory;
         }
 
         public void Initialize()
@@ -221,14 +221,11 @@ namespace ConnectIt.Model
             }
         }
 
-        private Port CreatePortOnMap(PortObjectInfo info, Vector3Int cellPosition)
+        private void CreatePortOnMap(PortObjectInfo info, Vector3Int cellPosition)
         {
             Tile targetTile = FindTileAtCellPosition(cellPosition);
 
-            Port createdPort = new(targetTile, info.CompatibilityIndex);
-            _createdPortNotifier.SendNotification(createdPort);
-
-            return createdPort;
+            _portFactory.Create(targetTile, info.CompatibilityIndex);
         }
 
         private Tile FindTileAtCellPosition(Vector3Int cellPosition)

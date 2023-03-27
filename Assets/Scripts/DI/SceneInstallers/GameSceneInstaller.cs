@@ -34,7 +34,7 @@ namespace ConnectIt.DI.Installers
                      .To<CreatedObjectNotifier<Port>>()
                      .AsSingle();
 
-            Container.BindFactory<Port, PortView, PortView.Factory>();
+            BindFactories();
 
             BindViewFromModelSpawner();
 
@@ -58,6 +58,15 @@ namespace ConnectIt.DI.Installers
 
                 Container.BindInitializableExecutionOrder<CreatedObjectsRegistrator<Port>>(-10);
             }
+
+            void BindFactories()
+            {
+                Container.BindFactory<Tile, int, Port, Port.Factory>()
+                    .FromFactory<PrimitiveDIFactory<Tile, int, Port>>();
+
+                Container.BindFactory<Port, PortView, PortView.Factory>()
+                    .FromFactory<PrimitiveDIFactory<Port, PortView>>();
+            }
         }
 
         private void BindConnectionLine()
@@ -70,16 +79,29 @@ namespace ConnectIt.DI.Installers
                      .To<CreatedObjectNotifier<ConnectionLine>>()
                      .AsSingle();
 
-            Container.BindFactory<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>()
-                     .FromIFactory(binder =>
-                     binder.To<ParentingMonoBehaviourDIFactory<ConnectionLine, ConnectionLineView>>()
-                           .AsCached()
-                           .WithArguments(_connectionLineParent));
+            BindFactories();
 
-            Container.BindInterfacesTo<ViewFromModelSpawner<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>>()
-                     .AsSingle();
+            BindViewFromModelSpawner();
 
-            Container.BindInitializableExecutionOrder<ViewFromModelSpawner<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>>(-10);
+            void BindViewFromModelSpawner()
+            {
+                Container.BindInterfacesTo<ViewFromModelSpawner<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>>()
+                         .AsSingle();
+
+                Container.BindInitializableExecutionOrder<ViewFromModelSpawner<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>>(-10);
+            }
+
+            void BindFactories()
+            {
+                Container.BindFactory<Port, ConnectionLine, ConnectionLine.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Port, ConnectionLine>>();
+
+                Container.BindFactory<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>()
+                         .FromIFactory(binder =>
+                         binder.To<ParentingMonoBehaviourDIFactory<ConnectionLine, ConnectionLineView>>()
+                               .AsCached()
+                               .WithArguments(_connectionLineParent));
+            }
         }
 
         private void BindGameplayInput()

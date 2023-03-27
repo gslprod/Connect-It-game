@@ -1,21 +1,40 @@
-﻿using ConnectIt.Infrastructure.Dispose;
+﻿using ConnectIt.Infrastructure.CreatedObjectNotifiers;
+using ConnectIt.Infrastructure.Dispose;
 using System;
+using UnityEngine.UIElements;
+using Zenject;
 
 namespace ConnectIt.Model
 {
-    public class Port : IDisposeNotifier<Port>
+    public class Port : IDisposeNotifier<Port>, IInitializable
     {
         public event Action<Port> Disposing;
 
-        public Connectable Connectable { get; }
-        public TileUser UsingTile { get; }
+        public Connectable Connectable { get; private set; }
+        public TileUser UsingTile { get; private set; }
 
-        public Port(Tile position, int compatibilityIndex)
+        private readonly Tile _position;
+        private int _compatibilityIndex;
+        private readonly ICreatedObjectNotifier<Port> _createdPortNotifier;
+
+        public Port(Tile position,
+            int compatibilityIndex,
+            ICreatedObjectNotifier<Port> createdPortNotifier)
         {
-            UsingTile = new TileUser(position, TileLayer.Main);
-            Connectable = new Connectable(compatibilityIndex);
+            _position = position;
+            _compatibilityIndex = compatibilityIndex;
+
+            _createdPortNotifier = createdPortNotifier;
+        }
+
+        public void Initialize()
+        {
+            UsingTile = new TileUser(_position, TileLayer.Main);
+            Connectable = new Connectable(_compatibilityIndex);
 
             UsingTile.TileUserInfoRequest += OnTileUserInfoRequest;
+
+            _createdPortNotifier.SendNotification(this);
         }
 
         public void Dispose()
@@ -40,5 +59,7 @@ namespace ConnectIt.Model
                 Port = port;
             }
         }
+
+        public class Factory : PlaceholderFactory<Tile, int, Port> { }
     }
 }

@@ -30,10 +30,7 @@ namespace ConnectIt.Infrastructure.Spawners
 
         protected virtual void OnModelCreated(TModel model)
         {
-            TView createdView = viewFactory.Create(model);
-            
-            if (createdView is IInitializable initializable)
-                initializable.Initialize();
+            viewFactory.Create(model);
         }
     }
 }

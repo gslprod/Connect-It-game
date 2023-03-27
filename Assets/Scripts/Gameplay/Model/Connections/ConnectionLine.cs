@@ -1,11 +1,13 @@
-﻿using ConnectIt.Infrastructure.Dispose;
+﻿using ConnectIt.Infrastructure.CreatedObjectNotifiers;
+using ConnectIt.Infrastructure.Dispose;
 using ConnectIt.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
+using Zenject;
 
 namespace ConnectIt.Model
 {
-    public class ConnectionLine : IDisposeNotifier<ConnectionLine>
+    public class ConnectionLine : IDisposeNotifier<ConnectionLine>, IInitializable
     {
         public event Action<ConnectionLine> Disposing;
         public event Action<ConnectionLine> UsingTilesChanged;
@@ -15,13 +17,25 @@ namespace ConnectIt.Model
         public bool ConnectionCompleted => _connection.ConnectionCompleted;
 
         private readonly List<TileUser> _usingTiles = new();
-        private readonly Connection _connection;
+        private readonly Port _start;
+        private readonly ICreatedObjectNotifier<ConnectionLine> _createdConnectionLineNotifier;
 
-        public ConnectionLine(Port start)
+        private Connection _connection;
+
+        public ConnectionLine(Port start,
+            ICreatedObjectNotifier<ConnectionLine> createdConnectionLineNotifier)
         {
-            _connection = new(start.Connectable);
+            _start = start;
+            _createdConnectionLineNotifier = createdConnectionLineNotifier;
+        }
 
-            ExpandLine(start.UsingTile.Tile);
+        public void Initialize()
+        {
+            _connection = new(_start.Connectable);
+
+            ExpandLine(_start.UsingTile.Tile);
+
+            _createdConnectionLineNotifier.SendNotification(this);
         }
 
         public void ExpandLine(Tile toTile)
@@ -73,5 +87,7 @@ namespace ConnectIt.Model
                 UsingTileIndex = usingTileIndex;
             }
         }
+
+        public class Factory : PlaceholderFactory<Port, ConnectionLine> { }
     }
 }

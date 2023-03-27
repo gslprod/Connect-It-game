@@ -1,24 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Zenject;
 
 namespace ConnectIt.Infrastructure.Factories
 {
     public abstract class DIFactoryBase<T> : IDIFactory
     {
-        protected readonly IInstantiator instantiator;
+        protected abstract IEnumerable<Type> ParamTypes { get; }
 
-        public DIFactoryBase(IInstantiator instantiator)
+        protected IInstantiator Instantiator { get; private set; }
+
+        private DiContainer _diContainer;
+
+        [Inject]
+        void Constructor(IInstantiator instantiator,
+            DiContainer diContainer)
         {
-            this.instantiator = instantiator;
+            _diContainer = diContainer;
+            Instantiator = instantiator;
         }
 
-        protected T CreateInternal() => instantiator.Instantiate<T>();
+        protected T CreateInternal() => Instantiator.Instantiate<T>();
 
-        protected T CreateInternal(IEnumerable<object> args) => instantiator.Instantiate<T>(args);
+        protected T CreateInternal(IEnumerable<object> args) => Instantiator.Instantiate<T>(args);
 
-        public virtual void Validate()
+        public void Validate()
         {
-            instantiator.Instantiate<T>();
+            _diContainer.InstantiateExplicit(typeof(T), ValidationUtil.CreateDefaultArgs(ParamTypes.ToArray()));
         }
     }
 }
