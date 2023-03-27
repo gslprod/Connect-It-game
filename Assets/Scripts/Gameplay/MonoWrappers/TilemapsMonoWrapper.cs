@@ -1,7 +1,7 @@
-﻿using ConnectIt.Model;
+﻿using ConnectIt.Gameplay.Model;
 using UnityEngine;
 
-namespace ConnectIt.MonoWrappers
+namespace ConnectIt.Gameplay.MonoWrappers
 {
     public class TilemapsMonoWrapper : MonoBehaviour
     {

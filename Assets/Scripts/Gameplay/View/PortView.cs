@@ -1,8 +1,8 @@
-﻿using ConnectIt.Model;
+﻿using ConnectIt.Gameplay.Model;
 using System;
 using Zenject;
 
-namespace ConnectIt.View
+namespace ConnectIt.Gameplay.View
 {
     public class PortView : IInitializable, IDisposable
     {

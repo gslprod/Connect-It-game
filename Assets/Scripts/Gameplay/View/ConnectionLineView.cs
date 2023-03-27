@@ -1,10 +1,10 @@
 ﻿using ConnectIt.Config;
-using ConnectIt.Model;
+using ConnectIt.Gameplay.Model;
 using System.Linq;
 using UnityEngine;
 using Zenject;
 
-namespace ConnectIt.View
+namespace ConnectIt.Gameplay.View
 {
     public class ConnectionLineView : MonoBehaviour
     {

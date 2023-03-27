@@ -1,4 +1,4 @@
-﻿using ConnectIt.Model;
+﻿using ConnectIt.Gameplay.Model;
 using UnityEngine;
 
 namespace ConnectIt.Input.GameplayInputRouterStates

@@ -1,5 +1,5 @@
-﻿using ConnectIt.Model;
-using ConnectIt.MonoWrappers;
+﻿using ConnectIt.Gameplay.Model;
+using ConnectIt.Gameplay.MonoWrappers;
 using Zenject;
 
 namespace ConnectIt.DI.Installers.Custom

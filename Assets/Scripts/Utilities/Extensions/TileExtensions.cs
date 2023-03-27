@@ -1,4 +1,4 @@
-﻿using ConnectIt.Model;
+﻿using ConnectIt.Gameplay.Model;
 
 namespace ConnectIt.Utilities.Extensions
 {

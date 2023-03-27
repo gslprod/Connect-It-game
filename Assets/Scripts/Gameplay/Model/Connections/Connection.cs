@@ -1,7 +1,7 @@
 ﻿using ConnectIt.Utilities;
 using System;
 
-namespace ConnectIt.Model
+namespace ConnectIt.Gameplay.Model
 {
     public class Connection : IDisposable
     {

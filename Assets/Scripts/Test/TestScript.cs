@@ -1,6 +1,6 @@
-﻿using ConnectIt.Infrastructure.CreatedObjectNotifiers;
+﻿using ConnectIt.Gameplay.Model;
+using ConnectIt.Infrastructure.CreatedObjectNotifiers;
 using ConnectIt.Input;
-using ConnectIt.Model;
 using System;
 using System.Linq;
 using UnityEngine;

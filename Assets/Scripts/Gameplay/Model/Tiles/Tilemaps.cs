@@ -1,18 +1,18 @@
-﻿using ConnectIt.Infrastructure.CreatedObjectNotifiers;
-using ConnectIt.Utilities;
+﻿using ConnectIt.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Zenject;
-using static ConnectIt.Model.TileBaseAndObjectInfoSet;
+using static ConnectIt.Gameplay.Model.TileBaseAndObjectInfoSet;
 
-namespace ConnectIt.Model
+namespace ConnectIt.Gameplay.Model
 {
     public class Tilemaps : IInitializable, IDisposable
     {
         public event Action<Tile, TileLayer> OnTileBaseChanged;
+        public IEnumerable<Tile> Tiles => _tiles;
 
         private readonly TilemapLayerSet[] _maps;
         private readonly TileBaseAndObjectInfoSet[] _spriteAndObjectTypeSets;

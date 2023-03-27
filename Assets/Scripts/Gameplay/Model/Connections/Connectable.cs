@@ -1,7 +1,7 @@
 using ConnectIt.Utilities;
 using System;
 
-namespace ConnectIt.Model
+namespace ConnectIt.Gameplay.Model
 {
     public class Connectable : IConnectable
     {
@@ -70,7 +70,7 @@ namespace ConnectIt.Model
         public void Dispose()
         {
             if (HasConnection)
-              ResetConnection();
+                ResetConnection();
         }
     }
 }

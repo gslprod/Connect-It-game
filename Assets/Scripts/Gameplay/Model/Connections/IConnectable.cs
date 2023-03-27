@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConnectIt.Model
+namespace ConnectIt.Gameplay.Model
 {
     public interface IConnectable : IDisposable
     {

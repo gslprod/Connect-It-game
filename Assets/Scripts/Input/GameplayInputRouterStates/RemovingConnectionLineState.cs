@@ -1,5 +1,5 @@
 ﻿using ConnectIt.Config;
-using ConnectIt.Model;
+using ConnectIt.Gameplay.Model;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;

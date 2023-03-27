@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace ConnectIt.Model
+namespace ConnectIt.Gameplay.Model
 {
     public enum TileLayer
     {

@@ -1,9 +1,9 @@
-﻿using ConnectIt.Model;
+﻿using ConnectIt.Gameplay.Model;
 using ConnectIt.Utilities.Extensions;
 using System.Linq;
 using UnityEngine.InputSystem;
 using Zenject;
-using static ConnectIt.Model.Port;
+using static ConnectIt.Gameplay.Model.Port;
 
 namespace ConnectIt.Input.GameplayInputRouterStates
 {

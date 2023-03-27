@@ -1,4 +1,7 @@
 using ConnectIt.DI.Installers.Custom;
+using ConnectIt.Gameplay.Model;
+using ConnectIt.Gameplay.MonoWrappers;
+using ConnectIt.Gameplay.View;
 using ConnectIt.Infrastructure.CreatedObjectNotifiers;
 using ConnectIt.Infrastructure.Dispose;
 using ConnectIt.Infrastructure.Factories;
@@ -6,9 +9,6 @@ using ConnectIt.Infrastructure.Registrators;
 using ConnectIt.Infrastructure.Spawners;
 using ConnectIt.Input;
 using ConnectIt.Input.GameplayInputRouterStates;
-using ConnectIt.Model;
-using ConnectIt.MonoWrappers;
-using ConnectIt.View;
 using UnityEngine;
 using Zenject;
 

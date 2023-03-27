@@ -1,10 +1,9 @@
 ﻿using ConnectIt.Infrastructure.CreatedObjectNotifiers;
 using ConnectIt.Infrastructure.Dispose;
 using System;
-using UnityEngine.UIElements;
 using Zenject;
 
-namespace ConnectIt.Model
+namespace ConnectIt.Gameplay.Model
 {
     public class Port : IDisposeNotifier<Port>, IInitializable
     {

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Zenject;
 
-namespace ConnectIt.Model
+namespace ConnectIt.Gameplay.Model
 {
     public class ConnectionLine : IDisposeNotifier<ConnectionLine>, IInitializable
     {
@@ -63,7 +63,7 @@ namespace ConnectIt.Model
         public void Dispose()
         {
             _connection.Dispose();
-            
+
             foreach (TileUser tileUser in UsingTiles)
             {
                 tileUser.Dispose();
