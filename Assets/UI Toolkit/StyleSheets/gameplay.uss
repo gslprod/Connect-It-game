@@ -1,0 +1,32 @@
+:root {
+    --non-focus-color-1: rgba(120, 120, 120, 0.3);
+}
+
+.root {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.top-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.top-container__child {
+    max-width: 45%;
+}
+
+.bottom-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.central-container {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0);
+}
