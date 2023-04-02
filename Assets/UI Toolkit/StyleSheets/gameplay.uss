@@ -4,7 +4,6 @@
 
 .root {
     flex-grow: 1;
-    background-color: rgba(0, 0, 0, 0);
     opacity: 1;
     align-items: stretch;
     justify-content: flex-start;
@@ -27,6 +26,7 @@
 }
 
 .central-container {
-    flex-grow: 1;
     background-color: rgba(0, 0, 0, 0);
+    flex-grow: 1;
+    align-self: stretch;
 }

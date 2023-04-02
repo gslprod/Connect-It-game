@@ -69,7 +69,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             lastOnUpdateInteractedTile = null;
         }
 
-        protected void OnLastInteractedTileUserChanged(Tile tile)
+        protected void OnLastInteractedTileUserChanged(Tile tile, TileLayer layer)
         {
             ResetLastOnUpdateInteractedTile();
         }

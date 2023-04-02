@@ -1,6 +1,7 @@
 using ConnectIt.DI.Installers.Custom;
 using ConnectIt.Gameplay.Model;
 using ConnectIt.Gameplay.MonoWrappers;
+using ConnectIt.Gameplay.Observers;
 using ConnectIt.Gameplay.View;
 using ConnectIt.Infrastructure.CreatedObjectNotifiers;
 using ConnectIt.Infrastructure.Dispose;
@@ -9,8 +10,10 @@ using ConnectIt.Infrastructure.Registrators;
 using ConnectIt.Infrastructure.Spawners;
 using ConnectIt.Input;
 using ConnectIt.Input.GameplayInputRouterStates;
+using ConnectIt.UI.Gameplay.Views;
 using UnityEngine;
 using Zenject;
+using CustomControls = ConnectIt.UI.CustomControls;
 
 namespace ConnectIt.DI.Installers
 {
@@ -26,6 +29,24 @@ namespace ConnectIt.DI.Installers
             BindGameplayInput();
             BindConnectionLine();
             BindPort();
+            BindGameStateObserver();
+            BindUIViews();
+        }
+
+        private void BindUIViews()
+        {
+            BindUIViewsFactories();
+
+            void BindUIViewsFactories()
+            {
+                Container.BindFactory<CustomControls.ProgressBar, LevelProgressView, LevelProgressView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<CustomControls.ProgressBar, LevelProgressView>>();
+            }
+        }
+
+        private void BindGameStateObserver()
+        {
+            Container.BindInterfacesTo<GameStateObserver>().AsSingle();
         }
 
         private void BindPort()

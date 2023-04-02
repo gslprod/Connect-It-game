@@ -1,4 +1,5 @@
-﻿using ConnectIt.Utilities;
+﻿using ConnectIt.Infrastructure.Dispose;
+using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,12 @@ namespace ConnectIt.Gameplay.Model
         Line
     }
 
-    public class Tile : IDisposable
+    public class Tile : IDisposeNotifier<Tile>
     {
-        public event Action<Tile> UsersChanged;
+        public event Action<Tile, TileLayer> UsersChanged;
         public event Action<Tile, TileLayer> TileBaseChanged;
         public event Func<object> TileUsersInfoRequest;
+        public event Action<Tile> Disposing;
 
         public Vector3Int LocationInTileMap { get; }
 
@@ -58,7 +60,7 @@ namespace ConnectIt.Gameplay.Model
             Assert.That(CanUserBeAdded(toAdd));
 
             _users.Add(toAdd);
-            UsersChanged?.Invoke(this);
+            UsersChanged?.Invoke(this, toAdd.Layer);
         }
 
         public void RemoveUser(TileUser toRemove)
@@ -66,7 +68,7 @@ namespace ConnectIt.Gameplay.Model
             Assert.That(CanUserBeRemoved(toRemove));
 
             _users.Remove(toRemove);
-            UsersChanged?.Invoke(this);
+            UsersChanged?.Invoke(this, toRemove.Layer);
         }
 
         public bool CanUserBeAdded(TileUser user)
@@ -92,6 +94,7 @@ namespace ConnectIt.Gameplay.Model
         public void Dispose()
         {
             _tilemaps.OnTileBaseChanged -= OnTileBaseChanged;
+            Disposing?.Invoke(this);
         }
 
         private void OnTileBaseChanged(Tile tile, TileLayer layer)

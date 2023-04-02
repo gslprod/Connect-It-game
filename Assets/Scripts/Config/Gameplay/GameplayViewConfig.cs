@@ -9,7 +9,12 @@ namespace ConnectIt.Config
     [CreateAssetMenu(fileName = "GameplayViewConfig.asset", menuName = "Config/GameplayViewConfig")]
     public class GameplayViewConfig : ScriptableObject
     {
-        [SerializeField] private List<ColorByCompatibilityIndexSet> ColorsByIndeces;
+        public string LevelCompleteProgressTitleFormat => _levelCompleteProgressTitleFormat;
+
+        [SerializeField] private List<ColorByCompatibilityIndexSet> _colorsByIndeces;
+
+        [Tooltip("Level Complete Progress Title Format")]
+        [SerializeField] private string _levelCompleteProgressTitleFormat;
 
         private void OnEnable()
         {
@@ -18,19 +23,19 @@ namespace ConnectIt.Config
 
         public Color GetColorByCompatibilityIndex(int compatibilityIndex)
         {
-            int foundIndex = ColorsByIndeces.FindIndex(set => set.CompatibilityIndex == compatibilityIndex);
+            int foundIndex = _colorsByIndeces.FindIndex(set => set.CompatibilityIndex == compatibilityIndex);
             Assert.That(foundIndex >= 0);
 
-            return ColorsByIndeces[foundIndex].Color;
+            return _colorsByIndeces[foundIndex].Color;
         }
 
         private void ValidateColorsByIndeces()
         {
-            if (ColorsByIndeces == null)
+            if (_colorsByIndeces == null)
                 return;
 
             var groupsWithDuplicateIndecesCount =
-                            ColorsByIndeces.GroupBy(set => set.CompatibilityIndex)
+                            _colorsByIndeces.GroupBy(set => set.CompatibilityIndex)
                             .Where(group => group.Count() > 1)
                             .Count();
 

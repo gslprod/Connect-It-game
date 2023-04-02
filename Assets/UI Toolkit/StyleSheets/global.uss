@@ -4,14 +4,12 @@
     padding-right: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
+    flex-grow: 1;
 }
 
 .highlighted-label {
     background-color: var(--non-focus-color-1);
     font-size: 55px;
-    -unity-font: url('project://database/Assets/2D/Fonts/VictorMono-Light.otf?fileID=12800000&guid=12718514e6e4d1547842bac8b5864f82&type=3#VictorMono-Light');
-    -unity-font-definition: initial;
-    color: rgb(255, 255, 255);
     margin-left: 0;
     padding-left: 10px;
     padding-right: 10px;
@@ -108,4 +106,41 @@
     margin-left: 22px;
     margin-right: 22px;
     margin-top: 22px;
+}
+
+.progress-bar {
+    width: 500px;
+    height: 60px;
+}
+
+.progress-bar__container {
+    flex-grow: 1;
+}
+
+.progress-bar__title {
+    -unity-text-align: middle-center;
+    font-size: 40px;
+}
+
+.progress-bar__title-container {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.progress-bar__progress {
+    background-color: rgba(0, 255, 0, 0.3);
+    flex-grow: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transition-property: right;
+    transition-duration: 300ms;
+    transition-timing-function: ease-out-circ;
+    transition-delay: 0s;
+}
+
+.progress-bar__background {
+    background-color: var(--non-focus-color-1);
+    flex-grow: 1;
 }

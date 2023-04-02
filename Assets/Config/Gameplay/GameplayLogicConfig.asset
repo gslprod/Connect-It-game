@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GameplayLogicConfig
   m_EditorClassIdentifier: 
   _removeConnectionLineHoldDurationSec: 1
+  _usedTilesVsConnectedPortsGameCompleteFactor: 0.5

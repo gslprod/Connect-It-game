@@ -1,0 +1,5 @@
+:root {
+    -unity-font: url('project://database/Assets/2D/Fonts/VictorMono-Light.otf?fileID=12800000&guid=12718514e6e4d1547842bac8b5864f82&type=3#VictorMono-Light');
+    -unity-font-definition: initial;
+    color: rgb(255, 255, 255);
+}

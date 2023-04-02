@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bff1b957b9a68d4ca398a4cf0c32622, type: 3}
   m_Name: GameplayViewConfig
   m_EditorClassIdentifier: 
-  ColorsByIndeces:
+  _colorsByIndeces:
   - _compatibilityIndex: 1
     _color: {r: 0, g: 0.64705884, b: 0.64705884, a: 1}
   - _compatibilityIndex: 2
@@ -31,3 +31,4 @@ MonoBehaviour:
     _color: {r: 0.3372549, g: 0.09803922, b: 0.64705884, a: 1}
   - _compatibilityIndex: 9
     _color: {r: 0.09803922, g: 0.17254902, b: 0.6509804, a: 1}
+  _levelCompleteProgressTitleFormat: '{0}%'
