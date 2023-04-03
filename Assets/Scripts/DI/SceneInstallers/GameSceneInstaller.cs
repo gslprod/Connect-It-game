@@ -47,7 +47,7 @@ namespace ConnectIt.DI.Installers
 
         private void BindTime()
         {
-            Container.BindInterfacesTo<TimeProvider>()
+            Container.BindInterfacesTo<GameplayTimeProvider>()
                      .AsSingle();
         }
 

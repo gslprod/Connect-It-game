@@ -1,5 +1,6 @@
 using ConnectIt.Config;
 using ConnectIt.Config.ScriptableObjects;
+using ConnectIt.Time;
 using ConnectIt.Utilities.Formatters;
 using UnityEngine;
 using Zenject;
@@ -17,6 +18,14 @@ namespace ConnectIt.DI.Installers
             BindRenderCameraProvider();
             BindConfig();
             BindFormatter();
+            BindTime();
+        }
+
+        private void BindTime()
+        {
+            Container.Bind<ITimeProvider>()
+                     .To<TimeProvider>()
+                     .AsSingle();
         }
 
         private void BindFormatter()

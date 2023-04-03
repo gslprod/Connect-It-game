@@ -1,11 +1,11 @@
-﻿using System;
+﻿using ConnectIt.Time;
+using System;
 
 namespace ConnectIt.Gameplay.Time
 {
-    public interface ITimeProvider
+    public interface IGameplayTimeProvider : ITimeProvider
     {
         TimeSpan ElapsedTime { get; }
         float ElapsedTimeSec { get; }
-        float DeltaTime { get; }
     }
 }

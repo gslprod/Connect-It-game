@@ -8,11 +8,11 @@ namespace ConnectIt.UI.Gameplay.Views
     public class TimeView : IInitializable, ITickable
     {
         private readonly Label _timeLabel;
-        private readonly ITimeProvider _timeProvider;
+        private readonly IGameplayTimeProvider _timeProvider;
         private readonly IFormatter _formatter;
 
         public TimeView(Label timeLabel,
-            ITimeProvider gameStateObserver,
+            IGameplayTimeProvider gameStateObserver,
             IFormatter gameplayViewConfig)
         {
             _timeLabel = timeLabel;

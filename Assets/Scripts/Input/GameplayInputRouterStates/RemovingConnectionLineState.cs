@@ -11,7 +11,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
     {
         private readonly GameplayLogicConfig _gameplayConfig;
         private readonly ConnectionLine _removingLine;
-        private readonly ITimeProvider _timeProvider;
+        private readonly IGameplayTimeProvider _timeProvider;
 
         private float _expiredTimeSec;
 
@@ -21,7 +21,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             RenderCameraProvider cameraProvider,
             Tilemaps tilemaps,
             GameplayLogicConfig gameplayConfig,
-            ITimeProvider timeProvider,
+            IGameplayTimeProvider timeProvider,
             ConnectionLine removingLine) : base(input, inputRouter, cameraProvider, tilemaps)
         {
             _gameplayConfig = gameplayConfig;
@@ -36,7 +36,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
 
         public override void Update()
         {
-            _expiredTimeSec += _timeProvider.DeltaTime;
+            _expiredTimeSec += _timeProvider.DeltaTimeSec;
 
             if (_expiredTimeSec >= _gameplayConfig.RemoveConnectionLineHoldDurationSec)
             {
