@@ -1,18 +1,43 @@
-﻿using UnityEngine;
+﻿using ConnectIt.Config.ScriptableObjects;
+using ConnectIt.Utilities;
 
 namespace ConnectIt.Config
 {
-    [CreateAssetMenu(fileName = "GameplayLogicConfig.asset", menuName = "Config/GameplayLogicConfig")]
-    public class GameplayLogicConfig : ScriptableObject
+    public class GameplayLogicConfig
     {
         public float RemoveConnectionLineHoldDurationSec => _removeConnectionLineHoldDurationSec;
         public float UsedTilesVsConnectedPortsGameCompleteFactor => _usedTilesVsConnectedPortsGameCompleteFactor;
+        public int MaxAvailableLevel => _maxAvailableLevel;
+        public int CurrentLevel => _currentLevel;
 
-        [Tooltip("Remove Connection Line Hold Duration Sec")]
-        [SerializeField] private float _removeConnectionLineHoldDurationSec = 1f;
+        private float _removeConnectionLineHoldDurationSec;
+        private float _usedTilesVsConnectedPortsGameCompleteFactor;
+        private int _maxAvailableLevel;
 
-        [Tooltip("Used Tiles Vs Connected Ports Game Complete Factor. Dominations: 1 -> Used Tiles, 0 -> Connected ports")]
-        [Range(0f, 1f)]
-        [SerializeField] private float _usedTilesVsConnectedPortsGameCompleteFactor;
+        private int _currentLevel = 1;
+
+        private readonly GameplayLogicConfigSO _configSO;
+
+        public GameplayLogicConfig(GameplayLogicConfigSO configSO)
+        {
+            _configSO = configSO;
+
+            SetValuesFromSO();
+        }
+
+        public void SetCurrentLevel(int levelNumber)
+        {
+            Assert.ThatArgIs(levelNumber >= 1,
+                levelNumber <= _maxAvailableLevel);
+
+            _currentLevel = levelNumber;
+        }
+
+        private void SetValuesFromSO()
+        {
+            _removeConnectionLineHoldDurationSec = _configSO.RemoveConnectionLineHoldDurationSec;
+            _usedTilesVsConnectedPortsGameCompleteFactor = _configSO.UsedTilesVsConnectedPortsGameCompleteFactor;
+            _maxAvailableLevel = _configSO.MaxAvailableLevel;
+        }
     }
 }

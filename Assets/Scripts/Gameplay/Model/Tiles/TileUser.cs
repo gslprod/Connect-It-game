@@ -26,7 +26,7 @@ namespace ConnectIt.Gameplay.Model
 
         public void SetTile(Tile tile)
         {
-            Assert.IsNotNull(tile);
+            Assert.ArgIsNotNull(tile);
             Assert.That(!HasTile);
 
             Tile = tile;

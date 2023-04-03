@@ -6,16 +6,28 @@ namespace ConnectIt.Utilities
     {
         private const string DefaultMessage = "Validation failed";
 
-        public static void IsNotNull(object obj)
+        public static void ThatArgIs(bool condition)
         {
-            if (obj == null)
+            if (!condition)
+                ThrowArgEx();
+        }
+
+        public static void ThatArgIs(bool condition1, bool condition2)
+        {
+            ThatArgIs(condition1);
+            ThatArgIs(condition2);
+        }
+
+        public static void ArgIsNotNull(object arg)
+        {
+            if (arg == null)
                 ThrowNullArgEx();
         }
 
-        public static void IsNotNull(object obj1, object obj2)
+        public static void ArgsIsNotNull(object arg1, object arg2)
         {
-            IsNotNull(obj1);
-            IsNotNull(obj2);
+            ArgIsNotNull(arg1);
+            ArgIsNotNull(arg2);
         }
 
         public static void That(bool condition)
@@ -30,6 +42,18 @@ namespace ConnectIt.Utilities
             That(condition2);
         }
 
+        public static void IsNotNull(object arg)
+        {
+            if (arg == null)
+                ThrowInvalidOperationEx();
+        }
+
+        public static void IsNotNull(object arg1, object arg2)
+        {
+            IsNotNull(arg1);
+            IsNotNull(arg2);
+        }
+
         public static void Fail()
         {
             ThrowInvalidOperationEx();
@@ -38,6 +62,11 @@ namespace ConnectIt.Utilities
         private static void ThrowNullArgEx()
         {
             throw new ArgumentNullException(DefaultMessage);
+        }
+
+        private static void ThrowArgEx()
+        {
+            throw new ArgumentException(DefaultMessage);
         }
 
         private static void ThrowInvalidOperationEx()

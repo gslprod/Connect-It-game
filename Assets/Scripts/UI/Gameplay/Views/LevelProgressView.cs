@@ -1,5 +1,5 @@
-﻿using ConnectIt.Config;
-using ConnectIt.Gameplay.Observers;
+﻿using ConnectIt.Gameplay.Observers;
+using ConnectIt.Utilities.Formatters;
 using System;
 using UnityEngine;
 using Zenject;
@@ -11,15 +11,15 @@ namespace ConnectIt.UI.Gameplay.Views
     {
         private readonly Custom.ProgressBar _levelProgressBar;
         private readonly IGameStateObserver _gameStateObserver;
-        private readonly GameplayViewConfig _gameplayViewConfig;
+        private readonly IFormatter _formatter;
 
         public LevelProgressView(Custom.ProgressBar levelProgressBar,
             IGameStateObserver gameStateObserver,
-            GameplayViewConfig gameplayViewConfig)
+            IFormatter gameplayViewConfig)
         {
             _levelProgressBar = levelProgressBar;
             _gameStateObserver = gameStateObserver;
-            _gameplayViewConfig = gameplayViewConfig;
+            _formatter = gameplayViewConfig;
         }
 
         public void Initialize()
@@ -39,7 +39,7 @@ namespace ConnectIt.UI.Gameplay.Views
             float progress = _gameStateObserver.GameCompleteProgressPercents;
 
             _levelProgressBar.value = progress;
-            _levelProgressBar.Title = string.Format(_gameplayViewConfig.LevelCompleteProgressTitleFormat, Mathf.FloorToInt(progress));
+            _levelProgressBar.Title = _formatter.FormatGameplayLevelProgress(Mathf.FloorToInt(progress));
         }
 
         public class Factory : PlaceholderFactory<Custom.ProgressBar, LevelProgressView> { }

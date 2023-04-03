@@ -11,15 +11,18 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
         private UIDocument _uiDocument;
         private VisualElement _rootVE => _uiDocument.rootVisualElement;
 
-        private LevelProgressView.Factory _levelProgressViewFactory;
-
         private LevelProgressView _levelProgressView;
+        private LevelProgressView.Factory _levelProgressViewFactory;
+        private TimeView _timeView;
+        private TimeView.Factory _timeViewFactory;
 
         [Inject]
         public void Constructor(
-            LevelProgressView.Factory levelProgressViewFactory)
+            LevelProgressView.Factory levelProgressViewFactory,
+            TimeView.Factory timeViewFactory)
         {
             _levelProgressViewFactory = levelProgressViewFactory;
+            _timeViewFactory = timeViewFactory;
         }
 
         private void Awake()
@@ -31,6 +34,14 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
         {
             _levelProgressView = _levelProgressViewFactory
                 .Create(_rootVE.Q<Custom.ProgressBar>(NameConstants.LevelProgressBarName));
+
+            _timeView = _timeViewFactory
+                .Create(_rootVE.Q<Label>(NameConstants.TimeLabelName));
+        }
+
+        private void Update()
+        {
+            _timeView.Tick();
         }
 
         private void OnDestroy()

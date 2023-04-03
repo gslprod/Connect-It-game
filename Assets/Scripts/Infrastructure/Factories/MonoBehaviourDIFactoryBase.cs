@@ -17,7 +17,7 @@ namespace ConnectIt.Infrastructure.Factories
         private DiContainer _diContainer;
 
         [Inject]
-        void Constructor(T prefab,
+        void Constructor([InjectOptional] T prefab,
             IInstantiator instantiator,
             DiContainer diContainer)
         {
@@ -63,86 +63,86 @@ namespace ConnectIt.Infrastructure.Factories
 
         protected T CreateInternal(IEnumerable<object> args)
         {
-            Assert.IsNotNull(args);
+            Assert.ArgIsNotNull(args);
 
             return Instantiator.InstantiatePrefabForComponent<T>(Prefab, args);
         }
 
         protected T CreateInternal(T customPrefab)
         {
-            Assert.IsNotNull(customPrefab);
+            Assert.ArgIsNotNull(customPrefab);
 
             return Instantiator.InstantiatePrefabForComponent<T>(customPrefab);
         }
 
         protected T CreateInternal(T customPrefab, IEnumerable<object> args)
         {
-            Assert.IsNotNull(customPrefab);
-            Assert.IsNotNull(args);
+            Assert.ArgIsNotNull(customPrefab);
+            Assert.ArgIsNotNull(args);
 
             return Instantiator.InstantiatePrefabForComponent<T>(customPrefab, args);
         }
 
         protected T CreateInternal(Transform parent)
         {
-            Assert.IsNotNull(parent);
+            Assert.ArgIsNotNull(parent);
 
             return Instantiator.InstantiatePrefabForComponent<T>(Prefab, parent);
         }
 
         protected T CreateInternal(Transform parent, IEnumerable<object> args)
         {
-            Assert.IsNotNull(parent);
-            Assert.IsNotNull(args);
+            Assert.ArgIsNotNull(parent);
+            Assert.ArgIsNotNull(args);
 
             return Instantiator.InstantiatePrefabForComponent<T>(Prefab, parent, args);
         }
 
         protected T CreateInternal(T customPrefab, Transform parent)
         {
-            Assert.IsNotNull(parent);
-            Assert.IsNotNull(customPrefab);
+            Assert.ArgIsNotNull(parent);
+            Assert.ArgIsNotNull(customPrefab);
 
             return Instantiator.InstantiatePrefabForComponent<T>(customPrefab, parent);
         }
 
         protected T CreateInternal(T customPrefab, Transform parent, IEnumerable<object> args)
         {
-            Assert.IsNotNull(parent);
-            Assert.IsNotNull(customPrefab);
-            Assert.IsNotNull(args);
+            Assert.ArgIsNotNull(parent);
+            Assert.ArgIsNotNull(customPrefab);
+            Assert.ArgIsNotNull(args);
 
             return Instantiator.InstantiatePrefabForComponent<T>(customPrefab, parent, args);
         }
 
         protected T CreateInternal(Transform parent, Vector3 position, Quaternion rotation)
         {
-            Assert.IsNotNull(parent);
+            Assert.ArgIsNotNull(parent);
 
             return Instantiator.InstantiatePrefabForComponent<T>(Prefab, position, rotation, parent);
         }
 
         protected T CreateInternal(Transform parent, Vector3 position, Quaternion rotation, IEnumerable<object> args)
         {
-            Assert.IsNotNull(parent);
-            Assert.IsNotNull(args);
+            Assert.ArgIsNotNull(parent);
+            Assert.ArgIsNotNull(args);
 
             return Instantiator.InstantiatePrefabForComponent<T>(Prefab, position, rotation, parent, args);
         }
 
         protected T CreateInternal(T customPrefab, Transform parent, Vector3 position, Quaternion rotation)
         {
-            Assert.IsNotNull(customPrefab);
-            Assert.IsNotNull(parent);
+            Assert.ArgIsNotNull(customPrefab);
+            Assert.ArgIsNotNull(parent);
 
             return Instantiator.InstantiatePrefabForComponent<T>(customPrefab, position, rotation, parent);
         }
 
         protected T CreateInternal(T customPrefab, Transform parent, Vector3 position, Quaternion rotation, IEnumerable<object> args)
         {
-            Assert.IsNotNull(customPrefab);
-            Assert.IsNotNull(parent);
-            Assert.IsNotNull(args);
+            Assert.ArgIsNotNull(customPrefab);
+            Assert.ArgIsNotNull(parent);
+            Assert.ArgIsNotNull(args);
 
             return Instantiator.InstantiatePrefabForComponent<T>(customPrefab, position, rotation, parent, args);
         }

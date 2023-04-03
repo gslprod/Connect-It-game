@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b64d32ca22b403469546ad124e835df, type: 3}
-  m_Name: GameplayLogicConfig
+  m_Script: {fileID: 11500000, guid: 1f41bdc990c2aaa46985c6bcc11e2ca9, type: 3}
+  m_Name: FormatterConfig
   m_EditorClassIdentifier: 
-  _removeConnectionLineHoldDurationSec: 1
-  _usedTilesVsConnectedPortsGameCompleteFactor: 0.5
-  _maxAvailableLevel: 10
+  _gameplayLevelProgressTitleFormat: '{0}%'
+  _gameplayElapsedTimeFormat: mm\:ss

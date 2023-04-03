@@ -7,8 +7,8 @@ namespace ConnectIt.Utilities.Extensions
     {
         public static int FindIndex<T>(this IEnumerable<T> items, Func<T, bool> predicate)
         {
-            Assert.IsNotNull(items);
-            Assert.IsNotNull(predicate);
+            Assert.ArgIsNotNull(items);
+            Assert.ArgIsNotNull(predicate);
             
             int retVal = 0;
             foreach (var item in items)

@@ -77,3 +77,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameplayLogicConfig: {fileID: 11400000, guid: 71d43c4902428694b8aedbcb39c3e20b, type: 2}
   _gameplayViewConfig: {fileID: 11400000, guid: bf6d0e172887e45478fe2aee12086ace, type: 2}
+  _formatterConfig: {fileID: 11400000, guid: 8cd11b46594a44844960f3e541fe631e, type: 2}

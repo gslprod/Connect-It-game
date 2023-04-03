@@ -1,4 +1,6 @@
 using ConnectIt.Config;
+using ConnectIt.Config.ScriptableObjects;
+using ConnectIt.Utilities.Formatters;
 using UnityEngine;
 using Zenject;
 
@@ -6,13 +8,23 @@ namespace ConnectIt.DI.Installers
 {
     public class BootstrapInstaller : MonoInstaller
     {
-        [SerializeField] private GameplayLogicConfig _gameplayLogicConfig;
-        [SerializeField] private GameplayViewConfig _gameplayViewConfig;
+        [SerializeField] private GameplayLogicConfigSO _gameplayLogicConfig;
+        [SerializeField] private GameplayViewConfigSO _gameplayViewConfig;
+        [SerializeField] private FormatterConfig _formatterConfig;
 
         public override void InstallBindings()
         {
             BindRenderCameraProvider();
             BindConfig();
+            BindFormatter();
+        }
+
+        private void BindFormatter()
+        {
+            Container.Bind<IFormatter>()
+                     .To<Formatter>()
+                     .AsSingle()
+                     .WithArguments(_formatterConfig);
         }
 
         private void BindConfig()
@@ -23,12 +35,12 @@ namespace ConnectIt.DI.Installers
         private void BindGameplayConfig()
         {
             Container.Bind<GameplayLogicConfig>()
-                     .FromInstance(_gameplayLogicConfig)
-                     .AsSingle();
+                     .AsSingle()
+                     .WithArguments(_gameplayLogicConfig);
 
             Container.Bind<GameplayViewConfig>()
-                     .FromInstance(_gameplayViewConfig)
-                     .AsSingle();
+                     .AsSingle()
+                     .WithArguments(_gameplayViewConfig);
         }
 
         private void BindRenderCameraProvider()

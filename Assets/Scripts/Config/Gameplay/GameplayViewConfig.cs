@@ -1,24 +1,22 @@
-﻿using ConnectIt.Config.Wrappers;
+﻿using ConnectIt.Config.ScriptableObjects;
+using ConnectIt.Config.Wrappers;
 using ConnectIt.Utilities;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace ConnectIt.Config
 {
-    [CreateAssetMenu(fileName = "GameplayViewConfig.asset", menuName = "Config/GameplayViewConfig")]
-    public class GameplayViewConfig : ScriptableObject
+    public class GameplayViewConfig
     {
-        public string LevelCompleteProgressTitleFormat => _levelCompleteProgressTitleFormat;
+        private List<ColorByCompatibilityIndexSet> _colorsByIndeces;
 
-        [SerializeField] private List<ColorByCompatibilityIndexSet> _colorsByIndeces;
+        private readonly GameplayViewConfigSO _configSO;
 
-        [Tooltip("Level Complete Progress Title Format")]
-        [SerializeField] private string _levelCompleteProgressTitleFormat;
-
-        private void OnEnable()
+        public GameplayViewConfig(GameplayViewConfigSO configSO)
         {
-            ValidateColorsByIndeces();
+            _configSO = configSO;
+
+            SetValuesFromSO();
         }
 
         public Color GetColorByCompatibilityIndex(int compatibilityIndex)
@@ -29,17 +27,9 @@ namespace ConnectIt.Config
             return _colorsByIndeces[foundIndex].Color;
         }
 
-        private void ValidateColorsByIndeces()
+        private void SetValuesFromSO()
         {
-            if (_colorsByIndeces == null)
-                return;
-
-            var groupsWithDuplicateIndecesCount =
-                            _colorsByIndeces.GroupBy(set => set.CompatibilityIndex)
-                            .Where(group => group.Count() > 1)
-                            .Count();
-
-            Assert.That(groupsWithDuplicateIndecesCount == 0);
+            _colorsByIndeces = _configSO.ColorsByIndeces;
         }
     }
 }

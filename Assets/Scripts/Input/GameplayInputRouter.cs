@@ -51,7 +51,7 @@ namespace ConnectIt.Input
 
         public void SetState(BaseTilemapsInteractionState newState)
         {
-            Assert.IsNotNull(newState);
+            Assert.ArgIsNotNull(newState);
 
             if (State == newState)
                 return;

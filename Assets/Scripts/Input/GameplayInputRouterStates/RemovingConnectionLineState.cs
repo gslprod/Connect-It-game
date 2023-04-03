@@ -1,5 +1,6 @@
 ﻿using ConnectIt.Config;
 using ConnectIt.Gameplay.Model;
+using ConnectIt.Gameplay.Time;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -10,6 +11,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
     {
         private readonly GameplayLogicConfig _gameplayConfig;
         private readonly ConnectionLine _removingLine;
+        private readonly ITimeProvider _timeProvider;
 
         private float _expiredTimeSec;
 
@@ -19,10 +21,12 @@ namespace ConnectIt.Input.GameplayInputRouterStates
             RenderCameraProvider cameraProvider,
             Tilemaps tilemaps,
             GameplayLogicConfig gameplayConfig,
+            ITimeProvider timeProvider,
             ConnectionLine removingLine) : base(input, inputRouter, cameraProvider, tilemaps)
         {
             _gameplayConfig = gameplayConfig;
             _removingLine = removingLine;
+            _timeProvider = timeProvider;
         }
 
         public override void OnInteractionPressCanceled(InputAction.CallbackContext context)
@@ -32,7 +36,7 @@ namespace ConnectIt.Input.GameplayInputRouterStates
 
         public override void Update()
         {
-            _expiredTimeSec += Time.deltaTime;
+            _expiredTimeSec += _timeProvider.DeltaTime;
 
             if (_expiredTimeSec >= _gameplayConfig.RemoveConnectionLineHoldDurationSec)
             {

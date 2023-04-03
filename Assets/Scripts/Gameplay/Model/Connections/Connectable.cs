@@ -19,7 +19,7 @@ namespace ConnectIt.Gameplay.Model
 
         public void SetConnection(Connection connection)
         {
-            Assert.IsNotNull(connection);
+            Assert.ArgIsNotNull(connection);
             Assert.That(!HasConnection);
 
             if (connection.ConnectionCompleted)
@@ -45,7 +45,7 @@ namespace ConnectIt.Gameplay.Model
 
         public bool CanBeConnectedWith(IConnectable other)
         {
-            Assert.IsNotNull(other);
+            Assert.ArgIsNotNull(other);
 
             bool alreadyConnected = HasConnection && Connection.ConnectionCompleted;
             if (alreadyConnected)
@@ -60,7 +60,7 @@ namespace ConnectIt.Gameplay.Model
 
         public bool CompatibleWith(IConnectable other)
         {
-            Assert.IsNotNull(other);
+            Assert.ArgIsNotNull(other);
 
             return
                 this != other &&

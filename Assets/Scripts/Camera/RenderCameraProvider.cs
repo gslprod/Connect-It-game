@@ -22,7 +22,7 @@ namespace ConnectIt
 
         public void UnregisterCamera(Camera camera)
         {
-            Assert.IsNotNull(camera);
+            Assert.ArgIsNotNull(camera);
             Assert.That(_camerasList.Remove(camera));
 
             if (RenderCamera == camera)
@@ -36,7 +36,7 @@ namespace ConnectIt
 
         public void SetRenderCamera(Camera toSet)
         {
-            Assert.IsNotNull(toSet);
+            Assert.ArgIsNotNull(toSet);
             Assert.That(_camerasList.Contains(toSet));
 
             foreach (var camera in _camerasList)

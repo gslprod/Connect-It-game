@@ -12,7 +12,7 @@ namespace ConnectIt.Gameplay.Model
 
         public Connection(IConnectable first)
         {
-            Assert.IsNotNull(first);
+            Assert.ArgIsNotNull(first);
 
             First = first;
             first.SetConnection(this);
@@ -20,7 +20,7 @@ namespace ConnectIt.Gameplay.Model
 
         public Connection(IConnectable first, IConnectable second)
         {
-            Assert.IsNotNull(first, second);
+            Assert.ArgsIsNotNull(first, second);
 
             First = first;
             first.SetConnection(this);
@@ -31,7 +31,7 @@ namespace ConnectIt.Gameplay.Model
 
         public void CompleteConnection(IConnectable second)
         {
-            Assert.IsNotNull(second);
+            Assert.ArgIsNotNull(second);
             Assert.That(!ConnectionCompleted);
 
             Second = second;

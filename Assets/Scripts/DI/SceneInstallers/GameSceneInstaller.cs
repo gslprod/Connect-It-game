@@ -1,7 +1,9 @@
 using ConnectIt.DI.Installers.Custom;
+using ConnectIt.Gameplay.LevelLoading;
 using ConnectIt.Gameplay.Model;
 using ConnectIt.Gameplay.MonoWrappers;
 using ConnectIt.Gameplay.Observers;
+using ConnectIt.Gameplay.Time;
 using ConnectIt.Gameplay.View;
 using ConnectIt.Infrastructure.CreatedObjectNotifiers;
 using ConnectIt.Infrastructure.Dispose;
@@ -12,6 +14,7 @@ using ConnectIt.Input;
 using ConnectIt.Input.GameplayInputRouterStates;
 using ConnectIt.UI.Gameplay.Views;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Zenject;
 using CustomControls = ConnectIt.UI.CustomControls;
 
@@ -19,9 +22,9 @@ namespace ConnectIt.DI.Installers
 {
     public class GameSceneInstaller : MonoInstaller
     {
-        [SerializeField] private TilemapsMonoWrapper _tilemapsMonoWrapper;
         [SerializeField] private ConnectionLineView _connectionLinePrefab;
         [SerializeField] private Transform _connectionLineParent;
+        [SerializeField] private TilemapsMonoWrapper[] _tilemapsMonoWrapperPrefabs;
 
         public override void InstallBindings()
         {
@@ -31,6 +34,21 @@ namespace ConnectIt.DI.Installers
             BindPort();
             BindGameStateObserver();
             BindUIViews();
+            BindTime();
+            BindLevelLoader();
+        }
+
+        private void BindLevelLoader()
+        {
+            Container.Bind<LevelLoader>()
+                     .AsSingle()
+                     .WithArguments(_tilemapsMonoWrapperPrefabs);
+        }
+
+        private void BindTime()
+        {
+            Container.BindInterfacesTo<TimeProvider>()
+                     .AsSingle();
         }
 
         private void BindUIViews()
@@ -41,12 +59,16 @@ namespace ConnectIt.DI.Installers
             {
                 Container.BindFactory<CustomControls.ProgressBar, LevelProgressView, LevelProgressView.Factory>()
                          .FromFactory<PrimitiveDIFactory<CustomControls.ProgressBar, LevelProgressView>>();
+
+                Container.BindFactory<Label, TimeView, TimeView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Label, TimeView>>();
             }
         }
 
         private void BindGameStateObserver()
         {
-            Container.BindInterfacesTo<GameStateObserver>().AsSingle();
+            Container.BindInterfacesTo<GameStateObserver>()
+                     .AsSingle();
         }
 
         private void BindPort()
@@ -83,10 +105,10 @@ namespace ConnectIt.DI.Installers
             void BindFactories()
             {
                 Container.BindFactory<Tile, int, Port, Port.Factory>()
-                    .FromFactory<PrimitiveDIFactory<Tile, int, Port>>();
+                         .FromFactory<PrimitiveDIFactory<Tile, int, Port>>();
 
                 Container.BindFactory<Port, PortView, PortView.Factory>()
-                    .FromFactory<PrimitiveDIFactory<Port, PortView>>();
+                         .FromFactory<PrimitiveDIFactory<Port, PortView>>();
             }
         }
 
@@ -156,11 +178,8 @@ namespace ConnectIt.DI.Installers
                      .AsSingle()
                      .NonLazy();
 
-            //todo
-            Container.Bind<TilemapsMonoWrapper>()
-                     .FromInstance(_tilemapsMonoWrapper)
-                     .AsSingle()
-                     .NonLazy();
+            Container.BindFactory<TilemapsMonoWrapper, TilemapsMonoWrapper, TilemapsMonoWrapper.Factory>()
+                     .FromFactory<MonoBehaviourPrefabDIFactory<TilemapsMonoWrapper>>();
         }
     }
 }

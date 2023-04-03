@@ -1,4 +1,5 @@
-﻿using ConnectIt.Gameplay.Model;
+﻿using ConnectIt.Gameplay.LevelLoading;
+using ConnectIt.Gameplay.Model;
 using ConnectIt.Gameplay.MonoWrappers;
 using Zenject;
 
@@ -10,13 +11,18 @@ namespace ConnectIt.DI.Installers.Custom
         {
             Container.Bind<Tilemaps>().AsSingle();
 
+            Container.Bind<TilemapsMonoWrapper>()
+                     .FromResolveGetter<LevelLoader>(loader => loader.InstantiateTilemapsPrefab())
+                     .AsSingle()
+                     .NonLazy();
+
             Container.Bind<TilemapLayerSet[]>()
-                        .FromResolveGetter<TilemapsMonoWrapper>(tilemapsMonoWrapper => tilemapsMonoWrapper.TilemapLayers)
-                        .AsSingle();
+                     .FromResolveGetter<TilemapsMonoWrapper>(tilemapsMonoWrapper => tilemapsMonoWrapper.TilemapLayers)
+                     .AsSingle();
 
             Container.Bind<TileBaseAndObjectInfoSet[]>()
-                        .FromResolveGetter<TilemapsMonoWrapper>(tilemapsMonoWrapper => tilemapsMonoWrapper.ObjectsInfo)
-                        .AsSingle();
+                     .FromResolveGetter<TilemapsMonoWrapper>(tilemapsMonoWrapper => tilemapsMonoWrapper.ObjectsInfo)
+                     .AsSingle();
         }
     }
 }

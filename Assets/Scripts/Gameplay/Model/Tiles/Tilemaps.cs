@@ -25,17 +25,16 @@ namespace ConnectIt.Gameplay.Model
             TileBaseAndObjectInfoSet[] spriteAndObjectTypeSets,
             Port.Factory portFactory)
         {
-            Validate(maps);
             _maps = maps;
-
-            Validate(spriteAndObjectTypeSets);
             _spriteAndObjectTypeSets = spriteAndObjectTypeSets;
-
             _portFactory = portFactory;
         }
 
         public void Initialize()
         {
+            Validate(_maps);
+            Validate(_spriteAndObjectTypeSets);
+
             CreateTiles();
             CreateObjectsOnMap();
         }
@@ -76,14 +75,14 @@ namespace ConnectIt.Gameplay.Model
 
         public bool ContainsTile(Tile toCheck)
         {
-            Assert.IsNotNull(toCheck);
+            Assert.ArgIsNotNull(toCheck);
 
             return FastFindTileByXCoordinate(toCheck.LocationInTileMap.x, tile => tile == toCheck) != null;
         }
 
         public void SetTileBaseOnLayer(TileLayer layer, TileBase tileBase, Tile tile)
         {
-            Assert.IsNotNull(tileBase);
+            Assert.ArgIsNotNull(tileBase);
             Assert.That(ContainsTile(tile));
 
             Tilemap tilemap = GetTilemapOnLayer(layer);
@@ -94,7 +93,7 @@ namespace ConnectIt.Gameplay.Model
 
         public T GetTileOnLayer<T>(TileLayer layer, Tile tile) where T : TileBase
         {
-            Assert.IsNotNull(tile);
+            Assert.ArgIsNotNull(tile);
             Assert.That(ContainsTile(tile));
 
             Tilemap tilemap = GetTilemapOnLayer(layer);
@@ -112,13 +111,12 @@ namespace ConnectIt.Gameplay.Model
 
         private void Validate(TilemapLayerSet[] maps)
         {
-            Assert.IsNotNull(maps);
+            Assert.ArgIsNotNull(maps);
 
             IEnumerable<IGrouping<TileLayer, TilemapLayerSet>> groupsByLayer = maps.GroupBy(set => set.Layer);
 
             int groupsWithDuplicateLayersCount =
-                groupsByLayer.Where(group => group.Count() > 1)
-                .Count();
+                groupsByLayer.Count(group => group.Count() > 1);
 
             bool containsMapLayer = groupsByLayer.Any(group => group.Key == TileLayer.Map);
 
@@ -128,13 +126,12 @@ namespace ConnectIt.Gameplay.Model
 
         private void Validate(TileBaseAndObjectInfoSet[] tileBaseAndObjectTypeSets)
         {
-            Assert.IsNotNull(tileBaseAndObjectTypeSets);
+            Assert.ArgIsNotNull(tileBaseAndObjectTypeSets);
 
             var groupsBySprite = tileBaseAndObjectTypeSets.GroupBy(set => set.TileBase);
 
             int groupsWithDuplicateSpritesCount =
-                groupsBySprite.Where(group => group.Count() > 1)
-                .Count();
+                groupsBySprite.Count(group => group.Count() > 1);
 
             Assert.That(groupsWithDuplicateSpritesCount == 0);
         }
@@ -200,7 +197,7 @@ namespace ConnectIt.Gameplay.Model
                             continue;
 
                         TileBaseAndObjectInfoSet set = _spriteAndObjectTypeSets.First(set => set.TileBase == tileBase);
-                        Assert.That(set != null);
+                        Assert.IsNotNull(set);
 
                         CreateObjectOnMap(set, currentCellPosition);
                     }
