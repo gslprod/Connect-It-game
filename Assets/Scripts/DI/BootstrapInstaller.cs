@@ -1,7 +1,10 @@
 using ConnectIt.Config;
 using ConnectIt.Config.ScriptableObjects;
+using ConnectIt.Infrastructure.Factories;
+using ConnectIt.Localization;
 using ConnectIt.Time;
 using ConnectIt.Utilities.Formatters;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -19,12 +22,21 @@ namespace ConnectIt.DI.Installers
             BindConfig();
             BindFormatter();
             BindTime();
+            BindLocalization();
+        }
+
+        private void BindLocalization()
+        {
+            Container.BindInterfacesTo<LocalizationProvider>()
+                     .AsSingle();
+
+            Container.BindFactory<string, IEnumerable<object>, TextKey, TextKey.Factory>()
+                     .FromFactory<PrimitiveDIFactory<string, IEnumerable<object>, TextKey>>();
         }
 
         private void BindTime()
         {
-            Container.Bind<ITimeProvider>()
-                     .To<TimeProvider>()
+            Container.BindInterfacesTo<TimeProvider>()
                      .AsSingle();
         }
 

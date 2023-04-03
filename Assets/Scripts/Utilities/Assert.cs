@@ -54,6 +54,11 @@ namespace ConnectIt.Utilities
             IsNotNull(arg2);
         }
 
+        public static Exception GetFailException()
+        {
+            return CreateInvalidOperationEx();
+        }
+
         public static void Fail()
         {
             ThrowInvalidOperationEx();
@@ -72,6 +77,11 @@ namespace ConnectIt.Utilities
         private static void ThrowInvalidOperationEx()
         {
             throw new InvalidOperationException(DefaultMessage);
+        }
+
+        private static InvalidOperationException CreateInvalidOperationEx()
+        {
+            return new InvalidOperationException(DefaultMessage);
         }
     }
 }

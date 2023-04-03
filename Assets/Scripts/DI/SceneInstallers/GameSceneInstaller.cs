@@ -47,8 +47,18 @@ namespace ConnectIt.DI.Installers
 
         private void BindTime()
         {
-            Container.BindInterfacesTo<GameplayTimeProvider>()
+            Container.Bind<GameplayTimeProvider>()
                      .AsSingle();
+
+            Container.Bind<IGameplayTimeProvider>()
+                     .To<GameplayTimeProvider>()
+                     .FromResolve()
+                     .AsCached();
+
+            Container.Bind<ITickable>()
+                     .To<GameplayTimeProvider>()
+                     .FromResolve()
+                     .AsCached();
         }
 
         private void BindUIViews()
@@ -62,6 +72,9 @@ namespace ConnectIt.DI.Installers
 
                 Container.BindFactory<Label, TimeView, TimeView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Label, TimeView>>();
+
+                Container.BindFactory<Label, LevelView, LevelView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Label, LevelView>>();
             }
         }
 
