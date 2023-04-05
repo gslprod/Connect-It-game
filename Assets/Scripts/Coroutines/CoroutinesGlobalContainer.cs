@@ -14,11 +14,11 @@ namespace ConnectIt.Coroutines
 
         private readonly List<CoroutineInfo> _coroutines = new();
 
-        private ScenesLoader _scenesControl;
+        private IScenesLoader _scenesControl;
 
         [Inject]
         public void Constructor(
-            ScenesLoader scenesControl)
+            IScenesLoader scenesControl)
         {
             _scenesControl = scenesControl;
         }

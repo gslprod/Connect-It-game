@@ -78,3 +78,6 @@ MonoBehaviour:
   _gameplayLogicConfig: {fileID: 11400000, guid: 71d43c4902428694b8aedbcb39c3e20b, type: 2}
   _gameplayViewConfig: {fileID: 11400000, guid: bf6d0e172887e45478fe2aee12086ace, type: 2}
   _formatterConfig: {fileID: 11400000, guid: 8cd11b46594a44844960f3e541fe631e, type: 2}
+  _dialogBoxAsset: {fileID: 9197481963319205126, guid: f65fccb38445a4c4ea4476d65ef53018, type: 3}
+  _dialogBoxButtonAsset: {fileID: 9197481963319205126, guid: 8fb16149267d925449556a4a186f299d, type: 3}
+  _coroutinesGlobalContainerPrefab: {fileID: 1996789195025190023, guid: e10af9497d4ddee47ae22993c46b76dd, type: 3}

@@ -36,6 +36,7 @@ namespace ConnectIt.UI.DialogBox
                 _onClick += () => _dialogBoxView.Close();
 
             SetupButtonView();
+            UpdateLocalization();
 
             _buttonInfo = null;
 

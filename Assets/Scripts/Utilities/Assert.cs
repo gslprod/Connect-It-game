@@ -69,6 +69,12 @@ namespace ConnectIt.Utilities
             IsNotNull(arg2);
         }
 
+        public static void IsNull(object arg)
+        {
+            if (arg != null)
+                ThrowInvalidOperationEx();
+        }
+
         public static Exception GetFailException()
         {
             return CreateInvalidOperationEx();

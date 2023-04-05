@@ -1,11 +1,15 @@
 using ConnectIt.Config;
 using ConnectIt.Config.ScriptableObjects;
+using ConnectIt.Coroutines;
 using ConnectIt.Infrastructure.Factories;
 using ConnectIt.Localization;
+using ConnectIt.Scenes;
 using ConnectIt.Time;
+using ConnectIt.UI.DialogBox;
 using ConnectIt.Utilities.Formatters;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Zenject;
 
 namespace ConnectIt.DI.Installers
@@ -15,6 +19,9 @@ namespace ConnectIt.DI.Installers
         [SerializeField] private GameplayLogicConfigSO _gameplayLogicConfig;
         [SerializeField] private GameplayViewConfigSO _gameplayViewConfig;
         [SerializeField] private FormatterConfig _formatterConfig;
+        [SerializeField] private VisualTreeAsset _dialogBoxAsset;
+        [SerializeField] private VisualTreeAsset _dialogBoxButtonAsset;
+        [SerializeField] private CoroutinesGlobalContainer _coroutinesGlobalContainerPrefab;
 
         public override void InstallBindings()
         {
@@ -23,6 +30,52 @@ namespace ConnectIt.DI.Installers
             BindFormatter();
             BindTime();
             BindLocalization();
+            BindDialogBox();
+            BindCoroutinesGlobalContainer();
+            BindScenesLoader();
+        }
+
+        private void BindScenesLoader()
+        {
+            Container.Bind<IScenesLoader>()
+                     .To<ScenesLoader>()
+                     .AsSingle();
+        }
+
+        private void BindCoroutinesGlobalContainer()
+        {
+            Container.Bind<ICoroutinesGlobalContainer>()
+                     .To<CoroutinesGlobalContainer>()
+                     .FromNewComponentOnNewPrefab(_coroutinesGlobalContainerPrefab)
+                     .AsSingle();
+        }
+
+        private void BindDialogBox()
+        {
+            BindFactories();
+            BindAssets();
+
+            void BindFactories()
+            {
+                Container.BindFactory<DialogBoxButtonInfo, Button, DialogBoxView, DialogBoxButton, DialogBoxButton.Factory>()
+                         .FromFactory<PrimitiveDIFactory<DialogBoxButtonInfo, Button, DialogBoxView, DialogBoxButton>>();
+
+                Container.BindFactory<DialogBoxCreationData, DialogBoxView, DialogBoxView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<DialogBoxCreationData, DialogBoxView>>();
+            }
+
+            void BindAssets()
+            {
+                Container.BindInstance(_dialogBoxAsset)
+                         .WithId(DialogBoxView.DialogBoxAssetId)
+                         .AsCached()
+                         .WhenInjectedInto<DialogBoxView>();
+
+                Container.BindInstance(_dialogBoxButtonAsset)
+                         .WithId(DialogBoxView.DialogBoxButtonAssetId)
+                         .AsCached()
+                         .WhenInjectedInto<DialogBoxView>();
+            }
         }
 
         private void BindLocalization()

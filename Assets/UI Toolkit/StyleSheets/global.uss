@@ -155,7 +155,6 @@
 }
 
 .dialog-box__container {
-    flex-grow: 0;
     justify-content: center;
     align-items: center;
     background-color: var(--non-focus-color-1);
@@ -165,6 +164,21 @@
     padding-right: 15px;
     padding-top: 15px;
     padding-bottom: 15px;
+    overflow: hidden;
+    transition-property: opacity, scale, rotate;
+    transition-delay: 0s, 0s, 0s;
+    transition-duration: 800ms, 800ms, 800ms;
+    transition-timing-function: ease-out-cubic, ease-out-cubic, ease-out-cubic;
+}
+
+.dialog-box__container--closed {
+    transition-property: opacity, scale, rotate;
+    transition-delay: 0s, 0s, 0s;
+    transition-duration: 800ms, 800ms, 800ms;
+    transition-timing-function: ease-out-cubic, ease-out-cubic, ease-out-cubic;
+    scale: 0 0;
+    opacity: 0;
+    rotate: 90deg;
 }
 
 .dialog-box__title-label {
@@ -191,7 +205,7 @@
 }
 
 .dialog-box__button--accept {
-    background-color: rgba(0, 167, 0, 0.3);
+    background-color: var(--accept-color);
 }
 
 .dialog-box__button--dismiss {

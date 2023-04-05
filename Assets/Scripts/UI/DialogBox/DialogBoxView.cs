@@ -1,13 +1,20 @@
-﻿using ConnectIt.Localization;
+﻿using ConnectIt.Coroutines;
+using ConnectIt.Localization;
+using ConnectIt.Utilities;
+using System;
+using System.Collections;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
 
 namespace ConnectIt.UI.DialogBox
 {
-    public class DialogBoxView : IInitializable
+    public class DialogBoxView : IInitializable, IDisposable
     {
         public const string DialogBoxAssetId = "DialogBoxAsset";
         public const string DialogBoxButtonAssetId = "DialogBoxButtonAsset";
+        public const string DialogBoxContainerName = "dialog-box-container";
         public const string DialogBoxButtonParentName = "buttons-group";
         public const string TitleLabelName = "title-label";
         public const string MessageLabelName = "message-label";
@@ -15,11 +22,13 @@ namespace ConnectIt.UI.DialogBox
         private readonly ILocalizationProvider _localizationProvider;
         private readonly VisualTreeAsset _uiAsset;
         private readonly VisualTreeAsset _uiButtonAsset;
-        private readonly DialogBoxButton.Factory _dialogBoxFactory;
+        private readonly DialogBoxButton.Factory _dialogBoxButtonFactory;
+        private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
         private DialogBoxCreationData _creationData;
 
         private VisualElement _parent;
         private TemplateContainer _root;
+        private VisualElement _elementsContainer;
         private TextKey _titleKey;
         private TextKey _messageKey;
         private DialogBoxButtonInfo[] _buttonsInfo;
@@ -28,17 +37,22 @@ namespace ConnectIt.UI.DialogBox
         private Label _titleLabel;
         private Label _messageLabel;
 
+        private Coroutine _appearAnimationCoroutine;
+        private Coroutine _disposeCoroutine;
+
         public DialogBoxView(ILocalizationProvider localizationProvider,
             [Inject(Id = DialogBoxAssetId)] VisualTreeAsset uiAsset,
             [Inject(Id = DialogBoxButtonAssetId)] VisualTreeAsset uiButtonAsset,
             DialogBoxCreationData creationData,
-            DialogBoxButton.Factory dialogBoxFactory)
+            DialogBoxButton.Factory dialogBoxButtonFactory,
+            ICoroutinesGlobalContainer coroutinesGlobalContainer)
         {
             _localizationProvider = localizationProvider;
             _uiAsset = uiAsset;
             _uiButtonAsset = uiButtonAsset;
             _creationData = creationData;
-            _dialogBoxFactory = dialogBoxFactory;
+            _dialogBoxButtonFactory = dialogBoxButtonFactory;
+            _coroutinesGlobalContainer = coroutinesGlobalContainer;
         }
 
         public void Initialize()
@@ -56,14 +70,20 @@ namespace ConnectIt.UI.DialogBox
 
         public void Show()
         {
+            Assert.That(_root == null);
+
             _root = _uiAsset.CloneTree();
-            _root.AddToClassList(ClassNamesConstants.DialogBoxRoot);
             _parent.Add(_root);
+            _root.AddToClassList(ClassNamesConstants.DialogBoxRoot);
 
             _titleLabel = _root.Q<Label>(TitleLabelName);
             _messageLabel = _root.Q<Label>(MessageLabelName);
+            _elementsContainer = _root.Q<VisualElement>(DialogBoxContainerName);
 
             CreateButtons();
+            UpdateLocalization();
+
+            _appearAnimationCoroutine = _coroutinesGlobalContainer.StartAndRegisterCoroutine(WaitOneFrameAndStartAppearAnimation());
 
             _titleKey.ArgsChanged += OnTitleKeyArgsChanged;
             _messageKey.ArgsChanged += OnMessageKeyArgsChanged;
@@ -72,11 +92,51 @@ namespace ConnectIt.UI.DialogBox
 
         public void Close()
         {
+            Assert.IsNull(_disposeCoroutine);
 
+            _elementsContainer.AddToClassList(ClassNamesConstants.DialogBoxContainerClosed);
+            
+            float closeDelaySec = _elementsContainer.resolvedStyle.transitionDuration.Max(
+                timeValue =>
+                {
+                    return timeValue.unit switch
+                    {
+                        TimeUnit.Second => timeValue.value,
+                        TimeUnit.Millisecond => timeValue.value / 1000,
+
+                        _ => throw Assert.GetFailException(),
+                    };
+                });
+
+            _disposeCoroutine = _coroutinesGlobalContainer.StartAndRegisterCoroutine(WaitForDelayAndDisposeCoroutine(closeDelaySec)); 
+        }
+
+        public void Dispose()
+        {
+            _root.RemoveFromHierarchy();
+
+            foreach (var button in _createdButtons)
+                button.Dispose();
 
             _titleKey.ArgsChanged -= OnTitleKeyArgsChanged;
             _messageKey.ArgsChanged -= OnMessageKeyArgsChanged;
             _localizationProvider.LocalizationChanged -= UpdateLocalization;
+        }
+
+        private IEnumerator WaitOneFrameAndStartAppearAnimation()
+        {
+            yield return null;
+
+            _elementsContainer.RemoveFromClassList(ClassNamesConstants.DialogBoxContainerClosed);
+            _coroutinesGlobalContainer.StopAndUnregisterCoroutine(_appearAnimationCoroutine);
+        }
+
+        private IEnumerator WaitForDelayAndDisposeCoroutine(float delaySec)
+        {
+            yield return new WaitForSeconds(delaySec);
+
+            Dispose();
+            _coroutinesGlobalContainer.StopAndUnregisterCoroutine(_disposeCoroutine);
         }
 
         private void UpdateLocalization()
@@ -120,7 +180,7 @@ namespace ConnectIt.UI.DialogBox
 
                 Button button =  createdButtonAsset.Q<Button>();
 
-                _createdButtons[i] = _dialogBoxFactory.Create(_buttonsInfo[i], button, this);
+                _createdButtons[i] = _dialogBoxButtonFactory.Create(_buttonsInfo[i], button, this);
             }
 
             _buttonsInfo = null;

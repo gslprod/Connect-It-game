@@ -127,8 +127,7 @@ namespace ConnectIt.DI.Installers
 
         private void BindConnectionLine()
         {
-            Container.Bind<ConnectionLineView>()
-                     .FromInstance(_connectionLinePrefab)
+            Container.BindInstance(_connectionLinePrefab)
                      .AsSingle();
 
             Container.Bind<ICreatedObjectNotifier<ConnectionLine>>()

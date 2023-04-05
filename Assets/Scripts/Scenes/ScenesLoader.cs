@@ -13,12 +13,12 @@ namespace ConnectIt.Scenes
         public event Action<SceneType> OnNewSceneAsyncLoadFinished;
         public event Action<SceneType, float> OnNewSceneAsyncLoading;
 
-        private readonly CoroutinesGlobalContainer _coroutinesGlobalContainer;
+        private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
 
         private Coroutine _currentSceneLoadingCoroutine;
 
         public ScenesLoader(
-            CoroutinesGlobalContainer coroutinesGlobalContainer)
+            ICoroutinesGlobalContainer coroutinesGlobalContainer)
         {
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
         }

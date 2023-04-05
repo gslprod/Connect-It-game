@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConnectIt.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Zenject;
@@ -23,7 +24,18 @@ namespace ConnectIt.Infrastructure.Factories
 
         protected T CreateInternal() => Instantiator.Instantiate<T>();
 
-        protected T CreateInternal(IEnumerable<object> args) => Instantiator.Instantiate<T>(args);
+        protected T CreateInternal(IEnumerable<object> args)
+        {
+            Assert.That(ParamTypes.Count() == args.Count());
+
+            int count = args.Count();
+            TypeValuePair[] pairs = new TypeValuePair[count];
+
+            for (int i = 0; i < count; i++)
+                pairs[i] = new(ParamTypes.ElementAt(i), args.ElementAt(i));
+
+            return _diContainer.InstantiateExplicit<T>(pairs.ToList());
+        }
 
         public void Validate()
         {
