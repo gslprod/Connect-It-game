@@ -1,34 +1,38 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="DialogBox" src="project://database/Assets/UI%20Toolkit/UI%20Documents/Templates/DialogBox/DialogBox.uxml?fileID=9197481963319205126&amp;guid=f65fccb38445a4c4ea4476d65ef53018&amp;type=3#DialogBox" />
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/gameplay.uss?fileID=7433441132597879392&amp;guid=e8a7e8d530ddcbc40b8695c3d954011b&amp;type=3#gameplay" />
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/global.uss?fileID=7433441132597879392&amp;guid=3e3efaa0af4d22345b7f033c26dc1a86&amp;type=3#global" />
     <ui:VisualElement name="root" class="root">
-        <ui:VisualElement name="top-container" class="top-container">
-            <ui:VisualElement name="top-left-container" class="vertical-layout--left-align top-container__child">
-                <ui:VisualElement class="vertical-layout__child">
-                    <ui:Label name="level-label" text="Level 1" class="highlighted-label" />
+        <ui:VisualElement name="gameplay-container" class="gameplay-container">
+            <ui:VisualElement name="top-container" class="top-container">
+                <ui:VisualElement name="top-left-container" class="vertical-layout--left-align top-container__child">
+                    <ui:VisualElement class="vertical-layout__child">
+                        <ui:Label name="level-label" text="Level 1" class="highlighted-label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="vertical-layout__child">
+                        <ui:Label text="01:11" name="time-label" class="highlighted-label" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement class="vertical-layout__child">
-                    <ui:Label text="01:11" name="time-label" class="highlighted-label" />
+                <ui:VisualElement name="top-right-container" class="vertical-layout--right-align top-container__child">
+                    <ui:VisualElement class="vertical-layout__child">
+                        <ui:Label text="100 coins" name="coins-label" class="highlighted-label highlighted-label--coins" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="vertical-layout__child">
+                        <ui:Button text="Use boost" name="use-boost-button" class="highlighted-label highlighted-label--use-boost-button" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="top-right-container" class="vertical-layout--right-align top-container__child">
-                <ui:VisualElement class="vertical-layout__child">
-                    <ui:Label text="100 coins" name="coins-label" class="highlighted-label highlighted-label--coins" />
-                </ui:VisualElement>
-                <ui:VisualElement class="vertical-layout__child">
-                    <ui:Button text="Use boost" name="use-boost-button" class="highlighted-label highlighted-label--use-boost" />
-                </ui:VisualElement>
+            <ui:VisualElement name="central-container" class="central-container" />
+            <ui:VisualElement name="bottom-container" class="bottom-container">
+                <ui:Button name="restart-button" class="round-button round-button--restart">
+                    <ui:VisualElement class="round-button__icon round-button__icon--restart" />
+                </ui:Button>
+                <ConnectIt.UI.CustomControls.ProgressBar name="level-progress" value="50" title="50%" />
+                <ui:Button name="exit-button" class="round-button round-button--exit">
+                    <ui:VisualElement class="round-button__icon round-button__icon--exit" />
+                </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="central-container" class="central-container" />
-        <ui:VisualElement name="bottom-container" class="bottom-container">
-            <ui:Button name="restart-button" class="round-button round-button--restart">
-                <ui:VisualElement class="round-button__icon round-button__icon--restart" />
-            </ui:Button>
-            <ConnectIt.UI.CustomControls.ProgressBar name="level-progress" value="50" title="50%" />
-            <ui:Button name="exit-button" class="round-button round-button--exit">
-                <ui:VisualElement class="round-button__icon round-button__icon--exit" />
-            </ui:Button>
-        </ui:VisualElement>
+        <ui:Instance template="DialogBox" name="DialogBox" class="dialog-box-root" />
     </ui:VisualElement>
 </ui:UXML>

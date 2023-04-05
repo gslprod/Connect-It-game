@@ -1,10 +1,10 @@
 :root {
     --non-focus-color-1: rgba(120, 120, 120, 0.3);
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    flex-grow: 1;
+    --accept-color: rgba(0, 255, 0, 0.3);
+    --dismiss-color: rgba(255, 0, 0, 0.3);
+}
+
+.label {
 }
 
 .highlighted-label {
@@ -34,7 +34,7 @@
     background-color: rgba(255, 150, 0, 0.3);
 }
 
-.highlighted-label--use-boost {
+.highlighted-label--use-boost-button {
     background-color: rgba(0, 167, 0, 0.3);
 }
 
@@ -97,7 +97,7 @@
 }
 
 .round-button--exit {
-    background-color: rgba(255, 0, 0, 0.3);
+    background-color: var(--dismiss-color);
 }
 
 .round-button__icon--exit {
@@ -143,4 +143,57 @@
 .progress-bar__background {
     background-color: var(--non-focus-color-1);
     flex-grow: 1;
+}
+
+.dialog-box-root {
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.dialog-box__container {
+    flex-grow: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--non-focus-color-1);
+    font-size: 36px;
+    color: rgb(255, 255, 255);
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.dialog-box__title-label {
+    font-size: 55px;
+    -unity-text-align: upper-center;
+    margin-bottom: 15px;
+}
+
+.dialog-box__message-label {
+    font-size: 42px;
+    -unity-text-align: upper-center;
+    margin-bottom: 20px;
+}
+
+.dialog-box__buttons-group {
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: -20px;
+}
+
+.dialog-box__button {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.dialog-box__button--accept {
+    background-color: rgba(0, 167, 0, 0.3);
+}
+
+.dialog-box__button--dismiss {
+    background-color: var(--dismiss-color);
 }

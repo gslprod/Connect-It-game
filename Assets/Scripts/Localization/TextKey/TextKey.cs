@@ -1,4 +1,5 @@
 ﻿using ConnectIt.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Zenject;
@@ -7,6 +8,8 @@ namespace ConnectIt.Localization
 {
     public class TextKey
     {
+        public event Action<TextKey> ArgsChanged;
+
         public string Key => _key;
         public IEnumerable<object> Args => _args;
 
@@ -30,11 +33,15 @@ namespace ConnectIt.Localization
             Assert.ArgIsNotNull(args);
 
             _args = args;
+
+            ArgsChanged?.Invoke(this);
         }
 
         public void ClearArgs()
         {
             _args = null;
+
+            ArgsChanged?.Invoke(this);
         }
 
         public override string ToString()

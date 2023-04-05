@@ -30,6 +30,21 @@ namespace ConnectIt.Utilities
             ArgIsNotNull(arg2);
         }
 
+        public static void ArgsIsNotNull(object arg1, object arg2, object arg3)
+        {
+            ArgIsNotNull(arg1);
+            ArgIsNotNull(arg2);
+            ArgIsNotNull(arg3);
+        }
+
+        public static void ArgsIsNotNull(object arg1, object arg2, object arg3, object arg4)
+        {
+            ArgIsNotNull(arg1);
+            ArgIsNotNull(arg2);
+            ArgIsNotNull(arg3);
+            ArgIsNotNull(arg4);
+        }
+
         public static void That(bool condition)
         {
             if (!condition)

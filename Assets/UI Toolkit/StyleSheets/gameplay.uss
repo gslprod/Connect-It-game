@@ -7,6 +7,10 @@
     opacity: 1;
     align-items: stretch;
     justify-content: flex-start;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .top-container {
@@ -29,4 +33,8 @@
     background-color: rgba(0, 0, 0, 0);
     flex-grow: 1;
     align-self: stretch;
+}
+
+.gameplay-container {
+    flex-grow: 1;
 }
