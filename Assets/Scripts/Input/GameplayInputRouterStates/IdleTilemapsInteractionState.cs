@@ -1,5 +1,4 @@
 ﻿using ConnectIt.Gameplay.Model;
-using ConnectIt.Infrastructure.CreatedObjectNotifiers;
 using UnityEngine.InputSystem;
 using Zenject;
 using static ConnectIt.Gameplay.Model.ConnectionLine;

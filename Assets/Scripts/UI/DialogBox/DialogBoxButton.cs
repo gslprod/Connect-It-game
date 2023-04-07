@@ -15,6 +15,7 @@ namespace ConnectIt.UI.DialogBox
 
         private TextKey _titleKey;
         private Action _onClick;
+        private bool _receivesButtonCallback = false;
 
         public DialogBoxButton(ILocalizationProvider localizationProvider,
             DialogBoxButtonInfo buttonInfo,
@@ -40,7 +41,7 @@ namespace ConnectIt.UI.DialogBox
 
             _buttonInfo = null;
 
-            _button.clicked += OnButtonClick;
+            ReceiveButtonCallback(true);
 
             _localizationProvider.LocalizationChanged += UpdateLocalization;
             _titleKey.ArgsChanged += OnTitleKeyArgsChanged;
@@ -48,10 +49,23 @@ namespace ConnectIt.UI.DialogBox
 
         public void Dispose()
         {
-            _button.clicked -= OnButtonClick;
+            ReceiveButtonCallback(false);
 
             _localizationProvider.LocalizationChanged -= UpdateLocalization;
             _titleKey.ArgsChanged -= OnTitleKeyArgsChanged;
+        }
+
+        public void ReceiveButtonCallback(bool isReceive)
+        {
+            if (isReceive == _receivesButtonCallback)
+                return;
+
+            _receivesButtonCallback = isReceive;
+
+            if (_receivesButtonCallback)
+                _button.clicked += OnButtonClick;
+            else
+                _button.clicked -= OnButtonClick;
         }
 
         private void SetupButtonView()

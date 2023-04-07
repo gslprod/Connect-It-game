@@ -46,10 +46,13 @@ namespace ConnectIt.Input
 
         public void Tick()
         {
+            if (!_input.asset.enabled)
+                return;
+
             State.Update();
         }
 
-        public void SetState(BaseTilemapsInteractionState newState)
+        public void SetState(BaseState newState)
         {
             Assert.ArgIsNotNull(newState);
 

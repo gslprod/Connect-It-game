@@ -95,7 +95,10 @@ namespace ConnectIt.UI.DialogBox
             Assert.IsNull(_disposeCoroutine);
 
             _elementsContainer.AddToClassList(ClassNamesConstants.DialogBoxContainerClosed);
-            
+
+            foreach (var button in _createdButtons)
+                button.ReceiveButtonCallback(false);
+
             float closeDelaySec = _elementsContainer.resolvedStyle.transitionDuration.Max(
                 timeValue =>
                 {
