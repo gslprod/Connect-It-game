@@ -1,19 +1,38 @@
-﻿using System;
+﻿using ConnectIt.Infrastructure.Setters;
+using System;
+using Zenject;
 
 namespace ConnectIt.Gameplay.Pause
 {
-    public class PauseService : IPauseService
+    public class PauseService : IPauseService, IInitializable
     {
         public event Action<bool> PauseChanged;
 
-        public bool Paused { get; private set; } = false;
+        public bool Paused { get; private set; }
 
-        public void SetPause(bool isPause)
+        private PriorityAwareSetter<bool> _isPausedSetter;
+
+        public void Initialize()
         {
-            if (isPause == Paused)
-                return;
+            _isPausedSetter = new(
+                SetPauseInternal,
+                () => Paused,
+                false);
+        }
 
-            Paused = isPause;
+        public void SetPause(bool isPause, int priority)
+        {
+            _isPausedSetter.SetValue(isPause, priority);
+        }
+
+        public void ResetPauseWithPriority(int priority)
+        {
+            _isPausedSetter.ResetValueWithPriority(priority);
+        }
+
+        private void SetPauseInternal(bool newValue)
+        {
+            Paused = newValue;
             PauseChanged?.Invoke(Paused);
         }
     }

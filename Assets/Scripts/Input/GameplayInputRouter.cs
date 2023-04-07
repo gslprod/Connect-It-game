@@ -1,4 +1,5 @@
-﻿using ConnectIt.Input.GameplayInputRouterStates;
+﻿using ConnectIt.Infrastructure.Setters;
+using ConnectIt.Input.GameplayInputRouterStates;
 using ConnectIt.Utilities;
 using System;
 using UnityEngine.InputSystem;
@@ -10,10 +11,13 @@ namespace ConnectIt.Input
     {
         public event Action StateChanged;
 
+        public bool Enabled => _input.asset.enabled;
         public BaseState State { get; private set; }
 
         private readonly GameplayInput _input;
         private readonly IdleTilemapsInteractionState.Factory _idleStateFactory;
+
+        private PriorityAwareSetter<bool> _enableSetter;
 
         public GameplayInputRouter(
             GameplayInput gameplayInput,
@@ -27,21 +31,10 @@ namespace ConnectIt.Input
         {
             ResetState();
 
-            Enable();
-        }
-
-        public void Enable()
-        {
-            _input.Enable();
-
-            SubscribeToInput();
-        }
-
-        public void Disable()
-        {
-            _input.Disable();
-
-            UnsubscribeFromInput();
+            _enableSetter = new(
+                SetEnableInternal,
+                () => Enabled,
+                true);
         }
 
         public void Tick()
@@ -50,6 +43,16 @@ namespace ConnectIt.Input
                 return;
 
             State.Update();
+        }
+
+        public void SetEnable(bool enable, int priority)
+        {
+            _enableSetter.SetValue(enable, priority);
+        }
+
+        public void ResetEnableWithPriority(int priority)
+        {
+            _enableSetter.ResetValueWithPriority(priority);
         }
 
         public void SetState(BaseState newState)
@@ -83,6 +86,28 @@ namespace ConnectIt.Input
         private void OnInteractionPressCanceled(InputAction.CallbackContext context)
         {
             State.OnInteractionPressCanceled(context);
+        }
+
+        private void SetEnableInternal(bool enable)
+        {
+            if (enable)
+                Enable();
+            else
+                Disable();
+        }
+
+        private void Enable()
+        {
+            _input.Enable();
+
+            SubscribeToInput();
+        }
+
+        private void Disable()
+        {
+            _input.Disable();
+
+            UnsubscribeFromInput();
         }
 
         private void SubscribeToInput()

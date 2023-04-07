@@ -8,6 +8,7 @@ namespace ConnectIt.Gameplay.Pause
 
         event Action<bool> PauseChanged;
 
-        void SetPause(bool isPause);
+        void SetPause(bool isPause, int priority);
+        void ResetPauseWithPriority(int priority);
     }
 }
