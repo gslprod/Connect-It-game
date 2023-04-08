@@ -1,5 +1,6 @@
 ﻿using ConnectIt.Localization;
 using ConnectIt.Utilities;
+using System;
 using UnityEngine.UIElements;
 
 namespace ConnectIt.UI.DialogBox

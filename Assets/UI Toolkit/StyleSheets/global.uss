@@ -1,5 +1,7 @@
 :root {
     --non-focus-color-1: rgba(120, 120, 120, 0.3);
+    --non-focus-color-2: rgba(90, 90, 90, 0.55);
+    --blackout-color: rgba(0, 0, 0, 0.7);
     --accept-color: rgba(0, 255, 0, 0.3);
     --dismiss-color: rgba(255, 0, 0, 0.3);
 }
@@ -108,6 +110,18 @@
     margin-top: 22px;
 }
 
+.round-button--pause {
+    background-color: var(--dismiss-color);
+}
+
+.round-button__icon--pause {
+    background-image: url('project://database/Assets/2D/Sprites/UI/pause/pause%20256.png?fileID=21300000&guid=5807500da87cbaf4a9d9c0b71a9a7ab2&type=3#pause 256');
+    margin-left: 13px;
+    margin-right: 13px;
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+
 .progress-bar {
     width: 500px;
     height: 60px;
@@ -145,19 +159,36 @@
     flex-grow: 1;
 }
 
-.dialog-box-root {
+.dialog-box__root {
     position: absolute;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
     height: 100%;
     overflow: hidden;
+    transition-property: opacity;
+    transition-delay: 0s;
+    transition-duration: 800ms;
+    transition-timing-function: ease-out-cubic;
+    background-color: var(--blackout-color);
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.dialog-box__root--closed {
+    transition-property: opacity;
+    transition-delay: 0s;
+    transition-duration: 800ms;
+    transition-timing-function: ease-out-cubic;
+    opacity: 0;
 }
 
 .dialog-box__container {
     justify-content: center;
     align-items: center;
-    background-color: var(--non-focus-color-1);
+    background-color: var(--non-focus-color-2);
     font-size: 36px;
     color: rgb(255, 255, 255);
     padding-left: 15px;
@@ -178,7 +209,7 @@
     transition-timing-function: ease-out-cubic, ease-out-cubic, ease-out-cubic;
     scale: 0 0;
     opacity: 0;
-    rotate: 90deg;
+    rotate: 45deg;
 }
 
 .dialog-box__title-label {
@@ -202,6 +233,10 @@
 .dialog-box__button {
     width: 100%;
     margin-bottom: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .dialog-box__button--accept {

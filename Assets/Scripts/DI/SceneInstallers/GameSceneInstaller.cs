@@ -3,6 +3,7 @@ using ConnectIt.Gameplay.LevelLoading;
 using ConnectIt.Gameplay.Model;
 using ConnectIt.Gameplay.MonoWrappers;
 using ConnectIt.Gameplay.Observers;
+using ConnectIt.Gameplay.Pause;
 using ConnectIt.Gameplay.Time;
 using ConnectIt.Gameplay.View;
 using ConnectIt.Infrastructure.CreatedObjectNotifiers;
@@ -13,6 +14,7 @@ using ConnectIt.Infrastructure.Spawners;
 using ConnectIt.Input;
 using ConnectIt.Input.GameplayInputRouterStates;
 using ConnectIt.UI.Gameplay.Views;
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
@@ -36,6 +38,13 @@ namespace ConnectIt.DI.Installers
             BindUIViews();
             BindTime();
             BindLevelLoader();
+            BindPauseService();
+        }
+
+        private void BindPauseService()
+        {
+            Container.BindInterfacesTo<PauseService>()
+                     .AsSingle();
         }
 
         private void BindLevelLoader()
@@ -55,7 +64,17 @@ namespace ConnectIt.DI.Installers
                      .FromResolve()
                      .AsCached();
 
+            Container.Bind<IInitializable>()
+                     .To<GameplayTimeProvider>()
+                     .FromResolve()
+                     .AsCached();
+
             Container.Bind<ITickable>()
+                     .To<GameplayTimeProvider>()
+                     .FromResolve()
+                     .AsCached();
+
+            Container.Bind<IDisposable>()
                      .To<GameplayTimeProvider>()
                      .FromResolve()
                      .AsCached();
@@ -75,6 +94,9 @@ namespace ConnectIt.DI.Installers
 
                 Container.BindFactory<Label, LevelView, LevelView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Label, LevelView>>();
+
+                Container.BindFactory<Button, Action, DefaultButtonView, DefaultButtonView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Button, Action, DefaultButtonView>>();
             }
         }
 

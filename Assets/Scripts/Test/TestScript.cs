@@ -45,17 +45,17 @@ namespace ConnectIt.Test
 
         private void Start()
         {
-            _uiDoc = FindObjectOfType<UIDocument>();
+            //_uiDoc = FindObjectOfType<UIDocument>();
 
-            var parent = _uiDoc.rootVisualElement.Q<VisualElement>("root");
-            DialogBoxCreationData dialogBoxCreationData = new(parent,
-                _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Title, null),
-                _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Message, null),
-                new DialogBoxButtonInfo[] {
-                    new DialogBoxButtonInfo(
-                    _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Title, null), null, DialogBoxButtonType.Accept, true) });
+            //var parent = _uiDoc.rootVisualElement.Q<VisualElement>("root");
+            //DialogBoxCreationData dialogBoxCreationData = new(parent,
+            //    _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Title, null),
+            //    _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Message, null),
+            //    new DialogBoxButtonInfo[] {
+            //        new DialogBoxButtonInfo(
+            //        _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Title, null), null, DialogBoxButtonType.Accept, true) });
 
-            StartCoroutine(Delay(dialogBoxCreationData));
+            //StartCoroutine(Delay(dialogBoxCreationData));
         }
 
         private IEnumerator Delay(DialogBoxCreationData dialogBoxCreationData)

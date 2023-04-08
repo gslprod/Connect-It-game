@@ -1,3 +1,7 @@
+using ConnectIt.Gameplay.Pause;
+using ConnectIt.Input;
+using ConnectIt.Localization;
+using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Gameplay.Views;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,29 +13,52 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
     public class GameplayUIDocumentMonoWrapper : MonoBehaviour
     {
         private UIDocument _uiDocument;
-        private VisualElement _rootVE => _uiDocument.rootVisualElement;
+        private VisualElement _documentRootVE => _uiDocument.rootVisualElement;
+        private VisualElement _rootVE;
+
+        private DialogBoxView.Factory _dialogBoxFactory;
+        private TextKey.Factory _textKeyFactory;
+        private GameplayInputRouter _gameplayInputRouter;
+        private IPauseService _pauseService;
 
         private LevelProgressView _levelProgressView;
         private LevelProgressView.Factory _levelProgressViewFactory;
+
         private TimeView _timeView;
         private TimeView.Factory _timeViewFactory;
+
         private LevelView _levelView;
         private LevelView.Factory _levelViewFactory;
+
+        private DefaultButtonView _pauseButtonView;
+        private DefaultButtonView _restartButtonView;
+        private DefaultButtonView.Factory _defaultButtonViewFactory;
 
         [Inject]
         public void Constructor(
             LevelProgressView.Factory levelProgressViewFactory,
             TimeView.Factory timeViewFactory,
-            LevelView.Factory levelViewFactory)
+            LevelView.Factory levelViewFactory,
+            DefaultButtonView.Factory defaultButtonViewFactor,
+            DialogBoxView.Factory dialogBoxFactory,
+            TextKey.Factory textKeyFactory,
+            GameplayInputRouter gameplayInputRouter,
+            IPauseService pauseService)
         {
             _levelProgressViewFactory = levelProgressViewFactory;
             _timeViewFactory = timeViewFactory;
             _levelViewFactory = levelViewFactory;
+            _defaultButtonViewFactory = defaultButtonViewFactor;
+            _dialogBoxFactory = dialogBoxFactory;
+            _textKeyFactory = textKeyFactory;
+            _gameplayInputRouter = gameplayInputRouter;
+            _pauseService = pauseService;
         }
 
         private void Awake()
         {
             _uiDocument = GetComponent<UIDocument>();
+            _rootVE = _documentRootVE.Q<VisualElement>(NameConstants.RootName);
         }
 
         private void Start()
@@ -52,13 +79,19 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
         private void CreateViews()
         {
             _levelProgressView = _levelProgressViewFactory
-                .Create(_rootVE.Q<Custom.ProgressBar>(NameConstants.LevelProgressBarName));
+                .Create(_documentRootVE.Q<Custom.ProgressBar>(NameConstants.LevelProgressBarName));
 
             _timeView = _timeViewFactory
-                .Create(_rootVE.Q<Label>(NameConstants.TimeLabelName));
+                .Create(_documentRootVE.Q<Label>(NameConstants.TimeLabelName));
 
             _levelView = _levelViewFactory
-                .Create(_rootVE.Q<Label>(NameConstants.LevelLabelName));
+                .Create(_documentRootVE.Q<Label>(NameConstants.LevelLabelName));
+
+            _pauseButtonView = _defaultButtonViewFactory
+                .Create(_documentRootVE.Q<Button>(NameConstants.PauseButtonName), PauseButtonClick);
+
+            _restartButtonView = _defaultButtonViewFactory
+                .Create(_documentRootVE.Q<Button>(NameConstants.RestartButtonName), RestartButtonClick);
         }
 
         private void SendTickToTickableViews()
@@ -70,6 +103,131 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
         {
             _levelProgressView.Dispose();
             _levelView.Dispose();
+            _pauseButtonView.Dispose();
+            _restartButtonView.Dispose();
+        }
+
+        private void RestartButtonClick()
+        {
+            //todo
+            DialogBoxButtonInfo confirmButtonInfo = new(
+                _textKeyFactory.Create(TextKeysConstants.Common.Confirm, null),
+                null,
+                DialogBoxButtonType.Accept);
+
+            DialogBoxButtonInfo cancelButtonInfo = new(
+                _textKeyFactory.Create(TextKeysConstants.Common.Cancel, null),
+                null,
+                DialogBoxButtonType.Dismiss,
+                true);
+
+            DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
+            {
+                confirmButtonInfo, cancelButtonInfo
+            };
+
+            DialogBoxCreationData creationData = new(
+                _rootVE,
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.RestartLevelConfirm_Title, null),
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.RestartLevelConfirm_Message, null),
+                buttonsInfo,
+                false);
+
+            DialogBoxView dialogBox = _dialogBoxFactory.Create(creationData);
+
+            dialogBox.Showing += OnRestartDialogBoxShowing;
+            dialogBox.Closing += OnRestartDialogBoxClosing;
+
+            dialogBox.Show();
+        }
+
+        private void OnRestartDialogBoxShowing(DialogBoxView dialogBox)
+        {
+            dialogBox.Showing -= OnRestartDialogBoxShowing;
+
+            _gameplayInputRouter.SetEnable(false, GameplayInputRouterEnablePriority.DialogBox, dialogBox);
+        }
+
+        private void OnRestartDialogBoxClosing(DialogBoxView dialogBox)
+        {
+            dialogBox.Closing -= OnRestartDialogBoxClosing;
+
+            _gameplayInputRouter.ResetEnable(dialogBox);
+        }
+
+        private void PauseButtonClick()
+        {
+            DialogBoxButtonInfo continueButtonInfo = new(
+                _textKeyFactory.Create(TextKeysConstants.Gameplay.PauseMenu_Continue, null),
+                null,
+                DialogBoxButtonType.Default,
+                true);
+
+            DialogBoxButtonInfo exitButtonInfo = new(
+                _textKeyFactory.Create(TextKeysConstants.Gameplay.PauseMenu_Exit, null),
+                ExitButtonClick,
+                DialogBoxButtonType.Dismiss);
+
+            DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
+            {
+                continueButtonInfo, exitButtonInfo
+            };
+
+            DialogBoxCreationData creationData = new(
+                _rootVE,
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.LevelPaused_Title, null),
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.LevelPaused_Message, null),
+                buttonsInfo,
+                false);
+
+            DialogBoxView dialogBox = _dialogBoxFactory.Create(creationData);
+
+            dialogBox.Showing += OnPauseDialogBoxShowing;
+            dialogBox.Closing += OnPauseDialogBoxClosing;
+
+            dialogBox.Show();
+
+            void ExitButtonClick()
+            {
+                DialogBoxButtonInfo cancelButtonInfo = new(
+                    _textKeyFactory.Create(TextKeysConstants.Common.Cancel, null),
+                    null,
+                    DialogBoxButtonType.Default,
+                    true);
+
+                //todo
+                DialogBoxButtonInfo exitButtonInfo = new(
+                    _textKeyFactory.Create(TextKeysConstants.Common.Confirm, null),
+                    null,
+                    DialogBoxButtonType.Dismiss);
+
+                DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
+                {
+                    cancelButtonInfo, exitButtonInfo
+                };
+
+                DialogBoxCreationData creationData = new(
+                    _rootVE,
+                    _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Title, null),
+                    _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Message, null),
+                    buttonsInfo);
+
+                _dialogBoxFactory.Create(creationData);
+            }
+        }
+
+        private void OnPauseDialogBoxShowing(DialogBoxView dialogBox)
+        {
+            dialogBox.Showing -= OnRestartDialogBoxShowing;
+
+            _pauseService.SetPause(true, PauseEnablePriority.PauseMenu, dialogBox);
+        }
+
+        private void OnPauseDialogBoxClosing(DialogBoxView dialogBox)
+        {
+            dialogBox.Closing -= OnRestartDialogBoxClosing;
+
+            _pauseService.ResetPause(dialogBox);
         }
     }
 }

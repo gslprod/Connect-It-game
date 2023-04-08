@@ -5,6 +5,8 @@
         public static class Gameplay
         {
             public const string Level = GameplayBaseString + ".Level";
+            public const string PauseMenu_Continue = GameplayBaseString + ".PauseMenu.Continue";
+            public const string PauseMenu_Exit = GameplayBaseString + ".PauseMenu.Exit";
 
             private const string GameplayBaseString = "Gameplay";
         }
@@ -14,7 +16,21 @@
             public const string QuitLevelConfirm_Title = DialogBoxBaseString + ".QuitLevelConfirm.Title";
             public const string QuitLevelConfirm_Message = DialogBoxBaseString + ".QuitLevelConfirm.Message";
 
+            public const string RestartLevelConfirm_Title = DialogBoxBaseString + ".RestartLevelConfirm.Title";
+            public const string RestartLevelConfirm_Message = DialogBoxBaseString + ".RestartLevelConfirm.Message";
+
+            public const string LevelPaused_Title = DialogBoxBaseString + ".LevelPaused.Title";
+            public const string LevelPaused_Message = DialogBoxBaseString + ".LevelPaused.Message";
+
             private const string DialogBoxBaseString = "DialogBox";
+        }
+
+        public static class Common
+        {
+            public const string Confirm = CommonBaseString + ".Confirm";
+            public const string Cancel = CommonBaseString + ".Cancel";
+
+            private const string CommonBaseString = "Common";
         }
     }
 }

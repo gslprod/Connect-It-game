@@ -20,14 +20,14 @@ namespace ConnectIt.Gameplay.Pause
                 false);
         }
 
-        public void SetPause(bool isPause, int priority)
+        public void SetPause(bool isPause, int priority, object source)
         {
-            _isPausedSetter.SetValue(isPause, priority);
+            _isPausedSetter.SetValue(isPause, priority, source);
         }
 
-        public void ResetPauseWithPriority(int priority)
+        public void ResetPause(object source)
         {
-            _isPausedSetter.ResetValueWithPriority(priority);
+            _isPausedSetter.ResetValue(source);
         }
 
         private void SetPauseInternal(bool newValue)

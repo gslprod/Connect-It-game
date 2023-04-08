@@ -2,6 +2,8 @@
 {
     public static class NameConstants
     {
+        public const string RootName = "root";
+
         public const string LevelLabelName = "level-label";
         public const string TimeLabelName = "time-label";
         public const string CoinsLabelName = "coins-label";
@@ -9,6 +11,6 @@
 
         public const string RestartButtonName = "restart-button";
         public const string LevelProgressBarName = "level-progress";
-        public const string ExitButtonName = "exit-button";
+        public const string PauseButtonName = "pause-button";
     }
 }

@@ -10,7 +10,7 @@ namespace ConnectIt.Infrastructure.Setters
         private readonly Func<TValue> _getter;
         private readonly TValue _defaultValue;
 
-        private readonly List<PriorityValuePair<TValue>> _prioritiesAndValues = new();
+        private readonly List<ValueSource<TValue>> _valueSources = new();
 
         public PriorityAwareSetter(Action<TValue> setter,
             Func<TValue> getter,
@@ -25,37 +25,66 @@ namespace ConnectIt.Infrastructure.Setters
             Initialize();
         }
 
-        public void SetValue(TValue value, int priority)
+        public void SetValue(TValue value, int priority, object source)
         {
-            PriorityValuePair<TValue> newPair = new(priority, value);
+            Assert.ArgIsNotNull(source);
 
-            if (_prioritiesAndValues.Count == 0)
+            ValueSource<TValue> newPair = new(priority, value, source);
+
+            if (_valueSources.Count == 0)
             {
-                _prioritiesAndValues.Add(newPair);
+                _valueSources.Add(newPair);
                 UpdateValue();
 
                 return;
             }
 
-            int insertIndex = _prioritiesAndValues.FindIndex(
-                pair => pair.Priority <= priority);
+            int affectedIndex = -1;
+            bool insertNeed = true;
+            for (int i = 0; i < _valueSources.Count; i++)
+            {
+                ValueSource<TValue> valueSource = _valueSources[i];
 
-            Assert.That(priority != _prioritiesAndValues[insertIndex].Priority);
+                if (affectedIndex == -1 &&
+                    valueSource.Priority <= priority)
+                {
+                    affectedIndex = i;
+                }
 
-            _prioritiesAndValues.Insert(insertIndex, newPair);
+                if (valueSource.Source == source)
+                {
+                    valueSource.Value = value;
+                    valueSource.Priority = priority;
 
-            if (insertIndex == 0)
+                    affectedIndex = i;
+                    insertNeed = false;
+
+                    break;
+                }
+            }
+
+            if (insertNeed)
+            {
+                if (affectedIndex == -1)
+                    affectedIndex = _valueSources.Count - 1;
+
+                _valueSources.Insert(affectedIndex, newPair);
+            }
+
+            if (affectedIndex == 0)
                 UpdateValue();
         }
 
-        public void ResetValueWithPriority(int priority)
+        public void ResetValue(object source)
         {
-            int index = _prioritiesAndValues.FindIndex(
-                pair => pair.Priority == priority);
+            Assert.ArgIsNotNull(source);
 
-            _prioritiesAndValues.RemoveAt(index);
+            int affectedIndex = _valueSources.FindIndex(
+                pair => pair.Source == source);
 
-            if (index == 0)
+            _valueSources.RemoveAt(affectedIndex);
+
+            if (affectedIndex == 0)
                 UpdateValue();
         }
 
@@ -66,7 +95,7 @@ namespace ConnectIt.Infrastructure.Setters
 
         private void UpdateValue()
         {
-            TValue toSet = _prioritiesAndValues.Count > 0 ? _prioritiesAndValues[0].Value : _defaultValue;
+            TValue toSet = _valueSources.Count > 0 ? _valueSources[0].Value : _defaultValue;
 
             if (EqualityComparer<TValue>.Default.Equals(toSet, GetValue()))
                 return;

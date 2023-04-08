@@ -19,6 +19,9 @@ namespace ConnectIt.UI.DialogBox
         public const string TitleLabelName = "title-label";
         public const string MessageLabelName = "message-label";
 
+        public event Action<DialogBoxView> Showing;
+        public event Action<DialogBoxView> Closing;
+
         private readonly ILocalizationProvider _localizationProvider;
         private readonly VisualTreeAsset _uiAsset;
         private readonly VisualTreeAsset _uiButtonAsset;
@@ -75,6 +78,7 @@ namespace ConnectIt.UI.DialogBox
             _root = _uiAsset.CloneTree();
             _parent.Add(_root);
             _root.AddToClassList(ClassNamesConstants.DialogBoxRoot);
+            _root.AddToClassList(ClassNamesConstants.DialogBoxRootClosed);
 
             _titleLabel = _root.Q<Label>(TitleLabelName);
             _messageLabel = _root.Q<Label>(MessageLabelName);
@@ -88,6 +92,8 @@ namespace ConnectIt.UI.DialogBox
             _titleKey.ArgsChanged += OnTitleKeyArgsChanged;
             _messageKey.ArgsChanged += OnMessageKeyArgsChanged;
             _localizationProvider.LocalizationChanged += UpdateLocalization;
+
+            Showing?.Invoke(this);
         }
 
         public void Close()
@@ -95,11 +101,15 @@ namespace ConnectIt.UI.DialogBox
             Assert.IsNull(_disposeCoroutine);
 
             _elementsContainer.AddToClassList(ClassNamesConstants.DialogBoxContainerClosed);
+            _root.AddToClassList(ClassNamesConstants.DialogBoxRootClosed);
 
             foreach (var button in _createdButtons)
                 button.ReceiveButtonCallback(false);
 
-            float closeDelaySec = _elementsContainer.resolvedStyle.transitionDuration.Max(
+            float closeDelaySec =
+                _elementsContainer.resolvedStyle.transitionDuration
+                .Concat(_root.resolvedStyle.transitionDuration)
+                .Max(
                 timeValue =>
                 {
                     return timeValue.unit switch
@@ -111,7 +121,9 @@ namespace ConnectIt.UI.DialogBox
                     };
                 });
 
-            _disposeCoroutine = _coroutinesGlobalContainer.StartAndRegisterCoroutine(WaitForDelayAndDisposeCoroutine(closeDelaySec)); 
+            _disposeCoroutine = _coroutinesGlobalContainer.StartAndRegisterCoroutine(WaitForDelayAndDisposeCoroutine(closeDelaySec));
+
+            Closing?.Invoke(this);
         }
 
         public void Dispose()
@@ -131,6 +143,8 @@ namespace ConnectIt.UI.DialogBox
             yield return null;
 
             _elementsContainer.RemoveFromClassList(ClassNamesConstants.DialogBoxContainerClosed);
+            _root.RemoveFromClassList(ClassNamesConstants.DialogBoxRootClosed);
+
             _coroutinesGlobalContainer.StopAndUnregisterCoroutine(_appearAnimationCoroutine);
         }
 
@@ -173,7 +187,7 @@ namespace ConnectIt.UI.DialogBox
             if (_buttonsInfo == null || _buttonsInfo.Length == 0)
                 return;
 
-            VisualElement buttonsParent = _parent.Q<VisualElement>(DialogBoxButtonParentName);
+            VisualElement buttonsParent = _root.Q<VisualElement>(DialogBoxButtonParentName);
             _createdButtons = new DialogBoxButton[_buttonsInfo.Length];
 
             for (int i = 0; i < _buttonsInfo.Length; i++)

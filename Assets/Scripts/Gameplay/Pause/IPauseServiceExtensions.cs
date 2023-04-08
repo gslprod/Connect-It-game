@@ -2,14 +2,9 @@
 {
     public static class IPauseServiceExtensions
     {
-        public static void SetPause(this IPauseService source, bool isPause, PauseEnablePriority priority)
+        public static void SetPause(this IPauseService invokeSource, bool isPause, PauseEnablePriority priority, object source)
         {
-            source.SetPause(isPause, (int)priority);
-        }
-
-        public static void ResetPauseWithPriority(this IPauseService source, PauseEnablePriority priority)
-        {
-            source.ResetPauseWithPriority((int)priority);
+            invokeSource.SetPause(isPause, (int)priority, source);
         }
     }
 }

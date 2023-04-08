@@ -1,3 +1,7 @@
 Key,English,Russian
 DialogBox.QuitLevelConfirm.Title,,Закрыть уровень?
-DialogBox.QuitLevelConfirm.Message,,Ваш прогресс по текущему уровню будет сброшен.
+DialogBox.QuitLevelConfirm.Message,,Ваш прогресс по текущему уровню будет потерян.
+DialogBox.RestartLevelConfirm.Title,,Перезапустить уровень?
+DialogBox.RestartLevelConfirm.Message,,Ваш прогресс по текущему уровню будет потерян.
+DialogBox.LevelPaused.Title,,Игра на паузе
+DialogBox.LevelPaused.Message,,Вы можете продолжить играть в любой момент.

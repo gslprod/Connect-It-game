@@ -27,8 +27,8 @@
                     <ui:VisualElement class="round-button__icon round-button__icon--restart" />
                 </ui:Button>
                 <ConnectIt.UI.CustomControls.ProgressBar name="level-progress" value="50" title="50%" />
-                <ui:Button name="exit-button" class="round-button round-button--exit">
-                    <ui:VisualElement class="round-button__icon round-button__icon--exit" />
+                <ui:Button name="pause-button" class="round-button round-button--pause">
+                    <ui:VisualElement class="round-button__icon round-button__icon--pause" />
                 </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>

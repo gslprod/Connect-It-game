@@ -1,4 +1,5 @@
-﻿using ConnectIt.Infrastructure.Setters;
+﻿using ConnectIt.Gameplay.Pause;
+using ConnectIt.Infrastructure.Setters;
 using ConnectIt.Input.GameplayInputRouterStates;
 using ConnectIt.Utilities;
 using System;
@@ -7,7 +8,7 @@ using Zenject;
 
 namespace ConnectIt.Input
 {
-    public class GameplayInputRouter : IInitializable, ITickable
+    public class GameplayInputRouter : IInitializable, ITickable, IDisposable
     {
         public event Action StateChanged;
 
@@ -16,15 +17,18 @@ namespace ConnectIt.Input
 
         private readonly GameplayInput _input;
         private readonly IdleTilemapsInteractionState.Factory _idleStateFactory;
+        private IPauseService _pauseService;
 
         private PriorityAwareSetter<bool> _enableSetter;
 
         public GameplayInputRouter(
             GameplayInput gameplayInput,
-            IdleTilemapsInteractionState.Factory idleStateFactory)
+            IdleTilemapsInteractionState.Factory idleStateFactory,
+            IPauseService pauseService)
         {
             _input = gameplayInput;
             _idleStateFactory = idleStateFactory;
+            _pauseService = pauseService;
         }
 
         public void Initialize()
@@ -35,6 +39,8 @@ namespace ConnectIt.Input
                 SetEnableInternal,
                 () => Enabled,
                 true);
+
+            _pauseService.PauseChanged += OnPauseChanged;
         }
 
         public void Tick()
@@ -45,14 +51,19 @@ namespace ConnectIt.Input
             State.Update();
         }
 
-        public void SetEnable(bool enable, int priority)
+        public void Dispose()
         {
-            _enableSetter.SetValue(enable, priority);
+            _pauseService.PauseChanged -= OnPauseChanged;
         }
 
-        public void ResetEnableWithPriority(int priority)
+        public void SetEnable(bool enable, int priority, object source)
         {
-            _enableSetter.ResetValueWithPriority(priority);
+            _enableSetter.SetValue(enable, priority, source);
+        }
+
+        public void ResetEnable(object source)
+        {
+            _enableSetter.ResetValue(source);
         }
 
         public void SetState(BaseState newState)
@@ -124,6 +135,11 @@ namespace ConnectIt.Input
 
             _input.Main.InteractionPress.performed -= OnInteractionPressPerformed;
             _input.Main.InteractionPress.canceled -= OnInteractionPressCanceled;
+        }
+
+        private void OnPauseChanged(bool paused)
+        {
+            this.SetEnable(!paused, GameplayInputRouterEnablePriority.Pause, this);
         }
     }
 }

@@ -3,6 +3,7 @@
     public enum GameplayInputRouterEnablePriority
     {
         None = 0,
-        PauseMenu
+        DialogBox,
+        Pause
     }
 }
