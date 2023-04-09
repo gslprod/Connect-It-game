@@ -39,3 +39,8 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.level-progress-bar {
+    width: 550px;
+    height: 60px;
+}

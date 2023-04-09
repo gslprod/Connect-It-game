@@ -2,17 +2,16 @@
 using ConnectIt.Gameplay.MonoWrappers;
 using ConnectIt.Utilities;
 using System.Linq;
-using Zenject;
 
 namespace ConnectIt.Gameplay.LevelLoading
 {
-    public class LevelLoader
+    public class LevelContentLoader
     {
         private readonly TilemapsMonoWrapper[] _tilemapsMonoWrappersPrefabs;
         private readonly TilemapsMonoWrapper.Factory _tilemapsMonoWrapperFactory;
         private readonly GameplayLogicConfig _gameplayLogicConfig;
 
-        public LevelLoader(
+        public LevelContentLoader(
             TilemapsMonoWrapper[] tilemapsMonoWrappersPrefabs,
             TilemapsMonoWrapper.Factory tilemapsMonoWrapperFactory,
             GameplayLogicConfig gameplayLogicConfig)

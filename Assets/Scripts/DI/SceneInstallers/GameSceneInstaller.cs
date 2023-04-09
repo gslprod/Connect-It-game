@@ -49,7 +49,7 @@ namespace ConnectIt.DI.Installers
 
         private void BindLevelLoader()
         {
-            Container.Bind<LevelLoader>()
+            Container.Bind<LevelContentLoader>()
                      .AsSingle()
                      .WithArguments(_tilemapsMonoWrapperPrefabs);
         }

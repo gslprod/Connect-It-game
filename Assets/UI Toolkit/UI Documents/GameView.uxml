@@ -17,17 +17,17 @@
                         <ui:Label text="100 coins" name="coins-label" class="highlighted-label highlighted-label--coins" />
                     </ui:VisualElement>
                     <ui:VisualElement class="vertical-layout__child">
-                        <ui:Button text="Use boost" name="use-boost-button" class="highlighted-label highlighted-label--use-boost-button" />
+                        <ui:Button text="Use boost" name="use-boost-button" class="highlighted-label highlighted-label--use-boost-button button" />
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="central-container" class="central-container" />
             <ui:VisualElement name="bottom-container" class="bottom-container">
-                <ui:Button name="restart-button" class="round-button round-button--restart">
+                <ui:Button name="restart-button" class="round-button round-button--restart button">
                     <ui:VisualElement class="round-button__icon round-button__icon--restart" />
                 </ui:Button>
-                <ConnectIt.UI.CustomControls.ProgressBar name="level-progress" value="50" title="50%" />
-                <ui:Button name="pause-button" class="round-button round-button--pause">
+                <ConnectIt.UI.CustomControls.ProgressBar name="level-progress" value="50" title="50%" class="level-progress-bar" />
+                <ui:Button name="pause-button" class="round-button round-button--pause button">
                     <ui:VisualElement class="round-button__icon round-button__icon--pause" />
                 </ui:Button>
             </ui:VisualElement>

@@ -75,8 +75,8 @@ namespace ConnectIt.UI.DialogBox
 
             string classToAdd = _buttonInfo.Type switch
             {
-                DialogBoxButtonType.Accept => ClassNamesConstants.DialogBoxButtonAccept,
-                DialogBoxButtonType.Dismiss => ClassNamesConstants.DialogBoxButtonDismiss,
+                DialogBoxButtonType.Accept => ClassNamesConstants.Global.DialogBoxButtonAccept,
+                DialogBoxButtonType.Dismiss => ClassNamesConstants.Global.DialogBoxButtonDismiss,
 
                 _ => throw Assert.GetFailException(),
             };

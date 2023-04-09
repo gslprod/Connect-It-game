@@ -2,57 +2,56 @@
 using ConnectIt.Localization;
 using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
+using ConnectIt.Utilities.Formatters;
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
+using Custom = ConnectIt.UI.CustomControls;
 
-namespace ConnectIt.UI.DialogBox
+namespace ConnectIt.UI.LoadingScreen
 {
-    public class DialogBoxView : IInitializable, IDisposable
+    public class LoadingScreenView
     {
-        public const string DialogBoxAssetId = "DialogBoxAsset";
-        public const string DialogBoxButtonAssetId = "DialogBoxButtonAsset";
-        public const string DialogBoxContainerName = "dialog-box-container";
-        public const string DialogBoxButtonParentName = "buttons-group";
-        public const string TitleLabelName = "title-label";
-        public const string MessageLabelName = "message-label";
+        public const string LoadingScreenContainerName = "container";
+        public const string TitleLabelName = "title";
+        public const string MessageLabelName = "message";
+        public const string ProgressBarName = "progress-bar";
 
-        public event Action<DialogBoxView> Showing;
-        public event Action<DialogBoxView> Closing;
+        public event Action<LoadingScreenView> Showing;
+        public event Action<LoadingScreenView> ShowingAnimationEnded;
+        public event Action<LoadingScreenView> Closing;
+        public event Action<LoadingScreenView> Disposing;
 
         private readonly ILocalizationProvider _localizationProvider;
         private readonly VisualTreeAsset _uiAsset;
-        private readonly VisualTreeAsset _uiButtonAsset;
-        private readonly DialogBoxButton.Factory _dialogBoxButtonFactory;
         private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
-        private DialogBoxCreationData _creationData;
+        private readonly IFormatter _formatter;
+        private LoadingScreenCreationData _creationData;
 
         private VisualElement _parent;
         private TemplateContainer _root;
         private VisualElement _elementsContainer;
+        private Custom.ProgressBar _progressBar;
         private Label _titleLabel;
         private Label _messageLabel;
         private TextKey _titleKey;
         private TextKey _messageKey;
-        private DialogBoxButtonInfo[] _buttonsInfo;
-        private DialogBoxButton[] _createdButtons;
 
+        private Coroutine _appearAnimationCoroutine;
         private Coroutine _disposeCoroutine;
 
-        public DialogBoxView(ILocalizationProvider localizationProvider,
-            [Inject(Id = DialogBoxAssetId)] VisualTreeAsset uiAsset,
-            [Inject(Id = DialogBoxButtonAssetId)] VisualTreeAsset uiButtonAsset,
-            DialogBoxCreationData creationData,
-            DialogBoxButton.Factory dialogBoxButtonFactory,
-            ICoroutinesGlobalContainer coroutinesGlobalContainer)
+        public LoadingScreenView(ILocalizationProvider localizationProvider,
+            VisualTreeAsset uiAsset,
+            LoadingScreenCreationData creationData,
+            ICoroutinesGlobalContainer coroutinesGlobalContainer,
+            IFormatter formatter)
         {
             _localizationProvider = localizationProvider;
             _uiAsset = uiAsset;
-            _uiButtonAsset = uiButtonAsset;
             _creationData = creationData;
-            _dialogBoxButtonFactory = dialogBoxButtonFactory;
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
+            _formatter = formatter;
         }
 
         public void Initialize()
@@ -60,7 +59,6 @@ namespace ConnectIt.UI.DialogBox
             _parent = _creationData.Parent;
             _titleKey = _creationData.TitleKey;
             _messageKey = _creationData.MessageKey;
-            _buttonsInfo = _creationData.Buttons;
 
             if (_creationData.ShowImmediately)
                 Show();
@@ -74,14 +72,14 @@ namespace ConnectIt.UI.DialogBox
 
             _root = _uiAsset.CloneTree();
             _parent.Add(_root);
-            _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRoot);
-            _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
+            _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRoot);
+            _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
 
             _titleLabel = _root.Q<Label>(TitleLabelName);
             _messageLabel = _root.Q<Label>(MessageLabelName);
-            _elementsContainer = _root.Q<VisualElement>(DialogBoxContainerName);
+            _progressBar = _root.Q<Custom.ProgressBar>(ProgressBarName);
+            _elementsContainer = _root.Q<VisualElement>(LoadingScreenContainerName);
 
-            CreateButtons();
             UpdateLocalization();
 
             _coroutinesGlobalContainer.DelayedAction(StartShowingAnimation);
@@ -93,15 +91,23 @@ namespace ConnectIt.UI.DialogBox
             Showing?.Invoke(this);
         }
 
+        public void UpdateProgressValue(float progress)
+        {
+            Assert.ThatArgIs(progress >= 0, progress <= 100);
+
+            _progressBar.value = progress;
+            _progressBar.Title = _formatter.FormatSceneLoadingProgress(progress);
+        }
+
         public void Close()
         {
             Assert.IsNull(_disposeCoroutine);
 
-            _elementsContainer.AddToClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
-            _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
+            if (_appearAnimationCoroutine != null)
+                _coroutinesGlobalContainer.StopAndUnregisterCoroutine(_appearAnimationCoroutine);
 
-            foreach (var button in _createdButtons)
-                button.ReceiveButtonCallback(false);
+            _elementsContainer.AddToClassList(ClassNamesConstants.Global.LoadingScreenContainerClosed);
+            _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
 
             float closeDelaySec = Mathf.Max(
                 _elementsContainer.resolvedStyle.CalculateMaxTransitionLength(),
@@ -116,18 +122,28 @@ namespace ConnectIt.UI.DialogBox
         {
             _root.RemoveFromHierarchy();
 
-            foreach (var button in _createdButtons)
-                button.Dispose();
-
             _titleKey.ArgsChanged -= OnTitleKeyArgsChanged;
             _messageKey.ArgsChanged -= OnMessageKeyArgsChanged;
             _localizationProvider.LocalizationChanged -= UpdateLocalization;
+
+            Disposing?.Invoke(this);
         }
 
         private void StartShowingAnimation()
         {
-            _elementsContainer.RemoveFromClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
-            _root.RemoveFromClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
+            _elementsContainer.RemoveFromClassList(ClassNamesConstants.Global.LoadingScreenContainerClosed);
+            _root.RemoveFromClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
+
+            float appearAnimationLengthSec = Mathf.Max(
+                _elementsContainer.resolvedStyle.CalculateMaxTransitionLength(),
+                _root.resolvedStyle.CalculateMaxTransitionLength());
+
+            _appearAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(OnShowingAnimationEnded, new WaitForSeconds(appearAnimationLengthSec));
+        }
+
+        private void OnShowingAnimationEnded()
+        {
+            ShowingAnimationEnded?.Invoke(this);
         }
 
         private void UpdateLocalization()
@@ -156,27 +172,6 @@ namespace ConnectIt.UI.DialogBox
             UpdateMessageLocalization();
         }
 
-        private void CreateButtons()
-        {
-            if (_buttonsInfo == null || _buttonsInfo.Length == 0)
-                return;
-
-            VisualElement buttonsParent = _root.Q<VisualElement>(DialogBoxButtonParentName);
-            _createdButtons = new DialogBoxButton[_buttonsInfo.Length];
-
-            for (int i = 0; i < _buttonsInfo.Length; i++)
-            {
-                TemplateContainer createdButtonAsset = _uiButtonAsset.CloneTree();
-                buttonsParent.Add(createdButtonAsset);
-
-                Button button =  createdButtonAsset.Q<Button>();
-
-                _createdButtons[i] = _dialogBoxButtonFactory.Create(_buttonsInfo[i], button, this);
-            }
-
-            _buttonsInfo = null;
-        }
-
-        public class Factory : PlaceholderFactory<DialogBoxCreationData, DialogBoxView> { }
+        public class Factory : PlaceholderFactory<LoadingScreenCreationData, LoadingScreenView> { }
     }
 }

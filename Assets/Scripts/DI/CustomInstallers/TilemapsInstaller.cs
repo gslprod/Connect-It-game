@@ -12,7 +12,7 @@ namespace ConnectIt.DI.Installers.Custom
             Container.Bind<Tilemaps>().AsSingle();
 
             Container.Bind<TilemapsMonoWrapper>()
-                     .FromResolveGetter<LevelLoader>(loader => loader.InstantiateTilemapsPrefab())
+                     .FromResolveGetter<LevelContentLoader>(loader => loader.InstantiateTilemapsPrefab())
                      .AsSingle()
                      .NonLazy();
 

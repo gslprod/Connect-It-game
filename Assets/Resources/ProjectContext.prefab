@@ -81,3 +81,4 @@ MonoBehaviour:
   _dialogBoxAsset: {fileID: 9197481963319205126, guid: f65fccb38445a4c4ea4476d65ef53018, type: 3}
   _dialogBoxButtonAsset: {fileID: 9197481963319205126, guid: 8fb16149267d925449556a4a186f299d, type: 3}
   _coroutinesGlobalContainerPrefab: {fileID: 1996789195025190023, guid: e10af9497d4ddee47ae22993c46b76dd, type: 3}
+  _globalUIDocumentPrefab: {fileID: 9201374191772173986, guid: e0cc656dca9b3bc45b0f77cd059a6645, type: 3}

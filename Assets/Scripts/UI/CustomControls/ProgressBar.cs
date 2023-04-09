@@ -34,6 +34,12 @@ namespace ConnectIt.UI.CustomControls
                 defaultValue = string.Empty
             };
 
+            private readonly UxmlFloatAttributeDescription m_TitleFontSize = new()
+            {
+                name = "title-font-size",
+                defaultValue = 40f
+            };
+
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
@@ -42,6 +48,7 @@ namespace ConnectIt.UI.CustomControls
                 progressBar.HighValue = m_HighValue.GetValueFromBag(bag, cc);
                 progressBar.value = m_Value.GetValueFromBag(bag, cc);
                 progressBar.Title = m_Title.GetValueFromBag(bag, cc);
+                progressBar.TitleFontSize = m_TitleFontSize.GetValueFromBag(bag, cc);
             }
         }
 
@@ -51,6 +58,9 @@ namespace ConnectIt.UI.CustomControls
         public static readonly string TitleContainerUssClassName = UssClassName + "__title-container";
         public static readonly string ProgressUssClassName = UssClassName + "__progress";
         public static readonly string BackgroundUssClassName = UssClassName + "__background";
+
+        public static readonly string BaseName = "progress-bar";
+        public static readonly string LabelName = BaseName + "-label";
 
         private readonly VisualElement _background;
         private readonly VisualElement _progress;
@@ -69,6 +79,18 @@ namespace ConnectIt.UI.CustomControls
             set
             {
                 _title.text = value;
+            }
+        }
+
+        public float TitleFontSize
+        {
+            get
+            {
+                return _title.style.fontSize.value.value;
+            }
+            set
+            {
+                _title.style.fontSize = new StyleLength(value);
             }
         }
 
@@ -146,6 +168,7 @@ namespace ConnectIt.UI.CustomControls
             _background.Add(visualElement2);
 
             _title = new Label();
+            _title.name = LabelName;
             _title.AddToClassList(TitleUssClassName);
             visualElement2.Add(_title);
 

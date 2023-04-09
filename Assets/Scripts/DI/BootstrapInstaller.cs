@@ -6,6 +6,7 @@ using ConnectIt.Localization;
 using ConnectIt.Scenes;
 using ConnectIt.Time;
 using ConnectIt.UI.DialogBox;
+using ConnectIt.UI.Global.MonoWrappers;
 using ConnectIt.Utilities.Formatters;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,7 @@ namespace ConnectIt.DI.Installers
         [SerializeField] private VisualTreeAsset _dialogBoxAsset;
         [SerializeField] private VisualTreeAsset _dialogBoxButtonAsset;
         [SerializeField] private CoroutinesGlobalContainer _coroutinesGlobalContainerPrefab;
+        [SerializeField] private GlobalUIDocumentMonoWrapper _globalUIDocumentPrefab;
 
         public override void InstallBindings()
         {
@@ -33,6 +35,15 @@ namespace ConnectIt.DI.Installers
             BindDialogBox();
             BindCoroutinesGlobalContainer();
             BindScenesLoader();
+            BindGlobalUIDocument();
+        }
+
+        private void BindGlobalUIDocument()
+        {
+            Container.Bind<GlobalUIDocumentMonoWrapper>()
+                     .FromComponentInNewPrefab(_globalUIDocumentPrefab)
+                     .AsSingle()
+                     .NonLazy();
         }
 
         private void BindScenesLoader()
@@ -46,7 +57,7 @@ namespace ConnectIt.DI.Installers
         {
             Container.Bind<ICoroutinesGlobalContainer>()
                      .To<CoroutinesGlobalContainer>()
-                     .FromNewComponentOnNewPrefab(_coroutinesGlobalContainerPrefab)
+                     .FromComponentInNewPrefab(_coroutinesGlobalContainerPrefab)
                      .AsSingle();
         }
 

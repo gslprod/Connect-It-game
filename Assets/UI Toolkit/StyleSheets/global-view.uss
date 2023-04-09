@@ -1,0 +1,7 @@
+.root {
+    flex-grow: 1;
+}
+
+.loading-screen__creaton-root {
+    flex-grow: 1;
+}

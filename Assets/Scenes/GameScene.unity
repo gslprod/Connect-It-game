@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 79163559}
   - component: {fileID: 79163561}
   m_Layer: 5
-  m_Name: UIDocument
+  m_Name: GameplayUIDocument
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

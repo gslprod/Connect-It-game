@@ -7,6 +7,23 @@
 }
 
 .label {
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+    -unity-text-align: upper-center;
+}
+
+.button {
+    transition-property: opacity, scale;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    transition-duration: 400ms, 400ms;
+}
+
+.button:active {
+    transition-property: opacity, scale;
+    transition-duration: 400ms, 400ms;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    opacity: 0.7;
+    scale: 0.9 0.9;
 }
 
 .highlighted-label {
@@ -123,8 +140,6 @@
 }
 
 .progress-bar {
-    width: 500px;
-    height: 60px;
 }
 
 .progress-bar__container {
@@ -245,4 +260,86 @@
 
 .dialog-box__button--dismiss {
     background-color: var(--dismiss-color);
+}
+
+.loading-screen__root {
+    position: absolute;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition-property: opacity;
+    transition-delay: 0s;
+    transition-duration: 800ms;
+    transition-timing-function: ease-out-cubic;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-image: url('project://database/Assets/2D/Sprites/background.png?fileID=21300000&guid=7d7dfe8b23ece2b4a9b5202c0cb4d99c&type=3#background');
+    -unity-background-image-tint-color: rgb(63, 63, 63);
+}
+
+.loading-screen__root--closed {
+    transition-property: opacity;
+    transition-delay: 0s;
+    transition-duration: 800ms;
+    transition-timing-function: ease-out-cubic;
+    opacity: 0;
+}
+
+.loading-screen__container {
+    align-items: stretch;
+    justify-content: center;
+    background-color: var(--non-focus-color-1);
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.loading-screen__container--closed {
+}
+
+.loading-screen__loading-progress-bar {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.loading-screen__loading-progress-bar-label {
+    font-size: 50px;
+}
+
+.loading-screen__title-label {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.loading-screen__message-label {
+    margin-bottom: 25px;
+    font-size: 42px;
+}
+
+.loading-screen__dev-logo-area {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    justify-content: flex-end;
+    align-items: center;
+    align-self: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.loading-screen__dev-logo {
+    width: 100%;
+    height: 150px;
+    -unity-background-scale-mode: scale-to-fit;
+    background-image: url('project://database/Assets/2D/Sprites/UI/dev%20logo/dev%20logo%20512.png?fileID=21300000&guid=fe101e96e89fac345bff22fcb4ac10dc&type=3#dev logo 512');
+    opacity: 0.85;
 }
