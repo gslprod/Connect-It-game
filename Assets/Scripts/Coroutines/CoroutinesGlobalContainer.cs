@@ -14,23 +14,24 @@ namespace ConnectIt.Coroutines
 
         private readonly List<CoroutineInfo> _coroutines = new();
 
-        private IScenesLoader _scenesControl;
+        private IScenesLoader _scenesLoader;
+        private Dictionary<Guid, Coroutine> _localLaunchedCoroutines = new();
 
         [Inject]
         public void Constructor(
-            IScenesLoader scenesControl)
+            IScenesLoader scenesLoader)
         {
-            _scenesControl = scenesControl;
+            _scenesLoader = scenesLoader;
         }
 
         private void OnEnable()
         {
-            _scenesControl.OnNewSceneAsyncLoadFinished += NewSceneLoadFinished;
+            _scenesLoader.OnNewSceneAsyncLoadFinished += NewSceneLoadFinished;
         }
 
         private void OnDisable()
         {
-            _scenesControl.OnNewSceneAsyncLoadFinished -= NewSceneLoadFinished;
+            _scenesLoader.OnNewSceneAsyncLoadFinished -= NewSceneLoadFinished;
         }
 
         private void NewSceneLoadFinished(SceneType obj)
@@ -61,12 +62,38 @@ namespace ConnectIt.Coroutines
             StopAndUnregisterByCoroutineInfo(coroutineInfo);
         }
 
+        public Coroutine DelayedAction(Action action, YieldInstruction delay = null, bool global = false)
+        {
+            Assert.ArgIsNotNull(action);
+
+            Guid id = Guid.NewGuid();
+            Coroutine coroutine = StartAndRegisterCoroutine(DelayedActionCoroutine(action, delay, id), global);
+            _localLaunchedCoroutines.Add(id, coroutine);
+
+            return coroutine;
+        }
+
         private void StopAndUnregisterByCoroutineInfo(CoroutineInfo info)
         {
             _coroutines.Remove(info);
 
             StopCoroutine(info.Target);
             CoroutineStopped?.Invoke(info.Target);
+        }
+
+        private void StopAndUnregisterLocalLaunchedCoroutine(Guid id)
+        {
+            StopAndUnregisterCoroutine(_localLaunchedCoroutines[id]);
+
+            _localLaunchedCoroutines.Remove(id);
+        }
+
+        private IEnumerator DelayedActionCoroutine(Action action, YieldInstruction delay, Guid id)
+        {
+            yield return delay;
+
+            action();
+            StopAndUnregisterLocalLaunchedCoroutine(id);
         }
     }
 }
