@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/gameplay.uss?fileID=7433441132597879392&amp;guid=e8a7e8d530ddcbc40b8695c3d954011b&amp;type=3#gameplay" />
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/gameplay-view.uss?fileID=7433441132597879392&amp;guid=e8a7e8d530ddcbc40b8695c3d954011b&amp;type=3#gameplay-view" />
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/global.uss?fileID=7433441132597879392&amp;guid=3e3efaa0af4d22345b7f033c26dc1a86&amp;type=3#global" />
     <ui:VisualElement name="root" class="root">
         <ui:VisualElement name="gameplay-container" class="gameplay-container">
