@@ -57,6 +57,7 @@ namespace ConnectIt.UI.CustomControls
         public static readonly string TitleUssClassName = UssClassName + "__title";
         public static readonly string TitleContainerUssClassName = UssClassName + "__title-container";
         public static readonly string ProgressUssClassName = UssClassName + "__progress";
+        public static readonly string ProgressFirstStateUssClassName = UssClassName + "__progress--first-state";
         public static readonly string BackgroundUssClassName = UssClassName + "__background";
 
         public static readonly string BaseName = "progress-bar";

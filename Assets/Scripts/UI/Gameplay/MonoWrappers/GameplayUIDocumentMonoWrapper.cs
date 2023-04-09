@@ -1,6 +1,7 @@
 using ConnectIt.Gameplay.Pause;
 using ConnectIt.Input;
 using ConnectIt.Localization;
+using ConnectIt.Scenes.Switchers;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Gameplay.Views;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
         private TextKey.Factory _textKeyFactory;
         private GameplayInputRouter _gameplayInputRouter;
         private IPauseService _pauseService;
+        private ISceneSwitcher _sceneSwitcher;
 
         private LevelProgressView _levelProgressView;
         private LevelProgressView.Factory _levelProgressViewFactory;
@@ -43,7 +45,8 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
             DialogBoxView.Factory dialogBoxFactory,
             TextKey.Factory textKeyFactory,
             GameplayInputRouter gameplayInputRouter,
-            IPauseService pauseService)
+            IPauseService pauseService,
+            ISceneSwitcher sceneSwitcher)
         {
             _levelProgressViewFactory = levelProgressViewFactory;
             _timeViewFactory = timeViewFactory;
@@ -53,6 +56,7 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
             _textKeyFactory = textKeyFactory;
             _gameplayInputRouter = gameplayInputRouter;
             _pauseService = pauseService;
+            _sceneSwitcher = sceneSwitcher;
         }
 
         private void Awake()
@@ -88,7 +92,7 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
                 .Create(_documentRootVE.Q<Label>(NameConstants.LevelLabelName));
 
             _pauseButtonView = _defaultButtonViewFactory
-                .Create(_documentRootVE.Q<Button>(NameConstants.PauseButtonName), PauseButtonClick);
+                .Create(_documentRootVE.Q<Button>(NameConstants.PauseButtonName), OnPauseButtonClick);
 
             _restartButtonView = _defaultButtonViewFactory
                 .Create(_documentRootVE.Q<Button>(NameConstants.RestartButtonName), RestartButtonClick);
@@ -107,12 +111,13 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
             _restartButtonView.Dispose();
         }
 
+        #region RestartButton
+
         private void RestartButtonClick()
         {
-            //todo
             DialogBoxButtonInfo confirmButtonInfo = new(
                 _textKeyFactory.Create(TextKeysConstants.Common.Confirm, null),
-                null,
+                OnConfirmRestartButtonClick,
                 DialogBoxButtonType.Accept);
 
             DialogBoxButtonInfo cancelButtonInfo = new(
@@ -155,7 +160,16 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
             _gameplayInputRouter.ResetEnable(dialogBox);
         }
 
-        private void PauseButtonClick()
+        private void OnConfirmRestartButtonClick()
+        {
+            _sceneSwitcher.TryReloadActiveScene();
+        }
+
+        #endregion
+
+        #region ExitButton
+
+        private void OnPauseButtonClick()
         {
             DialogBoxButtonInfo continueButtonInfo = new(
                 _textKeyFactory.Create(TextKeysConstants.Gameplay.PauseMenu_Continue, null),
@@ -165,7 +179,7 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
 
             DialogBoxButtonInfo exitButtonInfo = new(
                 _textKeyFactory.Create(TextKeysConstants.Gameplay.PauseMenu_Exit, null),
-                ExitButtonClick,
+                OnConfirmExitButtonClick,
                 DialogBoxButtonType.Dismiss);
 
             DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
@@ -186,34 +200,6 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
             dialogBox.Closing += OnPauseDialogBoxClosing;
 
             dialogBox.Show();
-
-            void ExitButtonClick()
-            {
-                DialogBoxButtonInfo cancelButtonInfo = new(
-                    _textKeyFactory.Create(TextKeysConstants.Common.Cancel, null),
-                    null,
-                    DialogBoxButtonType.Default,
-                    true);
-
-                //todo
-                DialogBoxButtonInfo exitButtonInfo = new(
-                    _textKeyFactory.Create(TextKeysConstants.Common.Confirm, null),
-                    null,
-                    DialogBoxButtonType.Dismiss);
-
-                DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
-                {
-                    cancelButtonInfo, exitButtonInfo
-                };
-
-                DialogBoxCreationData creationData = new(
-                    _rootVE,
-                    _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Title, null),
-                    _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Message, null),
-                    buttonsInfo);
-
-                _dialogBoxFactory.Create(creationData);
-            }
         }
 
         private void OnPauseDialogBoxShowing(DialogBoxView dialogBox)
@@ -229,5 +215,35 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
 
             _pauseService.ResetPause(dialogBox);
         }
+
+        private void OnConfirmExitButtonClick()
+        {
+            DialogBoxButtonInfo cancelButtonInfo = new(
+                _textKeyFactory.Create(TextKeysConstants.Common.Cancel, null),
+                null,
+                DialogBoxButtonType.Default,
+                true);
+
+            //todo
+            DialogBoxButtonInfo exitButtonInfo = new(
+                _textKeyFactory.Create(TextKeysConstants.Common.Confirm, null),
+                null,
+                DialogBoxButtonType.Dismiss);
+
+            DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
+            {
+                    cancelButtonInfo, exitButtonInfo
+            };
+
+            DialogBoxCreationData creationData = new(
+                _rootVE,
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Title, null),
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Message, null),
+                buttonsInfo);
+
+            _dialogBoxFactory.Create(creationData);
+        }
+
+        #endregion
     }
 }

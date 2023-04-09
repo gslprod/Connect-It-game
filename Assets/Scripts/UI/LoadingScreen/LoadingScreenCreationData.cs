@@ -13,7 +13,7 @@ namespace ConnectIt.UI.LoadingScreen
         public LoadingScreenCreationData(VisualElement parent,
             TextKey titleKey,
             TextKey messageKey,
-            bool showImmediately)
+            bool showImmediately = true)
         {
             Parent = parent;
             TitleKey = titleKey;

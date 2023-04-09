@@ -167,6 +167,12 @@
     transition-duration: 300ms;
     transition-timing-function: ease-out-circ;
     transition-delay: 0s;
+    right: 0;
+}
+
+.progress-bar__progress--first-state {
+    transition-property: right;
+    transition-duration: 0ms;
 }
 
 .progress-bar__background {
@@ -297,16 +303,20 @@
     padding-right: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
+    transition-property: scale, translate;
+    transition-duration: 800ms, 800ms;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
 }
 
 .loading-screen__container--closed {
+    transition-property: scale, translate;
+    transition-duration: 800ms, 800ms;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    scale: 0 0;
+    translate: 0 -300px;
 }
 
 .loading-screen__loading-progress-bar {
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 0;
 }
 
 .loading-screen__loading-progress-bar-label {

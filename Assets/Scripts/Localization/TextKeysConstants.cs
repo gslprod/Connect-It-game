@@ -32,5 +32,15 @@
 
             private const string CommonBaseString = "Common";
         }
+
+        public class LoadingScreen
+        {
+            public const string SwitchingToGameScene_Title = LoadingScreenBaseString + ".SwitchingToGameScene.Title";
+            public const string SwitchingToGameScene_Message = LoadingScreenBaseString + ".SwitchingToGameScene.Message";
+            public const string SwitchingToMenuScene_Title = LoadingScreenBaseString + ".SwitchingToMenuScene.Title";
+            public const string SwitchingToMenuScene_Message = LoadingScreenBaseString + ".SwitchingToMenuScene.Message";
+
+            private const string LoadingScreenBaseString = "LoadingScreen";
+        }
     }
 }

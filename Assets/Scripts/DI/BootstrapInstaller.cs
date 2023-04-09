@@ -4,9 +4,11 @@ using ConnectIt.Coroutines;
 using ConnectIt.Infrastructure.Factories;
 using ConnectIt.Localization;
 using ConnectIt.Scenes;
+using ConnectIt.Scenes.Switchers;
 using ConnectIt.Time;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Global.MonoWrappers;
+using ConnectIt.UI.LoadingScreen;
 using ConnectIt.Utilities.Formatters;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +26,7 @@ namespace ConnectIt.DI.Installers
         [SerializeField] private VisualTreeAsset _dialogBoxButtonAsset;
         [SerializeField] private CoroutinesGlobalContainer _coroutinesGlobalContainerPrefab;
         [SerializeField] private GlobalUIDocumentMonoWrapper _globalUIDocumentPrefab;
+        [SerializeField] private VisualTreeAsset _loadingScreenAsset;
 
         public override void InstallBindings()
         {
@@ -36,6 +39,25 @@ namespace ConnectIt.DI.Installers
             BindCoroutinesGlobalContainer();
             BindScenesLoader();
             BindGlobalUIDocument();
+            BindLoadingScreen();
+            BindSceneSwitcher();
+        }
+
+        private void BindSceneSwitcher()
+        {
+            Container.Bind<ISceneSwitcher>()
+                     .To<SceneSwitcherWithLoadingScreen>()
+                     .AsSingle();
+        }
+
+        private void BindLoadingScreen()
+        {
+            Container.BindFactory<LoadingScreenCreationData, LoadingScreenView, LoadingScreenView.Factory>()
+                     .FromFactory<PrimitiveDIFactory<LoadingScreenCreationData, LoadingScreenView>>();
+
+            Container.BindInstance(_loadingScreenAsset)
+                     .AsCached()
+                     .WhenInjectedInto<LoadingScreenView>();
         }
 
         private void BindGlobalUIDocument()

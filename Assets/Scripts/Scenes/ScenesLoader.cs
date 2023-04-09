@@ -13,6 +13,10 @@ namespace ConnectIt.Scenes
         public event Action<SceneType> OnNewSceneAsyncLoadFinished;
         public event Action<SceneType, float> OnNewSceneAsyncLoading;
 
+        public SceneType ActiveScene => (SceneType)SceneManager.GetActiveScene().buildIndex;
+
+        public bool SceneLoading => _currentSceneLoadingCoroutine != null;
+
         private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
 
         private Coroutine _currentSceneLoadingCoroutine;
@@ -25,23 +29,12 @@ namespace ConnectIt.Scenes
 
         public bool TryGoToSceneAsync(SceneType sceneType)
         {
-            if (_currentSceneLoadingCoroutine != null)
+            if (SceneLoading)
                 return false;
 
-            _currentSceneLoadingCoroutine = _coroutinesGlobalContainer.StartAndRegisterCoroutine(AsyncLoadingScene(sceneType));
-            _coroutinesGlobalContainer.CoroutineStopped += OnCoroutineStopped;
+            _currentSceneLoadingCoroutine = _coroutinesGlobalContainer.StartCoroutine(AsyncLoadingScene(sceneType));
 
             return true;
-        }
-
-        private void OnCoroutineStopped(Coroutine coroutine)
-        {
-            if (coroutine != _currentSceneLoadingCoroutine)
-                return;
-
-            _currentSceneLoadingCoroutine = null;
-
-            _coroutinesGlobalContainer.CoroutineStopped -= OnCoroutineStopped;
         }
 
         private IEnumerator AsyncLoadingScene(SceneType sceneType)
@@ -59,7 +52,7 @@ namespace ConnectIt.Scenes
 
             OnNewSceneAsyncLoadFinished?.Invoke(sceneType);
 
-            _coroutinesGlobalContainer.StopAndUnregisterCoroutine(_currentSceneLoadingCoroutine);
+            _currentSceneLoadingCoroutine = null;
         }
     }
 }

@@ -11,7 +11,7 @@ using Custom = ConnectIt.UI.CustomControls;
 
 namespace ConnectIt.UI.LoadingScreen
 {
-    public class LoadingScreenView
+    public class LoadingScreenView : IInitializable, IDisposable
     {
         public const string LoadingScreenContainerName = "container";
         public const string TitleLabelName = "title";
@@ -33,13 +33,16 @@ namespace ConnectIt.UI.LoadingScreen
         private TemplateContainer _root;
         private VisualElement _elementsContainer;
         private Custom.ProgressBar _progressBar;
+        private Label _progressBarLabel;
         private Label _titleLabel;
         private Label _messageLabel;
         private TextKey _titleKey;
         private TextKey _messageKey;
 
+        private Coroutine _delayedShowingAnimationCoroutine;
         private Coroutine _appearAnimationCoroutine;
-        private Coroutine _disposeCoroutine;
+        private Coroutine _delayedClosingAnimationCoroutine;
+        private Coroutine _delayedDisposeCoroutine;
 
         public LoadingScreenView(ILocalizationProvider localizationProvider,
             VisualTreeAsset uiAsset,
@@ -78,11 +81,16 @@ namespace ConnectIt.UI.LoadingScreen
             _titleLabel = _root.Q<Label>(TitleLabelName);
             _messageLabel = _root.Q<Label>(MessageLabelName);
             _progressBar = _root.Q<Custom.ProgressBar>(ProgressBarName);
+            _progressBarLabel = _progressBar.Q<Label>(Custom.ProgressBar.LabelName);
             _elementsContainer = _root.Q<VisualElement>(LoadingScreenContainerName);
 
+            _elementsContainer.AddToClassList(ClassNamesConstants.Global.LoadingScreenContainerClosed);
+            _progressBarLabel.AddToClassList(ClassNamesConstants.Global.LoadingScreenProgressBarLabel);
+
+            UpdateProgressValue(0);
             UpdateLocalization();
 
-            _coroutinesGlobalContainer.DelayedAction(StartShowingAnimation);
+            _delayedShowingAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(StartShowingAnimation);
 
             _titleKey.ArgsChanged += OnTitleKeyArgsChanged;
             _messageKey.ArgsChanged += OnMessageKeyArgsChanged;
@@ -101,26 +109,23 @@ namespace ConnectIt.UI.LoadingScreen
 
         public void Close()
         {
-            Assert.IsNull(_disposeCoroutine);
+            Assert.IsNull(_delayedDisposeCoroutine);
 
             if (_appearAnimationCoroutine != null)
-                _coroutinesGlobalContainer.StopAndUnregisterCoroutine(_appearAnimationCoroutine);
+                _coroutinesGlobalContainer.StopCoroutine(_appearAnimationCoroutine);
 
-            _elementsContainer.AddToClassList(ClassNamesConstants.Global.LoadingScreenContainerClosed);
-            _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
-
-            float closeDelaySec = Mathf.Max(
-                _elementsContainer.resolvedStyle.CalculateMaxTransitionLength(),
-                _root.resolvedStyle.CalculateMaxTransitionLength());
-
-            _disposeCoroutine = _coroutinesGlobalContainer.DelayedAction(Dispose, new WaitForSeconds(closeDelaySec));
+            _delayedClosingAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(StartClosingAnimation);
 
             Closing?.Invoke(this);
         }
 
         public void Dispose()
         {
+            _delayedDisposeCoroutine = null;
+
             _root.RemoveFromHierarchy();
+
+            StopRunningCoroutines();
 
             _titleKey.ArgsChanged -= OnTitleKeyArgsChanged;
             _messageKey.ArgsChanged -= OnMessageKeyArgsChanged;
@@ -131,6 +136,8 @@ namespace ConnectIt.UI.LoadingScreen
 
         private void StartShowingAnimation()
         {
+            _delayedShowingAnimationCoroutine = null;
+
             _elementsContainer.RemoveFromClassList(ClassNamesConstants.Global.LoadingScreenContainerClosed);
             _root.RemoveFromClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
 
@@ -141,9 +148,40 @@ namespace ConnectIt.UI.LoadingScreen
             _appearAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(OnShowingAnimationEnded, new WaitForSeconds(appearAnimationLengthSec));
         }
 
+        private void StartClosingAnimation()
+        {
+            _delayedClosingAnimationCoroutine = null;
+
+            _elementsContainer.AddToClassList(ClassNamesConstants.Global.LoadingScreenContainerClosed);
+            _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
+
+            float closeDelaySec = Mathf.Max(
+                _elementsContainer.resolvedStyle.CalculateMaxTransitionLength(),
+                _root.resolvedStyle.CalculateMaxTransitionLength());
+
+            _delayedDisposeCoroutine = _coroutinesGlobalContainer.DelayedAction(Dispose, new WaitForSeconds(closeDelaySec));
+        }
+
         private void OnShowingAnimationEnded()
         {
+            _appearAnimationCoroutine = null;
+
             ShowingAnimationEnded?.Invoke(this);
+        }
+
+        private void StopRunningCoroutines()
+        {
+            if (_appearAnimationCoroutine != null)
+                _coroutinesGlobalContainer.StopCoroutine(_appearAnimationCoroutine);
+
+            if (_delayedClosingAnimationCoroutine != null)
+                _coroutinesGlobalContainer.StopCoroutine(_delayedClosingAnimationCoroutine);
+
+            if (_delayedDisposeCoroutine != null)
+                _coroutinesGlobalContainer.StopCoroutine(_delayedDisposeCoroutine);
+
+            if (_delayedShowingAnimationCoroutine != null)
+                _coroutinesGlobalContainer.StopCoroutine(_delayedShowingAnimationCoroutine);
         }
 
         private void UpdateLocalization()

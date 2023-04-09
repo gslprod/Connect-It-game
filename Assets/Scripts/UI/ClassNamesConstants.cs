@@ -16,9 +16,10 @@
 
             #region LoadingScreen
 
-            public const string LoadingScreenRoot = "dialog-box__root";
-            public const string LoadingScreenRootClosed = "dialog-box__root--closed";
-            public const string LoadingScreenContainerClosed = "dialog-box__container--closed";
+            public const string LoadingScreenRoot = "loading-screen__root";
+            public const string LoadingScreenRootClosed = "loading-screen__root--closed";
+            public const string LoadingScreenContainerClosed = "loading-screen__container--closed";
+            public const string LoadingScreenProgressBarLabel = "loading-screen__loading-progress-bar-label";
 
             #endregion
         }

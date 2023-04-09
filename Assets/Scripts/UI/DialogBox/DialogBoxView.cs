@@ -38,7 +38,9 @@ namespace ConnectIt.UI.DialogBox
         private DialogBoxButtonInfo[] _buttonsInfo;
         private DialogBoxButton[] _createdButtons;
 
-        private Coroutine _disposeCoroutine;
+        private Coroutine _delayedShowingAnimationCoroutine;
+        private Coroutine _delayedClosingAnimationCoroutine;
+        private Coroutine _delayedDisposeCoroutine;
 
         public DialogBoxView(ILocalizationProvider localizationProvider,
             [Inject(Id = DialogBoxAssetId)] VisualTreeAsset uiAsset,
@@ -81,10 +83,12 @@ namespace ConnectIt.UI.DialogBox
             _messageLabel = _root.Q<Label>(MessageLabelName);
             _elementsContainer = _root.Q<VisualElement>(DialogBoxContainerName);
 
+            _elementsContainer.AddToClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
+
             CreateButtons();
             UpdateLocalization();
 
-            _coroutinesGlobalContainer.DelayedAction(StartShowingAnimation);
+            _delayedShowingAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(StartShowingAnimation);
 
             _titleKey.ArgsChanged += OnTitleKeyArgsChanged;
             _messageKey.ArgsChanged += OnMessageKeyArgsChanged;
@@ -95,26 +99,23 @@ namespace ConnectIt.UI.DialogBox
 
         public void Close()
         {
-            Assert.IsNull(_disposeCoroutine);
-
-            _elementsContainer.AddToClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
-            _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
+            Assert.IsNull(_delayedDisposeCoroutine);
 
             foreach (var button in _createdButtons)
                 button.ReceiveButtonCallback(false);
 
-            float closeDelaySec = Mathf.Max(
-                _elementsContainer.resolvedStyle.CalculateMaxTransitionLength(),
-                _root.resolvedStyle.CalculateMaxTransitionLength());
-
-            _disposeCoroutine = _coroutinesGlobalContainer.DelayedAction(Dispose, new WaitForSeconds(closeDelaySec));
+            _delayedClosingAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(StartClosingAnimation);
 
             Closing?.Invoke(this);
         }
 
         public void Dispose()
         {
+            _delayedDisposeCoroutine = null;
+
             _root.RemoveFromHierarchy();
+
+            StopRunningCoroutines();
 
             foreach (var button in _createdButtons)
                 button.Dispose();
@@ -126,8 +127,36 @@ namespace ConnectIt.UI.DialogBox
 
         private void StartShowingAnimation()
         {
+            _delayedShowingAnimationCoroutine = null;
+
             _elementsContainer.RemoveFromClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
             _root.RemoveFromClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
+        }
+
+        private void StartClosingAnimation()
+        {
+            _delayedClosingAnimationCoroutine = null;
+
+            _elementsContainer.AddToClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
+            _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
+
+            float closeDelaySec = Mathf.Max(
+                _elementsContainer.resolvedStyle.CalculateMaxTransitionLength(),
+                _root.resolvedStyle.CalculateMaxTransitionLength());
+
+            _delayedDisposeCoroutine = _coroutinesGlobalContainer.DelayedAction(Dispose, new WaitForSeconds(closeDelaySec));
+        }
+
+        private void StopRunningCoroutines()
+        {
+            if (_delayedDisposeCoroutine != null)
+                _coroutinesGlobalContainer.StopCoroutine(_delayedDisposeCoroutine);
+
+            if (_delayedClosingAnimationCoroutine != null)
+                _coroutinesGlobalContainer.StopCoroutine(_delayedClosingAnimationCoroutine);
+
+            if (_delayedShowingAnimationCoroutine != null)
+                _coroutinesGlobalContainer.StopCoroutine(_delayedShowingAnimationCoroutine);
         }
 
         private void UpdateLocalization()
