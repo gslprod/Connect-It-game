@@ -2,6 +2,7 @@
 {
     public enum SceneType
     {
-        GameScene = 0
+        GameScene = 0,
+        MenuScene = 1
     }
 }
