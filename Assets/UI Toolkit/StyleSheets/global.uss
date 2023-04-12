@@ -4,24 +4,34 @@
     --blackout-color: rgba(0, 0, 0, 0.7);
     --accept-color: rgba(0, 255, 0, 0.3);
     --dismiss-color: rgba(255, 0, 0, 0.3);
+    --default-button-transition-timing-function: ease-out-cubic;
+    --default-button-transition-duration: 400ms;
+    --default-transition-timing-function: ease-out-cubic;
+    --default-transition-duration: 800ms;
+    --default-progress-bar-transition-timing-function: ease-out-cubic;
+    --default-progress-bar-transition-duration: 300ms;
 }
 
 .label {
     color: rgb(255, 255, 255);
     font-size: 40px;
     -unity-text-align: upper-center;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .button {
     transition-property: opacity, scale;
-    transition-timing-function: ease-out-cubic, ease-out-cubic;
-    transition-duration: 400ms, 400ms;
+    transition-timing-function: var(--default-button-transition-timing-function), var(--default-button-transition-timing-function);
+    transition-duration: var(--default-button-transition-duration), var(--default-button-transition-duration);
 }
 
 .button:active {
     transition-property: opacity, scale;
-    transition-duration: 400ms, 400ms;
-    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    transition-duration: var(--default-button-transition-duration), var(--default-button-transition-duration);
+    transition-timing-function: var(--default-button-transition-timing-function), var(--default-button-transition-timing-function);
     opacity: 0.7;
     scale: 0.9 0.9;
 }
@@ -29,14 +39,10 @@
 .highlighted-label {
     background-color: var(--non-focus-color-1);
     font-size: 55px;
-    margin-left: 0;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 0;
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
@@ -55,6 +61,11 @@
 
 .highlighted-label--use-boost-button {
     background-color: rgba(0, 167, 0, 0.3);
+}
+
+.highlighted-label--account-level {
+    font-size: 45px;
+    -unity-text-align: upper-left;
 }
 
 .vertical-layout__child {
@@ -95,6 +106,7 @@
     padding-right: 15px;
     padding-top: 15px;
     padding-bottom: 15px;
+    flex-shrink: 0;
 }
 
 .round-button--restart {
@@ -164,9 +176,8 @@
     top: 0;
     bottom: 0;
     transition-property: right;
-    transition-duration: 300ms;
-    transition-timing-function: ease-out-circ;
-    transition-delay: 0s;
+    transition-duration: var(--default-progress-bar-transition-duration);
+    transition-timing-function: var(--default-progress-bar-transition-timing-function);
     right: 0;
 }
 
@@ -188,9 +199,8 @@
     height: 100%;
     overflow: hidden;
     transition-property: opacity;
-    transition-delay: 0s;
-    transition-duration: 800ms;
-    transition-timing-function: ease-out-cubic;
+    transition-duration: var(--default-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function);
     background-color: var(--blackout-color);
     padding-left: 20px;
     padding-right: 20px;
@@ -200,9 +210,8 @@
 
 .dialog-box__root--closed {
     transition-property: opacity;
-    transition-delay: 0s;
-    transition-duration: 800ms;
-    transition-timing-function: ease-out-cubic;
+    transition-duration: var(--default-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function);
     opacity: 0;
 }
 
@@ -218,16 +227,14 @@
     padding-bottom: 15px;
     overflow: hidden;
     transition-property: opacity, scale, rotate;
-    transition-delay: 0s, 0s, 0s;
-    transition-duration: 800ms, 800ms, 800ms;
-    transition-timing-function: ease-out-cubic, ease-out-cubic, ease-out-cubic;
+    transition-duration: var(--default-transition-duration), var(--default-transition-duration), var(--default-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function), var(--default-transition-timing-function), var(--default-transition-timing-function);
 }
 
 .dialog-box__container--closed {
     transition-property: opacity, scale, rotate;
-    transition-delay: 0s, 0s, 0s;
-    transition-duration: 800ms, 800ms, 800ms;
-    transition-timing-function: ease-out-cubic, ease-out-cubic, ease-out-cubic;
+    transition-duration: var(--default-transition-duration), var(--default-transition-duration), var(--default-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function), var(--default-transition-timing-function), var(--default-transition-timing-function);
     scale: 0 0;
     opacity: 0;
     rotate: 45deg;
@@ -276,9 +283,8 @@
     height: 100%;
     overflow: hidden;
     transition-property: opacity;
-    transition-delay: 0s;
-    transition-duration: 800ms;
-    transition-timing-function: ease-out-cubic;
+    transition-duration: var(--default-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function);
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 20px;
@@ -289,9 +295,8 @@
 
 .loading-screen__root--closed {
     transition-property: opacity;
-    transition-delay: 0s;
-    transition-duration: 800ms;
-    transition-timing-function: ease-out-cubic;
+    transition-duration: var(--default-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function);
     opacity: 0;
 }
 
@@ -304,14 +309,14 @@
     padding-top: 20px;
     padding-bottom: 20px;
     transition-property: scale, translate;
-    transition-duration: 800ms, 800ms;
-    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    transition-duration: var(--default-transition-duration), var(--default-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function), var(--default-transition-timing-function);
 }
 
 .loading-screen__container--closed {
     transition-property: scale, translate;
-    transition-duration: 800ms, 800ms;
-    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    transition-duration: var(--default-transition-duration), var(--default-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function), var(--default-transition-timing-function);
     scale: 0 0;
     translate: 0 -300px;
 }
@@ -352,4 +357,29 @@
     -unity-background-scale-mode: scale-to-fit;
     background-image: url('project://database/Assets/2D/Sprites/UI/dev%20logo/dev%20logo%20512.png?fileID=21300000&guid=fe101e96e89fac345bff22fcb4ac10dc&type=3#dev logo 512');
     opacity: 0.85;
+}
+
+.dev-logo-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    align-self: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.dev-logo-container__logo {
+    width: 100%;
+    height: 150px;
+    opacity: 0.85;
+    -unity-background-scale-mode: scale-to-fit;
+    background-image: url('project://database/Assets/2D/Sprites/UI/dev%20logo/dev%20logo%20512.png?fileID=21300000&guid=fe101e96e89fac345bff22fcb4ac10dc&type=3#dev logo 512');
+}
+
+.dev-logo-container__label {
+    margin-top: 15px;
 }

@@ -97,6 +97,7 @@ namespace ConnectIt.Scenes.Switchers
             => sceneType switch
             {
                 SceneType.GameScene => _textKeyFactory.Create(TextKeysConstants.LoadingScreen.SwitchingToGameScene_Title, null),
+                SceneType.MenuScene => _textKeyFactory.Create(TextKeysConstants.LoadingScreen.SwitchingToMenuScene_Title, null),
 
                 _ => throw Assert.GetFailException(),
             };
@@ -105,6 +106,7 @@ namespace ConnectIt.Scenes.Switchers
             => sceneType switch
             {
                 SceneType.GameScene => _textKeyFactory.Create(TextKeysConstants.LoadingScreen.SwitchingToGameScene_Message, null),
+                SceneType.MenuScene => _textKeyFactory.Create(TextKeysConstants.LoadingScreen.SwitchingToMenuScene_Message, null),
 
                 _ => throw Assert.GetFailException(),
             };

@@ -1,4 +1,72 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/menu-view.uss?fileID=7433441132597879392&amp;guid=f6ff23d6b28c3cf4e94fc7a56b647751&amp;type=3#menu-view" />
+    <ui:Template name="DevLogoContainer" src="project://database/Assets/UI%20Toolkit/UI%20Documents/Templates/DevLogo/DevLogoContainer.uxml?fileID=9197481963319205126&amp;guid=baaff3446cea3e1488636709577d219a&amp;type=3#DevLogoContainer" />
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/global.uss?fileID=7433441132597879392&amp;guid=3e3efaa0af4d22345b7f033c26dc1a86&amp;type=3#global" />
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/menu-view.uss?fileID=7433441132597879392&amp;guid=f6ff23d6b28c3cf4e94fc7a56b647751&amp;type=3#menu-view" />
+    <ui:VisualElement name="root" class="root">
+        <ui:VisualElement name="menu-container" class="menu-container">
+            <ui:VisualElement name="top-container" class="top-container">
+                <ui:VisualElement name="account-container" class="account-container">
+                    <ui:VisualElement name="account-avatar" class="account-avatar account-container__child" />
+                    <ui:VisualElement name="account-info-container" class="account-container__child account-info-container">
+                        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="account-name" class="label account-info-container__child account-info-container__account-name" />
+                        <ui:Label text="Level" name="account-level" class="label highlighted-label account-info-container__child highlighted-label--account-level" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="coins-container" class="coins-container">
+                    <ui:Label text="Coins" name="coins-label" class="label highlighted-label highlighted-label--coins" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="content-container" class="content-container">
+                <ui:VisualElement name="main-menu-container" class="main-menu-container main-menu-container--closed">
+                    <ui:VisualElement name="buttons-container" class="main-menu-buttons-container">
+                        <ui:Button name="play-button" class="button round-button round-button--play">
+                            <ui:VisualElement name="play-button-icon" class="round-button__icon round-button__icon--play" />
+                        </ui:Button>
+                        <ui:VisualElement name="additional-buttons-container" class="main-menu-additional-buttons-container">
+                            <ui:Button name="gj-api-button" class="button main-menu-additional-buttons-container__child round-button round-button--gj-api main-menu-additional-buttons-container__child--left">
+                                <ui:VisualElement name="gj-api-button-icon" class="round-button__icon round-button__icon--gj-api" />
+                            </ui:Button>
+                            <ui:Button name="settings-button" class="button main-menu-additional-buttons-container__child round-button round-button--settings">
+                                <ui:VisualElement name="settings-button-icon" class="round-button__icon round-button__icon--settings" />
+                            </ui:Button>
+                            <ui:Button name="stats-button" class="button main-menu-additional-buttons-container__child round-button round-button--stats main-menu-additional-buttons-container__child--right">
+                                <ui:VisualElement name="stats-button-icon" class="round-button__icon round-button__icon--stats" />
+                            </ui:Button>
+                        </ui:VisualElement>
+                        <ui:Button name="exit-button" class="round-button round-button--exit button">
+                            <ui:VisualElement name="exit-button-icon" class="round-button__icon round-button__icon--exit" />
+                        </ui:Button>
+                    </ui:VisualElement>
+                    <ui:Instance template="DevLogoContainer" name="DevLogoContainer" picking-mode="Ignore" class="dev-logo-container" />
+                </ui:VisualElement>
+                <ui:VisualElement name="select-level-container" class="select-level-container select-level-container--closed">
+                    <ui:ScrollView scroll-deceleration-rate="0.5" elasticity="0.1" touch-scroll-type="Elastic" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" class="scroll-view--select-level">
+                        <ConnectIt.UI.CustomControls.LevelViewContainer auto-connect-views="true" name="level-view-container" class="level-view-container">
+                            <ConnectIt.UI.CustomControls.LevelView text="1" level="1" class="level-button button level-view-container__level-view level-view-container__level-view--lvl1 level-button--completed" />
+                            <ConnectIt.UI.CustomControls.LevelView text="2" level="2" class="level-button button level-view-container__level-view level-view-container__level-view--lvl2 level-button--current" />
+                            <ConnectIt.UI.CustomControls.LevelView text="3" level="3" class="level-button button level-view-container__level-view level-view-container__level-view--lvl3" />
+                            <ConnectIt.UI.CustomControls.LevelView text="4" level="4" class="level-button button level-view-container__level-view level-view-container__level-view--lvl4" />
+                            <ConnectIt.UI.CustomControls.LevelView text="5" level="5" class="level-button button level-view-container__level-view level-view-container__level-view--lvl5" />
+                            <ConnectIt.UI.CustomControls.LevelView text="6" level="6" class="level-button button level-view-container__level-view level-view-container__level-view--lvl6" />
+                            <ConnectIt.UI.CustomControls.LevelView text="7" level="7" class="level-button button level-view-container__level-view level-view-container__level-view--lvl7" />
+                            <ConnectIt.UI.CustomControls.LevelView text="8" level="8" class="level-button button level-view-container__level-view level-view-container__level-view--lvl8" />
+                            <ConnectIt.UI.CustomControls.LevelView text="9" level="9" class="level-button button level-view-container__level-view level-view-container__level-view--lvl9" />
+                            <ConnectIt.UI.CustomControls.LevelView text="10" level="10" class="level-button button level-view-container__level-view level-view-container__level-view--lvl10" />
+                        </ConnectIt.UI.CustomControls.LevelViewContainer>
+                    </ui:ScrollView>
+                    <ui:VisualElement name="back-button-container" class="back-button-container">
+                        <ui:Button name="back-button" class="button round-button round-button--exit">
+                            <ui:VisualElement name="back-button-icon" class="round-button__icon round-button__icon--exit" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+                        </ui:Button>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="settings-container" class="settings-container">
+                    <ui:Slider picking-mode="Ignore" value="42" high-value="100" direction="Horizontal" show-input-field="true" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="bottom-container" class="bottom-container">
+                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="version-label" class="label highlighted-label highlighted-label--version" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

@@ -1,6 +1,7 @@
 using ConnectIt.Gameplay.Pause;
 using ConnectIt.Input;
 using ConnectIt.Localization;
+using ConnectIt.Scenes;
 using ConnectIt.Scenes.Switchers;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Gameplay.Views;
@@ -179,7 +180,7 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
 
             DialogBoxButtonInfo exitButtonInfo = new(
                 _textKeyFactory.Create(TextKeysConstants.Gameplay.PauseMenu_Exit, null),
-                OnConfirmExitButtonClick,
+                OnExitButtonClick,
                 DialogBoxButtonType.Dismiss);
 
             DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
@@ -216,7 +217,7 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
             _pauseService.ResetPause(dialogBox);
         }
 
-        private void OnConfirmExitButtonClick()
+        private void OnExitButtonClick()
         {
             DialogBoxButtonInfo cancelButtonInfo = new(
                 _textKeyFactory.Create(TextKeysConstants.Common.Cancel, null),
@@ -224,15 +225,14 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
                 DialogBoxButtonType.Default,
                 true);
 
-            //todo
             DialogBoxButtonInfo exitButtonInfo = new(
                 _textKeyFactory.Create(TextKeysConstants.Common.Confirm, null),
-                null,
+                OnConfirmExitButtonClick,
                 DialogBoxButtonType.Dismiss);
 
             DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
             {
-                    cancelButtonInfo, exitButtonInfo
+                cancelButtonInfo, exitButtonInfo
             };
 
             DialogBoxCreationData creationData = new(
@@ -242,6 +242,11 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
                 buttonsInfo);
 
             _dialogBoxFactory.Create(creationData);
+        }
+
+        private void OnConfirmExitButtonClick()
+        {
+            _sceneSwitcher.TryGoToScene(SceneType.MenuScene);
         }
 
         #endregion
