@@ -8,7 +8,7 @@
                 <ui:VisualElement name="account-container" class="account-container">
                     <ui:VisualElement name="account-avatar" class="account-avatar account-container__child" />
                     <ui:VisualElement name="account-info-container" class="account-container__child account-info-container">
-                        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="account-name" class="label account-info-container__child account-info-container__account-name" />
+                        <ui:Label text="Label" name="account-name" class="label account-info-container__child account-info-container__account-name" />
                         <ui:Label text="Level" name="account-level" class="label highlighted-label account-info-container__child highlighted-label--account-level" />
                     </ui:VisualElement>
                 </ui:VisualElement>
@@ -17,7 +17,7 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="content-container" class="content-container">
-                <ui:VisualElement name="main-menu-container" class="main-menu-container main-menu-container--closed">
+                <ui:VisualElement name="main-menu-container" class="main-menu-container content-container__frame content-container__frame--closed">
                     <ui:VisualElement name="buttons-container" class="main-menu-buttons-container">
                         <ui:Button name="play-button" class="button round-button round-button--play">
                             <ui:VisualElement name="play-button-icon" class="round-button__icon round-button__icon--play" />
@@ -39,11 +39,14 @@
                     </ui:VisualElement>
                     <ui:Instance template="DevLogoContainer" name="DevLogoContainer" picking-mode="Ignore" class="dev-logo-container" />
                 </ui:VisualElement>
-                <ui:VisualElement name="select-level-container" class="select-level-container select-level-container--closed">
+                <ui:VisualElement name="select-level-container" class="select-level-container content-container__frame content-container__frame--closed">
+                    <ui:VisualElement name="title-container" class="title-container">
+                        <ui:Label text="Label" name="title-label" class="label highlighted-label title-container__title-label" />
+                    </ui:VisualElement>
                     <ui:ScrollView scroll-deceleration-rate="0.5" elasticity="0.1" touch-scroll-type="Elastic" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" class="scroll-view--select-level">
                         <ConnectIt.UI.CustomControls.LevelViewContainer auto-connect-views="true" name="level-view-container" class="level-view-container">
-                            <ConnectIt.UI.CustomControls.LevelView text="1" level="1" class="level-button button level-view-container__level-view level-view-container__level-view--lvl1 level-button--completed" />
-                            <ConnectIt.UI.CustomControls.LevelView text="2" level="2" class="level-button button level-view-container__level-view level-view-container__level-view--lvl2 level-button--current" />
+                            <ConnectIt.UI.CustomControls.LevelView text="1" level="1" class="level-button button level-view-container__level-view level-view-container__level-view--lvl1" />
+                            <ConnectIt.UI.CustomControls.LevelView text="2" level="2" class="level-button button level-view-container__level-view level-view-container__level-view--lvl2" />
                             <ConnectIt.UI.CustomControls.LevelView text="3" level="3" class="level-button button level-view-container__level-view level-view-container__level-view--lvl3" />
                             <ConnectIt.UI.CustomControls.LevelView text="4" level="4" class="level-button button level-view-container__level-view level-view-container__level-view--lvl4" />
                             <ConnectIt.UI.CustomControls.LevelView text="5" level="5" class="level-button button level-view-container__level-view level-view-container__level-view--lvl5" />
@@ -56,16 +59,150 @@
                     </ui:ScrollView>
                     <ui:VisualElement name="back-button-container" class="back-button-container">
                         <ui:Button name="back-button" class="button round-button round-button--exit">
-                            <ui:VisualElement name="back-button-icon" class="round-button__icon round-button__icon--exit" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+                            <ui:VisualElement name="back-button-icon" class="round-button__icon round-button__icon--exit" />
                         </ui:Button>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="settings-container" class="settings-container">
-                    <ui:Slider picking-mode="Ignore" value="42" high-value="100" direction="Horizontal" show-input-field="true" />
+                <ui:VisualElement name="settings-container" class="settings-container content-container__frame content-container__frame--closed">
+                    <ui:VisualElement name="title-container" class="title-container">
+                        <ui:Label text="Label" name="title-label" class="label highlighted-label title-container__title-label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="settings-scroll-view-container" class="settings-scroll-view-container">
+                        <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" focusable="true" touch-scroll-type="Elastic" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" class="settings-scroll-view">
+                            <ui:VisualElement name="settings-scroll-view-internal-container" class="settings-scroll-view-internal-container">
+                                <ConnectIt.UI.CustomControls.ProgressBarSlider value="40" high-value="100" low-value="0" name="sound-slider" class="settings-scroll-view-internal-container__child">
+                                    <ui:Label text="Label" display-tooltip-when-elided="false" name="sound-slider-label" picking-mode="Ignore" class="label setting__label progress-bar-slider__label" />
+                                </ConnectIt.UI.CustomControls.ProgressBarSlider>
+                                <ConnectIt.UI.CustomControls.ProgressBarSlider value="4.67" high-value="100" low-value="0" name="music-slider" class="settings-scroll-view-internal-container__child">
+                                    <ui:Label text="Label" name="music-slider-label" picking-mode="Ignore" class="label setting__label progress-bar-slider__label" />
+                                </ConnectIt.UI.CustomControls.ProgressBarSlider>
+                                <ui:Button text="Button" name="hq-effects-button" class="button highlighted-label label settings-scroll-view-internal-container__child setting__label" />
+                                <ui:Button text="Button" name="language-button" class="button highlighted-label label settings-scroll-view-internal-container__child settings-scroll-view-internal-container__child--last setting__label language-button" />
+                            </ui:VisualElement>
+                        </ui:ScrollView>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="back-button-container" class="back-button-container">
+                        <ui:Button name="back-button" class="button round-button round-button--exit">
+                            <ui:VisualElement name="back-button-icon" class="round-button__icon round-button__icon--exit" />
+                        </ui:Button>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="stats-container" class="stats-container content-container__frame content-container__frame--closed">
+                    <ui:VisualElement name="title-container" class="title-container">
+                        <ui:Label text="Label" name="title-label" class="label highlighted-label title-container__title-label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="stats-scroll-view-container" class="stats-scroll-view-container">
+                        <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" focusable="true" touch-scroll-type="Elastic" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" class="stats-scroll-view">
+                            <ui:VisualElement name="stats-scroll-view-internal-container" class="stats-scroll-view-internal-container" />
+                        </ui:ScrollView>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="back-button-container" class="back-button-container">
+                        <ui:Button name="back-button" class="button round-button round-button--exit">
+                            <ui:VisualElement name="back-button-icon" class="round-button__icon round-button__icon--exit" />
+                        </ui:Button>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="shop-container" class="stats-container content-container__frame content-container__frame--closed">
+                    <ui:VisualElement name="title-container" class="title-container">
+                        <ui:Label text="Label" name="title-label" class="label highlighted-label title-container__title-label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="shop-scroll-view-container" class="stats-scroll-view-container">
+                        <ui:ScrollView scroll-deceleration-rate="1" elasticity="0.1" focusable="true" touch-scroll-type="Elastic" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" class="stats-scroll-view">
+                            <ui:VisualElement name="shop-scroll-view-internal-container" class="shop-scroll-view-internal-container">
+                                <ui:VisualElement name="shop-coins-container" class="shop-coins-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                                    <ui:Label text="Label" name="shop-coins-label" class="label highlighted-label highlighted-label--coins" />
+                                    <ui:Label text="Label" name="shop-coins-info-label" class="label highlighted-label" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="boosts-container" class="boosts-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                                    <ui:Label text="Label" name="title" class="label highlighted-label boosts-container__title" />
+                                    <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" touch-scroll-type="Elastic" class="boosts-scroll-view">
+                                        <ui:VisualElement name="scroll-view-container" class="scroll-view-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+                                    </ui:ScrollView>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:ScrollView>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="back-button-container" class="back-button-container">
+                        <ui:Button name="back-button" class="button round-button round-button--exit">
+                            <ui:VisualElement name="back-button-icon" class="round-button__icon round-button__icon--exit" />
+                        </ui:Button>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="gj-container" class="content-container__frame gj-api-container content-container__frame--closed">
+                    <ui:VisualElement name="title-container" class="title-container">
+                        <ui:Label text="Label" name="title-label" class="label highlighted-label title-container__title-label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="gj-scroll-view-container" class="gj-api-scroll-view-container">
+                        <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" focusable="true" touch-scroll-type="Elastic" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" class="gj-api-scroll-view">
+                            <ui:VisualElement name="gj-scroll-view-internal-container" class="gj-api-scroll-view-internal-container">
+                                <ui:VisualElement name="gj-account-info-container" class="gj-account-info-container" style="margin-bottom: 70px;">
+                                    <ui:VisualElement name="username-label-container" class="gj-account-info-container__username-label-container">
+                                        <ui:Label text="Label" name="username-label" class="label highlighted-label gj-account-info-container__username-label" />
+                                        <ui:Button display-tooltip-when-elided="true" name="logout-button" class="button highlighted-label highlighted-label--logout" style="width: 110px;">
+                                            <ui:VisualElement name="logout-button-icon" class="gj-account-info-container__logout-button-icon" />
+                                        </ui:Button>
+                                    </ui:VisualElement>
+                                    <ui:Label text="Label" name="top-position-label" class="label highlighted-label gj-account-info-container__top-position-label highlighted-label--top-user-position" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="scores-container" class="gj-scores-container">
+                                    <ui:Label text="Label" name="title" class="label highlighted-label boosts-container__title" />
+                                    <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" touch-scroll-type="Elastic" class="gj-scores-scroll-view">
+                                        <ui:VisualElement name="scroll-view-container" class="scroll-view-container" />
+                                    </ui:ScrollView>
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:ScrollView>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="back-button-container" class="back-button-container">
+                        <ui:Button name="back-button" class="button round-button round-button--exit">
+                            <ui:VisualElement name="back-button-icon" class="round-button__icon round-button__icon--exit" />
+                        </ui:Button>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="gj-login-container" class="content-container__frame gj-login-container content-container__frame--closed">
+                    <ui:VisualElement name="title-container" class="title-container">
+                        <ui:Label text="Label" name="title-label" class="label highlighted-label title-container__title-label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="gj-login-scroll-view-container" class="gj-login-scroll-view-container">
+                        <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" focusable="true" touch-scroll-type="Elastic" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" class="gj-login-scroll-view">
+                            <ui:VisualElement name="gj-login-scroll-view-internal-container" class="gj-login-scroll-view-internal-container">
+                                <ui:VisualElement name="gj-logo-container" class="gj-login-gj-logo-container">
+                                    <ui:Label name="logo-container" class="label highlighted-label gj-login-gj-logo-container__gj-api-logo-container">
+                                        <ui:VisualElement name="gj-logo" class="gj-login-gj-logo-container__gj-api-logo" />
+                                    </ui:Label>
+                                    <ui:Label text="Label" name="gj-info-label" class="label highlighted-label gj-login-account-info-container__gj-info-label" />
+                                </ui:VisualElement>
+                                <ui:VisualElement name="login-input-container" class="login-input-container">
+                                    <ui:VisualElement name="username-input-container" class="input-container login-input-container__child">
+                                        <ui:Label text="Label" name="username-title" class="label highlighted-label input-container__title-label highlighted-label--input-title" />
+                                        <ui:TextField picking-mode="Ignore" value="filler text" name="username-input-field" class="input-container__input-field">
+                                            <ui:VisualElement name="username-input-field-icon-container" class="input-container__input-field-icon-container">
+                                                <ui:VisualElement name="username-input-field-icon" class="input-container__input-field-icon input-container__input-field-icon--username" style="margin-left: 5px; margin-right: 5px; margin-top: 10px; margin-bottom: 10px;" />
+                                            </ui:VisualElement>
+                                        </ui:TextField>
+                                    </ui:VisualElement>
+                                    <ui:VisualElement name="token-input-container" class="input-container login-input-container__child--last login-input-container__child">
+                                        <ui:Label text="Label" name="token-title" class="label highlighted-label input-container__title-label highlighted-label--input-title" />
+                                        <ui:TextField picking-mode="Ignore" value="filler text" name="token-input-field" class="input-container__input-field">
+                                            <ui:VisualElement name="token-input-field-icon-container" class="input-container__input-field-icon-container">
+                                                <ui:VisualElement name="token-input-field-icon" class="input-container__input-field-icon input-container__input-field-icon--token" style="margin-left: 5px; margin-right: 5px; margin-top: 10px; margin-bottom: 10px;" />
+                                            </ui:VisualElement>
+                                        </ui:TextField>
+                                    </ui:VisualElement>
+                                </ui:VisualElement>
+                                <ui:Button text="Button" display-tooltip-when-elided="true" name="login-button" class="button highlighted-label highlighted-label--login" />
+                            </ui:VisualElement>
+                        </ui:ScrollView>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="back-button-container" class="back-button-container">
+                        <ui:Button name="back-button" class="button round-button round-button--exit">
+                            <ui:VisualElement name="back-button-icon" class="round-button__icon round-button__icon--exit" />
+                        </ui:Button>
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="bottom-container" class="bottom-container">
-                <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="version-label" class="label highlighted-label highlighted-label--version" />
+                <ui:Label text="Label" name="version-label" class="label highlighted-label highlighted-label--version" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

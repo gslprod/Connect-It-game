@@ -3,6 +3,8 @@
     <ui:VisualElement name="dialog-box-container" class="dialog-box__container">
         <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="title-label" class="label dialog-box__title-label" />
         <ui:Label tabindex="-1" text="Ddfdfdffdfdfdfdfdfdfdfdfdfdfdfdfdffdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdf" display-tooltip-when-elided="true" name="message-label" class="label dialog-box__message-label" />
-        <ui:VisualElement name="buttons-group" class="dialog-box__buttons-group" />
+        <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" name="buttons-scroll-view" class="dialog-box__buttons-scroll-view">
+            <ui:VisualElement name="buttons-group" class="dialog-box__buttons-group" />
+        </ui:ScrollView>
     </ui:VisualElement>
 </ui:UXML>

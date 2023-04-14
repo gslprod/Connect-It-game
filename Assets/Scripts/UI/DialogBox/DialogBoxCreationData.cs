@@ -11,12 +11,14 @@ namespace ConnectIt.UI.DialogBox
         public TextKey TitleKey { get; }
         public TextKey MessageKey { get; }
         public DialogBoxButtonInfo[] Buttons { get; }
+        public DialogBoxButtonInfo AdditionalBottomButton { get; }
         public bool ShowImmediately { get; }
 
         public DialogBoxCreationData(VisualElement parent,
             TextKey titleKey,
             TextKey messageKey,
             DialogBoxButtonInfo[] buttons = null,
+            DialogBoxButtonInfo additionalBottomButton = null,
             bool showImmediately = true)
         {
             Assert.ArgsIsNotNull(parent, titleKey, messageKey);
@@ -25,6 +27,7 @@ namespace ConnectIt.UI.DialogBox
             TitleKey = titleKey;
             MessageKey = messageKey;
             Buttons = buttons;
+            AdditionalBottomButton = additionalBottomButton;
             ShowImmediately = showImmediately;
         }
     }

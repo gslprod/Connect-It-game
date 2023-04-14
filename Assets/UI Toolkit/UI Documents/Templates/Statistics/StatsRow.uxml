@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="stats-row" class="stats-row">
+        <ui:Label text="Label" name="name" class="label highlighted-label stats-row__name-label" />
+        <ui:Label text="Label" name="value" class="label highlighted-label stats-row__value-label" />
+    </ui:VisualElement>
+</ui:UXML>

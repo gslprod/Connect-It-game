@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="gj-score" class="gj-score">
+        <ui:Label text="1" name="gj-score-position-label" class="gj-score__position-label label highlighted-label gj-score__child" />
+        <ui:Label text="Label" name="gj-score-username-label" class="label highlighted-label gj-score__username-label gj-score__child" />
+        <ui:Label text="Label" name="gj-score-value-label" class="label highlighted-label gj-score__score-value-label gj-score__child" />
+    </ui:VisualElement>
+</ui:UXML>

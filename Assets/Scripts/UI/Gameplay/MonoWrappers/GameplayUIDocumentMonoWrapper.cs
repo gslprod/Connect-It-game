@@ -137,6 +137,7 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.RestartLevelConfirm_Title, null),
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.RestartLevelConfirm_Message, null),
                 buttonsInfo,
+                null,
                 false);
 
             DialogBoxView dialogBox = _dialogBoxFactory.Create(creationData);
@@ -193,6 +194,7 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.LevelPaused_Title, null),
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.LevelPaused_Message, null),
                 buttonsInfo,
+                null,
                 false);
 
             DialogBoxView dialogBox = _dialogBoxFactory.Create(creationData);

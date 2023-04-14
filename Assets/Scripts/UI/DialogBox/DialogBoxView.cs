@@ -36,6 +36,7 @@ namespace ConnectIt.UI.DialogBox
         private TextKey _titleKey;
         private TextKey _messageKey;
         private DialogBoxButtonInfo[] _buttonsInfo;
+        private DialogBoxButtonInfo _additionalBottomButtonInfo;
         private DialogBoxButton[] _createdButtons;
 
         private Coroutine _delayedShowingAnimationCoroutine;
@@ -63,6 +64,7 @@ namespace ConnectIt.UI.DialogBox
             _titleKey = _creationData.TitleKey;
             _messageKey = _creationData.MessageKey;
             _buttonsInfo = _creationData.Buttons;
+            _additionalBottomButtonInfo = _creationData.AdditionalBottomButton;
 
             if (_creationData.ShowImmediately)
                 Show();
@@ -86,6 +88,7 @@ namespace ConnectIt.UI.DialogBox
             _elementsContainer.AddToClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
 
             CreateButtons();
+            CreateAdditionalButton();
             UpdateLocalization();
 
             _delayedShowingAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(StartShowingAnimation);
@@ -191,19 +194,43 @@ namespace ConnectIt.UI.DialogBox
                 return;
 
             VisualElement buttonsParent = _root.Q<VisualElement>(DialogBoxButtonParentName);
-            _createdButtons = new DialogBoxButton[_buttonsInfo.Length];
+            _createdButtons = new DialogBoxButton[GetButtonsAmount()];
 
             for (int i = 0; i < _buttonsInfo.Length; i++)
             {
-                TemplateContainer createdButtonAsset = _uiButtonAsset.CloneTree();
-                buttonsParent.Add(createdButtonAsset);
+                _uiButtonAsset.CloneTree(buttonsParent);
+                Button createdButton = (Button)buttonsParent[buttonsParent.childCount - 1];
 
-                Button button =  createdButtonAsset.Q<Button>();
+                if (i < _buttonsInfo.Length - 1)
+                    createdButton.AddToClassList(ClassNamesConstants.Global.DialogBoxButtonNotLastInLayout);
 
-                _createdButtons[i] = _dialogBoxButtonFactory.Create(_buttonsInfo[i], button, this);
+                _createdButtons[i] = _dialogBoxButtonFactory.Create(_buttonsInfo[i], createdButton, this);
             }
 
             _buttonsInfo = null;
+        }
+
+        private void CreateAdditionalButton()
+        {
+            if (_additionalBottomButtonInfo == null)
+                return;
+
+            _uiButtonAsset.CloneTree(_elementsContainer);
+            Button createdButton = (Button)_elementsContainer[_elementsContainer.childCount - 1];
+
+            createdButton.AddToClassList(ClassNamesConstants.Global.DialogBoxButtonAdditional);
+
+            _createdButtons[^1] = _dialogBoxButtonFactory.Create(_additionalBottomButtonInfo, createdButton, this);
+
+            _additionalBottomButtonInfo = null;
+        }
+
+        private int GetButtonsAmount()
+        {
+            int buttonsAmount = _buttonsInfo == null ? 0 : _buttonsInfo.Length;
+            buttonsAmount += _additionalBottomButtonInfo == null ? 0 : 1;
+
+            return buttonsAmount;
         }
 
         public class Factory : PlaceholderFactory<DialogBoxCreationData, DialogBoxView> { }
