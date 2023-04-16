@@ -144,10 +144,10 @@ namespace ConnectIt.UI.DialogBox
             _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
 
             float closeDelaySec = Mathf.Max(
-                _elementsContainer.resolvedStyle.CalculateMaxTransitionLength(),
-                _root.resolvedStyle.CalculateMaxTransitionLength());
+                _elementsContainer.resolvedStyle.CalculateMaxTransitionLengthSec(),
+                _root.resolvedStyle.CalculateMaxTransitionLengthSec());
 
-            _delayedDisposeCoroutine = _coroutinesGlobalContainer.DelayedAction(Dispose, new WaitForSeconds(closeDelaySec));
+            _delayedDisposeCoroutine = _coroutinesGlobalContainer.DelayedAction(Dispose, closeDelaySec);
         }
 
         private void StopRunningCoroutines()

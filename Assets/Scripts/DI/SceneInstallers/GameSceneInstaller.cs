@@ -13,6 +13,7 @@ using ConnectIt.Infrastructure.Registrators;
 using ConnectIt.Infrastructure.Spawners;
 using ConnectIt.Input;
 using ConnectIt.Input.GameplayInputRouterStates;
+using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.Gameplay.Views;
 using System;
 using UnityEngine;
@@ -94,9 +95,6 @@ namespace ConnectIt.DI.Installers
 
                 Container.BindFactory<Label, LevelView, LevelView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Label, LevelView>>();
-
-                Container.BindFactory<Button, Action, DefaultButtonView, DefaultButtonView.Factory>()
-                         .FromFactory<PrimitiveDIFactory<Button, Action, DefaultButtonView>>();
             }
         }
 

@@ -1,4 +1,4 @@
-﻿namespace ConnectIt.Input
+﻿namespace ConnectIt.Utilities.Extensions.GameplayInputRouter
 {
     public enum GameplayInputRouterEnablePriority
     {

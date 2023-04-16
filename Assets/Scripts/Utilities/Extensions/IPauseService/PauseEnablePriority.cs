@@ -1,4 +1,4 @@
-﻿namespace ConnectIt.Gameplay.Pause
+﻿namespace ConnectIt.Utilities.Extensions.IPauseService
 {
     public enum PauseEnablePriority
     {

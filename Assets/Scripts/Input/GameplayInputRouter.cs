@@ -2,6 +2,7 @@
 using ConnectIt.Infrastructure.Setters;
 using ConnectIt.Input.GameplayInputRouterStates;
 using ConnectIt.Utilities;
+using ConnectIt.Utilities.Extensions.GameplayInputRouter;
 using System;
 using UnityEngine.InputSystem;
 using Zenject;

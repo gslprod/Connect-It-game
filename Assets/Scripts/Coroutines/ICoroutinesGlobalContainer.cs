@@ -9,5 +9,7 @@ namespace ConnectIt.Coroutines
         Coroutine StartCoroutine(IEnumerator coroutine);
         void StopCoroutine(Coroutine coroutine);
         Coroutine DelayedAction(Action action, YieldInstruction delay = null);
+        Coroutine DelayedAction(Action action, CustomYieldInstruction delay);
+        Coroutine DelayedAction(Action action, float delaySec);
     }
 }

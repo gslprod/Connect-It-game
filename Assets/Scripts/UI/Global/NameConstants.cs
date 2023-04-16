@@ -4,5 +4,6 @@
     {
         public const string RootName = "root";
         public const string LoadingScreenCreationRootName = "loading-screen-creaton-root";
+        public const string BlockPanelName = "block-panel";
     }
 }

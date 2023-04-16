@@ -102,7 +102,7 @@
                         </ui:Button>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="shop-container" class="stats-container content-container__frame content-container__frame--closed">
+                <ui:VisualElement name="shop-container" class="content-container__frame shop-container content-container__frame--closed">
                     <ui:VisualElement name="title-container" class="title-container">
                         <ui:Label text="Label" name="title-label" class="label highlighted-label title-container__title-label" />
                     </ui:VisualElement>

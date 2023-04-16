@@ -142,10 +142,10 @@ namespace ConnectIt.UI.LoadingScreen
             _root.RemoveFromClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
 
             float appearAnimationLengthSec = Mathf.Max(
-                _elementsContainer.resolvedStyle.CalculateMaxTransitionLength(),
-                _root.resolvedStyle.CalculateMaxTransitionLength());
+                _elementsContainer.resolvedStyle.CalculateMaxTransitionLengthSec(),
+                _root.resolvedStyle.CalculateMaxTransitionLengthSec());
 
-            _appearAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(OnShowingAnimationEnded, new WaitForSeconds(appearAnimationLengthSec));
+            _appearAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(OnShowingAnimationEnded, appearAnimationLengthSec);
         }
 
         private void StartClosingAnimation()
@@ -156,10 +156,10 @@ namespace ConnectIt.UI.LoadingScreen
             _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
 
             float closeDelaySec = Mathf.Max(
-                _elementsContainer.resolvedStyle.CalculateMaxTransitionLength(),
-                _root.resolvedStyle.CalculateMaxTransitionLength());
+                _elementsContainer.resolvedStyle.CalculateMaxTransitionLengthSec(),
+                _root.resolvedStyle.CalculateMaxTransitionLengthSec());
 
-            _delayedDisposeCoroutine = _coroutinesGlobalContainer.DelayedAction(Dispose, new WaitForSeconds(closeDelaySec));
+            _delayedDisposeCoroutine = _coroutinesGlobalContainer.DelayedAction(Dispose, closeDelaySec);
         }
 
         private void OnShowingAnimationEnded()

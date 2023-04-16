@@ -3,5 +3,6 @@
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/global-view.uss?fileID=7433441132597879392&amp;guid=3e7e0fef7b69e5d47a5e8ee32af6704d&amp;type=3#global-view" />
     <ui:VisualElement name="root" picking-mode="Ignore" class="root">
         <ui:VisualElement name="loading-screen-creaton-root" picking-mode="Ignore" class="loading-screen__creaton-root" />
+        <ui:VisualElement name="block-panel" class="block-panel block-panel--disabled" />
     </ui:VisualElement>
 </ui:UXML>

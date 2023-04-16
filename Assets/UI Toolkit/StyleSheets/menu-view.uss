@@ -104,9 +104,11 @@
 }
 
 .main-menu-container {
-    flex-grow: 1;
     justify-content: center;
     margin-left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 .main-menu-buttons-container {
@@ -313,11 +315,13 @@
 }
 
 .settings-container {
-    flex-grow: 1;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 30px;
     padding-bottom: 30px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 .settings-scroll-view-internal-container__child {
@@ -366,11 +370,13 @@
 }
 
 .stats-container {
-    flex-grow: 1;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 30px;
     padding-bottom: 30px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 .stats-scroll-view {
@@ -410,11 +416,13 @@
 }
 
 .shop-container {
-    flex-grow: 1;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 30px;
     padding-bottom: 30px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 .shop-scroll-view {
@@ -524,11 +532,13 @@
 }
 
 .gj-api-container {
-    flex-grow: 1;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 30px;
     padding-bottom: 30px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 .gj-api-scroll-view {
@@ -632,11 +642,13 @@
 }
 
 .gj-login-container {
-    flex-grow: 1;
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 30px;
     padding-bottom: 30px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 .gj-login-scroll-view {

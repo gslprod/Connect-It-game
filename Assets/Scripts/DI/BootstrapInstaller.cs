@@ -6,10 +6,13 @@ using ConnectIt.Localization;
 using ConnectIt.Scenes;
 using ConnectIt.Scenes.Switchers;
 using ConnectIt.Time;
+using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Global.MonoWrappers;
 using ConnectIt.UI.LoadingScreen;
+using ConnectIt.UI.Tools;
 using ConnectIt.Utilities.Formatters;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -41,6 +44,27 @@ namespace ConnectIt.DI.Installers
             BindGlobalUIDocument();
             BindLoadingScreen();
             BindSceneSwitcher();
+            BindUIViews();
+            BindUIBlocker();
+        }
+
+        private void BindUIBlocker()
+        {
+            Container.Bind<IUIBlocker>()
+                     .To<GlobalUIDocumentMonoWrapper>()
+                     .FromResolve()
+                     .AsCached();
+        }
+
+        private void BindUIViews()
+        {
+            BindUIViewsFactories();
+
+            void BindUIViewsFactories()
+            {
+                Container.BindFactory<Button, Action, DefaultButtonView, DefaultButtonView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Button, Action, DefaultButtonView>>();
+            }
         }
 
         private void BindSceneSwitcher()
@@ -64,7 +88,7 @@ namespace ConnectIt.DI.Installers
         {
             Container.Bind<GlobalUIDocumentMonoWrapper>()
                      .FromComponentInNewPrefab(_globalUIDocumentPrefab)
-                     .AsSingle()
+                     .AsCached()
                      .NonLazy();
         }
 
