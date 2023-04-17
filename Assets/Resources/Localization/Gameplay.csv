@@ -1,4 +1,4 @@
 Key,English,Russian
-Gameplay.Level,Level {0},Уровень {0}
+Gameplay.LevelLabel.Title,Level {0},Уровень {0}
 Gameplay.PauseMenu.Continue,,Продожить
 Gameplay.PauseMenu.Exit,,Выйти в главное меню

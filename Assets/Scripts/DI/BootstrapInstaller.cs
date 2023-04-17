@@ -30,6 +30,7 @@ namespace ConnectIt.DI.Installers
         [SerializeField] private CoroutinesGlobalContainer _coroutinesGlobalContainerPrefab;
         [SerializeField] private GlobalUIDocumentMonoWrapper _globalUIDocumentPrefab;
         [SerializeField] private VisualTreeAsset _loadingScreenAsset;
+        [SerializeField] private GameVersionSO _gameVersionConfig;
 
         public override void InstallBindings()
         {
@@ -161,17 +162,25 @@ namespace ConnectIt.DI.Installers
         private void BindConfig()
         {
             BindGameplayConfig();
-        }
+            BindGameVersionConfig();
 
-        private void BindGameplayConfig()
-        {
-            Container.Bind<GameplayLogicConfig>()
-                     .AsSingle()
-                     .WithArguments(_gameplayLogicConfig);
+            void BindGameplayConfig()
+            {
+                Container.Bind<GameplayLogicConfig>()
+                         .AsSingle()
+                         .WithArguments(_gameplayLogicConfig);
 
-            Container.Bind<GameplayViewConfig>()
-                     .AsSingle()
-                     .WithArguments(_gameplayViewConfig);
+                Container.Bind<GameplayViewConfig>()
+                         .AsSingle()
+                         .WithArguments(_gameplayViewConfig);
+            }
+
+            void BindGameVersionConfig()
+            {
+                Container.Bind<GameVersion>()
+                         .AsSingle()
+                         .WithArguments(_gameVersionConfig);
+            }
         }
 
         private void BindRenderCameraProvider()

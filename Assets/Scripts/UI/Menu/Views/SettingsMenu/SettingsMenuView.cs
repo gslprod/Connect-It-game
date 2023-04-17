@@ -5,9 +5,9 @@ using System;
 using UnityEngine.UIElements;
 using Zenject;
 
-namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
+namespace ConnectIt.UI.Menu.Views.SettingsMenu
 {
-    public class SelectLevelMenuView : IInitializable, IDisposable
+    public class SettingsMenuView : IInitializable, IDisposable
     {
         private readonly VisualElement _viewRoot;
         private readonly FramesSwitcher<VisualElement> _framesSwitcher;
@@ -16,7 +16,7 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
 
         private DefaultButtonView _backButton;
 
-        public SelectLevelMenuView(VisualElement viewRoot,
+        public SettingsMenuView(VisualElement viewRoot,
             FramesSwitcher<VisualElement> switcher,
             MenuUIDocumentMonoWrapper menuUIDocumentMonoWrapper,
             DefaultButtonView.Factory defaultButtonViewFactory)
@@ -40,7 +40,7 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
         private void CreateViews()
         {
             _backButton = _defaultButtonViewFactory.Create(
-                _viewRoot.Q<Button>(NameConstants.SelectLevelMenu.BackButton), OnBackButtonClick);
+                _viewRoot.Q<Button>(NameConstants.SettingsMenu.BackButton), OnBackButtonClick);
         }
 
         private void DisposeDisposableViews()
@@ -57,6 +57,6 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
 
         #endregion
 
-        public class Factory : PlaceholderFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SelectLevelMenuView> { }
+        public class Factory : PlaceholderFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SettingsMenuView> { }
     }
 }

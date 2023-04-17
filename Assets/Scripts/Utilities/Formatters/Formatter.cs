@@ -5,17 +5,16 @@ namespace ConnectIt.Utilities.Formatters
 {
     public class Formatter : IFormatter
     {
-        private string _gameplayLevelProgressTitleFormat;
-        private string _gameplayElapsedTimeFormat;
-        private string _sceneLoadingProgressTitleFormat;
+        private string _gameplayLevelProgressTitleFormat => _config.GameplayLevelProgressTitleFormat;
+        private string _gameplayElapsedTimeFormat => _config.GameplayElapsedTimeFormat;
+        private string _sceneLoadingProgressTitleFormat => _config.SceneLoadingProgressTitleFormat;
+        private string _versionFormat => _config.VersionFormat;
 
         private readonly FormatterConfig _config;
 
         public Formatter(FormatterConfig config)
         {
             _config = config;
-
-            SetValuesFromSO();
         }
 
         public string FormatGameplayLevelProgress(float progress)
@@ -33,11 +32,9 @@ namespace ConnectIt.Utilities.Formatters
             return string.Format(_sceneLoadingProgressTitleFormat, progress);
         }
 
-        private void SetValuesFromSO()
+        public string FormatVersion(string applicationVersion, string additionalVersionInfo)
         {
-            _gameplayLevelProgressTitleFormat = _config.GameplayLevelProgressTitleFormat;
-            _gameplayElapsedTimeFormat = _config.GameplayElapsedTimeFormat;
-            _sceneLoadingProgressTitleFormat = _config.SceneLoadingProgressTitleFormat;
+            return string.Format(_versionFormat, applicationVersion, additionalVersionInfo);
         }
     }
 }

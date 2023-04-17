@@ -8,6 +8,7 @@ namespace ConnectIt.Config.ScriptableObjects
         public string GameplayLevelProgressTitleFormat => _gameplayLevelProgressTitleFormat;
         public string GameplayElapsedTimeFormat => _gameplayElapsedTimeFormat;
         public string SceneLoadingProgressTitleFormat => _sceneLoadingProgressTitleFormat;
+        public string VersionFormat => _versionFormat;
 
         [Header("Gameplay")]
 
@@ -21,5 +22,10 @@ namespace ConnectIt.Config.ScriptableObjects
 
         [Tooltip("Scene Loading Progress Title Format")]
         [SerializeField] private string _sceneLoadingProgressTitleFormat;
+
+        [Header("Version")]
+
+        [Tooltip("Version Format. 0 - application version, 1 - additional version info")]
+        [SerializeField] private string _versionFormat;
     }
 }

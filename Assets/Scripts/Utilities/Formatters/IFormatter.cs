@@ -7,5 +7,6 @@ namespace ConnectIt.Utilities.Formatters
         string FormatGameplayElapsedTime(TimeSpan time);
         string FormatGameplayLevelProgress(float progress);
         string FormatSceneLoadingProgress(float progress);
+        string FormatVersion(string applicationVersion, string additionalVersionInfo);
     }
 }

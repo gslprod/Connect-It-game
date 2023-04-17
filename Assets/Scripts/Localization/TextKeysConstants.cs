@@ -4,7 +4,7 @@
     {
         public static class Gameplay
         {
-            public const string Level = GameplayBaseString + ".Level";
+            public const string Level = GameplayBaseString + ".LevelLabel.Title";
             public const string PauseMenu_Continue = GameplayBaseString + ".PauseMenu.Continue";
             public const string PauseMenu_Exit = GameplayBaseString + ".PauseMenu.Exit";
 
@@ -33,7 +33,7 @@
             private const string CommonBaseString = "Common";
         }
 
-        public class LoadingScreen
+        public static class LoadingScreen
         {
             public const string SwitchingToGameScene_Title = LoadingScreenBaseString + ".SwitchingToGameScene.Title";
             public const string SwitchingToGameScene_Message = LoadingScreenBaseString + ".SwitchingToGameScene.Message";
@@ -41,6 +41,13 @@
             public const string SwitchingToMenuScene_Message = LoadingScreenBaseString + ".SwitchingToMenuScene.Message";
 
             private const string LoadingScreenBaseString = "LoadingScreen";
+        }
+
+        public static class Menu
+        {
+            public const string VersionLabel_Title = MenuBaseString + ".VersionLabel.Title";
+
+            private const string MenuBaseString = "Menu";
         }
     }
 }

@@ -1,5 +1,11 @@
 ﻿using ConnectIt.Coroutines;
+using ConnectIt.UI.Menu.Views;
+using ConnectIt.UI.Menu.Views.GJLoginMenu;
+using ConnectIt.UI.Menu.Views.GJMenu;
 using ConnectIt.UI.Menu.Views.MainMenu;
+using ConnectIt.UI.Menu.Views.SelectLevelMenu;
+using ConnectIt.UI.Menu.Views.SettingsMenu;
+using ConnectIt.UI.Menu.Views.StatsMenu;
 using ConnectIt.UI.Tools;
 using ConnectIt.Utilities.Extensions;
 using ConnectIt.Utilities.Extensions.IUIBlocker;
@@ -16,32 +22,58 @@ namespace ConnectIt.UI.Menu.MonoWrappers
         public VisualElement SettingsContainer { get; private set; }
         public VisualElement StatsContainer { get; private set; }
         public VisualElement ShopContainer { get; private set; }
-        public VisualElement GjContainer { get; private set; }
-        public VisualElement GjLoginContainer { get; private set; }
+        public VisualElement GJContainer { get; private set; }
+        public VisualElement GJLoginContainer { get; private set; }
 
         private UIDocument _uiDocument;
         private VisualElement _documentRootVE => _uiDocument.rootVisualElement;
         private VisualElement _rootVE;
 
-        private MainMenuView.Factory _mainMenuViewFactory;
         private IUIBlocker _uiBlocker;
         private ICoroutinesGlobalContainer _coroutinesGlobalContainer;
 
         private FramesSwitcher<VisualElement> _framesSwitcher;
+        private MainMenuView.Factory _mainMenuViewFactory;
         private MainMenuView _mainMenuView;
+        private SelectLevelMenuView.Factory _selectLevelMenuViewFactory;
+        private SelectLevelMenuView _selectLevelMenuView;
+        private SettingsMenuView.Factory _settingsMenuViewFactory;
+        private SettingsMenuView _settingsMenuView;
+        private StatsMenuView.Factory _statsMenuViewFactory;
+        private StatsMenuView _statsMenuView;
+        private GJLoginMenuView.Factory _gjLoginMenuViewFactory;
+        private GJLoginMenuView _gjLoginMenuView;
+        private GJMenuView.Factory _gjMenuViewFactory;
+        private GJMenuView _gjMenuView;
+
+        private VersionView.Factory _versionViewFactory;
+        private VersionView _versionView;
 
         private Coroutine _firstFrameSwitchCoroutine;
         private Coroutine _waitForTransitionEndCoroutine;
 
         [Inject]
         public void Constructor(
-            MainMenuView.Factory mainMenuViewFactory,
             IUIBlocker uiBlocker,
-            ICoroutinesGlobalContainer coroutinesGlobalContainer)
+            ICoroutinesGlobalContainer coroutinesGlobalContainer,
+            MainMenuView.Factory mainMenuViewFactory,
+            SelectLevelMenuView.Factory selectLevelMenuViewFactory,
+            SettingsMenuView.Factory settingsMenuViewFactory,
+            StatsMenuView.Factory statsMenuViewFactory,
+            GJLoginMenuView.Factory gjLoginMenuViewFactory,
+            GJMenuView.Factory gjMenuViewFactory,
+            VersionView.Factory versionViewFactory)
         {
-            _mainMenuViewFactory = mainMenuViewFactory;
             _uiBlocker = uiBlocker;
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
+            _mainMenuViewFactory = mainMenuViewFactory;
+            _selectLevelMenuViewFactory = selectLevelMenuViewFactory;
+            _settingsMenuViewFactory = settingsMenuViewFactory;
+            _statsMenuViewFactory = statsMenuViewFactory;
+            _gjLoginMenuViewFactory = gjLoginMenuViewFactory;
+            _gjMenuViewFactory = gjMenuViewFactory;
+
+            _versionViewFactory = versionViewFactory;
         }
 
         private void Awake()
@@ -53,7 +85,8 @@ namespace ConnectIt.UI.Menu.MonoWrappers
 
         private void Start()
         {
-            CreateSwitcherAndViews();
+            CreateSwitcherAndFrames();
+            CreateViews();
         }
 
         private void OnDestroy()
@@ -64,23 +97,9 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             StopAllRunningCoroutines();
         }
 
-        private void DisposeDisposableViews()
-        {
-            _mainMenuView.Dispose();
-        }
+        #region SwitcherAndFramesCreation
 
-        private void StopAllRunningCoroutines()
-        {
-            if (_waitForTransitionEndCoroutine != null)
-                _coroutinesGlobalContainer.StopCoroutine(_waitForTransitionEndCoroutine);
-
-            if (_firstFrameSwitchCoroutine != null)
-                _coroutinesGlobalContainer.StopCoroutine(_firstFrameSwitchCoroutine);
-        }
-
-        #region SwitcherAndViewsCreation
-
-        private void CreateSwitcherAndViews()
+        private void CreateSwitcherAndFrames()
         {
             MainMenuContainer = _rootVE.Q<VisualElement>(NameConstants.MainMenuContainer);
             Frame<VisualElement> mainMenuFrame = new(MainMenuContainer);
@@ -97,11 +116,11 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             ShopContainer = _rootVE.Q<VisualElement>(NameConstants.ShopContainer);
             Frame<VisualElement> shopFrame = new(ShopContainer);
 
-            GjContainer = _rootVE.Q<VisualElement>(NameConstants.GjContainer);
-            Frame<VisualElement> gjFrame = new(GjContainer);
+            GJContainer = _rootVE.Q<VisualElement>(NameConstants.GjContainer);
+            Frame<VisualElement> gjFrame = new(GJContainer);
 
-            GjLoginContainer = _rootVE.Q<VisualElement>(NameConstants.GjLoginContainer);
-            Frame<VisualElement> gjLoginFrame = new(GjLoginContainer);
+            GJLoginContainer = _rootVE.Q<VisualElement>(NameConstants.GjLoginContainer);
+            Frame<VisualElement> gjLoginFrame = new(GJLoginContainer);
 
             Frame<VisualElement>[] frames = new Frame<VisualElement>[]
             {
@@ -117,9 +136,14 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             _framesSwitcher = new(frames, EnableFrame, DisableFrame);
             _framesSwitcher.FrameSwitched += OnFrameSwitched;
 
-            _firstFrameSwitchCoroutine = _coroutinesGlobalContainer.DelayedAction(() => SwitchToFirstFrame());
+            _firstFrameSwitchCoroutine = _coroutinesGlobalContainer.DelayedAction(SwitchToFirstFrame);
 
             _mainMenuView = _mainMenuViewFactory.Create(MainMenuContainer, _framesSwitcher, this);
+            _selectLevelMenuView = _selectLevelMenuViewFactory.Create(SelectLevelContainer, _framesSwitcher, this);
+            _settingsMenuView = _settingsMenuViewFactory.Create(SettingsContainer, _framesSwitcher, this);
+            _statsMenuView = _statsMenuViewFactory.Create(StatsContainer, _framesSwitcher, this);
+            _gjLoginMenuView = _gjLoginMenuViewFactory.Create(GJLoginContainer, _framesSwitcher, this);
+            _gjMenuView = _gjMenuViewFactory.Create(GJContainer, _framesSwitcher, this);
         }
 
         private void SwitchToFirstFrame()
@@ -132,7 +156,6 @@ namespace ConnectIt.UI.Menu.MonoWrappers
         private void OnFrameSwitched(VisualElement frame)
         {
             float transitionLength = frame.resolvedStyle.CalculateMaxTransitionLengthSec();
-            print(transitionLength);
             if (transitionLength == 0)
                 return;
 
@@ -159,5 +182,32 @@ namespace ConnectIt.UI.Menu.MonoWrappers
         }
 
         #endregion
+
+        private void DisposeDisposableViews()
+        {
+            _mainMenuView.Dispose();
+            _selectLevelMenuView.Dispose();
+            _settingsMenuView.Dispose();
+            _statsMenuView.Dispose();
+            _gjLoginMenuView.Dispose();
+            _gjMenuView.Dispose();
+
+            _versionView.Dispose();
+        }
+
+        private void StopAllRunningCoroutines()
+        {
+            if (_waitForTransitionEndCoroutine != null)
+                _coroutinesGlobalContainer.StopCoroutine(_waitForTransitionEndCoroutine);
+
+            if (_firstFrameSwitchCoroutine != null)
+                _coroutinesGlobalContainer.StopCoroutine(_firstFrameSwitchCoroutine);
+        }
+
+        private void CreateViews()
+        {
+            _versionView = _versionViewFactory.Create(
+                _documentRootVE.Q<Label>(NameConstants.VersionLabel));
+        }
     }
 }
