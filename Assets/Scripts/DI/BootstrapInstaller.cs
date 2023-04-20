@@ -3,6 +3,9 @@ using ConnectIt.Config.ScriptableObjects;
 using ConnectIt.Coroutines;
 using ConnectIt.Infrastructure.Factories;
 using ConnectIt.Localization;
+using ConnectIt.Save.SaveProviders;
+using ConnectIt.Save.Savers;
+using ConnectIt.Save.Serializers;
 using ConnectIt.Scenes;
 using ConnectIt.Scenes.Switchers;
 using ConnectIt.Time;
@@ -47,6 +50,21 @@ namespace ConnectIt.DI.Installers
             BindSceneSwitcher();
             BindUIViews();
             BindUIBlocker();
+            BindSave();
+        }
+
+        private void BindSave()
+        {
+            Container.BindInterfacesTo<GameSaveProvider>()
+                     .AsSingle();
+
+            Container.Bind<ISaver>()
+                     .To<FileSaver>()
+                     .AsSingle();
+
+            Container.Bind<ISerializer>()
+                     .To<UnityJSONSerializer>()
+                     .AsSingle();
         }
 
         private void BindUIBlocker()
