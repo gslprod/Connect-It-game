@@ -7,6 +7,11 @@
             public const string Level = GameplayBaseString + ".LevelLabel.Title";
             public const string PauseMenu_Continue = GameplayBaseString + ".PauseMenu.Continue";
             public const string PauseMenu_Exit = GameplayBaseString + ".PauseMenu.Exit";
+            public const string WinMenu_Title = GameplayBaseString + ".WinMenu.Title";
+            public const string WinMenu_Content = GameplayBaseString + ".WinMenu.Content";
+            public const string WinMenu_MainMenu = GameplayBaseString + ".WinMenu.MainMenu";
+            public const string WinMenu_Restart = GameplayBaseString + ".WinMenu.Restart";
+            public const string WinMenu_NextLevel = GameplayBaseString + ".WinMenu.NextLevel";
 
             private const string GameplayBaseString = "Gameplay";
         }
@@ -29,6 +34,7 @@
         {
             public const string Confirm = CommonBaseString + ".Confirm";
             public const string Cancel = CommonBaseString + ".Cancel";
+            public const string MainMenu = CommonBaseString + ".MainMenu";
 
             private const string CommonBaseString = "Common";
         }

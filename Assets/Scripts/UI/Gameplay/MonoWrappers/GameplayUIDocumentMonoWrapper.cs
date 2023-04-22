@@ -6,6 +6,7 @@ using ConnectIt.Scenes.Switchers;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Gameplay.Views;
+using ConnectIt.Utilities.Extensions;
 using ConnectIt.Utilities.Extensions.GameplayInputRouter;
 using ConnectIt.Utilities.Extensions.IPauseService;
 using UnityEngine;
@@ -17,6 +18,8 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
 {
     public class GameplayUIDocumentMonoWrapper : MonoBehaviour
     {
+        public VisualElement Root => _rootVE;
+
         private UIDocument _uiDocument;
         private VisualElement _documentRootVE => _uiDocument.rootVisualElement;
         private VisualElement _rootVE;
@@ -119,31 +122,7 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
 
         private void RestartButtonClick()
         {
-            DialogBoxButtonInfo confirmButtonInfo = new(
-                _textKeyFactory.Create(TextKeysConstants.Common.Confirm, null),
-                OnConfirmRestartButtonClick,
-                DialogBoxButtonType.Accept);
-
-            DialogBoxButtonInfo cancelButtonInfo = new(
-                _textKeyFactory.Create(TextKeysConstants.Common.Cancel, null),
-                null,
-                DialogBoxButtonType.Dismiss,
-                true);
-
-            DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
-            {
-                confirmButtonInfo, cancelButtonInfo
-            };
-
-            DialogBoxCreationData creationData = new(
-                _rootVE,
-                _textKeyFactory.Create(TextKeysConstants.DialogBox.RestartLevelConfirm_Title, null),
-                _textKeyFactory.Create(TextKeysConstants.DialogBox.RestartLevelConfirm_Message, null),
-                buttonsInfo,
-                null,
-                false);
-
-            DialogBoxView dialogBox = _dialogBoxFactory.Create(creationData);
+            DialogBoxView dialogBox = _dialogBoxFactory.CreateDefaultRestartLevelDialogBox(_textKeyFactory, _rootVE, _sceneSwitcher);
 
             dialogBox.Showing += OnRestartDialogBoxShowing;
             dialogBox.Closing += OnRestartDialogBoxClosing;
@@ -163,11 +142,6 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
             dialogBox.Closing -= OnRestartDialogBoxClosing;
 
             _gameplayInputRouter.ResetEnable(dialogBox);
-        }
-
-        private void OnConfirmRestartButtonClick()
-        {
-            _sceneSwitcher.TryReloadActiveScene();
         }
 
         #endregion

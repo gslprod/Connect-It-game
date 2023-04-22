@@ -3,6 +3,7 @@
     public enum PauseEnablePriority
     {
         None = 0,
-        PauseMenu
+        PauseMenu,
+        WinGameState
     }
 }

@@ -48,7 +48,7 @@ namespace ConnectIt.Save.SaveProviders
         }
 
         public GameplaySaveData LoadGameplayData()
-            => (GameplaySaveData)_gameplaySaveData.Clone();
+            => _gameplaySaveData.Clone();
 
         public void SaveShopData(ShopSaveData saveData)
         {
@@ -59,7 +59,7 @@ namespace ConnectIt.Save.SaveProviders
         }
 
         public ShopSaveData LoadShopData()
-            => (ShopSaveData)_shopSaveData.Clone();
+            => _shopSaveData.Clone();
 
         public void SaveStatsData(StatsSaveData saveData)
         {
@@ -70,7 +70,7 @@ namespace ConnectIt.Save.SaveProviders
         }
 
         public StatsSaveData LoadStatsData()
-            => (StatsSaveData)_statsSaveData.Clone();
+            => _statsSaveData.Clone();
 
         public void SaveExtrenalServerData(ExternalServerSaveData saveData)
         {
@@ -81,7 +81,7 @@ namespace ConnectIt.Save.SaveProviders
         }
 
         public ExternalServerSaveData LoadExternalServerData()
-            => (ExternalServerSaveData)_externalServerSaveData.Clone();
+            => _externalServerSaveData.Clone();
 
         private void LoadAllData()
         {
@@ -91,8 +91,14 @@ namespace ConnectIt.Save.SaveProviders
             _externalServerSaveData = LoadAndDeserialize<ExternalServerSaveData>(ExternalServerSaveData.SaveKey);
         }
 
-        private T LoadAndDeserialize<T>(string loadKey)
-            => _serializer.Deserialize<T>(_saver.Load(loadKey));
+        private T LoadAndDeserialize<T>(string loadKey) where T : new()
+        {
+            string serializedObj = _saver.Load(loadKey);
+            if (string.IsNullOrEmpty(serializedObj))
+                return new T();
+
+            return _serializer.Deserialize<T>(serializedObj);
+        }
 
         private bool TrySaveData<T>(T data, ref T savedData, string saveKey)
         {

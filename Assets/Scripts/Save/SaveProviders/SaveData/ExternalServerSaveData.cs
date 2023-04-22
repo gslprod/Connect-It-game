@@ -2,12 +2,13 @@
 
 namespace ConnectIt.Save.SaveProviders.SaveData
 {
-    public class ExternalServerSaveData : IEquatable<ExternalServerSaveData>, ICloneable
+    [Serializable]
+    public class ExternalServerSaveData : IEquatable<ExternalServerSaveData>
     {
         public const string SaveKey = "ExternalServer";
 
-        public object Clone()
-            => MemberwiseClone();
+        public ExternalServerSaveData Clone()
+            => (ExternalServerSaveData)MemberwiseClone();
 
         public bool Equals(ExternalServerSaveData other)
             => false;

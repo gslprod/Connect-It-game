@@ -1,6 +1,7 @@
 using ConnectIt.Config;
 using ConnectIt.Config.ScriptableObjects;
 using ConnectIt.Coroutines;
+using ConnectIt.Gameplay.Data;
 using ConnectIt.Infrastructure.Factories;
 using ConnectIt.Localization;
 using ConnectIt.Save.SaveProviders;
@@ -51,6 +52,13 @@ namespace ConnectIt.DI.Installers
             BindUIViews();
             BindUIBlocker();
             BindSave();
+            BindLevelsPassDataProvider();
+        }
+
+        private void BindLevelsPassDataProvider()
+        {
+            Container.BindInterfacesTo<LevelsPassDataProvider>()
+                     .AsSingle();
         }
 
         private void BindSave()
@@ -58,9 +66,10 @@ namespace ConnectIt.DI.Installers
             Container.BindInterfacesTo<GameSaveProvider>()
                      .AsSingle();
 
-            Container.Bind<ISaver>()
-                     .To<FileSaver>()
+            Container.BindInterfacesTo<FileSaver>()
                      .AsSingle();
+
+            Container.BindInitializableExecutionOrder<FileSaver>(-20);
 
             Container.Bind<ISerializer>()
                      .To<UnityJSONSerializer>()

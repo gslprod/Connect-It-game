@@ -14,7 +14,7 @@ namespace ConnectIt.Config
         private float _usedTilesVsConnectedPortsGameCompleteFactor;
         private int _maxAvailableLevel;
 
-        private int _currentLevel = 1;
+        private int _currentLevel = 2;
 
         private readonly GameplayLogicConfigSO _configSO;
 

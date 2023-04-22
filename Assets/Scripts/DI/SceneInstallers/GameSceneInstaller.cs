@@ -1,4 +1,5 @@
 using ConnectIt.DI.Installers.Custom;
+using ConnectIt.Gameplay.GameStateHandlers;
 using ConnectIt.Gameplay.LevelLoading;
 using ConnectIt.Gameplay.Model;
 using ConnectIt.Gameplay.MonoWrappers;
@@ -13,7 +14,7 @@ using ConnectIt.Infrastructure.Registrators;
 using ConnectIt.Infrastructure.Spawners;
 using ConnectIt.Input;
 using ConnectIt.Input.GameplayInputRouterStates;
-using ConnectIt.UI.CommonViews;
+using ConnectIt.UI.Gameplay.MonoWrappers;
 using ConnectIt.UI.Gameplay.Views;
 using System;
 using UnityEngine;
@@ -28,6 +29,7 @@ namespace ConnectIt.DI.Installers
         [SerializeField] private ConnectionLineView _connectionLinePrefab;
         [SerializeField] private Transform _connectionLineParent;
         [SerializeField] private TilemapsMonoWrapper[] _tilemapsMonoWrapperPrefabs;
+        [SerializeField] private GameplayUIDocumentMonoWrapper _gameplayUIDocumentMonoWrapper;
 
         public override void InstallBindings()
         {
@@ -40,6 +42,21 @@ namespace ConnectIt.DI.Installers
             BindTime();
             BindLevelLoader();
             BindPauseService();
+            BindUIDocumentMonoWrapper();
+            BindGameStateHandlers();
+        }
+
+        private void BindGameStateHandlers()
+        {
+            Container.BindInterfacesTo<WinHandler>()
+                     .AsSingle();
+        }
+
+        private void BindUIDocumentMonoWrapper()
+        {
+            Container.Bind<GameplayUIDocumentMonoWrapper>()
+                     .FromInstance(_gameplayUIDocumentMonoWrapper)
+                     .AsSingle();
         }
 
         private void BindPauseService()

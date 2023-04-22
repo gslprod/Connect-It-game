@@ -2,12 +2,13 @@
 
 namespace ConnectIt.Save.SaveProviders.SaveData
 {
-    public class ShopSaveData : IEquatable<ShopSaveData>, ICloneable
+    [Serializable]
+    public class ShopSaveData : IEquatable<ShopSaveData>
     {
         public const string SaveKey = "Shop";
 
-        public object Clone()
-            => MemberwiseClone();
+        public ShopSaveData Clone()
+            => (ShopSaveData)MemberwiseClone();
 
         public bool Equals(ShopSaveData other)
             => false;
