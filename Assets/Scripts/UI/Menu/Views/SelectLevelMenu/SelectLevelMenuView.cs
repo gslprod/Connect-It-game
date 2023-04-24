@@ -10,21 +10,28 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
     public class SelectLevelMenuView : IInitializable, IDisposable
     {
         private readonly VisualElement _viewRoot;
+        private readonly VisualElement _mainRoot;
         private readonly FramesSwitcher<VisualElement> _framesSwitcher;
         private readonly MenuUIDocumentMonoWrapper _menuUIDocumentMonoWrapper;
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
+        private readonly SelectLevelButtonsView.Factory _selectLevelButtonsViewFactory;
 
         private DefaultButtonView _backButton;
+        private SelectLevelButtonsView _selectLevelButtonsView;
 
         public SelectLevelMenuView(VisualElement viewRoot,
+            VisualElement mainRoot,
             FramesSwitcher<VisualElement> switcher,
             MenuUIDocumentMonoWrapper menuUIDocumentMonoWrapper,
-            DefaultButtonView.Factory defaultButtonViewFactory)
+            DefaultButtonView.Factory defaultButtonViewFactory,
+            SelectLevelButtonsView.Factory selectLevelButtonsViewFactory)
         {
             _viewRoot = viewRoot;
+            _mainRoot = mainRoot;
             _framesSwitcher = switcher;
             _menuUIDocumentMonoWrapper = menuUIDocumentMonoWrapper;
             _defaultButtonViewFactory = defaultButtonViewFactory;
+            _selectLevelButtonsViewFactory = selectLevelButtonsViewFactory;
         }
 
         public void Initialize()
@@ -41,11 +48,16 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
         {
             _backButton = _defaultButtonViewFactory.Create(
                 _viewRoot.Q<Button>(NameConstants.SelectLevelMenu.BackButton), OnBackButtonClick);
+
+            _selectLevelButtonsView = _selectLevelButtonsViewFactory.Create(
+                _viewRoot.Q<VisualElement>(NameConstants.SelectLevelMenu.LevelViewContainer),
+                _mainRoot);
         }
 
         private void DisposeDisposableViews()
         {
             _backButton.Dispose();
+            _selectLevelButtonsView.Dispose();
         }
 
         #region BackButton
@@ -57,6 +69,6 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
 
         #endregion
 
-        public class Factory : PlaceholderFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SelectLevelMenuView> { }
+        public class Factory : PlaceholderFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SelectLevelMenuView> { }
     }
 }

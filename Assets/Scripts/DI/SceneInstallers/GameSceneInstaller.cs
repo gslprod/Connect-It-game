@@ -141,7 +141,7 @@ namespace ConnectIt.DI.Installers
                 Container.BindInterfacesTo<ViewFromModelSpawner<Port, PortView, PortView.Factory>>()
                          .AsSingle();
 
-                Container.BindInitializableExecutionOrder<ViewFromModelSpawner<Port, PortView, PortView.Factory>>(-10);
+                Container.BindInitializableExecutionOrder<ViewFromModelSpawner<Port, PortView, PortView.Factory>>(ExecutionOrderConstants.Initializable.PortViewFromModelSpawner);
             }
 
             void BindRegistrator()
@@ -149,7 +149,7 @@ namespace ConnectIt.DI.Installers
                 Container.BindInterfacesTo<CreatedObjectsRegistrator<Port>>()
                          .AsSingle();
 
-                Container.BindInitializableExecutionOrder<CreatedObjectsRegistrator<Port>>(-10);
+                Container.BindInitializableExecutionOrder<CreatedObjectsRegistrator<Port>>(ExecutionOrderConstants.Initializable.CreatedPortsRegistrator);
             }
 
             void BindFactories()
@@ -180,7 +180,8 @@ namespace ConnectIt.DI.Installers
                 Container.BindInterfacesTo<ViewFromModelSpawner<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>>()
                          .AsSingle();
 
-                Container.BindInitializableExecutionOrder<ViewFromModelSpawner<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>>(-10);
+                Container.BindInitializableExecutionOrder<ViewFromModelSpawner<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>>(
+                    ExecutionOrderConstants.Initializable.ConnectionLineViewFromModelSpawner);
             }
 
             void BindFactories()

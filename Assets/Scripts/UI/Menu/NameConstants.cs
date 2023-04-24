@@ -25,6 +25,9 @@
         public static class SelectLevelMenu
         {
             public const string BackButton = "back-button";
+
+            public const string LevelViewContainer = "level-view-container";
+            public const string LevelButtonFormat = "level-{0}-button";
         }
 
         public static class SettingsMenu

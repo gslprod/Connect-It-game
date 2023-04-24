@@ -34,7 +34,7 @@
         {
             public const string Confirm = CommonBaseString + ".Confirm";
             public const string Cancel = CommonBaseString + ".Cancel";
-            public const string MainMenu = CommonBaseString + ".MainMenu";
+            public const string Play = CommonBaseString + ".Play";
 
             private const string CommonBaseString = "Common";
         }
@@ -54,6 +54,17 @@
             public const string VersionLabel_Title = MenuBaseString + ".VersionLabel.Title";
 
             private const string MenuBaseString = "Menu";
+
+            public static class SelectLevelMenu
+            {
+                public const string ChoosenLevelInfo_Title = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Title";
+                public const string ChoosenLevelInfo_Content_Completed = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Content.Completed";
+                public const string ChoosenLevelInfo_Content_NotCompleted = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Content.NotCompleted";
+                public const string ChoosenLevelInfo_Content_NotAvailable = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Content.NotAvailable";
+                public const string ChoosenLevelInfo_Content_Skipped = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Content.Skipped";
+
+                private const string SelectLevelMenuBaseString = MenuBaseString + ".SelectLevelMenu";
+            }
         }
     }
 }

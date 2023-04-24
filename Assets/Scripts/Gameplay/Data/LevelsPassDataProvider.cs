@@ -53,7 +53,7 @@ namespace ConnectIt.Gameplay.Data
             if (savedData.Passed && !dataToSave.Passed)
                 return;
 
-            savedData.Passed = dataToSave.Passed;
+            savedData.PassState = dataToSave.PassState;
 
             if (dataToSave.Score >= savedData.Score)
             {
@@ -70,6 +70,18 @@ namespace ConnectIt.Gameplay.Data
         public LevelData GetDataByLevelId(int levelId)
         {
             return _levelDataArray.First(element => element.Id == levelId);
+        }
+
+        public bool TryGetDataByLevelId(int levelId, out LevelData levelData)
+        {
+            levelData = default;
+            int index = _levelDataArray.FindIndex(element => element.Id == levelId);
+
+            if (index < 0)
+                return false;
+
+            levelData = _levelDataArray[index];
+            return true;
         }
 
         private void OnGameplaySaveDataChanged()
@@ -90,7 +102,7 @@ namespace ConnectIt.Gameplay.Data
                 LevelPassSaveData saveData = new()
                 {
                     Id = levelData.Id,
-                    Passed = levelData.Passed,
+                    PassState = levelData.PassState,
                     Score = levelData.Score,
                     PassTimeSec = levelData.PassTimeSec
                 };
@@ -117,7 +129,7 @@ namespace ConnectIt.Gameplay.Data
 
                 LevelData levelData = new(levelSaveData.Id)
                 {
-                    Passed = levelSaveData.Passed,
+                    PassState = levelSaveData.PassState,
                     Score = levelSaveData.Score,
                     PassTimeSec = levelSaveData.PassTimeSec
                 };

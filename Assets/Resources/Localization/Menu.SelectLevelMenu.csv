@@ -1,0 +1,6 @@
+Key,English,Russian
+Menu.SelectLevelMenu.ChoosenLevelInfo.Title,,Уровень {0}
+Menu.SelectLevelMenu.ChoosenLevelInfo.Content.Completed,,Пройден!\nВремя:{0}\nОчки:{1}\n
+Menu.SelectLevelMenu.ChoosenLevelInfo.Content.NotCompleted,,Не пройден. Вы можете начать проходить этот уровень.
+Menu.SelectLevelMenu.ChoosenLevelInfo.Content.NotAvailable,,"Недоступен. Чтобы приступить к этому уровню, пройдите или пропустите прошлые."
+Menu.SelectLevelMenu.ChoosenLevelInfo.Content.Skipped,,Пропущен. Вы можете начать проходить этот уровень.

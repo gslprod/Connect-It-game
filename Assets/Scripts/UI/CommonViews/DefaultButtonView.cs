@@ -6,29 +6,29 @@ namespace ConnectIt.UI.CommonViews
 {
     public class DefaultButtonView : IInitializable, IDisposable
     {
-        private readonly Button _button;
-        private readonly Action _onClick;
+        protected readonly Button button;
+        protected readonly Action onClick;
 
         public DefaultButtonView(Button button,
             Action onClick)
         {
-            _button = button;
-            _onClick = onClick;
+            this.button = button;
+            this.onClick = onClick;
         }
 
-        public void Initialize()
+        public virtual void Initialize()
         {
-            _button.clicked += OnButtonClicked;
+            button.clicked += OnButtonClicked;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
-            _button.clicked -= OnButtonClicked;
+            button.clicked -= OnButtonClicked;
         }
 
         private void OnButtonClicked()
         {
-            _onClick?.Invoke();
+            onClick?.Invoke();
         }
 
         public class Factory : PlaceholderFactory<Button, Action, DefaultButtonView> { }

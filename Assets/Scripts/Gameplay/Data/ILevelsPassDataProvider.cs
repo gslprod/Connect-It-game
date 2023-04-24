@@ -8,5 +8,6 @@ namespace ConnectIt.Gameplay.Data
 
         LevelData GetDataByLevelId(int levelId);
         void SaveData(LevelData dataToSave);
+        bool TryGetDataByLevelId(int levelId, out LevelData levelData);
     }
 }

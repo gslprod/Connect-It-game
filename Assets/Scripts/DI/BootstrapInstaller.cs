@@ -69,7 +69,7 @@ namespace ConnectIt.DI.Installers
             Container.BindInterfacesTo<FileSaver>()
                      .AsSingle();
 
-            Container.BindInitializableExecutionOrder<FileSaver>(-20);
+            Container.BindInitializableExecutionOrder<FileSaver>(ExecutionOrderConstants.Initializable.FileSaver);
 
             Container.Bind<ISerializer>()
                      .To<UnityJSONSerializer>()

@@ -18,7 +18,7 @@ namespace ConnectIt.Input
 
         private readonly GameplayInput _input;
         private readonly IdleTilemapsInteractionState.Factory _idleStateFactory;
-        private IPauseService _pauseService;
+        private readonly IPauseService _pauseService;
 
         private PriorityAwareSetter<bool> _enableSetter;
 

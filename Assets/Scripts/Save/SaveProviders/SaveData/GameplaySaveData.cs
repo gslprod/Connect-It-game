@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConnectIt.Gameplay.Data;
+using System;
 using UnityEngine;
 
 namespace ConnectIt.Save.SaveProviders.SaveData
@@ -36,13 +37,13 @@ namespace ConnectIt.Save.SaveProviders.SaveData
         public class LevelPassSaveData : IEquatable<LevelPassSaveData>
         {
             [SerializeField] internal int Id;
-            [SerializeField] internal bool Passed;
+            [SerializeField] internal PassStates PassState;
             [SerializeField] internal long Score;
             [SerializeField] internal float PassTimeSec;
 
             public bool Equals(LevelPassSaveData other)
                 => Id == other.Id &&
-                Passed == other.Passed &&
+                PassState == other.PassState &&
                 Score == other.Score &&
                 PassTimeSec == other.PassTimeSec;
 

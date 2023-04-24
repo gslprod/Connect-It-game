@@ -8,6 +8,7 @@ using ConnectIt.UI.Menu.Views.SelectLevelMenu;
 using ConnectIt.UI.Menu.Views.SettingsMenu;
 using ConnectIt.UI.Menu.Views.StatsMenu;
 using ConnectIt.UI.Tools;
+using System;
 using UnityEngine.UIElements;
 using Zenject;
 
@@ -56,8 +57,14 @@ public class MenuSceneInstaller : MonoInstaller
 
             void BindUIViewsFactories()
             {
-                Container.BindFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SelectLevelMenuView, SelectLevelMenuView.Factory>()
-                         .FromFactory<PrimitiveDIFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SelectLevelMenuView>>();
+                Container.BindFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SelectLevelMenuView, SelectLevelMenuView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SelectLevelMenuView>>();
+
+                Container.BindFactory<VisualElement, VisualElement, SelectLevelButtonsView, SelectLevelButtonsView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, SelectLevelButtonsView>>();
+
+                Container.BindFactory<Button, int, Action<int>, SelectLevelButtonView, SelectLevelButtonView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Button, int, Action<int>, SelectLevelButtonView>>();
             }
         }
 

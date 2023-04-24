@@ -79,7 +79,7 @@ namespace ConnectIt.Gameplay.GameStateHandlers
             //todo
             LevelData levelData = new(_gameplayLogicConfig.CurrentLevel)
             {
-                Passed = true,
+                PassState = PassStates.Passed,
                 Score = 0,
                 PassTimeSec = _gameplayTimeProvider.ElapsedTimeSec
             };

@@ -45,16 +45,16 @@
                     </ui:VisualElement>
                     <ui:ScrollView scroll-deceleration-rate="0.5" elasticity="0.1" touch-scroll-type="Elastic" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" class="scroll-view--select-level">
                         <ConnectIt.UI.CustomControls.LevelViewContainer auto-connect-views="true" name="level-view-container" class="level-view-container">
-                            <ConnectIt.UI.CustomControls.LevelView text="1" level="1" class="level-button button level-view-container__level-view level-view-container__level-view--lvl1" />
-                            <ConnectIt.UI.CustomControls.LevelView text="2" level="2" class="level-button button level-view-container__level-view level-view-container__level-view--lvl2" />
-                            <ConnectIt.UI.CustomControls.LevelView text="3" level="3" class="level-button button level-view-container__level-view level-view-container__level-view--lvl3" />
-                            <ConnectIt.UI.CustomControls.LevelView text="4" level="4" class="level-button button level-view-container__level-view level-view-container__level-view--lvl4" />
-                            <ConnectIt.UI.CustomControls.LevelView text="5" level="5" class="level-button button level-view-container__level-view level-view-container__level-view--lvl5" />
-                            <ConnectIt.UI.CustomControls.LevelView text="6" level="6" class="level-button button level-view-container__level-view level-view-container__level-view--lvl6" />
-                            <ConnectIt.UI.CustomControls.LevelView text="7" level="7" class="level-button button level-view-container__level-view level-view-container__level-view--lvl7" />
-                            <ConnectIt.UI.CustomControls.LevelView text="8" level="8" class="level-button button level-view-container__level-view level-view-container__level-view--lvl8" />
-                            <ConnectIt.UI.CustomControls.LevelView text="9" level="9" class="level-button button level-view-container__level-view level-view-container__level-view--lvl9" />
-                            <ConnectIt.UI.CustomControls.LevelView text="10" level="10" class="level-button button level-view-container__level-view level-view-container__level-view--lvl10" />
+                            <ConnectIt.UI.CustomControls.LevelView text="1" level="1" name="level-1-button" class="level-button button level-view-container__level-view level-view-container__level-view--lvl1" />
+                            <ConnectIt.UI.CustomControls.LevelView text="2" level="2" name="level-2-button" class="level-button button level-view-container__level-view level-view-container__level-view--lvl2" />
+                            <ConnectIt.UI.CustomControls.LevelView text="3" level="3" name="level-3-button" class="level-button button level-view-container__level-view level-view-container__level-view--lvl3" />
+                            <ConnectIt.UI.CustomControls.LevelView text="4" level="4" name="level-4-button" class="level-button button level-view-container__level-view level-view-container__level-view--lvl4" />
+                            <ConnectIt.UI.CustomControls.LevelView text="5" level="5" name="level-5-button" class="level-button button level-view-container__level-view level-view-container__level-view--lvl5" />
+                            <ConnectIt.UI.CustomControls.LevelView text="6" level="6" name="level-6-button" class="level-button button level-view-container__level-view level-view-container__level-view--lvl6" />
+                            <ConnectIt.UI.CustomControls.LevelView text="7" level="7" name="level-7-button" class="level-button button level-view-container__level-view level-view-container__level-view--lvl7" />
+                            <ConnectIt.UI.CustomControls.LevelView text="8" level="8" name="level-8-button" class="level-button button level-view-container__level-view level-view-container__level-view--lvl8" />
+                            <ConnectIt.UI.CustomControls.LevelView text="9" level="9" name="level-9-button" class="level-button button level-view-container__level-view level-view-container__level-view--lvl9" />
+                            <ConnectIt.UI.CustomControls.LevelView text="10" level="10" name="level-10-button" class="level-button button level-view-container__level-view level-view-container__level-view--lvl10" />
                         </ConnectIt.UI.CustomControls.LevelViewContainer>
                     </ui:ScrollView>
                     <ui:VisualElement name="back-button-container" class="back-button-container">

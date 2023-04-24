@@ -1,6 +1,6 @@
 Key,English,Russian
 Gameplay.LevelLabel.Title,Level {0},Уровень {0}
-Gameplay.PauseMenu.Continue,,Продожить
+Gameplay.PauseMenu.Continue,,Продолжить
 Gameplay.PauseMenu.Exit,,Выйти в главное меню
 Gameplay.WinMenu.Title,,Уровень {0} пройден!
 Gameplay.WinMenu.Content,,Время: {0}\nОчки: {1}\nПолучено монет: {2}
