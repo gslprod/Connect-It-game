@@ -104,5 +104,13 @@
                 private const string GJLoginMenuBaseString = MenuBaseString + ".GJLoginMenu";
             }
         }
+
+        public static class Items
+        {
+            public const string Boosts_SkipLevel_Name = ItemsBaseString + ".Boosts.SkipLevel.Name";
+            public const string Boosts_SkipLevel_Description = ItemsBaseString + ".Boosts.SkipLevel.Description";
+
+            private const string ItemsBaseString = "Items";
+        }
     }
 }

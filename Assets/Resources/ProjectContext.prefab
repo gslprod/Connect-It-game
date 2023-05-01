@@ -84,3 +84,4 @@ MonoBehaviour:
   _globalUIDocumentPrefab: {fileID: 9201374191772173986, guid: e0cc656dca9b3bc45b0f77cd059a6645, type: 3}
   _loadingScreenAsset: {fileID: 9197481963319205126, guid: 4051658bcc5f045439c5238028819be4, type: 3}
   _gameVersionConfig: {fileID: 11400000, guid: c9c89eb807bfefe4380d8079d434237d, type: 2}
+  _shopConfig: {fileID: 11400000, guid: 83af93338fb04c340b703ff4f9d0167d, type: 2}

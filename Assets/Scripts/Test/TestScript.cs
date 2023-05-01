@@ -1,14 +1,9 @@
-﻿using ConnectIt.Gameplay;
-using ConnectIt.Gameplay.Model;
+﻿using ConnectIt.Gameplay.Model;
 using ConnectIt.Gameplay.Observers;
-using ConnectIt.Infrastructure.CreatedObjectNotifiers;
 using ConnectIt.Input;
 using ConnectIt.Localization;
 using ConnectIt.UI.DialogBox;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
@@ -32,7 +27,7 @@ namespace ConnectIt.Test
 
         private IGameStateObserver _gameStateObserver;
 
-        [Inject]
+        //[Inject]
         public void Constructor(
             IGameStateObserver gameStateObserver,
             DialogBoxView.Factory dbFactory,
@@ -56,6 +51,8 @@ namespace ConnectIt.Test
             //        _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Title, null), null, DialogBoxButtonType.Accept, true) });
 
             //StartCoroutine(Delay(dialogBoxCreationData));
+
+            Gameplay.Model.TileUser s = new Gameplay.Model.TileUser(TileLayer.Map);
         }
 
         private IEnumerator Delay(DialogBoxCreationData dialogBoxCreationData)

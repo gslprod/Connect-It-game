@@ -1023,6 +1023,8 @@ MonoBehaviour:
     Id: 1543902778
   - Name: Menu.GJLoginMenu
     Id: 1560099676
+  - Name: Items
+    Id: 1532993543
   SaveFolder: {fileID: 102900000, guid: 41c0f89da3419fb498aee52788ade3ad, type: 3}
 --- !u!4 &1134513245
 Transform:

@@ -9,6 +9,7 @@ using ConnectIt.Save.Savers;
 using ConnectIt.Save.Serializers;
 using ConnectIt.Scenes;
 using ConnectIt.Scenes.Switchers;
+using ConnectIt.Shop.Customer;
 using ConnectIt.Time;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.DialogBox;
@@ -35,6 +36,7 @@ namespace ConnectIt.DI.Installers
         [SerializeField] private GlobalUIDocumentMonoWrapper _globalUIDocumentPrefab;
         [SerializeField] private VisualTreeAsset _loadingScreenAsset;
         [SerializeField] private GameVersionSO _gameVersionConfig;
+        [SerializeField] private ShopConfigSO _shopConfig;
 
         public override void InstallBindings()
         {
@@ -53,6 +55,30 @@ namespace ConnectIt.DI.Installers
             BindUIBlocker();
             BindSave();
             BindLevelsPassDataProvider();
+            BindWallet();
+            BindStorage();
+            BindCustomer();
+        }
+
+        private void BindCustomer()
+        {
+            Container.Bind<ICustomer>()
+                     .To<Customer>()
+                     .AsSingle();
+        }
+
+        private void BindStorage()
+        {
+            Container.Bind<IStorage>()
+                     .To<Storage>()
+                     .AsTransient();
+        }
+
+        private void BindWallet()
+        {
+            Container.Bind<IWallet>()
+                     .To<Wallet>()
+                     .AsTransient();
         }
 
         private void BindLevelsPassDataProvider()
@@ -193,6 +219,7 @@ namespace ConnectIt.DI.Installers
         {
             BindGameplayConfig();
             BindGameVersionConfig();
+            BindShopConfig();
 
             void BindGameplayConfig()
             {
@@ -210,6 +237,13 @@ namespace ConnectIt.DI.Installers
                 Container.Bind<GameVersion>()
                          .AsSingle()
                          .WithArguments(_gameVersionConfig);
+            }
+
+            void BindShopConfig()
+            {
+                Container.Bind<ShopConfig>()
+                         .AsSingle()
+                         .WithArguments(_shopConfig);
             }
         }
 
