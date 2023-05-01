@@ -1,4 +1,5 @@
-﻿using ConnectIt.UI.CommonViews;
+﻿using ConnectIt.Localization;
+using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.Menu.MonoWrappers;
 using ConnectIt.UI.Tools;
 using System;
@@ -15,16 +16,21 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
         private readonly MenuUIDocumentMonoWrapper _menuUIDocumentMonoWrapper;
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
         private readonly SelectLevelButtonsView.Factory _selectLevelButtonsViewFactory;
+        private readonly DefaultLocalizedLabelView.Factory _defaultLabelViewFactory;
+        private readonly TextKey.Factory _textKeyFactory;
 
         private DefaultButtonView _backButton;
         private SelectLevelButtonsView _selectLevelButtonsView;
+        private DefaultLocalizedLabelView _titleLabel;
 
         public SelectLevelMenuView(VisualElement viewRoot,
             VisualElement mainRoot,
             FramesSwitcher<VisualElement> switcher,
             MenuUIDocumentMonoWrapper menuUIDocumentMonoWrapper,
             DefaultButtonView.Factory defaultButtonViewFactory,
-            SelectLevelButtonsView.Factory selectLevelButtonsViewFactory)
+            SelectLevelButtonsView.Factory selectLevelButtonsViewFactory,
+            DefaultLocalizedLabelView.Factory defaultLabelViewFactory,
+            TextKey.Factory textKeyFactory)
         {
             _viewRoot = viewRoot;
             _mainRoot = mainRoot;
@@ -32,6 +38,8 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
             _menuUIDocumentMonoWrapper = menuUIDocumentMonoWrapper;
             _defaultButtonViewFactory = defaultButtonViewFactory;
             _selectLevelButtonsViewFactory = selectLevelButtonsViewFactory;
+            _defaultLabelViewFactory = defaultLabelViewFactory;
+            _textKeyFactory = textKeyFactory;
         }
 
         public void Initialize()
@@ -52,12 +60,17 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
             _selectLevelButtonsView = _selectLevelButtonsViewFactory.Create(
                 _viewRoot.Q<VisualElement>(NameConstants.SelectLevelMenu.LevelViewContainer),
                 _mainRoot);
+
+            _titleLabel = _defaultLabelViewFactory.Create(
+                _viewRoot.Q<Label>(NameConstants.SelectLevelMenu.TitleLabel),
+                _textKeyFactory.Create(TextKeysConstants.Menu.SelectLevelMenu.Title, null));
         }
 
         private void DisposeDisposableViews()
         {
             _backButton.Dispose();
             _selectLevelButtonsView.Dispose();
+            _titleLabel.Dispose();
         }
 
         #region BackButton

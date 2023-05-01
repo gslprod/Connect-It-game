@@ -37,6 +37,9 @@ public class MenuSceneInstaller : MonoInstaller
             {
                 Container.BindFactory<Label, VersionView, VersionView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Label, VersionView>>();
+
+                Container.BindFactory<Label, CompletedLevelsView, CompletedLevelsView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Label, CompletedLevelsView>>();
             }
         }
 

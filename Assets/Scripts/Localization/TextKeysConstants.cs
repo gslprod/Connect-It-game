@@ -51,12 +51,15 @@
 
         public static class Menu
         {
+            public const string CompletedLevelsLabel_Title = MenuBaseString + ".CompletedLevelsLabel.Title";
             public const string VersionLabel_Title = MenuBaseString + ".VersionLabel.Title";
 
             private const string MenuBaseString = "Menu";
 
             public static class SelectLevelMenu
             {
+                public const string Title = SelectLevelMenuBaseString + ".Title";
+
                 public const string ChoosenLevelInfo_Title = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Title";
                 public const string ChoosenLevelInfo_Content_Completed = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Content.Completed";
                 public const string ChoosenLevelInfo_Content_NotCompleted = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Content.NotCompleted";
@@ -64,6 +67,34 @@
                 public const string ChoosenLevelInfo_Content_Skipped = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Content.Skipped";
 
                 private const string SelectLevelMenuBaseString = MenuBaseString + ".SelectLevelMenu";
+            }
+
+            public static class SettingsMenu
+            {
+                public const string Title = SettingsMenuBaseString + ".Title";
+
+                private const string SettingsMenuBaseString = MenuBaseString + ".SettingsMenu";
+            }
+
+            public static class StatsMenu
+            {
+                public const string Title = StatsMenuBaseString + ".Title";
+
+                private const string StatsMenuBaseString = MenuBaseString + ".StatsMenu";
+            }
+
+            public static class GJMenu
+            {
+                public const string Title = GJMenuBaseString + ".Title";
+
+                private const string GJMenuBaseString = MenuBaseString + ".GJMenu";
+            }
+
+            public static class GJLoginMenu
+            {
+                public const string Title = GJLoginMenuBaseString + ".Title";
+
+                private const string GJLoginMenuBaseString = MenuBaseString + ".GJLoginMenu";
             }
         }
     }

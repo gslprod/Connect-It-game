@@ -4,6 +4,7 @@ using ConnectIt.Save.SaveProviders.SaveData;
 using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Zenject;
 using static ConnectIt.Save.SaveProviders.SaveData.GameplaySaveData;
@@ -13,6 +14,8 @@ namespace ConnectIt.Gameplay.Data
     public class LevelsPassDataProvider : ILevelsPassDataProvider, IInitializable, IDisposable
     {
         public event Action LevelDataChanged;
+
+        public IEnumerable<LevelData> LevelDataArray => _levelDataArray;
 
         private readonly GameplayLogicConfig _gameplayLogicConfig;
         private readonly IGameplaySaveProvider _gameplaySaveProvider;

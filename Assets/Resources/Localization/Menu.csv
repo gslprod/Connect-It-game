@@ -1,2 +1,3 @@
 Key,English,Russian
 Menu.VersionLabel.Title,,Версия: {0}
+Menu.CompletedLevelsLabel.Title,,Уровень: {0}/{1}

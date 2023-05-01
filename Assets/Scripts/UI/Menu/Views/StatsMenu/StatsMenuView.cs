@@ -1,4 +1,5 @@
-﻿using ConnectIt.UI.CommonViews;
+﻿using ConnectIt.Localization;
+using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.Menu.MonoWrappers;
 using ConnectIt.UI.Tools;
 using System;
@@ -13,18 +14,26 @@ namespace ConnectIt.UI.Menu.Views.StatsMenu
         private readonly FramesSwitcher<VisualElement> _framesSwitcher;
         private readonly MenuUIDocumentMonoWrapper _menuUIDocumentMonoWrapper;
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
+        private readonly DefaultLocalizedLabelView.Factory _defaultLabelViewFactory;
+        private readonly TextKey.Factory _textKeyFactory;
 
         private DefaultButtonView _backButton;
+        private DefaultLocalizedLabelView _titleLabel;
+
 
         public StatsMenuView(VisualElement viewRoot,
             FramesSwitcher<VisualElement> switcher,
             MenuUIDocumentMonoWrapper menuUIDocumentMonoWrapper,
-            DefaultButtonView.Factory defaultButtonViewFactory)
+            DefaultButtonView.Factory defaultButtonViewFactory,
+            DefaultLocalizedLabelView.Factory defaultLabelViewFactory,
+            TextKey.Factory textKeyFactory)
         {
             _viewRoot = viewRoot;
             _framesSwitcher = switcher;
             _menuUIDocumentMonoWrapper = menuUIDocumentMonoWrapper;
             _defaultButtonViewFactory = defaultButtonViewFactory;
+            _defaultLabelViewFactory = defaultLabelViewFactory;
+            _textKeyFactory = textKeyFactory;
         }
 
         public void Initialize()
@@ -41,11 +50,16 @@ namespace ConnectIt.UI.Menu.Views.StatsMenu
         {
             _backButton = _defaultButtonViewFactory.Create(
                 _viewRoot.Q<Button>(NameConstants.StatsMenu.BackButton), OnBackButtonClick);
+
+            _titleLabel = _defaultLabelViewFactory.Create(
+                _viewRoot.Q<Label>(NameConstants.StatsMenu.TitleLabel),
+                _textKeyFactory.Create(TextKeysConstants.Menu.StatsMenu.Title, null));
         }
 
         private void DisposeDisposableViews()
         {
             _backButton.Dispose();
+            _titleLabel.Dispose();
         }
 
         #region BackButton

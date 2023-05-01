@@ -92,6 +92,9 @@ namespace ConnectIt.DI.Installers
             {
                 Container.BindFactory<Button, Action, DefaultButtonView, DefaultButtonView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Button, Action, DefaultButtonView>>();
+
+                Container.BindFactory<Label, TextKey, DefaultLocalizedLabelView, DefaultLocalizedLabelView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Label, TextKey, DefaultLocalizedLabelView>>();
             }
         }
 

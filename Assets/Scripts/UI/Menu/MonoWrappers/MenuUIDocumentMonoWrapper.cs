@@ -28,6 +28,9 @@ namespace ConnectIt.UI.Menu.MonoWrappers
         private UIDocument _uiDocument;
         private VisualElement _documentRootVE => _uiDocument.rootVisualElement;
         private VisualElement _rootVE;
+        private VisualElement _topContainer;
+        private VisualElement _contentContainer;
+        private VisualElement _bottomContainer;
 
         private IUIBlocker _uiBlocker;
         private ICoroutinesGlobalContainer _coroutinesGlobalContainer;
@@ -46,6 +49,9 @@ namespace ConnectIt.UI.Menu.MonoWrappers
         private GJMenuView.Factory _gjMenuViewFactory;
         private GJMenuView _gjMenuView;
 
+        private CompletedLevelsView.Factory _completedLevelsViewFactory;
+        private CompletedLevelsView _completedLevelsView;
+
         private VersionView.Factory _versionViewFactory;
         private VersionView _versionView;
 
@@ -62,7 +68,8 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             StatsMenuView.Factory statsMenuViewFactory,
             GJLoginMenuView.Factory gjLoginMenuViewFactory,
             GJMenuView.Factory gjMenuViewFactory,
-            VersionView.Factory versionViewFactory)
+            VersionView.Factory versionViewFactory,
+            CompletedLevelsView.Factory completedLevelsViewFactory)
         {
             _uiBlocker = uiBlocker;
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
@@ -74,6 +81,7 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             _gjMenuViewFactory = gjMenuViewFactory;
 
             _versionViewFactory = versionViewFactory;
+            _completedLevelsViewFactory = completedLevelsViewFactory;
         }
 
         private void Awake()
@@ -81,6 +89,10 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             _uiDocument = GetComponent<UIDocument>();
 
             _rootVE = _documentRootVE.Q<VisualElement>(NameConstants.RootName);
+
+            _topContainer = _documentRootVE.Q<VisualElement>(NameConstants.TopContainer);
+            _contentContainer = _documentRootVE.Q<VisualElement>(NameConstants.ContentContainer);
+            _bottomContainer = _documentRootVE.Q<VisualElement>(NameConstants.BottomContainer);
         }
 
         private void Start()
@@ -101,25 +113,25 @@ namespace ConnectIt.UI.Menu.MonoWrappers
 
         private void CreateSwitcherAndFrames()
         {
-            MainMenuContainer = _rootVE.Q<VisualElement>(NameConstants.MainMenuContainer);
+            MainMenuContainer = _contentContainer.Q<VisualElement>(NameConstants.MainMenuContainer);
             Frame<VisualElement> mainMenuFrame = new(MainMenuContainer);
 
-            SelectLevelContainer = _rootVE.Q<VisualElement>(NameConstants.SelectLevelContainer);
+            SelectLevelContainer = _contentContainer.Q<VisualElement>(NameConstants.SelectLevelContainer);
             Frame<VisualElement> selectLevelframe = new(SelectLevelContainer);
 
-            SettingsContainer = _rootVE.Q<VisualElement>(NameConstants.SettingsContainer);
+            SettingsContainer = _contentContainer.Q<VisualElement>(NameConstants.SettingsContainer);
             Frame<VisualElement> settingsFrame = new(SettingsContainer);
 
-            StatsContainer = _rootVE.Q<VisualElement>(NameConstants.StatsContainer);
+            StatsContainer = _contentContainer.Q<VisualElement>(NameConstants.StatsContainer);
             Frame<VisualElement> statsFrame = new(StatsContainer);
 
-            ShopContainer = _rootVE.Q<VisualElement>(NameConstants.ShopContainer);
+            ShopContainer = _contentContainer.Q<VisualElement>(NameConstants.ShopContainer);
             Frame<VisualElement> shopFrame = new(ShopContainer);
 
-            GJContainer = _rootVE.Q<VisualElement>(NameConstants.GjContainer);
+            GJContainer = _contentContainer.Q<VisualElement>(NameConstants.GJContainer);
             Frame<VisualElement> gjFrame = new(GJContainer);
 
-            GJLoginContainer = _rootVE.Q<VisualElement>(NameConstants.GjLoginContainer);
+            GJLoginContainer = _contentContainer.Q<VisualElement>(NameConstants.GJLoginContainer);
             Frame<VisualElement> gjLoginFrame = new(GJLoginContainer);
 
             Frame<VisualElement>[] frames = new Frame<VisualElement>[]
@@ -183,6 +195,15 @@ namespace ConnectIt.UI.Menu.MonoWrappers
 
         #endregion
 
+        private void CreateViews()
+        {
+            _versionView = _versionViewFactory.Create(
+                _bottomContainer.Q<Label>(NameConstants.VersionLabel));
+
+            _completedLevelsView = _completedLevelsViewFactory.Create(
+                _topContainer.Q<Label>(NameConstants.CompletedLevelsLabel));
+        }
+
         private void DisposeDisposableViews()
         {
             _mainMenuView.Dispose();
@@ -193,6 +214,7 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             _gjMenuView.Dispose();
 
             _versionView.Dispose();
+            _completedLevelsView.Dispose();
         }
 
         private void StopAllRunningCoroutines()
@@ -202,12 +224,6 @@ namespace ConnectIt.UI.Menu.MonoWrappers
 
             if (_firstFrameSwitchCoroutine != null)
                 _coroutinesGlobalContainer.StopCoroutine(_firstFrameSwitchCoroutine);
-        }
-
-        private void CreateViews()
-        {
-            _versionView = _versionViewFactory.Create(
-                _documentRootVE.Q<Label>(NameConstants.VersionLabel));
         }
     }
 }

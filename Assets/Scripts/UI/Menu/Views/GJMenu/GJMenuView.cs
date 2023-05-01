@@ -1,4 +1,5 @@
-﻿using ConnectIt.UI.CommonViews;
+﻿using ConnectIt.Localization;
+using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.Menu.MonoWrappers;
 using ConnectIt.UI.Tools;
 using System;
@@ -13,18 +14,25 @@ namespace ConnectIt.UI.Menu.Views.GJMenu
         private readonly FramesSwitcher<VisualElement> _framesSwitcher;
         private readonly MenuUIDocumentMonoWrapper _menuUIDocumentMonoWrapper;
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
+        private readonly DefaultLocalizedLabelView.Factory _defaultLabelViewFactory;
+        private readonly TextKey.Factory _textKeyFactory;
 
         private DefaultButtonView _backButton;
+        private DefaultLocalizedLabelView _titleLabel;
 
         public GJMenuView(VisualElement viewRoot,
             FramesSwitcher<VisualElement> switcher,
             MenuUIDocumentMonoWrapper menuUIDocumentMonoWrapper,
-            DefaultButtonView.Factory defaultButtonViewFactory)
+            DefaultButtonView.Factory defaultButtonViewFactory,
+            DefaultLocalizedLabelView.Factory defaultLabelViewFactory,
+            TextKey.Factory textKeyFactory)
         {
             _viewRoot = viewRoot;
             _framesSwitcher = switcher;
             _menuUIDocumentMonoWrapper = menuUIDocumentMonoWrapper;
             _defaultButtonViewFactory = defaultButtonViewFactory;
+            _defaultLabelViewFactory = defaultLabelViewFactory;
+            _textKeyFactory = textKeyFactory;
         }
 
         public void Initialize()
@@ -41,11 +49,16 @@ namespace ConnectIt.UI.Menu.Views.GJMenu
         {
             _backButton = _defaultButtonViewFactory.Create(
                 _viewRoot.Q<Button>(NameConstants.GJMenu.BackButton), OnBackButtonClick);
+
+            _titleLabel = _defaultLabelViewFactory.Create(
+                _viewRoot.Q<Label>(NameConstants.GJMenu.TitleLabel),
+                _textKeyFactory.Create(TextKeysConstants.Menu.GJMenu.Title, null));
         }
 
         private void DisposeDisposableViews()
         {
             _backButton.Dispose();
+            _titleLabel.Dispose();
         }
 
         #region BackButton
