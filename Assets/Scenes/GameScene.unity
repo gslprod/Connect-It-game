@@ -1013,6 +1013,8 @@ MonoBehaviour:
     Id: 930195599
   - Name: Menu.SelectLevelMenu
     Id: 1681496841
+  - Name: Menu.ShopMenu
+    Id: 570792223
   - Name: Menu.SettingsMenu
     Id: 1353293514
   - Name: Menu.StatsMenu

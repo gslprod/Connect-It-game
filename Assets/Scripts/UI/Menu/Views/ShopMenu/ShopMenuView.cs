@@ -8,7 +8,7 @@ using Zenject;
 
 namespace ConnectIt.UI.Menu.Views.StatsMenu
 {
-    public class StatsMenuView : IInitializable, IDisposable
+    public class ShopMenuView : IInitializable, IDisposable
     {
         private readonly VisualElement _viewRoot;
         private readonly FramesSwitcher<VisualElement> _framesSwitcher;
@@ -20,7 +20,7 @@ namespace ConnectIt.UI.Menu.Views.StatsMenu
         private DefaultButtonView _backButton;
         private DefaultLocalizedLabelView _titleLabel;
 
-        public StatsMenuView(VisualElement viewRoot,
+        public ShopMenuView(VisualElement viewRoot,
             FramesSwitcher<VisualElement> switcher,
             MenuUIDocumentMonoWrapper menuUIDocumentMonoWrapper,
             DefaultButtonView.Factory defaultButtonViewFactory,
@@ -48,11 +48,11 @@ namespace ConnectIt.UI.Menu.Views.StatsMenu
         private void CreateViews()
         {
             _backButton = _defaultButtonViewFactory.Create(
-                _viewRoot.Q<Button>(NameConstants.StatsMenu.BackButton), OnBackButtonClick);
+                _viewRoot.Q<Button>(NameConstants.ShopMenu.BackButton), OnBackButtonClick);
 
             _titleLabel = _defaultLabelViewFactory.Create(
-                _viewRoot.Q<Label>(NameConstants.StatsMenu.TitleLabel),
-                _textKeyFactory.Create(TextKeysConstants.Menu.StatsMenu.Title, null));
+                _viewRoot.Q<Label>(NameConstants.ShopMenu.TitleLabel),
+                _textKeyFactory.Create(TextKeysConstants.Menu.ShopMenu.Title, null));
         }
 
         private void DisposeDisposableViews()
@@ -70,6 +70,6 @@ namespace ConnectIt.UI.Menu.Views.StatsMenu
 
         #endregion
 
-        public class Factory : PlaceholderFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, StatsMenuView> { }
+        public class Factory : PlaceholderFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, ShopMenuView> { }
     }
 }

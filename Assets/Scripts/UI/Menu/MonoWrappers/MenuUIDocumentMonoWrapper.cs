@@ -40,6 +40,8 @@ namespace ConnectIt.UI.Menu.MonoWrappers
         private MainMenuView _mainMenuView;
         private SelectLevelMenuView.Factory _selectLevelMenuViewFactory;
         private SelectLevelMenuView _selectLevelMenuView;
+        private ShopMenuView.Factory _shopMenuViewFactory;
+        private ShopMenuView _shopMenuView;
         private SettingsMenuView.Factory _settingsMenuViewFactory;
         private SettingsMenuView _settingsMenuView;
         private StatsMenuView.Factory _statsMenuViewFactory;
@@ -64,6 +66,7 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             ICoroutinesGlobalContainer coroutinesGlobalContainer,
             MainMenuView.Factory mainMenuViewFactory,
             SelectLevelMenuView.Factory selectLevelMenuViewFactory,
+            ShopMenuView.Factory shopMenuViewFactory,
             SettingsMenuView.Factory settingsMenuViewFactory,
             StatsMenuView.Factory statsMenuViewFactory,
             GJLoginMenuView.Factory gjLoginMenuViewFactory,
@@ -75,6 +78,7 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
             _mainMenuViewFactory = mainMenuViewFactory;
             _selectLevelMenuViewFactory = selectLevelMenuViewFactory;
+            _shopMenuViewFactory = shopMenuViewFactory;
             _settingsMenuViewFactory = settingsMenuViewFactory;
             _statsMenuViewFactory = statsMenuViewFactory;
             _gjLoginMenuViewFactory = gjLoginMenuViewFactory;
@@ -152,6 +156,7 @@ namespace ConnectIt.UI.Menu.MonoWrappers
 
             _mainMenuView = _mainMenuViewFactory.Create(MainMenuContainer, _framesSwitcher, this);
             _selectLevelMenuView = _selectLevelMenuViewFactory.Create(SelectLevelContainer, _rootVE, _framesSwitcher, this);
+            _shopMenuView = _shopMenuViewFactory.Create(ShopContainer, _framesSwitcher, this);
             _settingsMenuView = _settingsMenuViewFactory.Create(SettingsContainer, _framesSwitcher, this);
             _statsMenuView = _statsMenuViewFactory.Create(StatsContainer, _framesSwitcher, this);
             _gjLoginMenuView = _gjLoginMenuViewFactory.Create(GJLoginContainer, _framesSwitcher, this);
@@ -208,6 +213,7 @@ namespace ConnectIt.UI.Menu.MonoWrappers
         {
             _mainMenuView.Dispose();
             _selectLevelMenuView.Dispose();
+            _shopMenuView.Dispose();
             _settingsMenuView.Dispose();
             _statsMenuView.Dispose();
             _gjLoginMenuView.Dispose();

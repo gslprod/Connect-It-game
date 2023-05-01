@@ -26,6 +26,9 @@
                             <ui:Button name="gj-api-button" class="button main-menu-additional-buttons-container__child round-button round-button--gj-api main-menu-additional-buttons-container__child--left">
                                 <ui:VisualElement name="gj-api-button-icon" class="round-button__icon round-button__icon--gj-api" />
                             </ui:Button>
+                            <ui:Button name="shop-button" class="button main-menu-additional-buttons-container__child round-button round-button--shop">
+                                <ui:VisualElement name="settings-button-icon" class="round-button__icon round-button__icon--shop" />
+                            </ui:Button>
                             <ui:Button name="settings-button" class="button main-menu-additional-buttons-container__child round-button round-button--settings">
                                 <ui:VisualElement name="settings-button-icon" class="round-button__icon round-button__icon--settings" />
                             </ui:Button>

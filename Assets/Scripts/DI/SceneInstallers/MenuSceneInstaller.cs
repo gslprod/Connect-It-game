@@ -24,6 +24,7 @@ public class MenuSceneInstaller : MonoInstaller
         BindGlobalViews();
         BindMainMenuUIViews();
         BindSelectLevelMenuViews();
+        BindShopMenuViews();
         BindSettingsMenuViews();
         BindStatsMenuViews();
         BindGJLoginMenuViews();
@@ -68,6 +69,17 @@ public class MenuSceneInstaller : MonoInstaller
 
                 Container.BindFactory<Button, int, Action<int>, SelectLevelButtonView, SelectLevelButtonView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Button, int, Action<int>, SelectLevelButtonView>>();
+            }
+        }
+
+        void BindShopMenuViews()
+        {
+            BindUIViewsFactories();
+
+            void BindUIViewsFactories()
+            {
+                Container.BindFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, ShopMenuView, ShopMenuView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, ShopMenuView>>();
             }
         }
 

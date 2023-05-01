@@ -23,6 +23,7 @@
         {
             public const string PlayButton = "play-button";
             public const string GjApiButton = "gj-api-button";
+            public const string ShopButton = "shop-button";
             public const string SettingsButton = "settings-button";
             public const string StatsButton = "stats-button";
         }
@@ -35,6 +36,13 @@
 
             public const string LevelViewContainer = "level-view-container";
             public const string LevelButtonFormat = "level-{0}-button";
+        }
+
+        public static class ShopMenu
+        {
+            public const string TitleLabel = "title-label";
+
+            public const string BackButton = "back-button";
         }
 
         public static class SettingsMenu

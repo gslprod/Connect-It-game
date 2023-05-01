@@ -69,6 +69,13 @@
                 private const string SelectLevelMenuBaseString = MenuBaseString + ".SelectLevelMenu";
             }
 
+            public static class ShopMenu
+            {
+                public const string Title = ShopMenuBaseString + ".Title";
+
+                private const string ShopMenuBaseString = MenuBaseString + ".ShopMenu";
+            }
+
             public static class SettingsMenu
             {
                 public const string Title = SettingsMenuBaseString + ".Title";

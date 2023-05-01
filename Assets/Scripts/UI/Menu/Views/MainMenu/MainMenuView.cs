@@ -16,6 +16,7 @@ namespace ConnectIt.UI.Menu.Views.MainMenu
 
         private DefaultButtonView _playButtonView;
         private DefaultButtonView _settingsButtonView;
+        private DefaultButtonView _shopButtonView;
         private DefaultButtonView _gjApiButtonView;
         private DefaultButtonView _statsButtonView;
 
@@ -48,6 +49,9 @@ namespace ConnectIt.UI.Menu.Views.MainMenu
             _settingsButtonView = _defaultButtonViewFactory
                 .Create(_viewRoot.Q<Button>(NameConstants.MainMenu.SettingsButton), OnSettingsButtonClick);
 
+            _shopButtonView = _defaultButtonViewFactory
+                .Create(_viewRoot.Q<Button>(NameConstants.MainMenu.ShopButton), OnShopButtonClick);
+
             _gjApiButtonView = _defaultButtonViewFactory
                 .Create(_viewRoot.Q<Button>(NameConstants.MainMenu.GjApiButton), OnGjApiButtonClick);
 
@@ -59,6 +63,7 @@ namespace ConnectIt.UI.Menu.Views.MainMenu
         {
             _playButtonView.Dispose();
             _settingsButtonView.Dispose();
+            _shopButtonView.Dispose();
             _gjApiButtonView.Dispose();
             _statsButtonView.Dispose();
         }
@@ -77,6 +82,15 @@ namespace ConnectIt.UI.Menu.Views.MainMenu
         private void OnSettingsButtonClick()
         {
             _framesSwitcher.SwitchTo(_menuUIDocumentMonoWrapper.SettingsContainer);
+        }
+
+        #endregion
+
+        #region ShopButton
+
+        private void OnShopButtonClick()
+        {
+            _framesSwitcher.SwitchTo(_menuUIDocumentMonoWrapper.ShopContainer);
         }
 
         #endregion
