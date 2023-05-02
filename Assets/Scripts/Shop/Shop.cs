@@ -8,7 +8,7 @@ using Zenject;
 
 namespace ConnectIt.Shop
 {
-    public class Shop : IInitializable
+    public class Shop : IShop, IInitializable
     {
         public IEnumerable<ShowcaseProduct<IProduct>> Goods => _goods;
 

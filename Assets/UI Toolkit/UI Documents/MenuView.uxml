@@ -13,7 +13,7 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="coins-container" class="coins-container">
-                    <ui:Label text="Coins" name="coins-label" class="label highlighted-label highlighted-label--coins" />
+                    <ui:Button text="Coins" name="coins-label" class="button highlighted-label highlighted-label--coins" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="content-container" class="content-container">

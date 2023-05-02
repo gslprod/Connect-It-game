@@ -1,4 +1,5 @@
 ﻿using ConnectIt.Coroutines;
+using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.Menu.Views;
 using ConnectIt.UI.Menu.Views.GJLoginMenu;
 using ConnectIt.UI.Menu.Views.GJMenu;
@@ -53,9 +54,10 @@ namespace ConnectIt.UI.Menu.MonoWrappers
 
         private CompletedLevelsView.Factory _completedLevelsViewFactory;
         private CompletedLevelsView _completedLevelsView;
-
         private VersionView.Factory _versionViewFactory;
         private VersionView _versionView;
+        private ClickableCoinsView.Factory _clickableCoinsViewFactory;
+        private ClickableCoinsView _clickableCoinsView;
 
         private Coroutine _firstFrameSwitchCoroutine;
         private Coroutine _waitForTransitionEndCoroutine;
@@ -72,7 +74,8 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             GJLoginMenuView.Factory gjLoginMenuViewFactory,
             GJMenuView.Factory gjMenuViewFactory,
             VersionView.Factory versionViewFactory,
-            CompletedLevelsView.Factory completedLevelsViewFactory)
+            CompletedLevelsView.Factory completedLevelsViewFactory,
+            ClickableCoinsView.Factory clickableCoinsViewFactory)
         {
             _uiBlocker = uiBlocker;
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
@@ -86,6 +89,7 @@ namespace ConnectIt.UI.Menu.MonoWrappers
 
             _versionViewFactory = versionViewFactory;
             _completedLevelsViewFactory = completedLevelsViewFactory;
+            _clickableCoinsViewFactory = clickableCoinsViewFactory;
         }
 
         private void Awake()
@@ -207,6 +211,10 @@ namespace ConnectIt.UI.Menu.MonoWrappers
 
             _completedLevelsView = _completedLevelsViewFactory.Create(
                 _topContainer.Q<Label>(NameConstants.CompletedLevelsLabel));
+
+            _clickableCoinsView = _clickableCoinsViewFactory.Create(
+                _topContainer.Q<Button>(NameConstants.CoinsLabel),
+                OnCoinsClick);
         }
 
         private void DisposeDisposableViews()
@@ -221,6 +229,7 @@ namespace ConnectIt.UI.Menu.MonoWrappers
 
             _versionView.Dispose();
             _completedLevelsView.Dispose();
+            _clickableCoinsView.Dispose();
         }
 
         private void StopAllRunningCoroutines()
@@ -231,5 +240,14 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             if (_firstFrameSwitchCoroutine != null)
                 _coroutinesGlobalContainer.StopCoroutine(_firstFrameSwitchCoroutine);
         }
+
+        #region CoinsClick
+
+        private void OnCoinsClick()
+        {
+            _framesSwitcher.SwitchTo(ShopContainer);
+        }
+
+        #endregion
     }
 }

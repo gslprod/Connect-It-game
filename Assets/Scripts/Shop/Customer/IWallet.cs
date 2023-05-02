@@ -1,7 +1,11 @@
-﻿namespace ConnectIt.Shop.Customer
+﻿using System;
+
+namespace ConnectIt.Shop.Customer
 {
     public interface IWallet
     {
+        event Action<IWallet> CoinsChanged;
+
         long Coins { get; }
 
         void Add(long coins);

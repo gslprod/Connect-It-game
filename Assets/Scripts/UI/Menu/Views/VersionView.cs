@@ -1,57 +1,35 @@
 ﻿using ConnectIt.Config;
 using ConnectIt.Localization;
+using ConnectIt.UI.CommonViews;
 using System;
 using UnityEngine.UIElements;
 using Zenject;
 
 namespace ConnectIt.UI.Menu.Views
 {
-    public class VersionView : IInitializable, IDisposable
+    public class VersionView : DefaultLocalizedLabelView
     {
-        private readonly Label _versionLabel;
         private readonly GameVersion _gameVersion;
-        private readonly ILocalizationProvider _localizationProvider;
         private readonly TextKey.Factory _textKeyFactory;
-
-        private TextKey _versionTextKey;
 
         public VersionView(Label versionLabel,
             GameVersion gameVersion,
             ILocalizationProvider localizationProvider,
-            TextKey.Factory textKeyFactory)
+            TextKey.Factory textKeyFactory) : base(versionLabel, null, localizationProvider)
         {
-            _versionLabel = versionLabel;
             _gameVersion = gameVersion;
-            _localizationProvider = localizationProvider;
             _textKeyFactory = textKeyFactory;
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
-            _versionTextKey = _textKeyFactory.Create(
+            textKey = _textKeyFactory.Create(
                 TextKeysConstants.Menu.VersionLabel_Title,
                 new object[] { _gameVersion.GetVersion() });
 
-            _localizationProvider.LocalizationChanged += OnLocalizationChanged;
-
-            UpdateView();
+            base.Initialize();
         }
 
-        public void Dispose()
-        {
-            _localizationProvider.LocalizationChanged -= OnLocalizationChanged;
-        }
-
-        private void OnLocalizationChanged()
-        {
-            UpdateView();
-        }
-
-        private void UpdateView()
-        {
-            _versionLabel.text = _versionTextKey.ToString();
-        }
-
-        public class Factory : PlaceholderFactory<Label, VersionView> { }
+        public new class Factory : PlaceholderFactory<Label, VersionView> { }
     }
 }

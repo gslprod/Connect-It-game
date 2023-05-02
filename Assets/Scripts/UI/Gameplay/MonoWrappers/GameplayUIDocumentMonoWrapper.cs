@@ -30,25 +30,29 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
         private IPauseService _pauseService;
         private ISceneSwitcher _sceneSwitcher;
 
-        private LevelProgressView _levelProgressView;
         private LevelProgressView.Factory _levelProgressViewFactory;
+        private LevelProgressView _levelProgressView;
 
-        private TimeView _timeView;
         private TimeView.Factory _timeViewFactory;
+        private TimeView _timeView;
 
-        private LevelView _levelView;
         private LevelView.Factory _levelViewFactory;
+        private LevelView _levelView;
 
+        private DefaultButtonView.Factory _defaultButtonViewFactory;
         private DefaultButtonView _pauseButtonView;
         private DefaultButtonView _restartButtonView;
-        private DefaultButtonView.Factory _defaultButtonViewFactory;
+
+        private CoinsView.Factory _coinsViewFactory;
+        private CoinsView _coinsView;
 
         [Inject]
         public void Constructor(
             LevelProgressView.Factory levelProgressViewFactory,
             TimeView.Factory timeViewFactory,
             LevelView.Factory levelViewFactory,
-            DefaultButtonView.Factory defaultButtonViewFactor,
+            DefaultButtonView.Factory defaultButtonViewFactory,
+            CoinsView.Factory coinsViewFactory,
             DialogBoxView.Factory dialogBoxFactory,
             TextKey.Factory textKeyFactory,
             GameplayInputRouter gameplayInputRouter,
@@ -58,7 +62,8 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
             _levelProgressViewFactory = levelProgressViewFactory;
             _timeViewFactory = timeViewFactory;
             _levelViewFactory = levelViewFactory;
-            _defaultButtonViewFactory = defaultButtonViewFactor;
+            _defaultButtonViewFactory = defaultButtonViewFactory;
+            _coinsViewFactory = coinsViewFactory;
             _dialogBoxFactory = dialogBoxFactory;
             _textKeyFactory = textKeyFactory;
             _gameplayInputRouter = gameplayInputRouter;
@@ -89,20 +94,25 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
 
         private void CreateViews()
         {
-            _levelProgressView = _levelProgressViewFactory
-                .Create(_documentRootVE.Q<Custom.ProgressBar>(NameConstants.LevelProgressBarName));
+            _levelProgressView = _levelProgressViewFactory.Create(
+                _documentRootVE.Q<Custom.ProgressBar>(NameConstants.LevelProgressBarName));
 
-            _timeView = _timeViewFactory
-                .Create(_documentRootVE.Q<Label>(NameConstants.TimeLabelName));
+            _timeView = _timeViewFactory.Create(
+                _documentRootVE.Q<Label>(NameConstants.TimeLabelName));
 
-            _levelView = _levelViewFactory
-                .Create(_documentRootVE.Q<Label>(NameConstants.LevelLabelName));
+            _levelView = _levelViewFactory.Create(
+                _documentRootVE.Q<Label>(NameConstants.LevelLabelName));
 
-            _pauseButtonView = _defaultButtonViewFactory
-                .Create(_documentRootVE.Q<Button>(NameConstants.PauseButtonName), OnPauseButtonClick);
+            _coinsView = _coinsViewFactory.Create(
+                _documentRootVE.Q<Label>(NameConstants.CoinsLabelName));
 
-            _restartButtonView = _defaultButtonViewFactory
-                .Create(_documentRootVE.Q<Button>(NameConstants.RestartButtonName), RestartButtonClick);
+            _pauseButtonView = _defaultButtonViewFactory.Create(
+                _documentRootVE.Q<Button>(NameConstants.PauseButtonName),
+                OnPauseButtonClick);
+
+            _restartButtonView = _defaultButtonViewFactory.Create(
+                _documentRootVE.Q<Button>(NameConstants.RestartButtonName),
+                RestartButtonClick);
         }
 
         private void SendTickToTickableViews()

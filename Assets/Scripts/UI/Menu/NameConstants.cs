@@ -18,6 +18,7 @@
 
         public const string CompletedLevelsLabel = "account-level";
         public const string VersionLabel = "version-label";
+        public const string CoinsLabel = "coins-label";
 
         public static class MainMenu
         {
@@ -41,6 +42,8 @@
         public static class ShopMenu
         {
             public const string TitleLabel = "title-label";
+            public const string CoinsLabel = "shop-coins-label";
+            public const string CoinsInfoLabel = "shop-coins-info-label";
 
             public const string BackButton = "back-button";
         }

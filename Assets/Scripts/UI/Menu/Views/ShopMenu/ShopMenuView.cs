@@ -16,16 +16,20 @@ namespace ConnectIt.UI.Menu.Views.StatsMenu
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
         private readonly DefaultLocalizedLabelView.Factory _defaultLabelViewFactory;
         private readonly TextKey.Factory _textKeyFactory;
+        private readonly CoinsView.Factory _coinsViewFactory;
 
         private DefaultButtonView _backButton;
         private DefaultLocalizedLabelView _titleLabel;
+        private CoinsView _coinsView;
+        private DefaultLocalizedLabelView _coinsInfoLabel;
 
         public ShopMenuView(VisualElement viewRoot,
             FramesSwitcher<VisualElement> switcher,
             MenuUIDocumentMonoWrapper menuUIDocumentMonoWrapper,
             DefaultButtonView.Factory defaultButtonViewFactory,
             DefaultLocalizedLabelView.Factory defaultLabelViewFactory,
-            TextKey.Factory textKeyFactory)
+            TextKey.Factory textKeyFactory,
+            CoinsView.Factory coinsViewFactory)
         {
             _viewRoot = viewRoot;
             _framesSwitcher = switcher;
@@ -33,6 +37,7 @@ namespace ConnectIt.UI.Menu.Views.StatsMenu
             _defaultButtonViewFactory = defaultButtonViewFactory;
             _defaultLabelViewFactory = defaultLabelViewFactory;
             _textKeyFactory = textKeyFactory;
+            _coinsViewFactory = coinsViewFactory;
         }
 
         public void Initialize()
@@ -53,12 +58,21 @@ namespace ConnectIt.UI.Menu.Views.StatsMenu
             _titleLabel = _defaultLabelViewFactory.Create(
                 _viewRoot.Q<Label>(NameConstants.ShopMenu.TitleLabel),
                 _textKeyFactory.Create(TextKeysConstants.Menu.ShopMenu.Title, null));
+
+            _coinsView = _coinsViewFactory.Create(
+                _viewRoot.Q<Label>(NameConstants.ShopMenu.CoinsLabel));
+
+            _coinsInfoLabel = _defaultLabelViewFactory.Create(
+                _viewRoot.Q<Label>(NameConstants.ShopMenu.CoinsInfoLabel),
+                _textKeyFactory.Create(TextKeysConstants.Menu.ShopMenu.CoinsInfoLabel_Title, null));
         }
 
         private void DisposeDisposableViews()
         {
             _backButton.Dispose();
             _titleLabel.Dispose();
+            _coinsView.Dispose();
+            _coinsInfoLabel.Dispose();
         }
 
         #region BackButton

@@ -68,6 +68,9 @@ namespace ConnectIt.UI.Tools
 
         private void SwitchTo(int elementIndex, bool saveToHistory = true)
         {
+            if (elementIndex == _currentFrameIndex)
+                return;
+
             if (_currentFrameIndex != -1)
             {
                 if (saveToHistory)

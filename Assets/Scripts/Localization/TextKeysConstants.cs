@@ -53,6 +53,7 @@
         {
             public const string CompletedLevelsLabel_Title = MenuBaseString + ".CompletedLevelsLabel.Title";
             public const string VersionLabel_Title = MenuBaseString + ".VersionLabel.Title";
+            public const string CoinsLabel_Title = MenuBaseString + ".CoinsLabel.Title";
 
             private const string MenuBaseString = "Menu";
 
@@ -72,6 +73,7 @@
             public static class ShopMenu
             {
                 public const string Title = ShopMenuBaseString + ".Title";
+                public const string CoinsInfoLabel_Title = ShopMenuBaseString + ".CoinsInfoLabel.Title";
 
                 private const string ShopMenuBaseString = MenuBaseString + ".ShopMenu";
             }

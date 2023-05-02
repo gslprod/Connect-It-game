@@ -10,6 +10,7 @@ using ConnectIt.Save.Serializers;
 using ConnectIt.Scenes;
 using ConnectIt.Scenes.Switchers;
 using ConnectIt.Shop.Customer;
+using ConnectIt.Shop.Goods.Boosts;
 using ConnectIt.Time;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.DialogBox;
@@ -58,6 +59,25 @@ namespace ConnectIt.DI.Installers
             BindWallet();
             BindStorage();
             BindCustomer();
+            BindShop();
+            BindShopGoods();
+        }
+
+        private void BindShopGoods()
+        {
+            BindFactories();
+
+            void BindFactories()
+            {
+                Container.BindFactory<SkipLevelBoost, SkipLevelBoost.Factory>()
+                         .FromFactory<PrimitiveDIFactory<SkipLevelBoost>>();
+            }
+        }
+
+        private void BindShop()
+        {
+            Container.BindInterfacesTo<Shop.Shop>()
+                     .AsSingle();
         }
 
         private void BindCustomer()
@@ -121,6 +141,15 @@ namespace ConnectIt.DI.Installers
 
                 Container.BindFactory<Label, TextKey, DefaultLocalizedLabelView, DefaultLocalizedLabelView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Label, TextKey, DefaultLocalizedLabelView>>();
+
+                Container.BindFactory<Button, Action, TextKey, DefaultLocalizedButtonView, DefaultLocalizedButtonView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Button, Action, TextKey, DefaultLocalizedButtonView>>();
+
+                Container.BindFactory<Label, CoinsView, CoinsView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Label, CoinsView>>();
+
+                Container.BindFactory<Button, Action, ClickableCoinsView, ClickableCoinsView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Button, Action, ClickableCoinsView>>();
             }
         }
 

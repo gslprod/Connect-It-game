@@ -1,14 +1,18 @@
 ﻿using ConnectIt.Utilities;
+using System;
 
 namespace ConnectIt.Shop.Customer
 {
     public class Wallet : IWallet
     {
+        public event Action<IWallet> CoinsChanged;
+
         public long Coins { get; private set; }
 
         public void Add(long coins)
         {
             Coins += coins;
+            CoinsChanged?.Invoke(this);
         }
 
         public void Withdraw(long coins)
@@ -33,6 +37,7 @@ namespace ConnectIt.Shop.Customer
         private void Remove(long coins)
         {
             Coins -= coins;
+            CoinsChanged?.Invoke(this);
         }
     }
 }
