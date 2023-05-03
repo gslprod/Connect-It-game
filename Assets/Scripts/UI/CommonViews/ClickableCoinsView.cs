@@ -24,7 +24,7 @@ namespace ConnectIt.UI.CommonViews
         public override void Initialize()
         {
             textKey = _textKeyFactory.Create(
-                TextKeysConstants.Menu.CoinsLabel_Title,
+                TextKeysConstants.Menu.CoinsLabel_Text,
                 new object[] { _userCustomer.Wallet.Coins });
 
             _userCustomer.Wallet.CoinsChanged += OnWalletCoinsChanged;

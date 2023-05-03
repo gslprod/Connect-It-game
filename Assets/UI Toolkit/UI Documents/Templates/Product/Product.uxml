@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/global.uss?fileID=7433441132597879392&amp;guid=3e3efaa0af4d22345b7f033c26dc1a86&amp;type=3#global" />
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/menu-view.uss?fileID=7433441132597879392&amp;guid=f6ff23d6b28c3cf4e94fc7a56b647751&amp;type=3#menu-view" />
+    <ui:VisualElement name="product-element" class="boost-element">
+        <ui:Label text="Label" name="product-name" class="label highlighted-label boost-element__name-label" />
+        <ui:Button name="product-decription-container" class="button highlighted-label boost-element__description-container">
+            <ui:VisualElement name="product-description-icon" class="boost-element__description-icon" />
+            <ui:Label text="Label Label Label Label Label Label Label Label" name="product-description-label" class="label boost-element__description-label" />
+        </ui:Button>
+        <ui:VisualElement name="product-price-amount-container" class="boost-element__price-amount-container">
+            <ui:Label tabindex="-1" text="x10" display-tooltip-when-elided="true" name="product-amount" class="label highlighted-label boost-element__amount-label" />
+            <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="product-price" text="40 coins" class="label highlighted-label highlighted-label--coins boost-element__price-label" />
+            <ui:Button text="Button" name="product-buy" class="button highlighted-label boost-element__buy-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

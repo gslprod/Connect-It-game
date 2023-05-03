@@ -2,6 +2,7 @@
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.Menu.MonoWrappers;
 using ConnectIt.UI.Tools;
+using ConnectIt.Utilities.Extensions;
 using System;
 using UnityEngine.UIElements;
 using Zenject;
@@ -52,7 +53,7 @@ namespace ConnectIt.UI.Menu.Views.GJLoginMenu
 
             _titleLabel = _defaultLabelViewFactory.Create(
                 _viewRoot.Q<Label>(NameConstants.GJLoginMenu.TitleLabel),
-                _textKeyFactory.Create(TextKeysConstants.Menu.GJLoginMenu.Title, null));
+                _textKeyFactory.Create(TextKeysConstants.Menu.GJLoginMenu.Title));
         }
 
         private void DisposeDisposableViews()

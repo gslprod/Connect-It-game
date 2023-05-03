@@ -161,13 +161,13 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
         private void OnPauseButtonClick()
         {
             DialogBoxButtonInfo continueButtonInfo = new(
-                _textKeyFactory.Create(TextKeysConstants.Gameplay.PauseMenu_Continue, null),
+                _textKeyFactory.Create(TextKeysConstants.Gameplay.PauseMenu_Continue),
                 null,
                 DialogBoxButtonType.Default,
                 true);
 
             DialogBoxButtonInfo exitButtonInfo = new(
-                _textKeyFactory.Create(TextKeysConstants.Gameplay.PauseMenu_Exit, null),
+                _textKeyFactory.Create(TextKeysConstants.Gameplay.PauseMenu_Exit),
                 OnExitButtonClick,
                 DialogBoxButtonType.Dismiss);
 
@@ -178,8 +178,8 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
 
             DialogBoxCreationData creationData = new(
                 _rootVE,
-                _textKeyFactory.Create(TextKeysConstants.DialogBox.LevelPaused_Title, null),
-                _textKeyFactory.Create(TextKeysConstants.DialogBox.LevelPaused_Message, null),
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.LevelPaused_Title),
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.LevelPaused_Message),
                 buttonsInfo,
                 null,
                 false);
@@ -209,13 +209,13 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
         private void OnExitButtonClick()
         {
             DialogBoxButtonInfo cancelButtonInfo = new(
-                _textKeyFactory.Create(TextKeysConstants.Common.Cancel, null),
+                _textKeyFactory.Create(TextKeysConstants.Common.Cancel),
                 null,
                 DialogBoxButtonType.Default,
                 true);
 
             DialogBoxButtonInfo exitButtonInfo = new(
-                _textKeyFactory.Create(TextKeysConstants.Common.Confirm, null),
+                _textKeyFactory.Create(TextKeysConstants.Common.Confirm),
                 OnConfirmExitButtonClick,
                 DialogBoxButtonType.Dismiss);
 
@@ -226,8 +226,8 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
 
             DialogBoxCreationData creationData = new(
                 _rootVE,
-                _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Title, null),
-                _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Message, null),
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Title),
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.QuitLevelConfirm_Message),
                 buttonsInfo);
 
             _dialogBoxFactory.Create(creationData);

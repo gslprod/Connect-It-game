@@ -26,16 +26,28 @@ namespace ConnectIt.UI.CommonViews
             UpdateLocalization();
 
             _localizationProvider.LocalizationChanged += UpdateLocalization;
+            textKey.ArgsChanged += OnArgsChanged;
         }
 
         public virtual void Dispose()
         {
             _localizationProvider.LocalizationChanged -= UpdateLocalization;
+            textKey.ArgsChanged -= OnArgsChanged;
+        }
+
+        public void SetArgs(params object[] args)
+        {
+            textKey.SetArgs(args);
         }
 
         protected virtual void UpdateLocalization()
         {
             label.text = textKey.ToString();
+        }
+
+        private void OnArgsChanged(TextKey textKey)
+        {
+            UpdateLocalization();
         }
 
         public class Factory : PlaceholderFactory<Label, TextKey, DefaultLocalizedLabelView> { }

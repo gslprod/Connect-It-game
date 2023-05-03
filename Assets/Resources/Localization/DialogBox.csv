@@ -5,3 +5,5 @@ DialogBox.RestartLevelConfirm.Title,,Перезапустить уровень?
 DialogBox.RestartLevelConfirm.Message,,Ваш прогресс по текущему уровню будет потерян.
 DialogBox.LevelPaused.Title,,Игра на паузе
 DialogBox.LevelPaused.Message,,Вы можете продолжить играть в любой момент.
+DialogBox.NotEnoughCoins.Title,,Недостаточно монет
+DialogBox.NotEnoughCoins.Message,,Для покупки данного предмета у вас недостаточно монет.

@@ -25,6 +25,7 @@ namespace ConnectIt.UI.CommonViews
             UpdateLocalization();
 
             _localizationProvider.LocalizationChanged += UpdateLocalization;
+            textKey.ArgsChanged += OnArgsChanged;
 
             base.Initialize();
         }
@@ -32,13 +33,24 @@ namespace ConnectIt.UI.CommonViews
         public override void Dispose()
         {
             _localizationProvider.LocalizationChanged -= UpdateLocalization;
+            textKey.ArgsChanged -= OnArgsChanged;
 
             base.Dispose();
+        }
+
+        public void SetArgs(params object[] args)
+        {
+            textKey.SetArgs(args);
         }
 
         protected virtual void UpdateLocalization()
         {
             button.text = textKey.ToString();
+        }
+
+        private void OnArgsChanged(TextKey textKey)
+        {
+            UpdateLocalization();
         }
 
         public new class Factory : PlaceholderFactory<Button, Action, TextKey, DefaultLocalizedButtonView> { }

@@ -160,7 +160,7 @@ namespace ConnectIt.UI.Menu.MonoWrappers
 
             _mainMenuView = _mainMenuViewFactory.Create(MainMenuContainer, _framesSwitcher, this);
             _selectLevelMenuView = _selectLevelMenuViewFactory.Create(SelectLevelContainer, _rootVE, _framesSwitcher, this);
-            _shopMenuView = _shopMenuViewFactory.Create(ShopContainer, _framesSwitcher, this);
+            _shopMenuView = _shopMenuViewFactory.Create(ShopContainer, _rootVE, _framesSwitcher, this);
             _settingsMenuView = _settingsMenuViewFactory.Create(SettingsContainer, _framesSwitcher, this);
             _statsMenuView = _statsMenuViewFactory.Create(StatsContainer, _framesSwitcher, this);
             _gjLoginMenuView = _gjLoginMenuViewFactory.Create(GJLoginContainer, _framesSwitcher, this);

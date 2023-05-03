@@ -116,8 +116,8 @@
                                     <ui:Label text="Label" name="shop-coins-label" class="label highlighted-label highlighted-label--coins" />
                                     <ui:Label text="Label" name="shop-coins-info-label" class="label highlighted-label" />
                                 </ui:VisualElement>
-                                <ui:VisualElement name="boosts-container" class="boosts-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-                                    <ui:Label text="Label" name="title" class="label highlighted-label boosts-container__title" />
+                                <ui:VisualElement name="goods-container" class="boosts-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                                    <ui:Label text="Label" name="goods-container-title" class="label highlighted-label boosts-container__title" />
                                     <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" touch-scroll-type="Elastic" class="boosts-scroll-view">
                                         <ui:VisualElement name="scroll-view-container" class="scroll-view-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
                                     </ui:ScrollView>

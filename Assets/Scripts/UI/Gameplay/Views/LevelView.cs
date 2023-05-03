@@ -23,7 +23,7 @@ namespace ConnectIt.UI.Gameplay.Views
         public override void Initialize()
         {
             textKey = _textKeyFactory.Create(
-                TextKeysConstants.Gameplay.Level,
+                TextKeysConstants.Gameplay.LevelLabel_Text,
                 new object[] { _gameplayLogicConfig.CurrentLevel });
 
             base.Initialize();

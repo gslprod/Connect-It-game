@@ -181,7 +181,7 @@ namespace ConnectIt.DI.Installers
                          .AsSingle();
 
                 Container.BindInitializableExecutionOrder<ViewFromModelSpawner<ConnectionLine, ConnectionLineView, ConnectionLineView.Factory>>(
-                    ExecutionOrderConstants.Initializable.ConnectionLineViewFromModelSpawner);
+                         ExecutionOrderConstants.Initializable.ConnectionLineViewFromModelSpawner);
             }
 
             void BindFactories()

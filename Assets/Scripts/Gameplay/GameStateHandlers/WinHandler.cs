@@ -92,11 +92,11 @@ namespace ConnectIt.Gameplay.GameStateHandlers
         private void ShowResults()
         {
             DialogBoxButtonInfo restartButtonInfo = new(
-                _textKeyFactory.Create(TextKeysConstants.Gameplay.WinMenu_Restart, null),
+                _textKeyFactory.Create(TextKeysConstants.Gameplay.WinMenu_Restart),
                 OnRestartLevelButtonClick);
 
             DialogBoxButtonInfo mainMenuButtonInfo = new(
-                _textKeyFactory.Create(TextKeysConstants.Gameplay.WinMenu_MainMenu, null),
+                _textKeyFactory.Create(TextKeysConstants.Gameplay.WinMenu_MainMenu),
                 OnMainMenuButtonClick,
                 DialogBoxButtonType.Dismiss);
 
@@ -107,7 +107,7 @@ namespace ConnectIt.Gameplay.GameStateHandlers
             if (nextLevelExists)
             {
                 DialogBoxButtonInfo nextLevelButtonInfo = new(
-                    _textKeyFactory.Create(TextKeysConstants.Gameplay.WinMenu_NextLevel, null),
+                    _textKeyFactory.Create(TextKeysConstants.Gameplay.WinMenu_NextLevel),
                     OnNextLevelButtonClick,
                     DialogBoxButtonType.Accept);
 

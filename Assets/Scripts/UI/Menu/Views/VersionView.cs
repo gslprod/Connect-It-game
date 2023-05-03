@@ -24,7 +24,7 @@ namespace ConnectIt.UI.Menu.Views
         public override void Initialize()
         {
             textKey = _textKeyFactory.Create(
-                TextKeysConstants.Menu.VersionLabel_Title,
+                TextKeysConstants.Menu.VersionLabel_Text,
                 new object[] { _gameVersion.GetVersion() });
 
             base.Initialize();

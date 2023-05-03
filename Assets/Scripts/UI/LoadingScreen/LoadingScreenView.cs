@@ -13,11 +13,6 @@ namespace ConnectIt.UI.LoadingScreen
 {
     public class LoadingScreenView : IInitializable, IDisposable
     {
-        public const string LoadingScreenContainerName = "container";
-        public const string TitleLabelName = "title";
-        public const string MessageLabelName = "message";
-        public const string ProgressBarName = "progress-bar";
-
         public event Action<LoadingScreenView> Showing;
         public event Action<LoadingScreenView> ShowingAnimationEnded;
         public event Action<LoadingScreenView> Closing;
@@ -78,11 +73,11 @@ namespace ConnectIt.UI.LoadingScreen
             _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRoot);
             _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
 
-            _titleLabel = _root.Q<Label>(TitleLabelName);
-            _messageLabel = _root.Q<Label>(MessageLabelName);
-            _progressBar = _root.Q<Custom.ProgressBar>(ProgressBarName);
+            _titleLabel = _root.Q<Label>(TemplatesNameConstants.LoadingScreen.TitleLabelName);
+            _messageLabel = _root.Q<Label>(TemplatesNameConstants.LoadingScreen.MessageLabelName);
+            _progressBar = _root.Q<Custom.ProgressBar>(TemplatesNameConstants.LoadingScreen.ProgressBarName);
             _progressBarLabel = _progressBar.Q<Label>(Custom.ProgressBar.LabelName);
-            _elementsContainer = _root.Q<VisualElement>(LoadingScreenContainerName);
+            _elementsContainer = _root.Q<VisualElement>(TemplatesNameConstants.LoadingScreen.LoadingScreenContainerName);
 
             _elementsContainer.AddToClassList(ClassNamesConstants.Global.LoadingScreenContainerClosed);
             _progressBarLabel.AddToClassList(ClassNamesConstants.Global.LoadingScreenProgressBarLabel);

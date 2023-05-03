@@ -44,6 +44,8 @@
             public const string TitleLabel = "title-label";
             public const string CoinsLabel = "shop-coins-label";
             public const string CoinsInfoLabel = "shop-coins-info-label";
+            public const string GoodsTitleLabel = "goods-container-title";
+            public const string GoodsScrollViewContainer = "scroll-view-container";
 
             public const string BackButton = "back-button";
         }

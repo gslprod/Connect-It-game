@@ -13,10 +13,6 @@ namespace ConnectIt.UI.DialogBox
     {
         public const string DialogBoxAssetId = "DialogBoxAsset";
         public const string DialogBoxButtonAssetId = "DialogBoxButtonAsset";
-        public const string DialogBoxContainerName = "dialog-box-container";
-        public const string DialogBoxButtonParentName = "buttons-group";
-        public const string TitleLabelName = "title-label";
-        public const string MessageLabelName = "message-label";
 
         public event Action<DialogBoxView> Showing;
         public event Action<DialogBoxView> Closing;
@@ -81,9 +77,9 @@ namespace ConnectIt.UI.DialogBox
             _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRoot);
             _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
 
-            _titleLabel = _root.Q<Label>(TitleLabelName);
-            _messageLabel = _root.Q<Label>(MessageLabelName);
-            _elementsContainer = _root.Q<VisualElement>(DialogBoxContainerName);
+            _titleLabel = _root.Q<Label>(TemplatesNameConstants.DialogBox.TitleLabelName);
+            _messageLabel = _root.Q<Label>(TemplatesNameConstants.DialogBox.MessageLabelName);
+            _elementsContainer = _root.Q<VisualElement>(TemplatesNameConstants.DialogBox.DialogBoxContainerName);
 
             _elementsContainer.AddToClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
 
@@ -193,7 +189,7 @@ namespace ConnectIt.UI.DialogBox
             if (_buttonsInfo == null || _buttonsInfo.Length == 0)
                 return;
 
-            VisualElement buttonsParent = _root.Q<VisualElement>(DialogBoxButtonParentName);
+            VisualElement buttonsParent = _root.Q<VisualElement>(TemplatesNameConstants.DialogBox.DialogBoxButtonParentName);
             _createdButtons = new DialogBoxButton[GetButtonsAmount()];
 
             for (int i = 0; i < _buttonsInfo.Length; i++)

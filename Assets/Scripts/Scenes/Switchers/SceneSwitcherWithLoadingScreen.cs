@@ -2,6 +2,7 @@
 using ConnectIt.UI.Global.MonoWrappers;
 using ConnectIt.UI.LoadingScreen;
 using ConnectIt.Utilities;
+using ConnectIt.Utilities.Extensions;
 using UnityEngine;
 
 namespace ConnectIt.Scenes.Switchers
@@ -96,8 +97,8 @@ namespace ConnectIt.Scenes.Switchers
         private TextKey GetTitleKeyByScene(SceneType sceneType)
             => sceneType switch
             {
-                SceneType.GameScene => _textKeyFactory.Create(TextKeysConstants.LoadingScreen.SwitchingToGameScene_Title, null),
-                SceneType.MenuScene => _textKeyFactory.Create(TextKeysConstants.LoadingScreen.SwitchingToMenuScene_Title, null),
+                SceneType.GameScene => _textKeyFactory.Create(TextKeysConstants.LoadingScreen.SwitchingToGameScene_Title),
+                SceneType.MenuScene => _textKeyFactory.Create(TextKeysConstants.LoadingScreen.SwitchingToMenuScene_Title),
 
                 _ => throw Assert.GetFailException(),
             };
@@ -105,8 +106,8 @@ namespace ConnectIt.Scenes.Switchers
         private TextKey GetMessageKeyByScene(SceneType sceneType)
             => sceneType switch
             {
-                SceneType.GameScene => _textKeyFactory.Create(TextKeysConstants.LoadingScreen.SwitchingToGameScene_Message, null),
-                SceneType.MenuScene => _textKeyFactory.Create(TextKeysConstants.LoadingScreen.SwitchingToMenuScene_Message, null),
+                SceneType.GameScene => _textKeyFactory.Create(TextKeysConstants.LoadingScreen.SwitchingToGameScene_Message),
+                SceneType.MenuScene => _textKeyFactory.Create(TextKeysConstants.LoadingScreen.SwitchingToMenuScene_Message),
 
                 _ => throw Assert.GetFailException(),
             };

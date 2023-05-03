@@ -1,4 +1,5 @@
 using ConnectIt.Infrastructure.Factories;
+using ConnectIt.Shop.Goods;
 using ConnectIt.UI.Menu.MonoWrappers;
 using ConnectIt.UI.Menu.Views;
 using ConnectIt.UI.Menu.Views.GJLoginMenu;
@@ -6,14 +7,18 @@ using ConnectIt.UI.Menu.Views.GJMenu;
 using ConnectIt.UI.Menu.Views.MainMenu;
 using ConnectIt.UI.Menu.Views.SelectLevelMenu;
 using ConnectIt.UI.Menu.Views.SettingsMenu;
+using ConnectIt.UI.Menu.Views.ShopMenu;
 using ConnectIt.UI.Menu.Views.StatsMenu;
 using ConnectIt.UI.Tools;
 using System;
+using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
 
 public class MenuSceneInstaller : MonoInstaller
 {
+    [SerializeField] private VisualTreeAsset _productAsset;
+
     public override void InstallBindings()
     {
         BindUIViews();
@@ -75,11 +80,25 @@ public class MenuSceneInstaller : MonoInstaller
         void BindShopMenuViews()
         {
             BindUIViewsFactories();
+            BindAssets();
 
             void BindUIViewsFactories()
             {
-                Container.BindFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, ShopMenuView, ShopMenuView.Factory>()
-                         .FromFactory<PrimitiveDIFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, ShopMenuView>>();
+                Container.BindFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, ShopMenuView, ShopMenuView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, ShopMenuView>>();
+
+                Container.BindFactory<VisualElement, VisualElement, GoodsView, GoodsView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, GoodsView>>();
+
+                Container.BindFactory<ShowcaseProduct<IProduct>, VisualElement, VisualElement, ProductView, ProductView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<ShowcaseProduct<IProduct>, VisualElement, VisualElement, ProductView>>();
+            }
+
+            void BindAssets()
+            {
+                Container.BindInstance(_productAsset)
+                         .AsCached()
+                         .WhenInjectedInto<ProductView>();
             }
         }
 

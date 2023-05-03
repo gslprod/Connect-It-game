@@ -4,7 +4,7 @@
     {
         public static class Gameplay
         {
-            public const string Level = GameplayBaseString + ".LevelLabel.Title";
+            public const string LevelLabel_Text = GameplayBaseString + ".LevelLabel.Text";
             public const string PauseMenu_Continue = GameplayBaseString + ".PauseMenu.Continue";
             public const string PauseMenu_Exit = GameplayBaseString + ".PauseMenu.Exit";
             public const string WinMenu_Title = GameplayBaseString + ".WinMenu.Title";
@@ -27,6 +27,9 @@
             public const string LevelPaused_Title = DialogBoxBaseString + ".LevelPaused.Title";
             public const string LevelPaused_Message = DialogBoxBaseString + ".LevelPaused.Message";
 
+            public const string NotEnoughCoins_Title = DialogBoxBaseString + ".NotEnoughCoins.Title";
+            public const string NotEnoughCoins_Message = DialogBoxBaseString + ".NotEnoughCoins.Message";
+
             private const string DialogBoxBaseString = "DialogBox";
         }
 
@@ -35,6 +38,9 @@
             public const string Confirm = CommonBaseString + ".Confirm";
             public const string Cancel = CommonBaseString + ".Cancel";
             public const string Play = CommonBaseString + ".Play";
+            public const string Buy = CommonBaseString + ".Buy";
+            public const string Close = CommonBaseString + ".Close";
+            public const string Description = CommonBaseString + ".Description";
 
             private const string CommonBaseString = "Common";
         }
@@ -51,9 +57,9 @@
 
         public static class Menu
         {
-            public const string CompletedLevelsLabel_Title = MenuBaseString + ".CompletedLevelsLabel.Title";
-            public const string VersionLabel_Title = MenuBaseString + ".VersionLabel.Title";
-            public const string CoinsLabel_Title = MenuBaseString + ".CoinsLabel.Title";
+            public const string CompletedLevelsLabel_Text = MenuBaseString + ".CompletedLevelsLabel.Text";
+            public const string VersionLabel_Text = MenuBaseString + ".VersionLabel.Text";
+            public const string CoinsLabel_Text = MenuBaseString + ".CoinsLabel.Text";
 
             private const string MenuBaseString = "Menu";
 
@@ -73,7 +79,10 @@
             public static class ShopMenu
             {
                 public const string Title = ShopMenuBaseString + ".Title";
-                public const string CoinsInfoLabel_Title = ShopMenuBaseString + ".CoinsInfoLabel.Title";
+                public const string CoinsInfoLabel_Text = ShopMenuBaseString + ".CoinsInfoLabel.Text";
+                public const string GoodsTitleLabel_Text = ShopMenuBaseString + ".GoodsTitleLabel.Text";
+                public const string Product_PriceLabel_Text = ShopMenuBaseString + ".Product.PriceLabel.Text";
+                public const string Product_AmountLabel_Text = ShopMenuBaseString + ".Product.AmountLabel.Text";
 
                 private const string ShopMenuBaseString = MenuBaseString + ".ShopMenu";
             }

@@ -3,6 +3,7 @@ using ConnectIt.Shop.Customer;
 using ConnectIt.Shop.Goods;
 using ConnectIt.Shop.Goods.Boosts;
 using ConnectIt.Utilities;
+using System;
 using System.Collections.Generic;
 using Zenject;
 
@@ -10,6 +11,8 @@ namespace ConnectIt.Shop
 {
     public class Shop : IShop, IInitializable
     {
+        public event Action<IShop> GoodsChanged;
+
         public IEnumerable<ShowcaseProduct<IProduct>> Goods => _goods;
 
         private List<ShowcaseProduct<IProduct>> _goods;

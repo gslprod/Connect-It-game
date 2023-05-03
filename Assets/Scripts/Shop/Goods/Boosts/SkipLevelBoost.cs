@@ -1,4 +1,5 @@
 ﻿using ConnectIt.Localization;
+using ConnectIt.Utilities.Extensions;
 using Zenject;
 
 namespace ConnectIt.Shop.Goods.Boosts
@@ -22,8 +23,8 @@ namespace ConnectIt.Shop.Goods.Boosts
         {
             base.Initialize();
 
-            _nameTextKey = _textKeyFactory.Create(TextKeysConstants.Items.Boosts_SkipLevel_Name, null);
-            _descriptionTextKey = _textKeyFactory.Create(TextKeysConstants.Items.Boosts_SkipLevel_Description, null);
+            _nameTextKey = _textKeyFactory.Create(TextKeysConstants.Items.Boosts_SkipLevel_Name);
+            _descriptionTextKey = _textKeyFactory.Create(TextKeysConstants.Items.Boosts_SkipLevel_Description);
         }
 
         public override void Use()

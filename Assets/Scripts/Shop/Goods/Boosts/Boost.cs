@@ -2,7 +2,7 @@
 using ConnectIt.Localization;
 using ConnectIt.Utilities;
 using System;
-using Unity.VisualScripting;
+using Zenject;
 
 namespace ConnectIt.Shop.Goods.Boosts
 {

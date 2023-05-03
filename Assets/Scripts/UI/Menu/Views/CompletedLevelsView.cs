@@ -28,7 +28,7 @@ namespace ConnectIt.UI.Menu.Views
         public override void Initialize()
         {
             textKey = _textKeyFactory.Create(
-                TextKeysConstants.Menu.CompletedLevelsLabel_Title,
+                TextKeysConstants.Menu.CompletedLevelsLabel_Text,
                 new object[]
                 {
                     GetLastCompletedLevel(),

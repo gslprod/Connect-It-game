@@ -2,6 +2,7 @@
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.Menu.MonoWrappers;
 using ConnectIt.UI.Tools;
+using ConnectIt.Utilities.Extensions;
 using System;
 using UnityEngine.UIElements;
 using Zenject;
@@ -52,7 +53,7 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
 
             _titleLabel = _defaultLabelViewFactory.Create(
                 _viewRoot.Q<Label>(NameConstants.SettingsMenu.TitleLabel),
-                _textKeyFactory.Create(TextKeysConstants.Menu.SettingsMenu.Title, null));
+                _textKeyFactory.Create(TextKeysConstants.Menu.SettingsMenu.Title));
         }
 
         private void DisposeDisposableViews()
