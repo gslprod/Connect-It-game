@@ -10,7 +10,7 @@ namespace ConnectIt.UI.DialogBox
     {
         private readonly ILocalizationProvider _localizationProvider;
         private readonly Button _button;
-        private readonly DialogBoxView _dialogBoxView;
+        private readonly IDialogBoxView _dialogBoxView;
         private DialogBoxButtonInfo _buttonInfo;
 
         private TextKey _titleKey;
@@ -20,7 +20,7 @@ namespace ConnectIt.UI.DialogBox
         public DialogBoxButton(ILocalizationProvider localizationProvider,
             DialogBoxButtonInfo buttonInfo,
             Button button,
-            DialogBoxView dialogBoxView)
+            IDialogBoxView dialogBoxView)
         {
             _localizationProvider = localizationProvider;
             _buttonInfo = buttonInfo;
@@ -99,6 +99,6 @@ namespace ConnectIt.UI.DialogBox
             _button.text = _titleKey.ToString();
         }
 
-        public class Factory : PlaceholderFactory<DialogBoxButtonInfo, Button, DialogBoxView, DialogBoxButton> { }
+        public class Factory : PlaceholderFactory<DialogBoxButtonInfo, Button, IDialogBoxView, DialogBoxButton> { }
     }
 }

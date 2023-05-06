@@ -7,3 +7,7 @@ Gameplay.WinMenu.Content,,Время: {0}\nОчки: {1}\nПолучено мо�
 Gameplay.WinMenu.NextLevel,,Следующий уровень
 Gameplay.WinMenu.Restart,,Перезапустить уровень
 Gameplay.WinMenu.MainMenu,,Главное меню
+Gameplay.UseBoostButton.Text,,Использовать преимущество
+Gameplay.UseBoostMenu.Title,,Меню использования преимуществ
+Gameplay.UseBoostMenu.InfoLabel.Text,,"Выберите преимущество, которое вы хотите использовать."
+Gameplay.UseBoostMenu.UseBoostElement.AmountLabel.Text,,{0} шт

@@ -9,13 +9,14 @@ using Zenject;
 
 namespace ConnectIt.UI.DialogBox
 {
-    public class DialogBoxView : IInitializable, IDisposable
+    public class DialogBoxView : IDialogBoxView, IInitializable, IDisposable
     {
         public const string DialogBoxAssetId = "DialogBoxAsset";
         public const string DialogBoxButtonAssetId = "DialogBoxButtonAsset";
 
-        public event Action<DialogBoxView> Showing;
-        public event Action<DialogBoxView> Closing;
+        public event Action<IDialogBoxView> Showing;
+        public event Action<IDialogBoxView> Closing;
+        public event Action<IDialogBoxView> Disposing;
 
         private readonly ILocalizationProvider _localizationProvider;
         private readonly VisualTreeAsset _uiAsset;
@@ -77,9 +78,9 @@ namespace ConnectIt.UI.DialogBox
             _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRoot);
             _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
 
-            _titleLabel = _root.Q<Label>(TemplatesNameConstants.DialogBox.TitleLabelName);
-            _messageLabel = _root.Q<Label>(TemplatesNameConstants.DialogBox.MessageLabelName);
-            _elementsContainer = _root.Q<VisualElement>(TemplatesNameConstants.DialogBox.DialogBoxContainerName);
+            _titleLabel = _root.Q<Label>(TemplatesNameConstants.DialogBox.TitleLabel);
+            _messageLabel = _root.Q<Label>(TemplatesNameConstants.DialogBox.MessageLabel);
+            _elementsContainer = _root.Q<VisualElement>(TemplatesNameConstants.DialogBox.DialogBoxContainer);
 
             _elementsContainer.AddToClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
 
@@ -122,6 +123,8 @@ namespace ConnectIt.UI.DialogBox
             _titleKey.ArgsChanged -= OnTitleKeyArgsChanged;
             _messageKey.ArgsChanged -= OnMessageKeyArgsChanged;
             _localizationProvider.LocalizationChanged -= UpdateLocalization;
+
+            Disposing?.Invoke(this);
         }
 
         private void StartShowingAnimation()
@@ -189,7 +192,7 @@ namespace ConnectIt.UI.DialogBox
             if (_buttonsInfo == null || _buttonsInfo.Length == 0)
                 return;
 
-            VisualElement buttonsParent = _root.Q<VisualElement>(TemplatesNameConstants.DialogBox.DialogBoxButtonParentName);
+            VisualElement buttonsParent = _root.Q<VisualElement>(TemplatesNameConstants.DialogBox.DialogBoxButtonParent);
             _createdButtons = new DialogBoxButton[GetButtonsAmount()];
 
             for (int i = 0; i < _buttonsInfo.Length; i++)
@@ -212,7 +215,7 @@ namespace ConnectIt.UI.DialogBox
                 return;
 
             _uiButtonAsset.CloneTree(_elementsContainer);
-            Button createdButton = (Button)_elementsContainer[_elementsContainer.childCount - 1];
+            Button createdButton = (Button)_elementsContainer.GetLastChild();
 
             createdButton.AddToClassList(ClassNamesConstants.Global.DialogBoxButtonAdditional);
 

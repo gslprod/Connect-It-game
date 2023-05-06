@@ -16,6 +16,7 @@ using ConnectIt.Input;
 using ConnectIt.Input.GameplayInputRouterStates;
 using ConnectIt.UI.Gameplay.MonoWrappers;
 using ConnectIt.UI.Gameplay.Views;
+using ConnectIt.UI.Gameplay.Views.UseBoostMenu;
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -30,6 +31,8 @@ namespace ConnectIt.DI.Installers
         [SerializeField] private Transform _connectionLineParent;
         [SerializeField] private TilemapsMonoWrapper[] _tilemapsMonoWrapperPrefabs;
         [SerializeField] private GameplayUIDocumentMonoWrapper _gameplayUIDocumentMonoWrapper;
+        [SerializeField] private VisualTreeAsset _useBoostMenuAsset;
+        [SerializeField] private VisualTreeAsset _useBoostElementAsset;
 
         public override void InstallBindings()
         {
@@ -101,6 +104,7 @@ namespace ConnectIt.DI.Installers
         private void BindUIViews()
         {
             BindUIViewsFactories();
+            BindAssets();
 
             void BindUIViewsFactories()
             {
@@ -112,6 +116,23 @@ namespace ConnectIt.DI.Installers
 
                 Container.BindFactory<Label, LevelView, LevelView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Label, LevelView>>();
+
+                Container.BindFactory<VisualElement, VisualElement, UseBoostMenuView, UseBoostMenuView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, UseBoostMenuView>>();
+
+                Container.BindFactory<Type, VisualElement, VisualElement, UseBoostElementView, UseBoostElementView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Type, VisualElement, VisualElement, UseBoostElementView>>();
+            }
+
+            void BindAssets()
+            {
+                Container.BindInstance(_useBoostMenuAsset)
+                         .AsCached()
+                         .WhenInjectedInto<GameplayUIDocumentMonoWrapper>();
+
+                Container.BindInstance(_useBoostElementAsset)
+                         .AsCached()
+                         .WhenInjectedInto<UseBoostElementView>();
             }
         }
 

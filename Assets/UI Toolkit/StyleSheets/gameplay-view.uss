@@ -1,5 +1,9 @@
 :root {
     --non-focus-color-1: rgba(120, 120, 120, 0.3);
+    --accept-color: rgba(0, 255, 0, 0.3);
+    --dismiss-color: rgba(255, 0, 0, 0.3);
+    --default-transition-timing-function: ease-out-cubic;
+    --default-transition-duration: 800ms;
     flex-grow: 1;
 }
 
@@ -43,4 +47,78 @@
 .level-progress-bar {
     width: 550px;
     height: 60px;
+}
+
+.boosts-use-menu__root {
+}
+
+.boosts-container {
+    margin-bottom: -20px;
+}
+
+.boosts-container__child {
+    margin-bottom: 20px;
+}
+
+.boost-element__root {
+    margin-right: -10px;
+    transition-property: opacity;
+    transition-duration: var(--default-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function);
+}
+
+.boost-element__name-label {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.boost-element__amount-label {
+    flex-grow: 0;
+}
+
+.boost-element__use-button {
+    flex-grow: 1;
+    background-color: var(--accept-color);
+    min-width: 200px;
+}
+
+.boost-element__bottom-container {
+    flex-direction: row;
+}
+
+.boost-element__top-container {
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.boost-element__info-button {
+    align-items: center;
+    justify-content: center;
+}
+
+.boost-element__child {
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.boost-element__info-button-icon {
+    width: 58px;
+    height: 58px;
+    background-image: url('project://database/Assets/2D/Sprites/UI/info/info%2064.png?fileID=21300000&guid=51ecaeab09efe054086c367982380461&type=3#info 64');
+}
+
+.boosts-use-menu__info-label {
+    font-size: 45px;
+    margin-bottom: 25px;
+}
+
+.boost-element__root--used {
+    opacity: 0.6;
+    transition-property: opacity;
+    transition-duration: var(--default-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function);
+}
+
+.boost-element__root--used .boost-element__use-button {
+    background-color: var(--dismiss-color);
 }

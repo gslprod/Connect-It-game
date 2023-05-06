@@ -40,5 +40,14 @@
             public const string LevelButtonCurrent = "level-button--current";
             public const string LevelButtonSkipped = "level-button--skipped";
         }
+
+        public static class GameplayView
+        {
+            #region UseBoostElement
+
+            public const string BoostElementRootUsed = "boost-element__root--used";
+
+            #endregion
+        }
     }
 }

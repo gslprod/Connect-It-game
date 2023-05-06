@@ -2,6 +2,8 @@
 using ConnectIt.Gameplay.Observers;
 using ConnectIt.Input;
 using ConnectIt.Localization;
+using ConnectIt.Shop.Customer;
+using ConnectIt.Shop.Goods.Boosts;
 using ConnectIt.UI.DialogBox;
 using System.Collections;
 using UnityEngine;
@@ -26,16 +28,22 @@ namespace ConnectIt.Test
         private TextKey.Factory _textKeyFactory;
 
         private IGameStateObserver _gameStateObserver;
+        private ICustomer _customer;
+        private SkipLevelBoost.Factory _skipLevelBoostFactory;
 
-        //[Inject]
+        [Inject]
         public void Constructor(
             IGameStateObserver gameStateObserver,
             DialogBoxView.Factory dbFactory,
-            TextKey.Factory textKeyFactory)
+            TextKey.Factory textKeyFactory,
+            ICustomer customer,
+            SkipLevelBoost.Factory skipLevelBoostFactory)
         {
             _gameStateObserver = gameStateObserver;
             _dbFactory = dbFactory;
             _textKeyFactory = textKeyFactory;
+            _customer = customer;
+            _skipLevelBoostFactory = skipLevelBoostFactory;
         }
 
         private void Start()
@@ -52,7 +60,7 @@ namespace ConnectIt.Test
 
             //StartCoroutine(Delay(dialogBoxCreationData));
 
-            Gameplay.Model.TileUser s = new Gameplay.Model.TileUser(TileLayer.Map);
+            _customer.Storage.AddItem(_skipLevelBoostFactory.Create());
         }
 
         private IEnumerator Delay(DialogBoxCreationData dialogBoxCreationData)

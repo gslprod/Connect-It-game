@@ -6,4 +6,12 @@ DialogBox.RestartLevelConfirm.Message,,Ваш прогресс по текуще
 DialogBox.LevelPaused.Title,,Игра на паузе
 DialogBox.LevelPaused.Message,,Вы можете продолжить играть в любой момент.
 DialogBox.NotEnoughCoins.Title,,Недостаточно монет
-DialogBox.NotEnoughCoins.Message,,Для покупки данного предмета у вас недостаточно монет.
+DialogBox.NotEnoughCoins.Message,,Для покупки данного предмета у Вас недостаточно монет.
+DialogBox.ConfirmBuy.Title,,Подтверждение покупки
+DialogBox.ConfirmBuy.Message,,"Ваш баланс монет будет уменьшен, а выбранный предмет будет Вам начислен. После покупки вы сможете воспользоваться купленным предметом."
+DialogBox.NotEnoughProductAmount.Title,,Недостаточное количество предмета
+DialogBox.NotEnoughProductAmount.Message,,Для совершения действия у Вас недостаточное количество данного предмета.
+DialogBox.ConfirmBoostUse.Title,,Подтверждение использования преимущества
+DialogBox.ConfirmBoostUse.Message,,"Если после использования преимущества Вы не сможете пройти уровень, оно будет возращено на Ваш аккаунт."
+DialogBox.BoostUsed.Title,,Использовано
+DialogBox.BoostUsed.Message,,Это преимущество уже было использовано в данном уровне. Повторное использование недоступно.

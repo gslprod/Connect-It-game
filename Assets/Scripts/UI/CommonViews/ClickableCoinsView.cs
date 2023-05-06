@@ -1,5 +1,6 @@
 ﻿using ConnectIt.Localization;
 using ConnectIt.Shop.Customer;
+using ConnectIt.Shop.Customer.Wallet;
 using System;
 using UnityEngine.UIElements;
 using Zenject;

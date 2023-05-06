@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/global.uss?fileID=7433441132597879392&amp;guid=3e3efaa0af4d22345b7f033c26dc1a86&amp;type=3#global" />
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/gameplay-view.uss?fileID=7433441132597879392&amp;guid=e8a7e8d530ddcbc40b8695c3d954011b&amp;type=3#gameplay-view" />
+    <ui:VisualElement name="boost-element-root" class="boosts-container__child boost-element__root">
+        <ui:VisualElement name="top-container" class="boost-element__top-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+            <ui:Label text="Some name" name="name-label" class="label highlighted-label boost-element__name-label boost-element__child" />
+            <ui:Button display-tooltip-when-elided="true" name="info-button" class="button highlighted-label boost-element__info-button boost-element__child">
+                <ui:VisualElement name="info-button-icon" class="boost-element__info-button-icon" />
+            </ui:Button>
+        </ui:VisualElement>
+        <ui:VisualElement name="bottom-container" class="boost-element__bottom-container">
+            <ui:Label text="x1" name="amount-label" class="label highlighted-label boost-element__amount-label boost-element__child" />
+            <ui:Button text="Use" name="use-button" class="button highlighted-label boost-element__use-button boost-element__child" style="flex-shrink: 1;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

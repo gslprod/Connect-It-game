@@ -12,6 +12,10 @@
             public const string WinMenu_MainMenu = GameplayBaseString + ".WinMenu.MainMenu";
             public const string WinMenu_Restart = GameplayBaseString + ".WinMenu.Restart";
             public const string WinMenu_NextLevel = GameplayBaseString + ".WinMenu.NextLevel";
+            public const string UseBoostButton_Text = GameplayBaseString + ".UseBoostButton.Text";
+            public const string UseBoostMenu_Title = GameplayBaseString + ".UseBoostMenu.Title";
+            public const string UseBoostMenu_InfoLabel_Text = GameplayBaseString + ".UseBoostMenu.InfoLabel.Text";
+            public const string UseBoostMenu_UseBoostElement_AmountLabel_Text = GameplayBaseString + ".UseBoostMenu.UseBoostElement.AmountLabel.Text";
 
             private const string GameplayBaseString = "Gameplay";
         }
@@ -30,6 +34,18 @@
             public const string NotEnoughCoins_Title = DialogBoxBaseString + ".NotEnoughCoins.Title";
             public const string NotEnoughCoins_Message = DialogBoxBaseString + ".NotEnoughCoins.Message";
 
+            public const string ConfirmBuy_Title = DialogBoxBaseString + ".ConfirmBuy.Title";
+            public const string ConfirmBuy_Message = DialogBoxBaseString + ".ConfirmBuy.Message";
+
+            public const string NotEnoughProductAmount_Title = DialogBoxBaseString + ".NotEnoughProductAmount.Title";
+            public const string NotEnoughProductAmount_Message = DialogBoxBaseString + ".NotEnoughProductAmount.Message";
+
+            public const string ConfirmBoostUse_Title = DialogBoxBaseString + ".ConfirmBoostUse.Title";
+            public const string ConfirmBoostUse_Message = DialogBoxBaseString + ".ConfirmBoostUse.Message";
+
+            public const string BoostUsed_Title = DialogBoxBaseString + ".BoostUsed.Title";
+            public const string BoostUsed_Message = DialogBoxBaseString + ".BoostUsed.Message";
+
             private const string DialogBoxBaseString = "DialogBox";
         }
 
@@ -41,6 +57,7 @@
             public const string Buy = CommonBaseString + ".Buy";
             public const string Close = CommonBaseString + ".Close";
             public const string Description = CommonBaseString + ".Description";
+            public const string Use = CommonBaseString + ".Use";
 
             private const string CommonBaseString = "Common";
         }

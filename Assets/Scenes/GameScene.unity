@@ -369,6 +369,8 @@ MonoBehaviour:
   - {fileID: 3374928802466732478, guid: 568f1cba75f188b468b7ba7f587bb943, type: 3}
   - {fileID: 9043604026070797284, guid: bbca52eaabf837945b8eeb682dd2e79e, type: 3}
   _gameplayUIDocumentMonoWrapper: {fileID: 79163561}
+  _useBoostMenuAsset: {fileID: 9197481963319205126, guid: d05cd3872c3d3f74198eb89fbeaa724a, type: 3}
+  _useBoostElementAsset: {fileID: 9197481963319205126, guid: 272905fc7a8fca1439c2e52241eb5ab6, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,6 +982,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1134513245}
   - component: {fileID: 1134513244}
+  - component: {fileID: 1134513246}
   m_Layer: 0
   m_Name: LocalizationSync
   m_TagString: Untagged
@@ -1041,6 +1044,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1134513246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134513243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 044fdabcd3a1fa64a8553823f3b8bf72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skip: 1
+  _tile1: {fileID: 0}
+  _tile2: {fileID: 0}
 --- !u!1 &1731047646
 GameObject:
   m_ObjectHideFlags: 0

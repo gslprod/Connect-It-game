@@ -1,13 +1,12 @@
 ﻿using ConnectIt.Localization;
 using ConnectIt.Shop;
 using ConnectIt.Shop.Customer;
+using ConnectIt.Shop.Customer.Storage;
 using ConnectIt.Shop.Goods;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.Utilities.Extensions;
 using System;
-using System.Linq;
-using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
 
@@ -126,10 +125,7 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
         }
 
         private int GetProductAmountFromCustomer()
-        {
-            return _playerCustomer.Storage.Items.Count(
-                product => _showcaseProduct.ShowcaseItem.GetType() == product.GetType());
-        }
+            => _playerCustomer.Storage.GetProductCountOfType(_showcaseProduct.ShowcaseItem.GetType());
 
         private void OnStorageItemsChanged(IStorage storage)
         {
@@ -153,16 +149,40 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
 
         private void OnBuyButtonClick()
         {
-            if (_playerCustomer.Wallet.Coins < _showcaseProduct.Price)
-            {
-                _dialogBoxFactory.CreateDefaultOneButtonDialogBox(_mainRoot,
-                    _textKeyFactory.Create(TextKeysConstants.DialogBox.NotEnoughCoins_Title),
-                    _textKeyFactory.Create(TextKeysConstants.DialogBox.NotEnoughCoins_Message),
-                    _textKeyFactory.Create(TextKeysConstants.Common.Close),
-                    true);
-
+            if (!IsEnoughCoins())
                 return;
-            }
+
+            _dialogBoxFactory.CreateDefaultConfirmCancelDialogBox(_mainRoot,
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.ConfirmBuy_Title),
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.ConfirmBuy_Message),
+                _textKeyFactory.Create(TextKeysConstants.Common.Cancel),
+                _textKeyFactory.Create(TextKeysConstants.Common.Confirm),
+                OnConfirmBuyButtonClick,
+                true);
+        }
+
+        private bool IsEnoughCoins()
+        {
+            if (_playerCustomer.Wallet.Coins >= _showcaseProduct.Price)
+                return true;
+
+            _dialogBoxFactory.CreateDefaultOneButtonDialogBox(_mainRoot,
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.NotEnoughCoins_Title),
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.NotEnoughCoins_Message),
+                _textKeyFactory.Create(TextKeysConstants.Common.Close),
+                true);
+
+            return false;
+        }
+
+        #endregion
+
+        #region ConfirmBuyButton
+
+        private void OnConfirmBuyButtonClick()
+        {
+            if (!IsEnoughCoins())
+                return;
 
             _shop.Buy(_showcaseProduct, _playerCustomer);
         }

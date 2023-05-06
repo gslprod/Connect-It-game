@@ -44,6 +44,14 @@ namespace ConnectIt.Shop
             customer.Storage.AddItem(product.GetNewInstance());
         }
 
+        public void SetGoods(IEnumerable<ShowcaseProduct<IProduct>> newGoods)
+        {
+            _goods.Clear();
+            _goods.AddRange(newGoods);
+
+            GoodsChanged?.Invoke(this);
+        }
+
         private bool IsProductInSale(ShowcaseProduct<IProduct> product)
             => _goods.Contains(product);
     }

@@ -9,6 +9,7 @@ namespace ConnectIt.Shop.Goods.Boosts
     public abstract class Boost : IProduct, IReversibleDisposableItem, IDisposeNotifier<Boost>, IInitializable
     {
         public event Action<Boost> Disposing;
+        public event Action<Boost> ReversibleDisposeChanged;
 
         public abstract TextKey Name { get; }
         public abstract TextKey Description { get; }
@@ -32,6 +33,7 @@ namespace ConnectIt.Shop.Goods.Boosts
             Assert.That(ReversibleDisposed);
 
             ReversibleDisposed = false;
+            ReversibleDisposeChanged?.Invoke(this);
         }
 
         public void ReversibleDispose()
@@ -39,6 +41,7 @@ namespace ConnectIt.Shop.Goods.Boosts
             Assert.That(!ReversibleDisposed);
 
             ReversibleDisposed = true;
+            ReversibleDisposeChanged?.Invoke(this);
         }
     }
 }

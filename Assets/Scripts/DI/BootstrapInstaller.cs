@@ -10,6 +10,8 @@ using ConnectIt.Save.Serializers;
 using ConnectIt.Scenes;
 using ConnectIt.Scenes.Switchers;
 using ConnectIt.Shop.Customer;
+using ConnectIt.Shop.Customer.Storage;
+using ConnectIt.Shop.Customer.Wallet;
 using ConnectIt.Shop.Goods.Boosts;
 using ConnectIt.Time;
 using ConnectIt.UI.CommonViews;
@@ -38,6 +40,7 @@ namespace ConnectIt.DI.Installers
         [SerializeField] private VisualTreeAsset _loadingScreenAsset;
         [SerializeField] private GameVersionSO _gameVersionConfig;
         [SerializeField] private ShopConfigSO _shopConfig;
+        [SerializeField] private VisualTreeAsset _customDialogBoxAsset;
 
         public override void InstallBindings()
         {
@@ -200,11 +203,14 @@ namespace ConnectIt.DI.Installers
 
             void BindFactories()
             {
-                Container.BindFactory<DialogBoxButtonInfo, Button, DialogBoxView, DialogBoxButton, DialogBoxButton.Factory>()
-                         .FromFactory<PrimitiveDIFactory<DialogBoxButtonInfo, Button, DialogBoxView, DialogBoxButton>>();
+                Container.BindFactory<DialogBoxButtonInfo, Button, IDialogBoxView, DialogBoxButton, DialogBoxButton.Factory>()
+                         .FromFactory<PrimitiveDIFactory<DialogBoxButtonInfo, Button, IDialogBoxView, DialogBoxButton>>();
 
                 Container.BindFactory<DialogBoxCreationData, DialogBoxView, DialogBoxView.Factory>()
                          .FromFactory<PrimitiveDIFactory<DialogBoxCreationData, DialogBoxView>>();
+
+                Container.BindFactory<CustomDialogBoxCreationData, CustomDialogBoxView, CustomDialogBoxView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<CustomDialogBoxCreationData, CustomDialogBoxView>>();
             }
 
             void BindAssets()
@@ -218,6 +224,16 @@ namespace ConnectIt.DI.Installers
                          .WithId(DialogBoxView.DialogBoxButtonAssetId)
                          .AsCached()
                          .WhenInjectedInto<DialogBoxView>();
+
+                Container.BindInstance(_customDialogBoxAsset)
+                         .WithId(CustomDialogBoxView.CustomDialogBoxAssetId)
+                         .AsCached()
+                         .WhenInjectedInto<CustomDialogBoxView>();
+
+                Container.BindInstance(_dialogBoxButtonAsset)
+                         .WithId(CustomDialogBoxView.DialogBoxButtonAssetId)
+                         .AsCached()
+                         .WhenInjectedInto<CustomDialogBoxView>();
             }
         }
 

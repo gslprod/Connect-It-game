@@ -73,11 +73,11 @@ namespace ConnectIt.UI.LoadingScreen
             _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRoot);
             _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
 
-            _titleLabel = _root.Q<Label>(TemplatesNameConstants.LoadingScreen.TitleLabelName);
-            _messageLabel = _root.Q<Label>(TemplatesNameConstants.LoadingScreen.MessageLabelName);
-            _progressBar = _root.Q<Custom.ProgressBar>(TemplatesNameConstants.LoadingScreen.ProgressBarName);
+            _titleLabel = _root.Q<Label>(TemplatesNameConstants.LoadingScreen.TitleLabel);
+            _messageLabel = _root.Q<Label>(TemplatesNameConstants.LoadingScreen.MessageLabel);
+            _progressBar = _root.Q<Custom.ProgressBar>(TemplatesNameConstants.LoadingScreen.ProgressBar);
             _progressBarLabel = _progressBar.Q<Label>(Custom.ProgressBar.LabelName);
-            _elementsContainer = _root.Q<VisualElement>(TemplatesNameConstants.LoadingScreen.LoadingScreenContainerName);
+            _elementsContainer = _root.Q<VisualElement>(TemplatesNameConstants.LoadingScreen.LoadingScreenContainer);
 
             _elementsContainer.AddToClassList(ClassNamesConstants.Global.LoadingScreenContainerClosed);
             _progressBarLabel.AddToClassList(ClassNamesConstants.Global.LoadingScreenProgressBarLabel);

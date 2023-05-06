@@ -16,19 +16,41 @@
 
         public static class DialogBox
         {
-            public const string DialogBoxContainerName = "dialog-box-container";
-            public const string DialogBoxButtonParentName = "buttons-group";
+            public const string DialogBoxContainer = "dialog-box-container";
+            public const string DialogBoxButtonParent = "buttons-group";
 
-            public const string TitleLabelName = "title-label";
-            public const string MessageLabelName = "message-label";
+            public const string TitleLabel = "title-label";
+            public const string MessageLabel = "message-label";
+        }
+
+        public static class CustomDialogBox
+        {
+            public const string DialogBoxContainer = "dialog-box-container";
+            public const string ContentRoot = "content-root";
+
+            public const string TitleLabel = "title-label";
         }
 
         public static class LoadingScreen
         {
-            public const string LoadingScreenContainerName = "container";
-            public const string TitleLabelName = "title";
-            public const string MessageLabelName = "message";
-            public const string ProgressBarName = "progress-bar";
+            public const string LoadingScreenContainer = "container";
+            public const string TitleLabel = "title";
+            public const string MessageLabel = "message";
+            public const string ProgressBar = "progress-bar";
+        }
+
+        public static class UseBoostMenu
+        {
+            public const string InfoLabel = "info-label";
+            public const string BoostsContainer = "boosts-container";
+        }
+
+        public static class UseBoostElement
+        {
+            public const string NameLabel = "name-label";
+            public const string InfoButton = "info-button";
+            public const string AmountLabel = "amount-label";
+            public const string UseButton = "use-button";
         }
     }
 }

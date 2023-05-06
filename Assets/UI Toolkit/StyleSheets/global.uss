@@ -30,9 +30,9 @@
 }
 
 .button {
-    transition-property: opacity, scale;
-    transition-timing-function: var(--default-button-transition-timing-function), var(--default-button-transition-timing-function);
-    transition-duration: var(--default-button-transition-duration), var(--default-button-transition-duration);
+    transition-property: opacity, scale, background-color;
+    transition-timing-function: var(--default-button-transition-timing-function), var(--default-button-transition-timing-function), var(--default-button-transition-timing-function);
+    transition-duration: var(--default-button-transition-duration), var(--default-button-transition-duration), var(--default-button-transition-duration);
     margin-left: 0;
     margin-right: 0;
     margin-top: 0;
@@ -44,13 +44,13 @@
     flex-shrink: 0;
 }
 
-.button:active {
-    transition-property: opacity, scale;
-    transition-duration: var(--default-button-transition-duration), var(--default-button-transition-duration);
-    transition-timing-function: var(--default-button-transition-timing-function), var(--default-button-transition-timing-function);
-    opacity: 0.7;
-    scale: 0.9 0.9;
-}
+    .button:active {
+        transition-property: opacity, scale, background-color;
+        transition-timing-function: var(--default-button-transition-timing-function), var(--default-button-transition-timing-function), var(--default-button-transition-timing-function);
+        transition-duration: var(--default-button-transition-duration), var(--default-button-transition-duration), var(--default-button-transition-duration);
+        opacity: 0.7;
+        scale: 0.9 0.9;
+    }
 
 .highlighted-label {
     background-color: var(--non-focus-color-1);
@@ -235,6 +235,10 @@
     padding-right: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+.dialog-box__content-root {
+    overflow: hidden;
 }
 
 .dialog-box__root--closed {

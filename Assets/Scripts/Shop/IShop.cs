@@ -12,5 +12,6 @@ namespace ConnectIt.Shop
         event Action<IShop> GoodsChanged;
 
         void Buy(ShowcaseProduct<IProduct> product, ICustomer customer);
+        void SetGoods(IEnumerable<ShowcaseProduct<IProduct>> newGoods);
     }
 }

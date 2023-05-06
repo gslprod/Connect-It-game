@@ -1,6 +1,7 @@
 ﻿using ConnectIt.Localization;
 using ConnectIt.Scenes.Switchers;
 using ConnectIt.UI.DialogBox;
+using System;
 using UnityEngine.UIElements;
 
 namespace ConnectIt.Utilities.Extensions
@@ -54,6 +55,38 @@ namespace ConnectIt.Utilities.Extensions
             DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
             {
                 cancelButtonInfo
+            };
+
+            DialogBoxCreationData creationData = new(
+                parent,
+                titleTextKey,
+                messageTextKey,
+                buttonsInfo,
+                null,
+                showImmediately);
+
+            return source.Create(creationData);
+        }
+
+        public static DialogBoxView CreateDefaultConfirmCancelDialogBox(this DialogBoxView.Factory source,
+            VisualElement parent, TextKey titleTextKey, TextKey messageTextKey, TextKey cancelButtonTextKey,
+            TextKey confirmButtonTextKey, Action onConfirmClick, bool showImmediately = false)
+        {
+            DialogBoxButtonInfo cancelButtonInfo = new(
+                cancelButtonTextKey,
+                null,
+                DialogBoxButtonType.Dismiss,
+                true);
+
+            DialogBoxButtonInfo confirmButtonInfo = new(
+                confirmButtonTextKey,
+                onConfirmClick,
+                DialogBoxButtonType.Accept,
+                true);
+
+            DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
+            {
+                confirmButtonInfo, cancelButtonInfo
             };
 
             DialogBoxCreationData creationData = new(

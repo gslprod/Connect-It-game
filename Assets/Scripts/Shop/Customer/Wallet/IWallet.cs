@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConnectIt.Shop.Customer
+namespace ConnectIt.Shop.Customer.Wallet
 {
     public interface IWallet
     {

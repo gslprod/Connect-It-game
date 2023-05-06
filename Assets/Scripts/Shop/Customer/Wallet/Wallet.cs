@@ -1,7 +1,7 @@
 ﻿using ConnectIt.Utilities;
 using System;
 
-namespace ConnectIt.Shop.Customer
+namespace ConnectIt.Shop.Customer.Wallet
 {
     public class Wallet : IWallet
     {
