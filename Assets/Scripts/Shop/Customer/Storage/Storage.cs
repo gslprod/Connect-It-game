@@ -1,4 +1,5 @@
-﻿using ConnectIt.Shop.Goods;
+﻿using ConnectIt.Infrastructure.Dispose;
+using ConnectIt.Shop.Goods;
 using ConnectIt.Utilities;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,8 @@ namespace ConnectIt.Shop.Customer.Storage
                 _itemsCounts[type]++;
             else
                 _itemsCounts.Add(type, 1);
+
+            SubscribeIfDisposeNotifierItem(item);
 
             ItemsChanged?.Invoke(this);
         }
@@ -85,6 +88,18 @@ namespace ConnectIt.Shop.Customer.Storage
         {
             if (!typeof(IProduct).IsAssignableFrom(type))
                 Assert.Fail();
+        }
+
+        private void SubscribeIfDisposeNotifierItem<T>(T item)
+        {
+            if (item is IDisposeNotifier disposeNotifier)
+                disposeNotifier.Disposing += OnItemDisposing;
+        }
+
+        private void OnItemDisposing(IDisposeNotifier disposeNotifier)
+        {   
+            disposeNotifier.Disposing -= OnItemDisposing;
+            RemoveItem((IProduct)disposeNotifier);
         }
     }
 }

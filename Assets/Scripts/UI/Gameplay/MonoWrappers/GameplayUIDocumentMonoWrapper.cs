@@ -1,7 +1,7 @@
+using ConnectIt.Gameplay.GameStateHandlers.GameEnd;
 using ConnectIt.Gameplay.Pause;
 using ConnectIt.Input;
 using ConnectIt.Localization;
-using ConnectIt.Scenes;
 using ConnectIt.Scenes.Switchers;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.DialogBox;
@@ -31,8 +31,8 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
         private TextKey.Factory _textKeyFactory;
         private GameplayInputRouter _gameplayInputRouter;
         private IPauseService _pauseService;
-        private ISceneSwitcher _sceneSwitcher;
         private VisualTreeAsset _useBoostMenuAsset;
+        private ILevelEndHandler _levelEndHandler;
 
         private LevelProgressView.Factory _levelProgressViewFactory;
         private LevelProgressView _levelProgressView;
@@ -67,11 +67,11 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
             TextKey.Factory textKeyFactory,
             GameplayInputRouter gameplayInputRouter,
             IPauseService pauseService,
-            ISceneSwitcher sceneSwitcher,
             DefaultLocalizedButtonView.Factory defaultLocalizedButtonViewFactory,
             CustomDialogBoxView.Factory customDialogBoxFactory,
             VisualTreeAsset useBoostMenuAsset,
-            UseBoostMenuView.Factory useBoostMenuViewFactory)
+            UseBoostMenuView.Factory useBoostMenuViewFactory,
+            ILevelEndHandler levelEndHandler)
         {
             _levelProgressViewFactory = levelProgressViewFactory;
             _timeViewFactory = timeViewFactory;
@@ -82,11 +82,11 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
             _textKeyFactory = textKeyFactory;
             _gameplayInputRouter = gameplayInputRouter;
             _pauseService = pauseService;
-            _sceneSwitcher = sceneSwitcher;
             _defaultLocalizedButtonViewFactory = defaultLocalizedButtonViewFactory;
             _customDialogBoxFactory = customDialogBoxFactory;
             _useBoostMenuAsset = useBoostMenuAsset;
             _useBoostMenuViewFactory = useBoostMenuViewFactory;
+            _levelEndHandler = levelEndHandler;
         }
 
         private void Awake()
@@ -157,7 +157,7 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
 
         private void RestartButtonClick()
         {
-            DialogBoxView dialogBox = _dialogBoxFactory.CreateDefaultRestartLevelDialogBox(_textKeyFactory, _rootVE, _sceneSwitcher);
+            DialogBoxView dialogBox = _dialogBoxFactory.CreateDefaultRestartLevelDialogBox(_textKeyFactory, _rootVE, _levelEndHandler);
 
             dialogBox.Showing += OnRestartDialogBoxShowing;
             dialogBox.Closing += OnRestartDialogBoxClosing;
@@ -260,7 +260,7 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
 
         private void OnConfirmExitButtonClick()
         {
-            _sceneSwitcher.TryGoToScene(SceneType.MenuScene);
+            _levelEndHandler.ExitToMainMenu();
         }
 
         #endregion

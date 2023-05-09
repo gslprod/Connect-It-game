@@ -13,6 +13,7 @@ using ConnectIt.Shop.Customer;
 using ConnectIt.Shop.Customer.Storage;
 using ConnectIt.Shop.Customer.Wallet;
 using ConnectIt.Shop.Goods.Boosts;
+using ConnectIt.Shop.Goods.Boosts.UsageContext;
 using ConnectIt.Time;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.DialogBox;
@@ -68,12 +69,17 @@ namespace ConnectIt.DI.Installers
 
         private void BindShopGoods()
         {
-            BindFactories();
+            BindBoosts();
 
-            void BindFactories()
+            void BindBoosts()
             {
-                Container.BindFactory<SkipLevelBoost, SkipLevelBoost.Factory>()
-                         .FromFactory<PrimitiveDIFactory<SkipLevelBoost>>();
+                BindFactories();
+
+                void BindFactories()
+                {
+                    Container.BindFactory<SkipLevelBoost, SkipLevelBoost.Factory>()
+                             .FromFactory<PrimitiveDIFactory<SkipLevelBoost>>();
+                }
             }
         }
 

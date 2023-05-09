@@ -1,5 +1,6 @@
 using ConnectIt.DI.Installers.Custom;
-using ConnectIt.Gameplay.GameStateHandlers;
+using ConnectIt.Gameplay.GameStateHandlers.GameEnd;
+using ConnectIt.Gameplay.GameStateHandlers.Shop;
 using ConnectIt.Gameplay.LevelLoading;
 using ConnectIt.Gameplay.Model;
 using ConnectIt.Gameplay.MonoWrappers;
@@ -10,10 +11,13 @@ using ConnectIt.Gameplay.View;
 using ConnectIt.Infrastructure.CreatedObjectNotifiers;
 using ConnectIt.Infrastructure.Dispose;
 using ConnectIt.Infrastructure.Factories;
+using ConnectIt.Infrastructure.Factories.Concrete;
 using ConnectIt.Infrastructure.Registrators;
 using ConnectIt.Infrastructure.Spawners;
 using ConnectIt.Input;
 using ConnectIt.Input.GameplayInputRouterStates;
+using ConnectIt.Shop.Goods.Boosts;
+using ConnectIt.Shop.Goods.Boosts.UsageContext;
 using ConnectIt.UI.Gameplay.MonoWrappers;
 using ConnectIt.UI.Gameplay.Views;
 using ConnectIt.UI.Gameplay.Views.UseBoostMenu;
@@ -47,12 +51,65 @@ namespace ConnectIt.DI.Installers
             BindPauseService();
             BindUIDocumentMonoWrapper();
             BindGameStateHandlers();
+            BindBoostUsageContexts();
+        }
+
+        private void BindBoostUsageContexts()
+        {
+            Container.BindFactory<CommonUsageData, BoostUsageContext, BoostUsageContext.Factory>()
+                     .FromFactory<BoostUsageContextFactory>()
+                     .WhenNotInjectedInto<BoostUsageContextFactory>();
+
+            Container.BindFactory<CommonUsageData, BoostUsageContext, BoostUsageContext.Factory>()
+                     .FromFactory<PrimitiveDIFactory<CommonUsageData, BoostUsageContext>>()
+                     .WhenInjectedInto<BoostUsageContextFactory>();
+
+            Container.BindFactory<CommonUsageData, SkipLevelBoostUsageContext, SkipLevelBoostUsageContext.Factory>()
+                     .FromFactory<PrimitiveDIFactory<CommonUsageData, SkipLevelBoostUsageContext>>()
+                     .WhenInjectedInto<BoostUsageContextFactory>();
         }
 
         private void BindGameStateHandlers()
         {
-            Container.BindInterfacesTo<WinHandler>()
-                     .AsSingle();
+            BindGameEndHandlers();
+            BindShopHandlers();
+
+            void BindGameEndHandlers()
+            {
+                Container.BindInterfacesTo<LevelEndHandler>()
+                                     .AsSingle();
+
+                BindFactories();
+
+                void BindFactories()
+                {
+                    Container.BindFactory<IWinHandler, IWinHandler.Factory>()
+                             .FromFactory<PrimitiveDIFactory<WinHandler>>()
+                             .WhenInjectedInto<ILevelEndHandler>();
+
+                    Container.BindFactory<IRestartHandler, IRestartHandler.Factory>()
+                             .FromFactory<PrimitiveDIFactory<RestartHandler>>()
+                             .WhenInjectedInto<ILevelEndHandler>();
+
+                    Container.BindFactory<ISkipHandler, ISkipHandler.Factory>()
+                             .FromFactory<PrimitiveDIFactory<SkipHandler>>()
+                             .WhenInjectedInto<ILevelEndHandler>();
+
+                    Container.BindFactory<IExitToMainMenuHandler, IExitToMainMenuHandler.Factory>()
+                             .FromFactory<PrimitiveDIFactory<ExitToMainMenuHandler>>()
+                             .WhenInjectedInto<ILevelEndHandler>();
+
+                    Container.BindFactory<IGoToNextLevelHandler, IGoToNextLevelHandler.Factory>()
+                             .FromFactory<PrimitiveDIFactory<GoToNextLevelHandler>>()
+                             .WhenInjectedInto<ILevelEndHandler>();
+                }
+            }
+
+            void BindShopHandlers()
+            {
+                Container.BindInterfacesTo<ReversibleDisposableItemsHandler<Boost>>()
+                         .AsSingle();
+            }
         }
 
         private void BindUIDocumentMonoWrapper()

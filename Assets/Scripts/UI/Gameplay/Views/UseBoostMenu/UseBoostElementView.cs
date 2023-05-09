@@ -4,6 +4,7 @@ using ConnectIt.Shop.Customer;
 using ConnectIt.Shop.Customer.Storage;
 using ConnectIt.Shop.Goods;
 using ConnectIt.Shop.Goods.Boosts;
+using ConnectIt.Shop.Goods.Boosts.UsageContext;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.Utilities.Extensions;
@@ -29,6 +30,7 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
         private readonly VisualTreeAsset _asset;
         private readonly ICustomer _playerCustomer;
         private readonly DialogBoxView.Factory _dialogBoxFactory;
+        private readonly BoostUsageContext.Factory _boostUsageContextFactory;
 
         private VisualElement _viewRoot;
         private DefaultLocalizedLabelView _nameLabel;
@@ -49,7 +51,8 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
             VisualTreeAsset asset,
             ICustomer playerCustomer,
             DialogBoxView.Factory dialogBoxFactory,
-            DefaultLocalizedButtonView.Factory defaultLocalizedButtonViewFactory)
+            DefaultLocalizedButtonView.Factory defaultLocalizedButtonViewFactory,
+            BoostUsageContext.Factory boostUsageContextFactory)
         {
             _boostType = boostType;
             _creationRoot = creationRoot;
@@ -61,6 +64,7 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
             _playerCustomer = playerCustomer;
             _dialogBoxFactory = dialogBoxFactory;
             _defaultLocalizedButtonViewFactory = defaultLocalizedButtonViewFactory;
+            _boostUsageContextFactory = boostUsageContextFactory;
         }
 
         public void Initialize()
@@ -183,6 +187,7 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
         private void OnBoostDisposing(Boost boost)
         {
             RemoveBoost(boost);
+            UpdateView();
         }
 
         private void UpdateView()
@@ -272,7 +277,14 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
                 return;
 
             Boost toUse = _boosts.First();
-            toUse.Use();
+
+            CommonUsageData commonUsageData = new()
+            {
+                UsedBoost = toUse
+            };
+
+            BoostUsageContext usageContext = _boostUsageContextFactory.Create(commonUsageData);
+            toUse.Use(usageContext);
         }
 
         #endregion

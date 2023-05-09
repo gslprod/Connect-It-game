@@ -3,7 +3,6 @@ using ConnectIt.UI.Global.MonoWrappers;
 using ConnectIt.UI.LoadingScreen;
 using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
-using UnityEngine;
 
 namespace ConnectIt.Scenes.Switchers
 {

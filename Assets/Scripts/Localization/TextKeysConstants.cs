@@ -9,13 +9,12 @@
             public const string PauseMenu_Exit = GameplayBaseString + ".PauseMenu.Exit";
             public const string WinMenu_Title = GameplayBaseString + ".WinMenu.Title";
             public const string WinMenu_Content = GameplayBaseString + ".WinMenu.Content";
-            public const string WinMenu_MainMenu = GameplayBaseString + ".WinMenu.MainMenu";
-            public const string WinMenu_Restart = GameplayBaseString + ".WinMenu.Restart";
-            public const string WinMenu_NextLevel = GameplayBaseString + ".WinMenu.NextLevel";
             public const string UseBoostButton_Text = GameplayBaseString + ".UseBoostButton.Text";
             public const string UseBoostMenu_Title = GameplayBaseString + ".UseBoostMenu.Title";
             public const string UseBoostMenu_InfoLabel_Text = GameplayBaseString + ".UseBoostMenu.InfoLabel.Text";
             public const string UseBoostMenu_UseBoostElement_AmountLabel_Text = GameplayBaseString + ".UseBoostMenu.UseBoostElement.AmountLabel.Text";
+            public const string SkipMenu_Title = GameplayBaseString + ".SkipMenu.Title";
+            public const string SkipMenu_Content = GameplayBaseString + ".SkipMenu.Content";
 
             private const string GameplayBaseString = "Gameplay";
         }
@@ -58,6 +57,9 @@
             public const string Close = CommonBaseString + ".Close";
             public const string Description = CommonBaseString + ".Description";
             public const string Use = CommonBaseString + ".Use";
+            public const string NextLevel = CommonBaseString + ".NextLevel";
+            public const string RestartLevel = CommonBaseString + ".RestartLevel";
+            public const string MainMenu = CommonBaseString + ".MainMenu";
 
             private const string CommonBaseString = "Common";
         }

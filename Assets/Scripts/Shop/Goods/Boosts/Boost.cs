@@ -1,5 +1,6 @@
 ﻿using ConnectIt.Infrastructure.Dispose;
 using ConnectIt.Localization;
+using ConnectIt.Shop.Goods.Boosts.UsageContext;
 using ConnectIt.Utilities;
 using System;
 using Zenject;
@@ -16,7 +17,7 @@ namespace ConnectIt.Shop.Goods.Boosts
 
         public bool ReversibleDisposed { get; private set; }
 
-        public virtual void Use()
+        public virtual void Use(BoostUsageContext usageContext)
         {
             ReversibleDispose();
         }

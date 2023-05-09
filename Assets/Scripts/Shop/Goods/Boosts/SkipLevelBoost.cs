@@ -1,4 +1,5 @@
 ﻿using ConnectIt.Localization;
+using ConnectIt.Shop.Goods.Boosts.UsageContext;
 using ConnectIt.Utilities.Extensions;
 using Zenject;
 
@@ -14,7 +15,8 @@ namespace ConnectIt.Shop.Goods.Boosts
         private TextKey _nameTextKey;
         private TextKey _descriptionTextKey;
 
-        public SkipLevelBoost(TextKey.Factory textKeyFactory)
+        public SkipLevelBoost(
+            TextKey.Factory textKeyFactory)
         {
             _textKeyFactory = textKeyFactory;
         }
@@ -27,11 +29,15 @@ namespace ConnectIt.Shop.Goods.Boosts
             _descriptionTextKey = _textKeyFactory.Create(TextKeysConstants.Items.Boosts_SkipLevel_Description);
         }
 
-        public override void Use()
+        public override void Use(BoostUsageContext usageContext)
         {
-            base.Use();
+            base.Use(usageContext);
 
+            SkipLevelBoostUsageContext skipLevelUsageContext = (SkipLevelBoostUsageContext)usageContext;
+            
+            skipLevelUsageContext.LevelEndHandler.SkipLevel();
 
+            Dispose();
         }
 
         public class Factory : PlaceholderFactory<SkipLevelBoost> { }

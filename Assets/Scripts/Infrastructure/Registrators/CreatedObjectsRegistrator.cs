@@ -29,7 +29,7 @@ namespace ConnectIt.Infrastructure.Registrators
 
             foreach (var registration in registrations)
             {
-                if (registration is IDisposeNotifier<TRegistrable> disposeNotifier)
+                if (registration is IDisposeNotifier disposeNotifier)
                     UnsubscribeFromDisposeNotifier(disposeNotifier);
             }
         }
@@ -38,23 +38,23 @@ namespace ConnectIt.Infrastructure.Registrators
         {
             registrations.Add(obj);
 
-            if (obj is IDisposeNotifier<TRegistrable> disposeNotifier)
+            if (obj is IDisposeNotifier disposeNotifier)
                 SubscribeToDisposeNotifier(disposeNotifier);
         }
 
-        private void OnDisposeNotify(TRegistrable obj)
+        private void OnDisposeNotify(IDisposeNotifier obj)
         {
-            UnsubscribeFromDisposeNotifier((IDisposeNotifier<TRegistrable>)obj);
+            UnsubscribeFromDisposeNotifier(obj);
 
-            registrations.Remove(obj);
+            registrations.Remove((TRegistrable)obj);
         }
 
-        private void SubscribeToDisposeNotifier(IDisposeNotifier<TRegistrable> disposeNotifier)
+        private void SubscribeToDisposeNotifier(IDisposeNotifier disposeNotifier)
         {
             disposeNotifier.Disposing += OnDisposeNotify;
         }
 
-        private void UnsubscribeFromDisposeNotifier(IDisposeNotifier<TRegistrable> disposeNotifier)
+        private void UnsubscribeFromDisposeNotifier(IDisposeNotifier disposeNotifier)
         {
             disposeNotifier.Disposing -= OnDisposeNotify;
         }
