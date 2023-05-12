@@ -7,6 +7,11 @@ namespace ConnectIt.Save.SaveProviders.SaveData
     {
         public const string SaveKey = "Stats";
 
+        public StatsSaveData()
+        {
+            
+        }
+
         public StatsSaveData Clone()
             => (StatsSaveData)MemberwiseClone();
 

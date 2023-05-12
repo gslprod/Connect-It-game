@@ -7,6 +7,11 @@ namespace ConnectIt.Save.SaveProviders.SaveData
     {
         public const string SaveKey = "ExternalServer";
 
+        public ExternalServerSaveData()
+        {
+            
+        }
+
         public ExternalServerSaveData Clone()
             => (ExternalServerSaveData)MemberwiseClone();
 

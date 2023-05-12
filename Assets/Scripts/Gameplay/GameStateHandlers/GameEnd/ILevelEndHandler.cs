@@ -4,6 +4,8 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
 {
     public interface ILevelEndHandler
     {
+        LevelEndReason EndReason { get; }
+
         event Action<LevelEndReason> LevelEnded;
 
         void ExitToMainMenu();

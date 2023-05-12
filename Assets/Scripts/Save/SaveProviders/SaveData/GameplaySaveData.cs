@@ -31,7 +31,24 @@ namespace ConnectIt.Save.SaveProviders.SaveData
         }
 
         public bool Equals(GameplaySaveData other)
-            => false;
+        {
+            if (LevelPasses == null != (other.LevelPasses == null))
+                return false;
+
+            if (LevelPasses != null)
+            {
+                if (LevelPasses.Length != other.LevelPasses.Length)
+                    return false;
+
+                for (int i = 0; i < LevelPasses.Length; i++)
+                {
+                    if (!LevelPasses[i].Equals(other.LevelPasses[i]))
+                        return false;
+                }
+            }
+
+            return true;
+        }
 
         [Serializable]
         public class LevelPassSaveData : IEquatable<LevelPassSaveData>

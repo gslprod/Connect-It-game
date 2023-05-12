@@ -98,16 +98,14 @@ namespace ConnectIt.DI.Installers
 
         private void BindStorage()
         {
-            Container.Bind<IStorage>()
-                     .To<Storage>()
-                     .AsTransient();
+            Container.BindInterfacesTo<PlayerStorage>()
+                     .AsSingle();
         }
 
         private void BindWallet()
         {
-            Container.Bind<IWallet>()
-                     .To<Wallet>()
-                     .AsTransient();
+            Container.BindInterfacesTo<PlayerWallet>()
+                     .AsSingle();
         }
 
         private void BindLevelsPassDataProvider()
@@ -120,6 +118,8 @@ namespace ConnectIt.DI.Installers
         {
             Container.BindInterfacesTo<GameSaveProvider>()
                      .AsSingle();
+
+            Container.BindInitializableExecutionOrder<GameSaveProvider>(ExecutionOrderConstants.Initializable.GameSaveProvider);
 
             Container.BindInterfacesTo<FileSaver>()
                      .AsSingle();

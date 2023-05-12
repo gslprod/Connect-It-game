@@ -7,7 +7,7 @@ namespace ConnectIt.Shop.Customer.Wallet
     {
         public event Action<IWallet> CoinsChanged;
 
-        public long Coins { get; private set; }
+        public long Coins { get; protected set; }
 
         public void Add(long coins)
         {
@@ -37,6 +37,11 @@ namespace ConnectIt.Shop.Customer.Wallet
         private void Remove(long coins)
         {
             Coins -= coins;
+            CoinsChanged?.Invoke(this);
+        }
+
+        protected void InvokeCoinsChangedEvent()
+        {
             CoinsChanged?.Invoke(this);
         }
     }

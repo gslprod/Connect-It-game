@@ -10,13 +10,13 @@ namespace ConnectIt.Save.SaveProviders
 {
     public class GameSaveProvider :
         IInitializable,
-        IGameplaySaveProvider, IShopSaveProvider,
-        IStatsSaveProvider, IExternalServerSaveProvider
+        IGameplaySaveProvider, IShopSaveProvider, IStatsSaveProvider, IExternalServerSaveProvider, ISettingsSaveProvider
     {
         public event Action GameplaySaveDataChanged;
         public event Action ShopSaveDataChanged;
         public event Action StatsSaveDataChanged;
         public event Action ExternalServerSaveDataChanged;
+        public event Action SettingsSaveDataChanged;
 
         private readonly ISaver _saver;
         private readonly ISerializer _serializer;
@@ -25,6 +25,7 @@ namespace ConnectIt.Save.SaveProviders
         private ShopSaveData _shopSaveData;
         private StatsSaveData _statsSaveData;
         private ExternalServerSaveData _externalServerSaveData;
+        private SettingsSaveData _settingsSaveData;
 
         public GameSaveProvider(
             ISaver saver,
@@ -83,12 +84,24 @@ namespace ConnectIt.Save.SaveProviders
         public ExternalServerSaveData LoadExternalServerData()
             => _externalServerSaveData.Clone();
 
+        public void SaveSettingsData(SettingsSaveData saveData)
+        {
+            if (!TrySaveData(saveData, ref _settingsSaveData, SettingsSaveData.SaveKey))
+                return;
+
+            SettingsSaveDataChanged?.Invoke();
+        }
+
+        public SettingsSaveData LoadSettingsData()
+            => _settingsSaveData.Clone();
+
         private void LoadAllData()
         {
             _gameplaySaveData = LoadAndDeserialize<GameplaySaveData>(GameplaySaveData.SaveKey);
             _shopSaveData = LoadAndDeserialize<ShopSaveData>(ShopSaveData.SaveKey);
             _statsSaveData = LoadAndDeserialize<StatsSaveData>(StatsSaveData.SaveKey);
             _externalServerSaveData = LoadAndDeserialize<ExternalServerSaveData>(ExternalServerSaveData.SaveKey);
+            _settingsSaveData = LoadAndDeserialize<SettingsSaveData>(SettingsSaveData.SaveKey);
         }
 
         private T LoadAndDeserialize<T>(string loadKey) where T : new()

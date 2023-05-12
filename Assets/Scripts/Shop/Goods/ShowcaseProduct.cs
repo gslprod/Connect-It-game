@@ -16,6 +16,7 @@ namespace ConnectIt.Shop.Goods
         {
             ShowcaseItem = item;
             Price = price;
+            _newItemsGetter = newItemsGetter;
         }
 
         public T GetNewInstance()

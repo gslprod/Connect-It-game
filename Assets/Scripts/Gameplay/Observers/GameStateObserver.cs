@@ -1,4 +1,5 @@
 ﻿using ConnectIt.Config;
+using ConnectIt.Gameplay.GameStateHandlers.GameEnd;
 using ConnectIt.Gameplay.Model;
 using ConnectIt.Infrastructure.Registrators;
 using System;
@@ -6,7 +7,7 @@ using Zenject;
 
 namespace ConnectIt.Gameplay.Observers
 {
-    public class GameStateObserver : IInitializable, IGameStateObserver
+    public class GameStateObserver : IGameStateObserver, IInitializable, IDisposable
     {
         public event Action GameCompleteProgressPercentsChanged;
 
@@ -20,23 +21,29 @@ namespace ConnectIt.Gameplay.Observers
         private readonly Tilemaps _tilemaps;
         private readonly IRegistrator<Port> _portRegistrator;
         private readonly GameplayLogicConfig _gameplayLogicConfig;
+        private readonly ILevelEndHandler _levelEndHandler;
 
         private int _portsCount;
         private int _connectedPortsCount;
         private int _tilesCount;
         private int _usedByLineTilesCount;
 
-        public GameStateObserver(Tilemaps tilemaps,
+        public GameStateObserver(
+            Tilemaps tilemaps,
             IRegistrator<Port> portRegistrator,
-            GameplayLogicConfig gameplayLogicConfig)
+            GameplayLogicConfig gameplayLogicConfig,
+            ILevelEndHandler levelEndHandler)
         {
             _tilemaps = tilemaps;
             _portRegistrator = portRegistrator;
             _gameplayLogicConfig = gameplayLogicConfig;
+            _levelEndHandler = levelEndHandler;
         }
 
         public void Initialize()
         {
+            _levelEndHandler.LevelEnded += OnLevelEnded;
+
             foreach (var tile in _tilemaps.Tiles)
             {
                 _tilesCount++;
@@ -58,6 +65,26 @@ namespace ConnectIt.Gameplay.Observers
             }
 
             GameCompleteProgressPercentsChanged?.Invoke();
+        }
+
+        public void Dispose()
+        {
+            _levelEndHandler.LevelEnded -= OnLevelEnded;
+        }
+
+        private void OnLevelEnded(LevelEndReason reason)
+        {
+            foreach (var tile in _tilemaps.Tiles)
+            {
+                tile.UsersChanged -= OnTilemapUsersChanged;
+                tile.Disposing -= OnTileDisposing;
+            }
+
+            foreach (var port in _portRegistrator.Registrations)
+            {
+                port.Connectable.ConnectionChanged -= OnPortConnectionChanged;
+                port.Disposing -= OnPortDisposing;
+            }
         }
 
         private void OnTilemapUsersChanged(Tile tile, TileLayer tileLayer)

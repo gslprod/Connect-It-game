@@ -11,8 +11,8 @@ namespace ConnectIt.Shop.Customer.Storage
         event Action<IStorage> ItemsChanged;
 
         void AddItem(IProduct item);
-        int GetProductCountOfType<T>() where T : IProduct;
-        int GetProductCountOfType(Type type);
+        int GetProductCountOfType<T>(bool onlySameType = false) where T : IProduct;
+        int GetProductCountOfType(Type type, bool onlySameType = false);
         IEnumerable<ItemAmount> GetProductsAmountsOfType(Type type);
         IEnumerable<ItemAmount> GetProductsAmountsOfType<T>() where T : IProduct;
         void RemoveItem(IProduct item);

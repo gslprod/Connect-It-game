@@ -11,24 +11,16 @@ namespace ConnectIt.Shop.Customer.Storage
     {
         public event Action<IStorage> ItemsChanged;
 
-        public IEnumerable<IProduct> Items => _items;
+        public IEnumerable<IProduct> Items => items;
 
-        private readonly List<IProduct> _items = new();
-        private readonly Dictionary<Type, int> _itemsCounts = new();
+        protected readonly List<IProduct> items = new();
+        protected readonly Dictionary<Type, int> itemsCounts = new();
 
         public void AddItem(IProduct item)
         {
             Assert.ArgIsNotNull(item);
 
-            _items.Add(item);
-
-            Type type = item.GetType();
-            if (_itemsCounts.ContainsKey(type))
-                _itemsCounts[type]++;
-            else
-                _itemsCounts.Add(type, 1);
-
-            SubscribeIfDisposeNotifierItem(item);
+            AddItemWithoutNotify(item);
 
             ItemsChanged?.Invoke(this);
         }
@@ -37,27 +29,19 @@ namespace ConnectIt.Shop.Customer.Storage
         {
             Assert.ArgIsNotNull(item);
 
-            Assert.That(
-                _items.Remove(item));
-
-            Type type = item.GetType();
-            if (_itemsCounts[type] > 1)
-                _itemsCounts[type]--;
-            else
-                _itemsCounts.Remove(type);
-
+            RemoveItemWithoutNotify(item);
 
             ItemsChanged?.Invoke(this);
         }
 
-        public int GetProductCountOfType<T>() where T : IProduct
-            => GetProductCountOfTypeInternal(typeof(T));
+        public int GetProductCountOfType<T>(bool onlySameType = false) where T : IProduct
+            => GetProductCountOfTypeInternal(typeof(T), onlySameType);
 
-        public int GetProductCountOfType(Type type)
+        public int GetProductCountOfType(Type type, bool onlySameType = false)
         {
             ValidateInputType(type);
 
-            return GetProductCountOfTypeInternal(type);
+            return GetProductCountOfTypeInternal(type, onlySameType);
         }
 
         public IEnumerable<ItemAmount> GetProductsAmountsOfType<T>() where T : IProduct
@@ -70,16 +54,51 @@ namespace ConnectIt.Shop.Customer.Storage
             return GetProductsAmountsOfTypeInternal(type);
         }
 
-        private int GetProductCountOfTypeInternal(Type type)
+        protected void AddItemWithoutNotify(IProduct item)
         {
-            return _itemsCounts
-                .Where(pair => type.IsAssignableFrom(pair.Key))
-                .Sum(pair => pair.Value);
+            items.Add(item);
+
+            Type type = item.GetType();
+            if (itemsCounts.ContainsKey(type))
+                itemsCounts[type]++;
+            else
+                itemsCounts.Add(type, 1);
+
+            SubscribeIfDisposeNotifierItem(item);
+        }
+
+        protected void RemoveItemWithoutNotify(IProduct item)
+        {
+            Assert.That(
+                items.Remove(item));
+
+            Type type = item.GetType();
+            if (itemsCounts[type] > 1)
+                itemsCounts[type]--;
+            else
+                itemsCounts.Remove(type);
+
+            UnsubscribeIfDisposeNotifierItem(item);
+        }
+
+        protected void InvokeItemsChangedEvent()
+        {
+            ItemsChanged?.Invoke(this);
+        }
+
+        private int GetProductCountOfTypeInternal(Type type, bool onlySameType)
+        {
+            if (!onlySameType)
+                return itemsCounts
+                    .Where(pair => type.IsAssignableFrom(pair.Key))
+                    .Sum(pair => pair.Value);
+
+            return itemsCounts.ContainsKey(type) ? itemsCounts[type] : 0;
         }
 
         private IEnumerable<ItemAmount> GetProductsAmountsOfTypeInternal(Type type)
         {
-            return _itemsCounts
+            return itemsCounts
                 .Where(pair => type.IsAssignableFrom(pair.Key))
                 .Select(pair => new ItemAmount(pair.Key, pair.Value));
         }
@@ -90,15 +109,20 @@ namespace ConnectIt.Shop.Customer.Storage
                 Assert.Fail();
         }
 
-        private void SubscribeIfDisposeNotifierItem<T>(T item)
+        private void SubscribeIfDisposeNotifierItem(IProduct item)
         {
             if (item is IDisposeNotifier disposeNotifier)
                 disposeNotifier.Disposing += OnItemDisposing;
         }
 
+        private void UnsubscribeIfDisposeNotifierItem(IProduct item)
+        {
+            if (item is IDisposeNotifier disposeNotifier)
+                disposeNotifier.Disposing -= OnItemDisposing;
+        }
+
         private void OnItemDisposing(IDisposeNotifier disposeNotifier)
-        {   
-            disposeNotifier.Disposing -= OnItemDisposing;
+        {
             RemoveItem((IProduct)disposeNotifier);
         }
     }

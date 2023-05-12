@@ -11,7 +11,7 @@ using static ConnectIt.Save.SaveProviders.SaveData.GameplaySaveData;
 
 namespace ConnectIt.Gameplay.Data
 {
-    public class LevelsPassDataProvider : ILevelsPassDataProvider, IInitializable, IDisposable
+    public class LevelsPassDataProvider : ILevelsPassDataProvider, IInitializable
     {
         public event Action LevelDataChanged;
 
@@ -37,13 +37,6 @@ namespace ConnectIt.Gameplay.Data
 
             CreateLevelData();
             SaveDataArray();
-
-            _gameplaySaveProvider.GameplaySaveDataChanged += OnGameplaySaveDataChanged;
-        }
-
-        public void Dispose()
-        {
-            _gameplaySaveProvider.GameplaySaveDataChanged -= OnGameplaySaveDataChanged;
         }
 
         public void SaveData(LevelData dataToSave)
@@ -85,13 +78,6 @@ namespace ConnectIt.Gameplay.Data
 
             levelData = _levelDataArray[index];
             return true;
-        }
-
-        private void OnGameplaySaveDataChanged()
-        {
-            TryLoadLevelData();
-
-            LevelDataChanged?.Invoke();
         }
 
         private void SaveDataArray()

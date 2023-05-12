@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ConnectIt.Save.SaveProviders;
+using ConnectIt.Save.SaveProviders.SaveData;
+using ConnectIt.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -12,38 +15,48 @@ namespace ConnectIt.Localization
     {
         public event Action LocalizationChanged;
 
-        public SupporedLanguages[] AllSupporedLanguages { get; private set; }
-        public SupporedLanguages Language
+        public IEnumerable<SupportedLanguages> AllSupporedLanguages => _allSupporedLanguages;
+        public SupportedLanguages Language
         {
             get => _language;
             set
             {
+                Assert.ThatArgIs(value != SupportedLanguages.None);
+
                 if (_language == value)
                     return;
 
                 _language = value;
+
+                SaveLanguage();
                 LocalizationChanged?.Invoke();
             }
         }
 
-        private SupporedLanguages _language;
-        private readonly Dictionary<SupporedLanguages, Dictionary<string, string>> _dictionary = new();
+        private SupportedLanguages[] _allSupporedLanguages;
+        private SupportedLanguages _language;
+        private readonly Dictionary<SupportedLanguages, Dictionary<string, string>> _dictionary = new();
+        private readonly ISettingsSaveProvider _settingsSaveProvider;
+
+        public LocalizationProvider(
+            ISettingsSaveProvider settingsSaveProvider)
+        {
+            _settingsSaveProvider = settingsSaveProvider;
+        }
 
         public void Initialize()
         {
             Read();
+
+            if (TryLoadLanguage())
+                return;
+
             AutoLanguage();
         }
 
         public void AutoLanguage()
         {
-            Language = Application.systemLanguage switch
-            {
-                SystemLanguage.English => SupporedLanguages.English,
-                SystemLanguage.Russian => SupporedLanguages.Russian,
-
-                _ => SupporedLanguages.English,
-            };
+            Language = Enum.TryParse(Application.systemLanguage.ToString(), out SupportedLanguages result) ? result : SupportedLanguages.English;
         }
 
         public void Read(string path = DefaultLocalizationPath)
@@ -99,7 +112,7 @@ namespace ConnectIt.Localization
         public bool HasKey(string localizationKey)
             => HasKeyInLanguage(Language, localizationKey);
 
-        public bool HasKeyInLanguage(SupporedLanguages language, string localizationKey)
+        public bool HasKeyInLanguage(SupportedLanguages language, string localizationKey)
         {
             return _dictionary[language].ContainsKey(localizationKey);
         }
@@ -107,7 +120,7 @@ namespace ConnectIt.Localization
         public string Localize(string localizationKey)
             => LocalizeToLanguage(Language, localizationKey);
 
-        public string LocalizeToLanguage(SupporedLanguages language, string localizationKey)
+        public string LocalizeToLanguage(SupportedLanguages language, string localizationKey)
         {
             if (_dictionary.Count == 0)
                 throw new InvalidOperationException("Localization provider has not been initialized");
@@ -115,6 +128,7 @@ namespace ConnectIt.Localization
             if (!_dictionary.ContainsKey(Language))
                 throw new KeyNotFoundException("Language not found: " + Language);
 
+            //todo
             //if (string.IsNullOrEmpty(localizationKey))
             //    throw new ArgumentNullException(nameof(localizationKey));
             if (string.IsNullOrEmpty(localizationKey))
@@ -143,7 +157,7 @@ namespace ConnectIt.Localization
             return string.Format(pattern, args);
         }
 
-        public string LocalizeToLanguageFormat(SupporedLanguages language, string localizationKey, params object[] args)
+        public string LocalizeToLanguageFormat(SupportedLanguages language, string localizationKey, params object[] args)
         {
             var pattern = LocalizeToLanguage(language, localizationKey);
 
@@ -157,12 +171,29 @@ namespace ConnectIt.Localization
 
         private void UpdateSupportedLanguages()
         {
-            AllSupporedLanguages = _dictionary.Keys.ToArray();
+            _allSupporedLanguages = _dictionary.Keys.ToArray();
         }
 
-        private SupporedLanguages StringToEnum(string stringLanguage)
+        private SupportedLanguages StringToEnum(string stringLanguage)
         {
-            return Enum.Parse<SupporedLanguages>(stringLanguage);
+            return Enum.Parse<SupportedLanguages>(stringLanguage);
+        }
+
+        private bool TryLoadLanguage()
+        {
+            SettingsSaveData saveData = _settingsSaveProvider.LoadSettingsData();
+            if (saveData.Language == SupportedLanguages.None)
+                return false;
+
+            _language = saveData.Language;
+            return true;
+        }
+
+        private void SaveLanguage()
+        {
+            SettingsSaveData saveData = _settingsSaveProvider.LoadSettingsData();
+            saveData.Language = Language;
+            _settingsSaveProvider.SaveSettingsData(saveData);
         }
     }
 }
