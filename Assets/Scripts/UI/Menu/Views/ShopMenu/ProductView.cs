@@ -78,10 +78,8 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
 
         private void CreateViews()
         {
-            int index = _creationRoot.childCount;
             _asset.CloneTree(_creationRoot);
-
-            _viewRoot = _creationRoot[index];
+            _viewRoot = _creationRoot.GetLastChild();
 
             _nameLabel = _defaultLabelViewFactory.Create(
                 _viewRoot.Q<Label>(TemplatesNameConstants.Product.NameLabel),
@@ -137,7 +135,7 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
         private void OnDescriptionButtonClick()
         {
             _dialogBoxFactory.CreateDefaultOneButtonDialogBox(_mainRoot,
-                _textKeyFactory.Create(TextKeysConstants.Common.Description),
+                _showcaseProduct.ShowcaseItem.Name,
                 _showcaseProduct.ShowcaseItem.Description,
                 _textKeyFactory.Create(TextKeysConstants.Common.Close),
                 true);

@@ -2,7 +2,6 @@ using ConnectIt.Gameplay.GameStateHandlers.GameEnd;
 using ConnectIt.Gameplay.Pause;
 using ConnectIt.Input;
 using ConnectIt.Localization;
-using ConnectIt.Scenes.Switchers;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Gameplay.Views;
@@ -54,7 +53,7 @@ namespace ConnectIt.UI.Gameplay.MonoWrappers
         private DefaultLocalizedButtonView _useBoostButtonView;
 
         private UseBoostMenuView.Factory _useBoostMenuViewFactory;
-        private Dictionary<IDialogBoxView, UseBoostMenuView> _useBoostMenuViews = new();
+        private readonly Dictionary<IDialogBoxView, UseBoostMenuView> _useBoostMenuViews = new();
 
         [Inject]
         public void Constructor(

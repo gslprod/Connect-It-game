@@ -53,11 +53,14 @@
 }
 
 .boosts-container {
-    margin-bottom: -20px;
 }
 
 .boosts-container__child {
     margin-bottom: 20px;
+}
+
+.boosts-container__child--last {
+    margin-bottom: 0;
 }
 
 .boost-element__root {

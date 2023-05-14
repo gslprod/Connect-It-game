@@ -1,6 +1,8 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/global.uss?fileID=7433441132597879392&amp;guid=3e3efaa0af4d22345b7f033c26dc1a86&amp;type=3#global" />
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/menu-view.uss?fileID=7433441132597879392&amp;guid=f6ff23d6b28c3cf4e94fc7a56b647751&amp;type=3#menu-view" />
     <ui:VisualElement name="stats-row" class="stats-row">
-        <ui:Label text="Label" name="name" class="label highlighted-label stats-row__name-label" />
+        <ui:Button text="Button" display-tooltip-when-elided="true" name="name" class="highlighted-label stats-row__name-label button" />
         <ui:Label text="Label" name="value" class="label highlighted-label stats-row__value-label" />
     </ui:VisualElement>
 </ui:UXML>

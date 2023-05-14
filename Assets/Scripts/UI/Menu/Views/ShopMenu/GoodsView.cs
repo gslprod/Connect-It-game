@@ -1,4 +1,6 @@
 ﻿using ConnectIt.Shop;
+using ConnectIt.UI.Menu.Views.StatsMenu;
+using ConnectIt.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
@@ -13,8 +15,7 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
         private readonly IShop _shop;
         private readonly ProductView.Factory _productViewFactory;
 
-        private VisualElement _goodsScrollViewContainer;
-        private List<ProductView> _productViews = new();
+        private readonly List<ProductView> _productViews = new();
 
         public GoodsView(
             VisualElement viewRoot,
@@ -30,8 +31,6 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
 
         public void Initialize()
         {
-            _goodsScrollViewContainer = _viewRoot.Q<VisualElement>(NameConstants.ShopMenu.GoodsScrollViewContainer);
-
             CreateViews();
 
             _shop.GoodsChanged += OnGoodsChanged;
@@ -49,10 +48,14 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
             foreach (var product in _shop.Goods)
             {
                 ProductView createdView =
-                    _productViewFactory.Create(product, _goodsScrollViewContainer, _mainRoot);
+                    _productViewFactory.Create(product, _viewRoot, _mainRoot);
 
+                _viewRoot.GetLastChild().AddToClassList(ClassNamesConstants.Global.ScrollViewContainerChild);
                 _productViews.Add(createdView);
             }
+
+            if (_productViews.Count > 0)
+                _viewRoot.GetLastChild().AddToClassList(ClassNamesConstants.Global.ScrollViewContainerChildLast);
         }
 
         private void DisposeDisposableViews()

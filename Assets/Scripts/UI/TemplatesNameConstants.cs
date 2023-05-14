@@ -52,5 +52,11 @@
             public const string AmountLabel = "amount-label";
             public const string UseButton = "use-button";
         }
+
+        public static class StatsRow
+        {
+            public const string NameButton = "name";
+            public const string ValueLabel = "value";
+        }
     }
 }

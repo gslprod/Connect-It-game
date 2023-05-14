@@ -23,7 +23,7 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
 
         private VisualElement _useBoostElementsRoot;
         private DefaultLocalizedLabelView _infoLabel;
-        private List<UseBoostElementView> _useBoostElementViews = new();
+        private readonly List<UseBoostElementView> _useBoostElementViews = new();
 
         public UseBoostMenuView(
             VisualElement viewRoot,
@@ -71,6 +71,8 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
 
             foreach (ItemAmount boostAmount in boostsAmounts)
                 CreateUseBoostElement(boostAmount);
+
+            AddClassToLastElementIfExists();
         }
 
         private void CreateUseBoostElement(ItemAmount boostItemAmount)
@@ -80,14 +82,30 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
                 _useBoostElementsRoot,
                 _mainRoot);
 
+            _useBoostElementsRoot.GetLastChild().AddToClassList(ClassNamesConstants.GameplayView.BoostsContainerChild);
+
             useBoostElementView.Disposing += OnUseBoostElementViewDisposing;
             _useBoostElementViews.Add(useBoostElementView);
+        }
+
+        private void AddClassToLastElementIfExists()
+        {
+            if (_useBoostElementsRoot.childCount > 0)
+                _useBoostElementsRoot.GetLastChild().AddToClassList(ClassNamesConstants.GameplayView.BoostsContainerChildLast);
+        }
+
+        private void RemoveClassFromLastElementIfExists()
+        {
+            if (_useBoostElementsRoot.childCount > 0)
+                _useBoostElementsRoot.GetLastChild().RemoveFromClassList(ClassNamesConstants.GameplayView.BoostsContainerChildLast);
         }
 
         private void OnUseBoostElementViewDisposing(UseBoostElementView useBoostElementView)
         {
             useBoostElementView.Disposing -= OnUseBoostElementViewDisposing;
             _useBoostElementViews.Remove(useBoostElementView);
+
+            AddClassToLastElementIfExists();
         }
 
         private void DisposeDisposableViews()
@@ -102,11 +120,18 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
         {
             IEnumerable<ItemAmount> boostsAmounts = _playerCustomer.Storage.GetProductsAmountsOfType<Boost>();
 
-            if (boostsAmounts.Count() >= _useBoostElementViews.Count)
+            if (boostsAmounts.Count() <= _useBoostElementViews.Count)
                 return;
 
             ItemAmount last = boostsAmounts.Last();
-            CreateUseBoostElement(last);
+            AddUseBoostElement(last);
+        }
+
+        private void AddUseBoostElement(ItemAmount item)
+        {
+            RemoveClassFromLastElementIfExists();
+            CreateUseBoostElement(item);
+            AddClassToLastElementIfExists();
         }
 
         public class Factory : PlaceholderFactory<VisualElement, VisualElement, UseBoostMenuView> { }

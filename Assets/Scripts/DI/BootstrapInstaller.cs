@@ -13,7 +13,9 @@ using ConnectIt.Shop.Customer;
 using ConnectIt.Shop.Customer.Storage;
 using ConnectIt.Shop.Customer.Wallet;
 using ConnectIt.Shop.Goods.Boosts;
-using ConnectIt.Shop.Goods.Boosts.UsageContext;
+using ConnectIt.Stats;
+using ConnectIt.Stats.Data;
+using ConnectIt.Stats.Modules;
 using ConnectIt.Time;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.DialogBox;
@@ -65,6 +67,28 @@ namespace ConnectIt.DI.Installers
             BindCustomer();
             BindShop();
             BindShopGoods();
+            BindStats();
+        }
+
+        private void BindStats()
+        {
+            Container.BindInterfacesTo<StatsCenter>()
+                     .AsSingle();
+
+            BindStatsDataFactories();
+            BindStatsModules();
+
+            void BindStatsDataFactories()
+            {
+                Container.BindFactory<ApplicationRunningTimeStatsData, ApplicationRunningTimeStatsData.Factory>()
+                         .FromFactory<PrimitiveDIFactory<ApplicationRunningTimeStatsData>>();
+            }
+
+            void BindStatsModules()
+            {
+                Container.BindInterfacesTo<ApplicationRunningTimeStatsModule>()
+                         .AsSingle();
+            }
         }
 
         private void BindShopGoods()

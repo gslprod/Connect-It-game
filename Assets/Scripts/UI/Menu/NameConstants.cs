@@ -32,7 +32,6 @@
         public static class SelectLevelMenu
         {
             public const string TitleLabel = "title-label";
-
             public const string BackButton = "back-button";
 
             public const string LevelViewContainer = "level-view-container";
@@ -42,39 +41,44 @@
         public static class ShopMenu
         {
             public const string TitleLabel = "title-label";
+            public const string BackButton = "back-button";
+
             public const string CoinsLabel = "shop-coins-label";
             public const string CoinsInfoLabel = "shop-coins-info-label";
             public const string GoodsTitleLabel = "goods-container-title";
             public const string GoodsScrollViewContainer = "scroll-view-container";
 
-            public const string BackButton = "back-button";
         }
 
         public static class SettingsMenu
         {
             public const string TitleLabel = "title-label";
-
             public const string BackButton = "back-button";
+
+            public const string SoundSlider = "sound-slider";
+            public const string MusicSlider = "music-slider";
+            public const string HQEffectsButton = "hq-effects-button";
+            public const string LanguageButton = "language-button";
+
         }
 
         public static class StatsMenu
         {
             public const string TitleLabel = "title-label";
-
             public const string BackButton = "back-button";
+
+            public const string StatsListScrollViewContainer = "stats-scroll-view-internal-container";
         }
 
         public static class GJLoginMenu
         {
             public const string TitleLabel = "title-label";
-
             public const string BackButton = "back-button";
         }
 
         public static class GJMenu
         {
             public const string TitleLabel = "title-label";
-
             public const string BackButton = "back-button";
         }
     }

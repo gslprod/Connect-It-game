@@ -95,8 +95,8 @@
                         <ui:Label text="Label" name="title-label" class="label highlighted-label title-container__title-label" />
                     </ui:VisualElement>
                     <ui:VisualElement name="stats-scroll-view-container" class="stats-scroll-view-container">
-                        <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" focusable="true" touch-scroll-type="Elastic" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" class="stats-scroll-view">
-                            <ui:VisualElement name="stats-scroll-view-internal-container" class="stats-scroll-view-internal-container" />
+                        <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" touch-scroll-type="Elastic" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" class="stats-scroll-view">
+                            <ui:VisualElement name="stats-scroll-view-internal-container" class="scroll-view-container" />
                         </ui:ScrollView>
                     </ui:VisualElement>
                     <ui:VisualElement name="back-button-container" class="back-button-container">

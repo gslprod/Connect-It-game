@@ -1,3 +1,6 @@
 Key,English,Russian
-Items.Boosts.SkipLevel.Name,,Пропуск уровня
-Items.Boosts.SkipLevel.Description,,Пропускает любой уровень. Благодаря этому открывается следующий уровень.
+Items.Product.Boost.SkipLevel.Name,,Пропуск уровня
+Items.Product.Boost.SkipLevel.Description,,Пропускает любой уровень. Благодаря этому открывается следующий уровень.
+Items.StatsData.ApplicationRunningTime.Name,,Время работы приложения
+Items.StatsData.ApplicationRunningTime.Description,,"Показывает, сколько времени была запущена эта игра."
+Items.StatsData.ApplicationRunningTime.Value,,{0} ч {1} мин

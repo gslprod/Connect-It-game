@@ -45,6 +45,9 @@
             public const string BoostUsed_Title = DialogBoxBaseString + ".BoostUsed.Title";
             public const string BoostUsed_Message = DialogBoxBaseString + ".BoostUsed.Message";
 
+            public const string LanguageChange_Title = DialogBoxBaseString + ".LanguageChange.Title";
+            public const string LanguageChange_Message = DialogBoxBaseString + ".LanguageChange.Message";
+
             private const string DialogBoxBaseString = "DialogBox";
         }
 
@@ -110,6 +113,8 @@
             {
                 public const string Title = SettingsMenuBaseString + ".Title";
 
+                public const string LanguageButton_Text = SettingsMenuBaseString + ".LanguageButton.Text";
+
                 private const string SettingsMenuBaseString = MenuBaseString + ".SettingsMenu";
             }
 
@@ -137,10 +142,24 @@
 
         public static class Items
         {
-            public const string Boosts_SkipLevel_Name = ItemsBaseString + ".Boosts.SkipLevel.Name";
-            public const string Boosts_SkipLevel_Description = ItemsBaseString + ".Boosts.SkipLevel.Description";
+            public const string Boosts_SkipLevel_Name = ItemsBaseString + ".Product.Boost.SkipLevel.Name";
+            public const string Boosts_SkipLevel_Description = ItemsBaseString + ".Product.Boost.SkipLevel.Description";
+
+            public const string StatsData_ApplicationRunningTime_Name = ItemsBaseString + ".StatsData.ApplicationRunningTime.Name";
+            public const string StatsData_ApplicationRunningTime_Description = ItemsBaseString + ".StatsData.ApplicationRunningTime.Description";
+            public const string StatsData_ApplicationRunningTime_Value = ItemsBaseString + ".StatsData.ApplicationRunningTime.Value";
 
             private const string ItemsBaseString = "Items";
+        }
+
+        public static class Languages
+        {
+            public const string Pattern = LanguagesBaseString + ".{0}";
+
+            public const string English = LanguagesBaseString + ".English";
+            public const string Russian = LanguagesBaseString + ".Russian";
+
+            private const string LanguagesBaseString = "Languages";
         }
     }
 }

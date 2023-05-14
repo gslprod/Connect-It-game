@@ -15,3 +15,5 @@ DialogBox.ConfirmBoostUse.Title,,Подтверждение использова
 DialogBox.ConfirmBoostUse.Message,,"Если после использования преимущества Вы не сможете пройти уровень, оно будет возращено на Ваш аккаунт."
 DialogBox.BoostUsed.Title,,Использовано
 DialogBox.BoostUsed.Message,,Это преимущество уже было использовано в данном уровне. Повторное использование недоступно.
+DialogBox.LanguageChange.Title,,Смена языка
+DialogBox.LanguageChange.Message,,Выберите язык из списка ниже.

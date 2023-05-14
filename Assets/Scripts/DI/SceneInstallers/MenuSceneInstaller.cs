@@ -1,5 +1,6 @@
 using ConnectIt.Infrastructure.Factories;
 using ConnectIt.Shop.Goods;
+using ConnectIt.Stats.Data;
 using ConnectIt.UI.Menu.MonoWrappers;
 using ConnectIt.UI.Menu.Views;
 using ConnectIt.UI.Menu.Views.GJLoginMenu;
@@ -18,6 +19,7 @@ using Zenject;
 public class MenuSceneInstaller : MonoInstaller
 {
     [SerializeField] private VisualTreeAsset _productAsset;
+    [SerializeField] private VisualTreeAsset _statsElementAsset;
 
     public override void InstallBindings()
     {
@@ -92,6 +94,12 @@ public class MenuSceneInstaller : MonoInstaller
 
                 Container.BindFactory<ShowcaseProduct<IProduct>, VisualElement, VisualElement, ProductView, ProductView.Factory>()
                          .FromFactory<PrimitiveDIFactory<ShowcaseProduct<IProduct>, VisualElement, VisualElement, ProductView>>();
+
+                Container.BindFactory<IStatsData, VisualElement, VisualElement, StatsElementView, StatsElementView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<IStatsData, VisualElement, VisualElement, StatsElementView>>();
+
+                Container.BindFactory< VisualElement, VisualElement, StatsElementsListView, StatsElementsListView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, StatsElementsListView>>();
             }
 
             void BindAssets()
@@ -99,6 +107,10 @@ public class MenuSceneInstaller : MonoInstaller
                 Container.BindInstance(_productAsset)
                          .AsCached()
                          .WhenInjectedInto<ProductView>();
+
+                Container.BindInstance(_statsElementAsset)
+                         .AsCached()
+                         .WhenInjectedInto<StatsElementView>();
             }
         }
 
@@ -108,8 +120,8 @@ public class MenuSceneInstaller : MonoInstaller
 
             void BindUIViewsFactories()
             {
-                Container.BindFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SettingsMenuView, SettingsMenuView.Factory>()
-                         .FromFactory<PrimitiveDIFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SettingsMenuView>>();
+                Container.BindFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SettingsMenuView, SettingsMenuView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SettingsMenuView>>();
             }
         }
 
@@ -119,8 +131,8 @@ public class MenuSceneInstaller : MonoInstaller
 
             void BindUIViewsFactories()
             {
-                Container.BindFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, StatsMenuView, StatsMenuView.Factory>()
-                         .FromFactory<PrimitiveDIFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, StatsMenuView>>();
+                Container.BindFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, StatsMenuView, StatsMenuView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, StatsMenuView>>();
             }
         }
 

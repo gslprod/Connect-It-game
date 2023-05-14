@@ -4,6 +4,9 @@
     {
         public static class Global
         {
+            public const string ScrollViewContainerChild = "scroll-view-container__child";
+            public const string ScrollViewContainerChildLast = "scroll-view-container__child--last";
+
             #region DialogBox
 
             public const string DialogBoxRoot = "dialog-box__root";
@@ -46,6 +49,9 @@
             #region UseBoostElement
 
             public const string BoostElementRootUsed = "boost-element__root--used";
+
+            public const string BoostsContainerChild = "boosts-container__child";
+            public const string BoostsContainerChildLast = "boosts-container__child--last";
 
             #endregion
         }
