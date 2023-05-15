@@ -5,8 +5,10 @@ using ConnectIt.Gameplay.LevelLoading;
 using ConnectIt.Gameplay.Model;
 using ConnectIt.Gameplay.MonoWrappers;
 using ConnectIt.Gameplay.Observers;
+using ConnectIt.Gameplay.Observers.Internal;
 using ConnectIt.Gameplay.Pause;
 using ConnectIt.Gameplay.Time;
+using ConnectIt.Gameplay.Tools.Calculators;
 using ConnectIt.Gameplay.View;
 using ConnectIt.Infrastructure.CreatedObjectNotifiers;
 using ConnectIt.Infrastructure.Dispose;
@@ -18,6 +20,7 @@ using ConnectIt.Input;
 using ConnectIt.Input.GameplayInputRouterStates;
 using ConnectIt.Shop.Goods.Boosts;
 using ConnectIt.Shop.Goods.Boosts.UsageContext;
+using ConnectIt.Stats.Modules;
 using ConnectIt.UI.Gameplay.MonoWrappers;
 using ConnectIt.UI.Gameplay.Views;
 using ConnectIt.UI.Gameplay.Views.UseBoostMenu;
@@ -52,6 +55,33 @@ namespace ConnectIt.DI.Installers
             BindUIDocumentMonoWrapper();
             BindGameStateHandlers();
             BindBoostUsageContexts();
+            BindTools();
+            BindStats();
+        }
+
+        private void BindStats()
+        {
+            BindStatsModules();
+
+            void BindStatsModules()
+            {
+                Container.BindInterfacesTo<MovesCountStatsModule>()
+                         .AsSingle();
+            }
+        }
+
+        private void BindTools()
+        {
+            BindCalculators();
+
+            void BindCalculators()
+            {
+                Container.BindInterfacesTo<ScoresCalculator>()
+                         .AsSingle();
+
+                Container.BindInterfacesTo<CoinsCalculator>()
+                         .AsSingle();
+            }
         }
 
         private void BindBoostUsageContexts()
@@ -196,6 +226,12 @@ namespace ConnectIt.DI.Installers
         private void BindGameStateObserver()
         {
             Container.BindInterfacesTo<GameStateObserver>()
+                     .AsSingle();
+
+            Container.BindInterfacesAndSelfTo<GameProgressObserver>()
+                     .AsSingle();
+
+            Container.BindInterfacesAndSelfTo<MovesObserver>()
                      .AsSingle();
         }
 

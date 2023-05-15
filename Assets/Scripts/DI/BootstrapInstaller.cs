@@ -82,6 +82,9 @@ namespace ConnectIt.DI.Installers
             {
                 Container.BindFactory<ApplicationRunningTimeStatsData, ApplicationRunningTimeStatsData.Factory>()
                          .FromFactory<PrimitiveDIFactory<ApplicationRunningTimeStatsData>>();
+
+                Container.BindFactory<MovesCountStatsData, MovesCountStatsData.Factory>()
+                         .FromFactory<PrimitiveDIFactory<MovesCountStatsData>>();
             }
 
             void BindStatsModules()

@@ -6,26 +6,26 @@ using Zenject;
 
 namespace ConnectIt.Stats.Data
 {
-    public class ApplicationRunningTimeStatsData : StatsDataBase<double>, IInitializable
+    public class MovesCountStatsData : StatsDataBase<long>, IInitializable
     {
         public override event Action<IStatsData> ValueChanged;
-        public override event Action<StatsDataBase<double>> RawValueChanged;
+        public override event Action<StatsDataBase<long>> RawValueChanged;
 
         public override TextKey Name => _name;
         public override TextKey Description => _description;
         public override TextKey Value => _value;
         public override bool OftenUpdating => true;
-        public override double RawValue
+        public override long RawValue
         {
             get
             {
-                return _rawValue.TotalSeconds;
+                return _rawValue;
             }
             set
             {
                 Assert.ThatArgIs(value >= 0);
 
-                _rawValue = CreateTimeSpanBySeconds(value);
+                _rawValue = value;
                 RawValueChanged?.Invoke(this);
                 UpdateValue();
             }
@@ -36,9 +36,9 @@ namespace ConnectIt.Stats.Data
         private TextKey _name;
         private TextKey _description;
         private TextKey _value;
-        private TimeSpan _rawValue = TimeSpan.Zero;
+        private long _rawValue;
 
-        public ApplicationRunningTimeStatsData(
+        public MovesCountStatsData(
             TextKey.Factory textKeyFactory)
         {
             _textKeyFactory = textKeyFactory;
@@ -46,38 +46,32 @@ namespace ConnectIt.Stats.Data
 
         public void Initialize()
         {
-            _name = _textKeyFactory.Create(TextKeysConstants.Items.StatsData_ApplicationRunningTime_Name);
-            _description = _textKeyFactory.Create(TextKeysConstants.Items.StatsData_ApplicationRunningTime_Description);
-            _value = _textKeyFactory.Create(TextKeysConstants.Items.StatsData_ApplicationRunningTime_Value);
+            _name = _textKeyFactory.Create(TextKeysConstants.Items.StatsData_MovesCount_Name);
+            _description = _textKeyFactory.Create(TextKeysConstants.Items.StatsData_MovesCount_Description);
+            _value = _textKeyFactory.Create(TextKeysConstants.Items.StatsData_MovesCount_Value);
 
             UpdateValue();
         }
 
-        public void InscreaseRawValue(double sec)
+        public void InscreaseRawValue(long value)
         {
-            Assert.ThatArgIs(sec >= 0);
+            Assert.ThatArgIs(value >= 0);
 
-            _rawValue = _rawValue.Add(CreateTimeSpanBySeconds(sec));
+            _rawValue += value;
             RawValueChanged?.Invoke(this);
             UpdateValue();
-        }
-
-        private static TimeSpan CreateTimeSpanBySeconds(double sec)
-        {
-            return new TimeSpan(Convert.ToInt64(TimeSpan.TicksPerSecond * sec));
         }
 
         private void UpdateValue()
         {
             _value.SetArgs(new object[]
             {
-                string.Format("{0:0}", _rawValue.TotalHours),
-                _rawValue.Minutes
+                _rawValue
             });
 
             ValueChanged?.Invoke(this);
         }
 
-        public class Factory : PlaceholderFactory<ApplicationRunningTimeStatsData> { }
+        public class Factory : PlaceholderFactory<MovesCountStatsData> { }
     }
 }

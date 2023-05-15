@@ -5,6 +5,7 @@ using ConnectIt.Save.SaveProviders.SaveData;
 using ConnectIt.Stats.Data;
 using ConnectIt.Stats.Modules;
 using ConnectIt.Utilities;
+using ConnectIt.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,12 +24,14 @@ namespace ConnectIt.Stats
         private readonly List<IStatsData> _data = new();
         private readonly Type[] _statsDataTypesToCreate = new Type[]
         {
-            typeof(ApplicationRunningTimeStatsData)
+            typeof(ApplicationRunningTimeStatsData),
+            typeof(MovesCountStatsData)
         };
 
         private readonly IStatsSaveProvider _saveProvider;
         private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
         private readonly ApplicationRunningTimeStatsData.Factory _applicationRunningTimeStatsDataFactory;
+        private readonly MovesCountStatsData.Factory _movesCountStatsDataFactory;
 
         private bool _oftenUpdatingDataSavingRequested = false;
         private bool _savingRequested = false;
@@ -36,11 +39,13 @@ namespace ConnectIt.Stats
         public StatsCenter(
             IStatsSaveProvider saveProvider,
             ICoroutinesGlobalContainer coroutinesGlobalContainer,
-            ApplicationRunningTimeStatsData.Factory applicationRunningTimeStatsDataFactory)
+            ApplicationRunningTimeStatsData.Factory applicationRunningTimeStatsDataFactory,
+            MovesCountStatsData.Factory movesCountStatsDataFactory)
         {
             _saveProvider = saveProvider;
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
             _applicationRunningTimeStatsDataFactory = applicationRunningTimeStatsDataFactory;
+            _movesCountStatsDataFactory = movesCountStatsDataFactory;
         }
 
         public void Initialize()
@@ -48,7 +53,7 @@ namespace ConnectIt.Stats
             if (TryLoadAnyData())
                 return;
 
-            CreateStatsData();
+            CreateMissingStatsData();
 
             Application.quitting += SaveAllStatsData;
         }
@@ -126,10 +131,27 @@ namespace ConnectIt.Stats
         {
             StatsSaveData saveData = _saveProvider.LoadStatsData();
 
-            return
+            bool loaded =
                 TryLoadData(saveData.DoubleStats) |
                 TryLoadData(saveData.LongStats) |
                 TryLoadData(saveData.StringStats);
+
+            CreateMissingStatsData();
+            SortData();
+
+            return loaded;
+        }
+
+        private void SortData()
+        {
+            _data.Sort(
+                (first, second) =>
+                {
+                    int firstIndex = _statsDataTypesToCreate.IndexOf(first.GetType());
+                    int secondIndex = _statsDataTypesToCreate.IndexOf(second.GetType());
+
+                    return firstIndex.CompareTo(secondIndex);
+                });
         }
 
         private bool TryLoadData<T>(IEnumerable<StatsElementSaveData<T>> saveData)
@@ -150,16 +172,22 @@ namespace ConnectIt.Stats
             return true;
         }
 
-        private void CreateStatsData()
+        private void CreateMissingStatsData()
         {
+            bool missingDataDetected = false;
             foreach (Type type in _statsDataTypesToCreate)
             {
-                IStatsData statsData = CreateStatsDataByType(type);
+                if (_data.Exists(item => item.GetType() == type))
+                    continue;
 
+                missingDataDetected = true;
+
+                IStatsData statsData = CreateStatsDataByType(type);
                 AddStatsData(statsData);
             }
 
-            SaveAllStatsData();
+            if (missingDataDetected)
+                SaveAllStatsData();
         }
 
         private void SaveAllStatsData()
@@ -197,6 +225,9 @@ namespace ConnectIt.Stats
         {
             if (type == typeof(ApplicationRunningTimeStatsData))
                 return _applicationRunningTimeStatsDataFactory.Create();
+
+            if (type == typeof(MovesCountStatsData))
+                return _movesCountStatsDataFactory.Create();
 
             throw Assert.GetFailException();
         }

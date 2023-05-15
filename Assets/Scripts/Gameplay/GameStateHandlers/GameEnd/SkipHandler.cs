@@ -44,7 +44,7 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
         {
             LevelData levelData = new(_gameplayLogicConfig.CurrentLevel)
             {
-                PassState = PassStates.Skipped,
+                PassState = PassStates.Skipped
             };
             _levelsPassDataProvider.SaveData(levelData);
 

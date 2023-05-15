@@ -4,3 +4,6 @@ Items.Product.Boost.SkipLevel.Description,,Пропускает любой ур�
 Items.StatsData.ApplicationRunningTime.Name,,Время работы приложения
 Items.StatsData.ApplicationRunningTime.Description,,"Показывает, сколько времени была запущена эта игра."
 Items.StatsData.ApplicationRunningTime.Value,,{0} ч {1} мин
+Items.StatsData.MovesCount.Name,,Количество ходов
+Items.StatsData.MovesCount.Description,,"Показывает количество ходов, совершенных во время прохождения уровня. Ход совершается при создании любой соединительной линии, в том числе незавершенной."
+Items.StatsData.MovesCount.Value,,{0}

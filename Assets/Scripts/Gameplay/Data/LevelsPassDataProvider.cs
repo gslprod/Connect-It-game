@@ -57,6 +57,9 @@ namespace ConnectIt.Gameplay.Data
                 savedData.PassTimeSec = dataToSave.PassTimeSec;
             }
 
+            if (dataToSave.TotalEarnedCoins > savedData.TotalEarnedCoins)
+                savedData.TotalEarnedCoins = dataToSave.TotalEarnedCoins;
+
             _levelDataArray[index] = savedData;
 
             SaveDataArray();
@@ -93,6 +96,7 @@ namespace ConnectIt.Gameplay.Data
                     Id = levelData.Id,
                     PassState = levelData.PassState,
                     Score = levelData.Score,
+                    TotalEarnedCoins = levelData.TotalEarnedCoins,
                     PassTimeSec = levelData.PassTimeSec
                 };
 
@@ -120,6 +124,7 @@ namespace ConnectIt.Gameplay.Data
                 {
                     PassState = levelSaveData.PassState,
                     Score = levelSaveData.Score,
+                    TotalEarnedCoins = levelSaveData.TotalEarnedCoins,
                     PassTimeSec = levelSaveData.PassTimeSec
                 };
 
@@ -142,6 +147,7 @@ namespace ConnectIt.Gameplay.Data
             Assert.ThatArgIs(data.Id > 0);
             Assert.ThatArgIs(data.PassTimeSec >= 0);
             Assert.ThatArgIs(data.Score >= 0);
+            Assert.ThatArgIs(data.TotalEarnedCoins >= 0);
         }
     }
 }

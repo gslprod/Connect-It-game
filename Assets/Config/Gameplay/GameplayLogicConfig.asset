@@ -15,3 +15,184 @@ MonoBehaviour:
   _removeConnectionLineHoldDurationSec: 1
   _usedTilesVsConnectedPortsGameCompleteFactor: 0.5
   _maxAvailableLevel: 10
+  _levelsRewardData:
+  - _level: 1
+    _rewardsByTime:
+    - _timeKeySec: 3
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _timeKeySec: 10
+      _scoresRewardMultiplier: 0.4
+      _coinsRewardMultiplier: 0
+    _rewardsByMoves:
+    - _moveCountKey: 4
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _moveCountKey: 8
+      _scoresRewardMultiplier: 0.8
+      _coinsRewardMultiplier: 0
+    _scoresBaseReward: 1000
+    _coinsBaseReward: 100
+    _coinsDependsOnScores: 1
+  - _level: 2
+    _rewardsByTime:
+    - _timeKeySec: 3
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _timeKeySec: 10
+      _scoresRewardMultiplier: 0.4
+      _coinsRewardMultiplier: 0
+    _rewardsByMoves:
+    - _moveCountKey: 4
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _moveCountKey: 8
+      _scoresRewardMultiplier: 0.8
+      _coinsRewardMultiplier: 0
+    _scoresBaseReward: 1000
+    _coinsBaseReward: 100
+    _coinsDependsOnScores: 1
+  - _level: 3
+    _rewardsByTime:
+    - _timeKeySec: 3
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _timeKeySec: 10
+      _scoresRewardMultiplier: 0.4
+      _coinsRewardMultiplier: 0
+    _rewardsByMoves:
+    - _moveCountKey: 4
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _moveCountKey: 8
+      _scoresRewardMultiplier: 0.8
+      _coinsRewardMultiplier: 0
+    _scoresBaseReward: 1000
+    _coinsBaseReward: 100
+    _coinsDependsOnScores: 1
+  - _level: 4
+    _rewardsByTime:
+    - _timeKeySec: 3
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _timeKeySec: 10
+      _scoresRewardMultiplier: 0.4
+      _coinsRewardMultiplier: 0
+    _rewardsByMoves:
+    - _moveCountKey: 4
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _moveCountKey: 8
+      _scoresRewardMultiplier: 0.8
+      _coinsRewardMultiplier: 0
+    _scoresBaseReward: 1000
+    _coinsBaseReward: 100
+    _coinsDependsOnScores: 1
+  - _level: 5
+    _rewardsByTime:
+    - _timeKeySec: 3
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _timeKeySec: 10
+      _scoresRewardMultiplier: 0.4
+      _coinsRewardMultiplier: 0
+    _rewardsByMoves:
+    - _moveCountKey: 4
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _moveCountKey: 8
+      _scoresRewardMultiplier: 0.8
+      _coinsRewardMultiplier: 0
+    _scoresBaseReward: 1000
+    _coinsBaseReward: 100
+    _coinsDependsOnScores: 1
+  - _level: 6
+    _rewardsByTime:
+    - _timeKeySec: 3
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _timeKeySec: 10
+      _scoresRewardMultiplier: 0.4
+      _coinsRewardMultiplier: 0
+    _rewardsByMoves:
+    - _moveCountKey: 4
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _moveCountKey: 8
+      _scoresRewardMultiplier: 0.8
+      _coinsRewardMultiplier: 0
+    _scoresBaseReward: 1000
+    _coinsBaseReward: 100
+    _coinsDependsOnScores: 1
+  - _level: 7
+    _rewardsByTime:
+    - _timeKeySec: 3
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _timeKeySec: 10
+      _scoresRewardMultiplier: 0.4
+      _coinsRewardMultiplier: 0
+    _rewardsByMoves:
+    - _moveCountKey: 4
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _moveCountKey: 8
+      _scoresRewardMultiplier: 0.8
+      _coinsRewardMultiplier: 0
+    _scoresBaseReward: 1000
+    _coinsBaseReward: 100
+    _coinsDependsOnScores: 1
+  - _level: 8
+    _rewardsByTime:
+    - _timeKeySec: 3
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _timeKeySec: 10
+      _scoresRewardMultiplier: 0.4
+      _coinsRewardMultiplier: 0
+    _rewardsByMoves:
+    - _moveCountKey: 4
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _moveCountKey: 8
+      _scoresRewardMultiplier: 0.8
+      _coinsRewardMultiplier: 0
+    _scoresBaseReward: 1000
+    _coinsBaseReward: 100
+    _coinsDependsOnScores: 1
+  - _level: 9
+    _rewardsByTime:
+    - _timeKeySec: 3
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _timeKeySec: 10
+      _scoresRewardMultiplier: 0.4
+      _coinsRewardMultiplier: 0
+    _rewardsByMoves:
+    - _moveCountKey: 4
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _moveCountKey: 8
+      _scoresRewardMultiplier: 0.8
+      _coinsRewardMultiplier: 0
+    _scoresBaseReward: 1000
+    _coinsBaseReward: 100
+    _coinsDependsOnScores: 1
+  - _level: 10
+    _rewardsByTime:
+    - _timeKeySec: 3
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _timeKeySec: 10
+      _scoresRewardMultiplier: 0.4
+      _coinsRewardMultiplier: 0
+    _rewardsByMoves:
+    - _moveCountKey: 4
+      _scoresRewardMultiplier: 1
+      _coinsRewardMultiplier: 0
+    - _moveCountKey: 8
+      _scoresRewardMultiplier: 0.8
+      _coinsRewardMultiplier: 0
+    _scoresBaseReward: 1000
+    _coinsBaseReward: 100
+    _coinsDependsOnScores: 1

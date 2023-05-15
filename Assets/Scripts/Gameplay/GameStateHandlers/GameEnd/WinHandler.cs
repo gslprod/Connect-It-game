@@ -3,12 +3,15 @@ using ConnectIt.Coroutines;
 using ConnectIt.Gameplay.Data;
 using ConnectIt.Gameplay.Observers;
 using ConnectIt.Gameplay.Time;
+using ConnectIt.Gameplay.Tools.Calculators;
 using ConnectIt.Localization;
+using ConnectIt.Shop.Customer;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Gameplay.MonoWrappers;
 using ConnectIt.Utilities.Extensions;
 using ConnectIt.Utilities.Formatters;
 using System;
+using UnityEngine;
 using Zenject;
 
 namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
@@ -27,6 +30,13 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
         private readonly IGameplayTimeProvider _gameplayTimeProvider;
         private readonly IFormatter _formatter;
         private readonly ILevelEndHandler _levelEndHandler;
+        private readonly IScoresCalculator _scoresCalculator;
+        private readonly ICoinsCalculator _coinsCalculator;
+        private readonly ICustomer _playerCustomer;
+
+        private long _totalEarnedCoins;
+        private long _gainedCoins;
+        private long _score;
 
         public WinHandler(
             IGameStateObserver gameStateObserver,
@@ -38,7 +48,10 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
             ILevelsPassDataProvider levelsPassDataProvider,
             IGameplayTimeProvider gameplayTimeProvider,
             IFormatter formatter,
-            ILevelEndHandler levelEndHandler)
+            ILevelEndHandler levelEndHandler,
+            IScoresCalculator scoresCalculator,
+            ICoinsCalculator coinsCalculator,
+            ICustomer playerCustomer)
         {
             _gameStateObserver = gameStateObserver;
             _gameplayUIDocumentMonoWrapper = gameplayUIDocumentMonoWrapper;
@@ -50,6 +63,9 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
             _gameplayTimeProvider = gameplayTimeProvider;
             _formatter = formatter;
             _levelEndHandler = levelEndHandler;
+            _scoresCalculator = scoresCalculator;
+            _coinsCalculator = coinsCalculator;
+            _playerCustomer = playerCustomer;
         }
 
         public void Initialize()
@@ -64,11 +80,22 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
 
         public void Win()
         {
-            //todo
+            _totalEarnedCoins = _coinsCalculator.Calculate();
+            _score = _scoresCalculator.Calculate();
+
+            long earnedCoinsBefore = _levelsPassDataProvider.GetDataByLevelId(_gameplayLogicConfig.CurrentLevel).TotalEarnedCoins;
+            _gainedCoins = _totalEarnedCoins - earnedCoinsBefore;
+
+            if (_gainedCoins <= 0)
+                _gainedCoins = 0;
+            else
+                _playerCustomer.Wallet.Add(_gainedCoins);
+
             LevelData levelData = new(_gameplayLogicConfig.CurrentLevel)
             {
                 PassState = PassStates.Passed,
-                Score = 0,
+                Score = _scoresCalculator.Calculate(),
+                TotalEarnedCoins = _totalEarnedCoins,
                 PassTimeSec = _gameplayTimeProvider.ElapsedTimeSec
             };
             _levelsPassDataProvider.SaveData(levelData);
@@ -88,7 +115,6 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
 
         private void ShowResults()
         {
-            //todo
             _dialogBoxFactory.CreateDefaultGameEndResultsDialogBox(
                 _textKeyFactory,
                 _gameplayUIDocumentMonoWrapper.Root,
@@ -98,8 +124,8 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
                     new object[]
                     {
                         _formatter.FormatGameplayElapsedTime(_gameplayTimeProvider.ElapsedTime),
-                        99,
-                        99
+                        _score,
+                        _gainedCoins
                     }),
                 _gameplayLogicConfig,
                 _levelEndHandler,

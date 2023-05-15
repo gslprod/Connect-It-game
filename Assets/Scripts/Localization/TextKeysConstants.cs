@@ -149,6 +149,10 @@
             public const string StatsData_ApplicationRunningTime_Description = ItemsBaseString + ".StatsData.ApplicationRunningTime.Description";
             public const string StatsData_ApplicationRunningTime_Value = ItemsBaseString + ".StatsData.ApplicationRunningTime.Value";
 
+            public const string StatsData_MovesCount_Name = ItemsBaseString + ".StatsData.MovesCount.Name";
+            public const string StatsData_MovesCount_Description = ItemsBaseString + ".StatsData.MovesCount.Description";
+            public const string StatsData_MovesCount_Value = ItemsBaseString + ".StatsData.MovesCount.Value";
+
             private const string ItemsBaseString = "Items";
         }
 

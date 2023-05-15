@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ConnectIt.Config.Wrappers;
+using UnityEngine;
 
 namespace ConnectIt.Config.ScriptableObjects
 {
@@ -8,6 +9,7 @@ namespace ConnectIt.Config.ScriptableObjects
         public float RemoveConnectionLineHoldDurationSec => _removeConnectionLineHoldDurationSec;
         public float UsedTilesVsConnectedPortsGameCompleteFactor => _usedTilesVsConnectedPortsGameCompleteFactor;
         public int MaxAvailableLevel => _maxAvailableLevel;
+        public LevelRewardData[] LevelRewardData => _levelsRewardData;
 
         [Tooltip("Remove Connection Line Hold Duration Sec")]
         [SerializeField] private float _removeConnectionLineHoldDurationSec = 1f;
@@ -18,5 +20,7 @@ namespace ConnectIt.Config.ScriptableObjects
 
         [Min(1)]
         [SerializeField] private int _maxAvailableLevel = 1;
+
+        [SerializeField] private LevelRewardData[] _levelsRewardData;
     }
 }

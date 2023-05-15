@@ -21,7 +21,8 @@ namespace ConnectIt.Save.SaveNames
 
             #region StatsData
             new ItemName(typeof(IStatsData), "StatsData"),
-            new ItemName(typeof(ApplicationRunningTimeStatsData), "ApplicationRunningTime", typeof(IStatsData))
+            new ItemName(typeof(ApplicationRunningTimeStatsData), "ApplicationRunningTime", typeof(IStatsData)),
+            new ItemName(typeof(MovesCountStatsData), "MovesCount", typeof(IStatsData))
             #endregion
         };
 
