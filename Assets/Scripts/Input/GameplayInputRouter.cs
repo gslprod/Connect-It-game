@@ -46,7 +46,7 @@ namespace ConnectIt.Input
 
         public void Tick()
         {
-            if (!_input.asset.enabled)
+            if (!Enabled)
                 return;
 
             State.Update();

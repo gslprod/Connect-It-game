@@ -32,7 +32,7 @@ namespace ConnectIt.Shop
         {
             _goods = new List<ShowcaseProduct<IProduct>>()
             {
-                new(_skipLevelBoostFactory.Create(), _config.SkipLevelBoostPrice, () => _skipLevelBoostFactory.Create())
+                new(_skipLevelBoostFactory.Create(), _config.SkipLevelBoostPrice, _skipLevelBoostFactory.Create)
             };
         }
 
