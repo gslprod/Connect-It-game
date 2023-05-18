@@ -59,3 +59,5 @@ sysinfo.txt
 crashlytics-build.properties
 
 
+/Assets/Config/Confidential/RealConfidentialValues.asset.meta
+/Assets/Config/Confidential/RealConfidentialValues.asset
