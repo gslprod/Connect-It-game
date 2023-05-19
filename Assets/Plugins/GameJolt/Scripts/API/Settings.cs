@@ -16,6 +16,9 @@ namespace GameJolt.API
 		private string privateKey;
 
 		[Header("Settings")]
+		[SerializeField]
+		private bool _autoInit;
+
 		[SerializeField, Tooltip("The time in seconds before an API call should timeout and return failure.")]
 		private float timeout = 10f;
 
@@ -56,8 +59,12 @@ namespace GameJolt.API
 
 		#region Public getter
 		public int GameId { get { return gameId; } }
-		internal string PrivateKey { get { return privateKey; } }
+		internal string PrivateKey {
+			get { return privateKey; }
+			set { privateKey = value; }
+		}
 
+		public bool AutoInit => _autoInit;
 		public float Timeout { get { return timeout; } }
 		public bool AutoPing { get { return autoPing; } }
 

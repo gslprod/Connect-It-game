@@ -31,6 +31,14 @@
             public const string TitleLabel = "title-label";
         }
 
+        public static class LoadingDialogBox
+        {
+            public const string MessageLabel = "message-label";
+
+            public const string LoadingIcon = "loading-icon";
+            public const string LoadingSpinningIcon = "loading-spinning-icon";
+        }
+
         public static class LoadingScreen
         {
             public const string LoadingScreenContainer = "container";

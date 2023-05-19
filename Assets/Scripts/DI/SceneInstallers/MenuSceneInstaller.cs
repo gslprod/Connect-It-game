@@ -142,8 +142,8 @@ public class MenuSceneInstaller : MonoInstaller
 
             void BindUIViewsFactories()
             {
-                Container.BindFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, GJLoginMenuView, GJLoginMenuView.Factory>()
-                         .FromFactory<PrimitiveDIFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, GJLoginMenuView>>();
+                Container.BindFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, GJLoginMenuView, GJLoginMenuView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, GJLoginMenuView>>();
             }
         }
 

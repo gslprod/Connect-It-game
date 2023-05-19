@@ -11,6 +11,7 @@
     --default-transition-duration: 800ms;
     --default-progress-bar-transition-timing-function: ease-out-cubic;
     --default-progress-bar-transition-duration: 300ms;
+    --default-loading-box-transition-duration: 400ms;
 }
 
 .label {
@@ -44,13 +45,13 @@
     flex-shrink: 0;
 }
 
-    .button:active {
-        transition-property: opacity, scale, background-color;
-        transition-timing-function: var(--default-button-transition-timing-function), var(--default-button-transition-timing-function), var(--default-button-transition-timing-function);
-        transition-duration: var(--default-button-transition-duration), var(--default-button-transition-duration), var(--default-button-transition-duration);
-        opacity: 0.7;
-        scale: 0.9 0.9;
-    }
+.button:active {
+    transition-property: opacity, scale, background-color;
+    transition-timing-function: var(--default-button-transition-timing-function), var(--default-button-transition-timing-function), var(--default-button-transition-timing-function);
+    transition-duration: var(--default-button-transition-duration), var(--default-button-transition-duration), var(--default-button-transition-duration);
+    opacity: 0.7;
+    scale: 0.9 0.9;
+}
 
 .highlighted-label {
     background-color: var(--non-focus-color-1);
@@ -316,6 +317,54 @@
 
 .dialog-box__button--additional {
     margin-top: 40px;
+}
+
+.loading-box__root {
+    transition-property: opacity;
+    transition-duration: var(--default-loading-box-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function);
+}
+
+.loading-box__root--closed {
+    transition-property: opacity;
+    transition-duration: var(--default-loading-box-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function);
+}
+
+.loading-box__container {
+    transition-property: opacity, scale, rotate;
+    transition-duration: var(--default-loading-box-transition-duration), var(--default-loading-box-transition-duration), var(--default-loading-box-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function), var(--default-transition-timing-function), var(--default-transition-timing-function);
+}
+
+.loading-box__container--closed {
+    transition-property: opacity, scale, rotate;
+    transition-duration: var(--default-loading-box-transition-duration), var(--default-loading-box-transition-duration), var(--default-loading-box-transition-duration);
+    transition-timing-function: var(--default-transition-timing-function), var(--default-transition-timing-function), var(--default-transition-timing-function);
+    rotate: 25deg;
+}
+
+.loading-box__message-label {
+    margin-bottom: 0;
+}
+
+.loading-box__icon {
+    width: 100px;
+    height: 100px;
+    align-self: center;
+    margin-bottom: 20px;
+    -unity-background-scale-mode: scale-to-fit;
+    background-image: url('project://database/Assets/2D/Sprites/UI/loading%20circle/loading%20circle%20128%20p4.png?fileID=21300000&guid=45f5910c74ab3ad43b4c0450aa361e74&type=3#loading circle 128 p4');
+    -unity-background-image-tint-color: rgba(126, 126, 126, 0.3);
+}
+
+.loading-box__spinning-icon {
+    width: 50px;
+    height: 50px;
+    align-self: flex-end;
+    -unity-background-scale-mode: scale-to-fit;
+    background-image: url('project://database/Assets/2D/Sprites/UI/loading%20circle/spin%20element/loading%20circle%20spin%20element%2064.png?fileID=21300000&guid=50f7ff6cb962b1540ac0b231ce1ccc47&type=3#loading circle spin element 64');
+    transform-origin: left bottom;
 }
 
 .loading-screen__root {

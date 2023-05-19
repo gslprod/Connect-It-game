@@ -73,6 +73,7 @@
     background-color: rgba(183, 183, 183, 0.38);
     width: 140px;
     height: 140px;
+    flex-shrink: 0;
 }
 
 .account-container__child {
@@ -397,17 +398,17 @@
 .stats-scroll-view {
 }
 
-    .stats-scroll-view > .scroll-view-container {
-        flex-direction: column;
-    }
+.stats-scroll-view > .scroll-view-container {
+    flex-direction: column;
+}
 
-        .stats-scroll-view > .scroll-view-container > .scroll-view-container__child {
-            margin-bottom: 20px;
-        }
+.stats-scroll-view > .scroll-view-container > .scroll-view-container__child {
+    margin-bottom: 20px;
+}
 
-        .stats-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
-            margin-bottom: 0;
-        }
+.stats-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
+    margin-bottom: 0;
+}
 
 .stats-scroll-view-container {
     flex-grow: 1;
@@ -457,14 +458,14 @@
     padding-bottom: 60px;
 }
 
-    .shop-coins-container > .highlighted-label {
-        font-size: 50px;
-    }
+.shop-coins-container > .highlighted-label {
+    font-size: 50px;
+}
 
-    .shop-coins-container > .highlighted-label--coins {
-        font-size: 85px;
-        margin-bottom: 25px;
-    }
+.shop-coins-container > .highlighted-label--coins {
+    font-size: 85px;
+    margin-bottom: 25px;
+}
 
 .boosts-container {
     align-items: center;
@@ -480,17 +481,17 @@
     width: 100%;
 }
 
-    .boosts-scroll-view > .scroll-view-container {
-        flex-direction: column;
-    }
+.boosts-scroll-view > .scroll-view-container {
+    flex-direction: column;
+}
 
-        .boosts-scroll-view > .scroll-view-container > .scroll-view-container__child {
-            margin-bottom: 20px;
-        }
+.boosts-scroll-view > .scroll-view-container > .scroll-view-container__child {
+    margin-bottom: 20px;
+}
 
-        .boosts-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
-            margin-bottom: 0;
-        }
+.boosts-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
+    margin-bottom: 0;
+}
 
 .boost-element {
     align-items: stretch;
@@ -619,17 +620,17 @@
     width: 100%;
 }
 
-    .gj-scores-scroll-view > .scroll-view-container {
-        flex-direction: column;
-    }
+.gj-scores-scroll-view > .scroll-view-container {
+    flex-direction: column;
+}
 
-        .gj-scores-scroll-view > .scroll-view-container > .scroll-view-container__child {
-            margin-bottom: 20px;
-        }
+.gj-scores-scroll-view > .scroll-view-container > .scroll-view-container__child {
+    margin-bottom: 20px;
+}
 
-        .gj-scores-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
-            margin-bottom: 0;
-        }
+.gj-scores-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
+    margin-bottom: 0;
+}
 
 .gj-score {
     flex-direction: row;

@@ -1,5 +1,6 @@
 ﻿using ConnectIt.Coroutines;
 using ConnectIt.Localization;
+using ConnectIt.UI.CommonViews;
 using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
 using System;
@@ -18,18 +19,18 @@ namespace ConnectIt.UI.DialogBox
         public event Action<IDialogBoxView> Closing;
         public event Action<IDialogBoxView> Disposing;
 
-        private readonly ILocalizationProvider _localizationProvider;
         private readonly VisualTreeAsset _uiAsset;
         private readonly VisualTreeAsset _uiButtonAsset;
         private readonly DialogBoxButton.Factory _dialogBoxButtonFactory;
         private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
+        private readonly DefaultLocalizedLabelView.Factory _defaultLocalizedLabelFactory;
         private DialogBoxCreationData _creationData;
 
         private VisualElement _parent;
         private TemplateContainer _root;
         private VisualElement _elementsContainer;
-        private Label _titleLabel;
-        private Label _messageLabel;
+        private DefaultLocalizedLabelView _titleLabel;
+        private DefaultLocalizedLabelView _messageLabel;
         private TextKey _titleKey;
         private TextKey _messageKey;
         private DialogBoxButtonInfo[] _buttonsInfo;
@@ -40,19 +41,20 @@ namespace ConnectIt.UI.DialogBox
         private Coroutine _delayedClosingAnimationCoroutine;
         private Coroutine _delayedDisposeCoroutine;
 
-        public DialogBoxView(ILocalizationProvider localizationProvider,
+        public DialogBoxView(
             [Inject(Id = DialogBoxAssetId)] VisualTreeAsset uiAsset,
             [Inject(Id = DialogBoxButtonAssetId)] VisualTreeAsset uiButtonAsset,
             DialogBoxCreationData creationData,
             DialogBoxButton.Factory dialogBoxButtonFactory,
-            ICoroutinesGlobalContainer coroutinesGlobalContainer)
+            ICoroutinesGlobalContainer coroutinesGlobalContainer,
+            DefaultLocalizedLabelView.Factory defaultLocalizedLabelFactory)
         {
-            _localizationProvider = localizationProvider;
             _uiAsset = uiAsset;
             _uiButtonAsset = uiButtonAsset;
             _creationData = creationData;
             _dialogBoxButtonFactory = dialogBoxButtonFactory;
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
+            _defaultLocalizedLabelFactory = defaultLocalizedLabelFactory;
         }
 
         public void Initialize()
@@ -78,21 +80,22 @@ namespace ConnectIt.UI.DialogBox
             _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRoot);
             _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
 
-            _titleLabel = _root.Q<Label>(TemplatesNameConstants.DialogBox.TitleLabel);
-            _messageLabel = _root.Q<Label>(TemplatesNameConstants.DialogBox.MessageLabel);
+            _titleLabel = _defaultLocalizedLabelFactory.Create(
+                _root.Q<Label>(TemplatesNameConstants.DialogBox.TitleLabel),
+                _titleKey);
+
+            _messageLabel = _defaultLocalizedLabelFactory.Create(
+                _root.Q<Label>(TemplatesNameConstants.DialogBox.MessageLabel),
+                _messageKey);
+
             _elementsContainer = _root.Q<VisualElement>(TemplatesNameConstants.DialogBox.DialogBoxContainer);
 
             _elementsContainer.AddToClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
 
             CreateButtons();
             CreateAdditionalButton();
-            UpdateLocalization();
 
             _delayedShowingAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(StartShowingAnimation);
-
-            _titleKey.ArgsChanged += OnTitleKeyArgsChanged;
-            _messageKey.ArgsChanged += OnMessageKeyArgsChanged;
-            _localizationProvider.LocalizationChanged += UpdateLocalization;
 
             Showing?.Invoke(this);
         }
@@ -117,12 +120,10 @@ namespace ConnectIt.UI.DialogBox
 
             StopRunningCoroutines();
 
+            _titleLabel.Dispose();
+            _messageLabel.Dispose();
             foreach (var button in _createdButtons)
                 button.Dispose();
-
-            _titleKey.ArgsChanged -= OnTitleKeyArgsChanged;
-            _messageKey.ArgsChanged -= OnMessageKeyArgsChanged;
-            _localizationProvider.LocalizationChanged -= UpdateLocalization;
 
             Disposing?.Invoke(this);
         }
@@ -159,32 +160,6 @@ namespace ConnectIt.UI.DialogBox
 
             if (_delayedShowingAnimationCoroutine != null)
                 _coroutinesGlobalContainer.StopCoroutine(_delayedShowingAnimationCoroutine);
-        }
-
-        private void UpdateLocalization()
-        {
-            UpdateTitleLocalization();
-            UpdateMessageLocalization();
-        }
-
-        private void UpdateMessageLocalization()
-        {
-            _messageLabel.text = _messageKey.ToString();
-        }
-
-        private void UpdateTitleLocalization()
-        {
-            _titleLabel.text = _titleKey.ToString();
-        }
-
-        private void OnTitleKeyArgsChanged(TextKey obj)
-        {
-            UpdateTitleLocalization();
-        }
-
-        private void OnMessageKeyArgsChanged(TextKey obj)
-        {
-            UpdateMessageLocalization();
         }
 
         private void CreateButtons()

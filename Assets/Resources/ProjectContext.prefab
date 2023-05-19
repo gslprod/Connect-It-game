@@ -86,3 +86,7 @@ MonoBehaviour:
   _gameVersionConfig: {fileID: 11400000, guid: c9c89eb807bfefe4380d8079d434237d, type: 2}
   _shopConfig: {fileID: 11400000, guid: 83af93338fb04c340b703ff4f9d0167d, type: 2}
   _customDialogBoxAsset: {fileID: 9197481963319205126, guid: 7ad4499fb67acae4bbf35f5738eb5df9, type: 3}
+  _realConfidentialValues: {fileID: 11400000, guid: 22f00f05d1cd0ab4285d0e375ef64087, type: 2}
+  _placeholderConfidentialValues: {fileID: 11400000, guid: fefac51c6ccebf149a246e37dd60af47, type: 2}
+  _gameJoltAPIPrefab: {fileID: 11422090, guid: 7a2e587034d846647b593aa159d7ed8d, type: 3}
+  _loadingDialogBoxAsset: {fileID: 9197481963319205126, guid: 0217ba00d5a20474380cc9b226e2d8f1, type: 3}

@@ -13,7 +13,13 @@ namespace ConnectIt.UI.DialogBox
         public DialogBoxButtonInfo AdditionalBottomButton { get; }
         public bool ShowImmediately { get; }
 
-        public CustomDialogBoxCreationData(VisualElement parent,
+        public string AdditionalDialogBoxRootClass { get; set; }
+        public string AdditionalDialogBoxContainerClass { get; set; }
+        public string AdditionalDialogBoxRootClosedClass { get; set; }
+        public string AdditionalDialogBoxContainerClosedClass { get; set; }
+
+        public CustomDialogBoxCreationData(
+            VisualElement parent,
             TextKey titleKey,
             VisualElement content,
             DialogBoxButtonInfo additionalBottomButton = null,

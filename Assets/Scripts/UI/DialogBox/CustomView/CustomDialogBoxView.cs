@@ -6,6 +6,7 @@ using UnityEngine;
 using Zenject;
 using ConnectIt.Utilities.Extensions;
 using ConnectIt.Utilities;
+using ConnectIt.UI.CommonViews;
 
 namespace ConnectIt.UI.DialogBox
 {
@@ -20,41 +21,46 @@ namespace ConnectIt.UI.DialogBox
 
         public VisualElement ContentRoot => _contentRoot;
 
-        private readonly ILocalizationProvider _localizationProvider;
         private readonly VisualTreeAsset _uiAsset;
         private readonly VisualTreeAsset _uiButtonAsset;
         private readonly DialogBoxButton.Factory _dialogBoxButtonFactory;
         private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
+        private readonly DefaultLocalizedLabelView.Factory _defaultLocalizedLabelViewFactory;
         private CustomDialogBoxCreationData _creationData;
 
         private VisualElement _parent;
         private TemplateContainer _root;
         private VisualElement _elementsContainer;
         private VisualElement _contentRoot;
-        private Label _titleLabel;
+        private DefaultLocalizedLabelView _titleLabel;
         private TextKey _titleKey;
         private VisualElement _content;
         private VisualTreeAsset _contentAsset;
         private DialogBoxButtonInfo _additionalBottomButtonInfo;
         private DialogBoxButton _createdButton;
+        private string _additionalDialogBoxRootClass;
+        private string _additionalDialogBoxContainerClass;
+        private string _additionalDialogBoxRootClosedClass;
+        private string _additionalDialogBoxContainerClosedClass;
 
         private Coroutine _delayedShowingAnimationCoroutine;
         private Coroutine _delayedClosingAnimationCoroutine;
         private Coroutine _delayedDisposeCoroutine;
 
-        public CustomDialogBoxView(ILocalizationProvider localizationProvider,
+        public CustomDialogBoxView(
             [Inject(Id = CustomDialogBoxAssetId)] VisualTreeAsset uiAsset,
             [Inject(Id = DialogBoxButtonAssetId)] VisualTreeAsset uiButtonAsset,
             CustomDialogBoxCreationData creationData,
             DialogBoxButton.Factory dialogBoxButtonFactory,
-            ICoroutinesGlobalContainer coroutinesGlobalContainer)
+            ICoroutinesGlobalContainer coroutinesGlobalContainer,
+            DefaultLocalizedLabelView.Factory defaultLocalizedLabelViewFactory)
         {
-            _localizationProvider = localizationProvider;
             _uiAsset = uiAsset;
             _uiButtonAsset = uiButtonAsset;
             _creationData = creationData;
             _dialogBoxButtonFactory = dialogBoxButtonFactory;
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
+            _defaultLocalizedLabelViewFactory = defaultLocalizedLabelViewFactory;
         }
 
         public void Initialize()
@@ -64,6 +70,10 @@ namespace ConnectIt.UI.DialogBox
             _additionalBottomButtonInfo = _creationData.AdditionalBottomButton;
             _content = _creationData.Content;
             _contentAsset = _creationData.ContentAsset;
+            _additionalDialogBoxRootClass = _creationData.AdditionalDialogBoxRootClass;
+            _additionalDialogBoxRootClosedClass = _creationData.AdditionalDialogBoxRootClosedClass;
+            _additionalDialogBoxContainerClass = _creationData.AdditionalDialogBoxContainerClass;
+            _additionalDialogBoxContainerClosedClass = _creationData.AdditionalDialogBoxContainerClosedClass;
 
             if (_creationData.ShowImmediately)
                 Show();
@@ -80,20 +90,29 @@ namespace ConnectIt.UI.DialogBox
             _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRoot);
             _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
 
-            _titleLabel = _root.Q<Label>(TemplatesNameConstants.CustomDialogBox.TitleLabel);
+            if (!string.IsNullOrEmpty(_additionalDialogBoxRootClass))
+                _root.AddToClassList(_additionalDialogBoxRootClass);
+            if (!string.IsNullOrEmpty(_additionalDialogBoxRootClosedClass))
+                _root.AddToClassList(_additionalDialogBoxRootClosedClass);
+
+            _titleLabel = _defaultLocalizedLabelViewFactory.Create(
+                _root.Q<Label>(TemplatesNameConstants.CustomDialogBox.TitleLabel),
+                _titleKey);
+
             _elementsContainer = _root.Q<VisualElement>(TemplatesNameConstants.CustomDialogBox.DialogBoxContainer);
             _contentRoot = _root.Q<VisualElement>(TemplatesNameConstants.CustomDialogBox.ContentRoot);
 
             _elementsContainer.AddToClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
 
+            if (!string.IsNullOrEmpty(_additionalDialogBoxContainerClass))
+                _elementsContainer.AddToClassList(_additionalDialogBoxContainerClass);
+            if (!string.IsNullOrEmpty(_additionalDialogBoxContainerClosedClass))
+                _elementsContainer.AddToClassList(_additionalDialogBoxContainerClosedClass);
+
             AddContent();
             CreateAdditionalButton();
-            UpdateLocalization();
 
             _delayedShowingAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(StartShowingAnimation);
-
-            _titleKey.ArgsChanged += OnTitleKeyArgsChanged;
-            _localizationProvider.LocalizationChanged += UpdateLocalization;
 
             Showing?.Invoke(this);
         }
@@ -117,10 +136,8 @@ namespace ConnectIt.UI.DialogBox
 
             StopRunningCoroutines();
 
+            _titleLabel.Dispose();
             _createdButton.Dispose();
-
-            _titleKey.ArgsChanged -= OnTitleKeyArgsChanged;
-            _localizationProvider.LocalizationChanged -= UpdateLocalization;
 
             Disposing?.Invoke(this);
         }
@@ -131,6 +148,11 @@ namespace ConnectIt.UI.DialogBox
 
             _elementsContainer.RemoveFromClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
             _root.RemoveFromClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
+
+            if (!string.IsNullOrEmpty(_additionalDialogBoxContainerClosedClass))
+                _elementsContainer.RemoveFromClassList(_additionalDialogBoxContainerClosedClass);
+            if (!string.IsNullOrEmpty(_additionalDialogBoxRootClosedClass))
+                _root.RemoveFromClassList(_additionalDialogBoxRootClosedClass);
         }
 
         private void StartClosingAnimation()
@@ -139,6 +161,11 @@ namespace ConnectIt.UI.DialogBox
 
             _elementsContainer.AddToClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
             _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
+
+            if (!string.IsNullOrEmpty(_additionalDialogBoxContainerClosedClass))
+                _elementsContainer.AddToClassList(_additionalDialogBoxContainerClosedClass);
+            if (!string.IsNullOrEmpty(_additionalDialogBoxRootClosedClass))
+                _root.AddToClassList(_additionalDialogBoxRootClosedClass);
 
             float closeDelaySec = Mathf.Max(
                 _elementsContainer.resolvedStyle.CalculateMaxTransitionLengthSec(),
@@ -157,21 +184,6 @@ namespace ConnectIt.UI.DialogBox
 
             if (_delayedShowingAnimationCoroutine != null)
                 _coroutinesGlobalContainer.StopCoroutine(_delayedShowingAnimationCoroutine);
-        }
-
-        private void UpdateLocalization()
-        {
-            UpdateTitleLocalization();
-        }
-
-        private void UpdateTitleLocalization()
-        {
-            _titleLabel.text = _titleKey.ToString();
-        }
-
-        private void OnTitleKeyArgsChanged(TextKey obj)
-        {
-            UpdateTitleLocalization();
         }
 
         private void AddContent()

@@ -48,6 +48,9 @@
             public const string LanguageChange_Title = DialogBoxBaseString + ".LanguageChange.Title";
             public const string LanguageChange_Message = DialogBoxBaseString + ".LanguageChange.Message";
 
+            public const string LoadingBox_GJLogin_Title = DialogBoxBaseString + ".LoadingBox.GJLogin.Title";
+            public const string LoadingBox_GJLogin_Message = DialogBoxBaseString + ".LoadingBox.GJLogin.Message";
+
             private const string DialogBoxBaseString = "DialogBox";
         }
 
@@ -63,6 +66,8 @@
             public const string NextLevel = CommonBaseString + ".NextLevel";
             public const string RestartLevel = CommonBaseString + ".RestartLevel";
             public const string MainMenu = CommonBaseString + ".MainMenu";
+            public const string Loading = CommonBaseString + ".Loading";
+            public const string PleaseWait = CommonBaseString + ".PleaseWait";
 
             private const string CommonBaseString = "Common";
         }
@@ -135,6 +140,10 @@
             public static class GJLoginMenu
             {
                 public const string Title = GJLoginMenuBaseString + ".Title";
+                public const string GJInfoLabel_Text = GJLoginMenuBaseString + ".GJInfoLabel.Text";
+                public const string UsernameLabel_Text = GJLoginMenuBaseString + ".UsernameLabel.Text";
+                public const string TokenLabel_Text = GJLoginMenuBaseString + ".TokenLabel.Text";
+                public const string LoginButton_Text = GJLoginMenuBaseString + ".LoginButton.Text";
 
                 private const string GJLoginMenuBaseString = MenuBaseString + ".GJLoginMenu";
             }

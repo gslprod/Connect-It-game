@@ -65,10 +65,24 @@ namespace GameJolt.API {
 		/// Init this instance.
 		/// </summary>
 		protected override void Init() {
-			Configure();
-			StartCoroutine(AutoConnect());
-			CacheTables();
+			if (!Settings.AutoInit)
+				return;
+
+			InitInternal();
 		}
+
+		public void Initialize(string privateKey)
+		{
+			Settings.PrivateKey = privateKey;
+
+			InitInternal();
+		}
+
+		private void InitInternal()
+		{
+            Configure();
+            CacheTables();
+        }
 
 		/// <summary>
 		/// Configure this instance.
@@ -136,6 +150,11 @@ namespace GameJolt.API {
 		#endregion Requests
 
 		#region Actions
+		public void StartAutoConnect()
+		{
+            StartCoroutine(AutoConnect());
+        }
+
 		private IEnumerator AutoConnect() {
 			yield return null; // delay by one frame to make sure that the whole UI is already initialized
 #if UNITY_WEBGL

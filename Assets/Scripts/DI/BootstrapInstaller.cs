@@ -1,6 +1,7 @@
 using ConnectIt.Config;
 using ConnectIt.Config.ScriptableObjects;
 using ConnectIt.Coroutines;
+using ConnectIt.ExternalServices.GameJolt;
 using ConnectIt.Gameplay.Data;
 using ConnectIt.Infrastructure.Factories;
 using ConnectIt.Localization;
@@ -9,6 +10,7 @@ using ConnectIt.Save.Savers;
 using ConnectIt.Save.Serializers;
 using ConnectIt.Scenes;
 using ConnectIt.Scenes.Switchers;
+using ConnectIt.Security.ConfidentialData;
 using ConnectIt.Shop.Customer;
 using ConnectIt.Shop.Customer.Storage;
 using ConnectIt.Shop.Customer.Wallet;
@@ -23,6 +25,7 @@ using ConnectIt.UI.Global.MonoWrappers;
 using ConnectIt.UI.LoadingScreen;
 using ConnectIt.UI.Tools;
 using ConnectIt.Utilities.Formatters;
+using GameJolt.API;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +47,10 @@ namespace ConnectIt.DI.Installers
         [SerializeField] private GameVersionSO _gameVersionConfig;
         [SerializeField] private ShopConfigSO _shopConfig;
         [SerializeField] private VisualTreeAsset _customDialogBoxAsset;
+        [SerializeField] private ConfidentialValuesSO _realConfidentialValues;
+        [SerializeField] private ConfidentialValuesSO _placeholderConfidentialValues;
+        [SerializeField] private GameJoltAPI _gameJoltAPIPrefab;
+        [SerializeField] private VisualTreeAsset _loadingDialogBoxAsset;
 
         public override void InstallBindings()
         {
@@ -68,6 +75,31 @@ namespace ConnectIt.DI.Installers
             BindShop();
             BindShopGoods();
             BindStats();
+            BindConfidentialData();
+            BindGameJoltAPI();
+        }
+
+        private void BindGameJoltAPI()
+        {
+            Container.Bind<GameJoltAPI>()
+                     .FromComponentInNewPrefab(_gameJoltAPIPrefab)
+                     .AsSingle();
+
+            Container.BindInterfacesAndSelfTo<GameJoltAPIProvider>()
+                     .AsSingle();
+
+            Container.BindInterfacesAndSelfTo<ExternalServices.GameJolt.Sessions>()
+                     .AsSingle();
+
+            Container.BindInterfacesAndSelfTo<ExternalServices.GameJolt.Scores>()
+                     .AsSingle();
+        }
+
+        private void BindConfidentialData()
+        {
+            Container.Bind<ConfidentialValues>()
+                     .AsSingle()
+                     .WithArguments(_realConfidentialValues != null ? _realConfidentialValues : _placeholderConfidentialValues);
         }
 
         private void BindStats()
@@ -244,6 +276,9 @@ namespace ConnectIt.DI.Installers
 
                 Container.BindFactory<CustomDialogBoxCreationData, CustomDialogBoxView, CustomDialogBoxView.Factory>()
                          .FromFactory<PrimitiveDIFactory<CustomDialogBoxCreationData, CustomDialogBoxView>>();
+
+                Container.BindFactory<LoadingDialogBoxViewCreationData, LoadingDialogBoxView, LoadingDialogBoxView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<LoadingDialogBoxViewCreationData, LoadingDialogBoxView>>();
             }
 
             void BindAssets()
@@ -267,6 +302,10 @@ namespace ConnectIt.DI.Installers
                          .WithId(CustomDialogBoxView.DialogBoxButtonAssetId)
                          .AsCached()
                          .WhenInjectedInto<CustomDialogBoxView>();
+
+                Container.BindInstance(_loadingDialogBoxAsset)
+                         .AsCached()
+                         .WhenInjectedInto<LoadingDialogBoxView>();
             }
         }
 

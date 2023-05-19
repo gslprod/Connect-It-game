@@ -1,12 +1,12 @@
 Key,English,Russian
 Gameplay.LevelLabel.Text,Level {0},Уровень {0}
-Gameplay.PauseMenu.Continue,,Продолжить
-Gameplay.PauseMenu.Exit,,Выйти в главное меню
-Gameplay.WinMenu.Title,,Уровень {0} пройден!
+Gameplay.PauseMenu.Continue,Continue,Продолжить
+Gameplay.PauseMenu.Exit,Exit to main menu,Выйти в главное меню
+Gameplay.WinMenu.Title,Level {0} passed!,Уровень {0} пройден!
 Gameplay.WinMenu.Content,,Время: {0}\nОчки: {1}\nПолучено монет: {2}
 Gameplay.UseBoostButton.Text,,Использовать преимущество
 Gameplay.UseBoostMenu.Title,,Меню использования преимуществ
 Gameplay.UseBoostMenu.InfoLabel.Text,,"Выберите преимущество, которое Вы хотите использовать."
 Gameplay.UseBoostMenu.UseBoostElement.AmountLabel.Text,,{0} шт
-Gameplay.SkipMenu.Title,,Уровень {0} пропущен
+Gameplay.SkipMenu.Title,Level {0} skipped,Уровень {0} пропущен
 Gameplay.SkipMenu.Content,,Очки и монеты не начислены. Вы можете вернуться к прохождению этого уровня в любое время.

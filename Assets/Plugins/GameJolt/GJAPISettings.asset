@@ -3,23 +3,25 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9badd6626894dc459f92a91d0bd95fa, type: 3}
   m_Name: GJAPISettings
   m_EditorClassIdentifier: 
-  gameId: 0
+  gameId: 808560
   privateKey: 
+  _autoInit: 0
   timeout: 10
-  autoPing: 1
+  autoPing: 0
   autoSignInOutMessage: 0
   signInMessage: Signed in as '{0}'
   signOutMessage: Signed out
   useCaching: 1
-  encryptionKey: 
+  encryptionKey: "GR*0\xA7bb%hkZ88Woe"
   logLevel: 1
   secretTrophies: 
   autoConnect: 0

@@ -14,7 +14,7 @@ namespace ConnectIt.Stats.Data
         public override TextKey Name => _name;
         public override TextKey Description => _description;
         public override TextKey Value => _value;
-        public override bool OftenUpdating => true;
+        public override bool OftenUpdating => false;
         public override long RawValue
         {
             get

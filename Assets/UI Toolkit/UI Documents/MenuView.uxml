@@ -178,7 +178,7 @@
                                 <ui:VisualElement name="login-input-container" class="login-input-container">
                                     <ui:VisualElement name="username-input-container" class="input-container login-input-container__child">
                                         <ui:Label text="Label" name="username-title" class="label highlighted-label input-container__title-label highlighted-label--input-title" />
-                                        <ui:TextField picking-mode="Ignore" value="filler text" name="username-input-field" class="input-container__input-field">
+                                        <ui:TextField picking-mode="Ignore" name="username-input-field" class="input-container__input-field">
                                             <ui:VisualElement name="username-input-field-icon-container" class="input-container__input-field-icon-container">
                                                 <ui:VisualElement name="username-input-field-icon" class="input-container__input-field-icon input-container__input-field-icon--username" style="margin-left: 5px; margin-right: 5px; margin-top: 10px; margin-bottom: 10px;" />
                                             </ui:VisualElement>
@@ -186,7 +186,7 @@
                                     </ui:VisualElement>
                                     <ui:VisualElement name="token-input-container" class="input-container login-input-container__child--last login-input-container__child">
                                         <ui:Label text="Label" name="token-title" class="label highlighted-label input-container__title-label highlighted-label--input-title" />
-                                        <ui:TextField picking-mode="Ignore" value="filler text" name="token-input-field" class="input-container__input-field">
+                                        <ui:TextField picking-mode="Ignore" name="token-input-field" class="input-container__input-field">
                                             <ui:VisualElement name="token-input-field-icon-container" class="input-container__input-field-icon-container">
                                                 <ui:VisualElement name="token-input-field-icon" class="input-container__input-field-icon input-container__input-field-icon--token" style="margin-left: 5px; margin-right: 5px; margin-top: 10px; margin-bottom: 10px;" />
                                             </ui:VisualElement>

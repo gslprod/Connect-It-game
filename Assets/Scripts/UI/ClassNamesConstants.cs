@@ -18,6 +18,11 @@
             public const string DialogBoxButtonDismiss = "dialog-box__button--dismiss";
             public const string DialogBoxButtonAccept = "dialog-box__button--accept";
 
+            public const string LoadingBoxRoot = "loading-box__root";
+            public const string LoadingBoxRootClosed = "loading-box__root--closed";
+            public const string LoadingBoxContainer = "loading-box__container";
+            public const string LoadingBoxContainerClosed = "loading-box__container--closed";
+
             #endregion
 
             #region LoadingScreen

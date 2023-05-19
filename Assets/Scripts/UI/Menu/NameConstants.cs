@@ -74,6 +74,13 @@
         {
             public const string TitleLabel = "title-label";
             public const string BackButton = "back-button";
+
+            public const string GJInfoLabel = "gj-info-label";
+            public const string UsernameLabel = "username-title";
+            public const string UsernameInputField = "username-input-field";
+            public const string TokenLabel = "token-title";
+            public const string TokenInputField = "token-input-field";
+            public const string LoginButton = "login-button";
         }
 
         public static class GJMenu

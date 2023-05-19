@@ -1,5 +1,6 @@
 ﻿using ConnectIt.Coroutines;
 using ConnectIt.Localization;
+using ConnectIt.UI.CommonViews;
 using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
 using ConnectIt.Utilities.Formatters;
@@ -18,10 +19,10 @@ namespace ConnectIt.UI.LoadingScreen
         public event Action<LoadingScreenView> Closing;
         public event Action<LoadingScreenView> Disposing;
 
-        private readonly ILocalizationProvider _localizationProvider;
         private readonly VisualTreeAsset _uiAsset;
         private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
         private readonly IFormatter _formatter;
+        private readonly DefaultLocalizedLabelView.Factory _defaultLocalizedLabelViewFactory;
         private LoadingScreenCreationData _creationData;
 
         private VisualElement _parent;
@@ -29,8 +30,8 @@ namespace ConnectIt.UI.LoadingScreen
         private VisualElement _elementsContainer;
         private Custom.ProgressBar _progressBar;
         private Label _progressBarLabel;
-        private Label _titleLabel;
-        private Label _messageLabel;
+        private DefaultLocalizedLabelView _titleLabel;
+        private DefaultLocalizedLabelView _messageLabel;
         private TextKey _titleKey;
         private TextKey _messageKey;
 
@@ -39,17 +40,18 @@ namespace ConnectIt.UI.LoadingScreen
         private Coroutine _delayedClosingAnimationCoroutine;
         private Coroutine _delayedDisposeCoroutine;
 
-        public LoadingScreenView(ILocalizationProvider localizationProvider,
+        public LoadingScreenView(
             VisualTreeAsset uiAsset,
             LoadingScreenCreationData creationData,
             ICoroutinesGlobalContainer coroutinesGlobalContainer,
-            IFormatter formatter)
+            IFormatter formatter,
+            DefaultLocalizedLabelView.Factory defaultLocalizedLabelViewFactory)
         {
-            _localizationProvider = localizationProvider;
             _uiAsset = uiAsset;
             _creationData = creationData;
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
             _formatter = formatter;
+            _defaultLocalizedLabelViewFactory = defaultLocalizedLabelViewFactory;
         }
 
         public void Initialize()
@@ -73,8 +75,14 @@ namespace ConnectIt.UI.LoadingScreen
             _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRoot);
             _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
 
-            _titleLabel = _root.Q<Label>(TemplatesNameConstants.LoadingScreen.TitleLabel);
-            _messageLabel = _root.Q<Label>(TemplatesNameConstants.LoadingScreen.MessageLabel);
+            _titleLabel = _defaultLocalizedLabelViewFactory.Create(
+                _root.Q<Label>(TemplatesNameConstants.LoadingScreen.TitleLabel),
+                _titleKey);
+
+            _messageLabel = _defaultLocalizedLabelViewFactory.Create(
+                _root.Q<Label>(TemplatesNameConstants.LoadingScreen.MessageLabel),
+                _messageKey);
+
             _progressBar = _root.Q<Custom.ProgressBar>(TemplatesNameConstants.LoadingScreen.ProgressBar);
             _progressBarLabel = _progressBar.Q<Label>(Custom.ProgressBar.LabelName);
             _elementsContainer = _root.Q<VisualElement>(TemplatesNameConstants.LoadingScreen.LoadingScreenContainer);
@@ -83,13 +91,8 @@ namespace ConnectIt.UI.LoadingScreen
             _progressBarLabel.AddToClassList(ClassNamesConstants.Global.LoadingScreenProgressBarLabel);
 
             UpdateProgressValue(0);
-            UpdateLocalization();
 
             _delayedShowingAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(StartShowingAnimation);
-
-            _titleKey.ArgsChanged += OnTitleKeyArgsChanged;
-            _messageKey.ArgsChanged += OnMessageKeyArgsChanged;
-            _localizationProvider.LocalizationChanged += UpdateLocalization;
 
             Showing?.Invoke(this);
         }
@@ -122,9 +125,8 @@ namespace ConnectIt.UI.LoadingScreen
 
             StopRunningCoroutines();
 
-            _titleKey.ArgsChanged -= OnTitleKeyArgsChanged;
-            _messageKey.ArgsChanged -= OnMessageKeyArgsChanged;
-            _localizationProvider.LocalizationChanged -= UpdateLocalization;
+            _titleLabel.Dispose();
+            _messageLabel.Dispose();
 
             Disposing?.Invoke(this);
         }
@@ -177,32 +179,6 @@ namespace ConnectIt.UI.LoadingScreen
 
             if (_delayedShowingAnimationCoroutine != null)
                 _coroutinesGlobalContainer.StopCoroutine(_delayedShowingAnimationCoroutine);
-        }
-
-        private void UpdateLocalization()
-        {
-            UpdateTitleLocalization();
-            UpdateMessageLocalization();
-        }
-
-        private void UpdateMessageLocalization()
-        {
-            _messageLabel.text = _messageKey.ToString();
-        }
-
-        private void UpdateTitleLocalization()
-        {
-            _titleLabel.text = _titleKey.ToString();
-        }
-
-        private void OnTitleKeyArgsChanged(TextKey obj)
-        {
-            UpdateTitleLocalization();
-        }
-
-        private void OnMessageKeyArgsChanged(TextKey obj)
-        {
-            UpdateMessageLocalization();
         }
 
         public class Factory : PlaceholderFactory<LoadingScreenCreationData, LoadingScreenView> { }
