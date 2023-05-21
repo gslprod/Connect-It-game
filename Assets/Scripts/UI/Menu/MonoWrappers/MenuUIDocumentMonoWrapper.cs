@@ -1,14 +1,13 @@
 ﻿using ConnectIt.Coroutines;
+using ConnectIt.Coroutines.CustomYieldInstructions;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.Menu.Views;
-using ConnectIt.UI.Menu.Views.GJLoginMenu;
 using ConnectIt.UI.Menu.Views.GJMenu;
 using ConnectIt.UI.Menu.Views.MainMenu;
 using ConnectIt.UI.Menu.Views.SelectLevelMenu;
 using ConnectIt.UI.Menu.Views.SettingsMenu;
 using ConnectIt.UI.Menu.Views.StatsMenu;
 using ConnectIt.UI.Tools;
-using ConnectIt.Utilities.Extensions;
 using ConnectIt.Utilities.Extensions.IUIBlocker;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -24,7 +23,6 @@ namespace ConnectIt.UI.Menu.MonoWrappers
         public VisualElement StatsContainer { get; private set; }
         public VisualElement ShopContainer { get; private set; }
         public VisualElement GJContainer { get; private set; }
-        public VisualElement GJLoginContainer { get; private set; }
 
         private UIDocument _uiDocument;
         private VisualElement _documentRootVE => _uiDocument.rootVisualElement;
@@ -47,8 +45,6 @@ namespace ConnectIt.UI.Menu.MonoWrappers
         private SettingsMenuView _settingsMenuView;
         private StatsMenuView.Factory _statsMenuViewFactory;
         private StatsMenuView _statsMenuView;
-        private GJLoginMenuView.Factory _gjLoginMenuViewFactory;
-        private GJLoginMenuView _gjLoginMenuView;
         private GJMenuView.Factory _gjMenuViewFactory;
         private GJMenuView _gjMenuView;
 
@@ -58,9 +54,13 @@ namespace ConnectIt.UI.Menu.MonoWrappers
         private VersionView _versionView;
         private ClickableCoinsView.Factory _clickableCoinsViewFactory;
         private ClickableCoinsView _clickableCoinsView;
+        private GameJoltUsernameView.Factory _gameJoltUsernameViewFactory;
+        private GameJoltUsernameView _gameJoltUsernameView;
+        private GameJoltAvatarView.Factory _gameJoltAvatarViewFactory;
+        private GameJoltAvatarView _gameJoltAvatarView;
 
+        private readonly TransitionsStopWaiter _transitionsStopWaiter = new();
         private Coroutine _firstFrameSwitchCoroutine;
-        private Coroutine _waitForTransitionEndCoroutine;
 
         [Inject]
         public void Constructor(
@@ -71,11 +71,12 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             ShopMenuView.Factory shopMenuViewFactory,
             SettingsMenuView.Factory settingsMenuViewFactory,
             StatsMenuView.Factory statsMenuViewFactory,
-            GJLoginMenuView.Factory gjLoginMenuViewFactory,
             GJMenuView.Factory gjMenuViewFactory,
             VersionView.Factory versionViewFactory,
             CompletedLevelsView.Factory completedLevelsViewFactory,
-            ClickableCoinsView.Factory clickableCoinsViewFactory)
+            ClickableCoinsView.Factory clickableCoinsViewFactory,
+            GameJoltUsernameView.Factory gameJoltUsernameViewFactory,
+            GameJoltAvatarView.Factory gameJoltAvatarViewFactory)
         {
             _uiBlocker = uiBlocker;
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
@@ -84,12 +85,13 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             _shopMenuViewFactory = shopMenuViewFactory;
             _settingsMenuViewFactory = settingsMenuViewFactory;
             _statsMenuViewFactory = statsMenuViewFactory;
-            _gjLoginMenuViewFactory = gjLoginMenuViewFactory;
             _gjMenuViewFactory = gjMenuViewFactory;
 
             _versionViewFactory = versionViewFactory;
             _completedLevelsViewFactory = completedLevelsViewFactory;
             _clickableCoinsViewFactory = clickableCoinsViewFactory;
+            _gameJoltUsernameViewFactory = gameJoltUsernameViewFactory;
+            _gameJoltAvatarViewFactory = gameJoltAvatarViewFactory;
         }
 
         private void Awake()
@@ -112,12 +114,13 @@ namespace ConnectIt.UI.Menu.MonoWrappers
         private void OnDestroy()
         {
             _framesSwitcher.FrameSwitched -= OnFrameSwitched;
+            _transitionsStopWaiter.AbortIfWaiting();
 
             DisposeDisposableViews();
             StopAllRunningCoroutines();
         }
 
-        #region SwitcherAndFramesCreation
+        #region SwitcherAndFramesCreationAndSetup
 
         private void CreateSwitcherAndFrames()
         {
@@ -139,9 +142,6 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             GJContainer = _contentContainer.Q<VisualElement>(NameConstants.GJContainer);
             Frame<VisualElement> gjFrame = new(GJContainer);
 
-            GJLoginContainer = _contentContainer.Q<VisualElement>(NameConstants.GJLoginContainer);
-            Frame<VisualElement> gjLoginFrame = new(GJLoginContainer);
-
             Frame<VisualElement>[] frames = new Frame<VisualElement>[]
             {
                 mainMenuFrame,
@@ -149,22 +149,19 @@ namespace ConnectIt.UI.Menu.MonoWrappers
                 settingsFrame,
                 statsFrame,
                 shopFrame,
-                gjFrame,
-                gjLoginFrame
+                gjFrame
             };
 
             _framesSwitcher = new(frames, EnableFrame, DisableFrame);
             _framesSwitcher.FrameSwitched += OnFrameSwitched;
-
-            _firstFrameSwitchCoroutine = _coroutinesGlobalContainer.DelayedAction(SwitchToFirstFrame);
+            _firstFrameSwitchCoroutine = _coroutinesGlobalContainer.DelayedAction(SwitchToFirstFrame, new WaitForFrames(2));
 
             _mainMenuView = _mainMenuViewFactory.Create(MainMenuContainer, _framesSwitcher, this);
             _selectLevelMenuView = _selectLevelMenuViewFactory.Create(SelectLevelContainer, _rootVE, _framesSwitcher, this);
             _shopMenuView = _shopMenuViewFactory.Create(ShopContainer, _rootVE, _framesSwitcher, this);
             _settingsMenuView = _settingsMenuViewFactory.Create(SettingsContainer, _rootVE, _framesSwitcher, this);
             _statsMenuView = _statsMenuViewFactory.Create(StatsContainer, _rootVE, _framesSwitcher, this);
-            _gjLoginMenuView = _gjLoginMenuViewFactory.Create(GJLoginContainer, _rootVE, _framesSwitcher, this);
-            _gjMenuView = _gjMenuViewFactory.Create(GJContainer, _framesSwitcher, this);
+            _gjMenuView = _gjMenuViewFactory.Create(GJContainer, _rootVE, _framesSwitcher, this);
         }
 
         private void SwitchToFirstFrame()
@@ -176,19 +173,13 @@ namespace ConnectIt.UI.Menu.MonoWrappers
 
         private void OnFrameSwitched(VisualElement frame)
         {
-            float transitionLength = frame.resolvedStyle.CalculateMaxTransitionLengthSec();
-            if (transitionLength == 0)
-                return;
-
             _uiBlocker.SetBlock(true, BlockPriority.Transition, this);
 
-            _waitForTransitionEndCoroutine = _coroutinesGlobalContainer.DelayedAction(OnTransitionEnded, transitionLength);
+            _coroutinesGlobalContainer.DelayedAction(() => _transitionsStopWaiter.AbortCurrentAndWait(OnTransitionEnded, frame));
         }
 
         private void OnTransitionEnded()
         {
-            _waitForTransitionEndCoroutine = null;
-
             _uiBlocker.ResetBlock(this);
         }
 
@@ -215,6 +206,12 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             _clickableCoinsView = _clickableCoinsViewFactory.Create(
                 _topContainer.Q<Button>(NameConstants.CoinsLabel),
                 OnCoinsClick);
+
+            _gameJoltUsernameView = _gameJoltUsernameViewFactory.Create(
+                _topContainer.Q<Label>(NameConstants.UsernameLabel));
+
+            _gameJoltAvatarView = _gameJoltAvatarViewFactory.Create(
+                _topContainer.Q<VisualElement>(NameConstants.Avatar));
         }
 
         private void DisposeDisposableViews()
@@ -224,19 +221,17 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             _shopMenuView.Dispose();
             _settingsMenuView.Dispose();
             _statsMenuView.Dispose();
-            _gjLoginMenuView.Dispose();
             _gjMenuView.Dispose();
 
             _versionView.Dispose();
             _completedLevelsView.Dispose();
             _clickableCoinsView.Dispose();
+            _gameJoltUsernameView.Dispose();
+            _gameJoltAvatarView.Dispose();
         }
 
         private void StopAllRunningCoroutines()
         {
-            if (_waitForTransitionEndCoroutine != null)
-                _coroutinesGlobalContainer.StopCoroutine(_waitForTransitionEndCoroutine);
-
             if (_firstFrameSwitchCoroutine != null)
                 _coroutinesGlobalContainer.StopCoroutine(_firstFrameSwitchCoroutine);
         }

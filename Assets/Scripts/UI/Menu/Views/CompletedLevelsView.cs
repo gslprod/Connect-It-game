@@ -55,7 +55,7 @@ namespace ConnectIt.UI.Menu.Views
                 _gameplayLogicConfig.MaxAvailableLevel
             });
 
-            UpdateLocalization();
+            UpdateLabel();
         }
 
         private int GetLastCompletedLevel()

@@ -19,3 +19,9 @@ DialogBox.LanguageChange.Title,,Смена языка
 DialogBox.LanguageChange.Message,,Выберите язык из списка ниже.
 DialogBox.LoadingBox.GJLogin.Title,,Вход в аккаунт GameJolt...
 DialogBox.LoadingBox.GJLogin.Message,,"Ожидаем ответ от сервера. Пожалуйста, подождите."
+DialogBox.InvalidLoginInputData.Title,,Введены некорректные данные
+DialogBox.InvalidLoginInputData.Message,,"Пожалуйста, перепроверьте введенные данные."
+DialogBox.LoginFailed.Title,,Вход не выполнен
+DialogBox.LoginFailed.Message,,"Возможно, Вы ввели неверные данные, или же сервер недоступен."
+DialogBox.ConfirmLogout.Title,,Выйти из аккаунта GameJolt?
+DialogBox.ConfirmLogout.Message,,"Все Ваши рекорды сохранятся, однако новые рекорды не будут фиксироваться в таблице до тех пор, пока Вы снова не войдете в аккаунт."

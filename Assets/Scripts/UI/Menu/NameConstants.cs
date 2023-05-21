@@ -14,11 +14,12 @@
         public const string StatsContainer = "stats-container";
         public const string ShopContainer = "shop-container";
         public const string GJContainer = "gj-container";
-        public const string GJLoginContainer = "gj-login-container";
 
         public const string CompletedLevelsLabel = "account-level";
         public const string VersionLabel = "version-label";
         public const string CoinsLabel = "coins-label";
+        public const string UsernameLabel = "account-name";
+        public const string Avatar = "account-avatar";
 
         public static class MainMenu
         {
@@ -70,23 +71,35 @@
             public const string StatsListScrollViewContainer = "stats-scroll-view-internal-container";
         }
 
-        public static class GJLoginMenu
-        {
-            public const string TitleLabel = "title-label";
-            public const string BackButton = "back-button";
-
-            public const string GJInfoLabel = "gj-info-label";
-            public const string UsernameLabel = "username-title";
-            public const string UsernameInputField = "username-input-field";
-            public const string TokenLabel = "token-title";
-            public const string TokenInputField = "token-input-field";
-            public const string LoginButton = "login-button";
-        }
-
         public static class GJMenu
         {
-            public const string TitleLabel = "title-label";
             public const string BackButton = "back-button";
+
+            public const string GJLoginContainer = "gj-login-container";
+            public const string GJProfileContainer = "gj-profile-container";
+
+            public static class GJLoginMenu
+            {
+                public const string TitleLabel = "title-label";
+
+                public const string GJInfoLabel = "gj-info-label";
+                public const string UsernameLabel = "username-title";
+                public const string UsernameInputField = "username-input-field";
+                public const string TokenLabel = "token-title";
+                public const string TokenInputField = "token-input-field";
+                public const string LoginButton = "login-button";
+            }
+
+            public static class GJProfileMenu
+            {
+                public const string TitleLabel = "title-label";
+
+                public const string UsernameLabel = "username-label";
+                public const string LogOutButton = "logout-button";
+                public const string TopUserPositionLabel = "top-position-label";
+                public const string ScoresLabel = "scores-title";
+                public const string ScoresScrollViewContainer = "scores-scroll-view-container";
+            }
         }
     }
 }

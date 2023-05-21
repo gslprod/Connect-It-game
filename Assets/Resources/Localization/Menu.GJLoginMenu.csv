@@ -1,6 +1,0 @@
-Key,English,Russian
-Menu.GJLoginMenu.Title,,Вход в аккаунт GameJolt
-Menu.GJLoginMenu.GJInfoLabel.Text,,"Войдите, чтобы получить доступ к таблице рекордов"
-Menu.GJLoginMenu.UsernameLabel.Text,,Имя пользователя
-Menu.GJLoginMenu.TokenLabel.Text,,Игровой токен
-Menu.GJLoginMenu.LoginButton.Text,,Войти

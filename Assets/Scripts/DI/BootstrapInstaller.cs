@@ -218,6 +218,15 @@ namespace ConnectIt.DI.Installers
 
                 Container.BindFactory<Button, Action, ClickableCoinsView, ClickableCoinsView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Button, Action, ClickableCoinsView>>();
+
+                Container.BindFactory<Label, GameJoltUsernameView, GameJoltUsernameView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Label, GameJoltUsernameView>>();
+
+                Container.BindFactory<Label, TextKey, string, DefaultUniversalLabelView, DefaultUniversalLabelView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<Label, TextKey, string, DefaultUniversalLabelView>>();
+
+                Container.BindFactory<VisualElement, Sprite, DefaultSpriteView, DefaultSpriteView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, Sprite, DefaultSpriteView>>();
             }
         }
 

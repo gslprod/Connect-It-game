@@ -1,6 +1,7 @@
 ﻿using ConnectIt.Coroutines;
 using ConnectIt.Localization;
 using ConnectIt.UI.CommonViews;
+using ConnectIt.UI.Tools;
 using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
 using System;
@@ -37,9 +38,9 @@ namespace ConnectIt.UI.DialogBox
         private DialogBoxButtonInfo _additionalBottomButtonInfo;
         private DialogBoxButton[] _createdButtons;
 
+        private readonly TransitionsStopWaiter _transitionsStopWaiter = new();
         private Coroutine _delayedShowingAnimationCoroutine;
         private Coroutine _delayedClosingAnimationCoroutine;
-        private Coroutine _delayedDisposeCoroutine;
 
         public DialogBoxView(
             [Inject(Id = DialogBoxAssetId)] VisualTreeAsset uiAsset,
@@ -102,8 +103,6 @@ namespace ConnectIt.UI.DialogBox
 
         public void Close()
         {
-            Assert.IsNull(_delayedDisposeCoroutine);
-
             foreach (var button in _createdButtons)
                 button.ReceiveButtonCallback(false);
 
@@ -114,11 +113,10 @@ namespace ConnectIt.UI.DialogBox
 
         public void Dispose()
         {
-            _delayedDisposeCoroutine = null;
-
             _root.RemoveFromHierarchy();
 
             StopRunningCoroutines();
+            _transitionsStopWaiter.AbortIfWaiting();
 
             _titleLabel.Dispose();
             _messageLabel.Dispose();
@@ -143,18 +141,11 @@ namespace ConnectIt.UI.DialogBox
             _elementsContainer.AddToClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
             _root.AddToClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
 
-            float closeDelaySec = Mathf.Max(
-                _elementsContainer.resolvedStyle.CalculateMaxTransitionLengthSec(),
-                _root.resolvedStyle.CalculateMaxTransitionLengthSec());
-
-            _delayedDisposeCoroutine = _coroutinesGlobalContainer.DelayedAction(Dispose, closeDelaySec);
+            _coroutinesGlobalContainer.DelayedAction(() => _transitionsStopWaiter.AbortCurrentAndWait(Dispose, _elementsContainer, _root));
         }
 
         private void StopRunningCoroutines()
         {
-            if (_delayedDisposeCoroutine != null)
-                _coroutinesGlobalContainer.StopCoroutine(_delayedDisposeCoroutine);
-
             if (_delayedClosingAnimationCoroutine != null)
                 _coroutinesGlobalContainer.StopCoroutine(_delayedClosingAnimationCoroutine);
 

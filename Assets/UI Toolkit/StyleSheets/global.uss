@@ -12,6 +12,8 @@
     --default-progress-bar-transition-timing-function: ease-out-cubic;
     --default-progress-bar-transition-duration: 300ms;
     --default-loading-box-transition-duration: 400ms;
+    --default-loading-spinning-transition-timing-function: linear;
+    --default-loading-spinning-transition-duration: 1500ms;
 }
 
 .label {
@@ -365,6 +367,13 @@
     -unity-background-scale-mode: scale-to-fit;
     background-image: url('project://database/Assets/2D/Sprites/UI/loading%20circle/spin%20element/loading%20circle%20spin%20element%2064.png?fileID=21300000&guid=50f7ff6cb962b1540ac0b231ce1ccc47&type=3#loading circle spin element 64');
     transform-origin: left bottom;
+}
+
+.loading-box__spinning-icon--360-rotated {
+    rotate: 360deg;
+    transition-property: rotate;
+    transition-timing-function: var(--default-loading-spinning-transition-timing-function);
+    transition-duration: var(--default-loading-spinning-transition-duration);
 }
 
 .loading-screen__root {

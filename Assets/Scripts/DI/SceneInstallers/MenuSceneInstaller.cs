@@ -3,8 +3,9 @@ using ConnectIt.Shop.Goods;
 using ConnectIt.Stats.Data;
 using ConnectIt.UI.Menu.MonoWrappers;
 using ConnectIt.UI.Menu.Views;
-using ConnectIt.UI.Menu.Views.GJLoginMenu;
 using ConnectIt.UI.Menu.Views.GJMenu;
+using ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu;
+using ConnectIt.UI.Menu.Views.GJMenu.GJProfileMenu;
 using ConnectIt.UI.Menu.Views.MainMenu;
 using ConnectIt.UI.Menu.Views.SelectLevelMenu;
 using ConnectIt.UI.Menu.Views.SettingsMenu;
@@ -20,6 +21,7 @@ public class MenuSceneInstaller : MonoInstaller
 {
     [SerializeField] private VisualTreeAsset _productAsset;
     [SerializeField] private VisualTreeAsset _statsElementAsset;
+    [SerializeField] private Sprite _defaultGJAvatarSprite;
 
     public override void InstallBindings()
     {
@@ -34,12 +36,12 @@ public class MenuSceneInstaller : MonoInstaller
         BindShopMenuViews();
         BindSettingsMenuViews();
         BindStatsMenuViews();
-        BindGJLoginMenuViews();
         BindGJMenuViews();
 
         void BindGlobalViews()
         {
             BindUIViewsFactories();
+            BindInstances();
 
             void BindUIViewsFactories()
             {
@@ -48,6 +50,16 @@ public class MenuSceneInstaller : MonoInstaller
 
                 Container.BindFactory<Label, CompletedLevelsView, CompletedLevelsView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Label, CompletedLevelsView>>();
+
+                Container.BindFactory<VisualElement, GameJoltAvatarView, GameJoltAvatarView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, GameJoltAvatarView>>();
+            }
+
+            void BindInstances()
+            {
+                Container.BindInstance(_defaultGJAvatarSprite)
+                         .AsSingle()
+                         .WhenInjectedInto<GameJoltAvatarView>();
             }
         }
 
@@ -136,25 +148,39 @@ public class MenuSceneInstaller : MonoInstaller
             }
         }
 
-        void BindGJLoginMenuViews()
-        {
-            BindUIViewsFactories();
-
-            void BindUIViewsFactories()
-            {
-                Container.BindFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, GJLoginMenuView, GJLoginMenuView.Factory>()
-                         .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, GJLoginMenuView>>();
-            }
-        }
-
         void BindGJMenuViews()
         {
+            BindGJProfileMenuViews();
+            BindGJLoginMenuViews();
+
             BindUIViewsFactories();
 
             void BindUIViewsFactories()
             {
-                Container.BindFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, GJMenuView, GJMenuView.Factory>()
-                         .FromFactory<PrimitiveDIFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, GJMenuView>>();
+                Container.BindFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, GJMenuView, GJMenuView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, GJMenuView>>();
+            }
+
+            void BindGJLoginMenuViews()
+            {
+                BindUIViewsFactories();
+
+                void BindUIViewsFactories()
+                {
+                    Container.BindFactory<VisualElement, VisualElement, GJLoginMenuView, GJLoginMenuView.Factory>()
+                             .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, GJLoginMenuView>>();
+                }
+            }
+
+            void BindGJProfileMenuViews()
+            {
+                BindUIViewsFactories();
+
+                void BindUIViewsFactories()
+                {
+                    Container.BindFactory<VisualElement, VisualElement, GJProfileMenuView, GJProfileMenuView.Factory>()
+                             .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, GJProfileMenuView>>();
+                }
             }
         }
     }

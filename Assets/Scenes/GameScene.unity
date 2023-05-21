@@ -1021,9 +1021,9 @@ MonoBehaviour:
     Id: 1353293514
   - Name: Menu.StatsMenu
     Id: 1240724967
-  - Name: Menu.GJMenu
+  - Name: Menu.GJMenu.GJProfileMenu
     Id: 1543902778
-  - Name: Menu.GJLoginMenu
+  - Name: Menu.GJMenu.GJLoginMenu
     Id: 1560099676
   - Name: Items
     Id: 1532993543

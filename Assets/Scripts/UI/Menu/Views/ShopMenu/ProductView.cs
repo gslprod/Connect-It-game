@@ -153,8 +153,7 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
             _dialogBoxFactory.CreateDefaultConfirmCancelDialogBox(_mainRoot,
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.ConfirmBuy_Title),
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.ConfirmBuy_Message),
-                _textKeyFactory.Create(TextKeysConstants.Common.Cancel),
-                _textKeyFactory.Create(TextKeysConstants.Common.Confirm),
+                _textKeyFactory,
                 OnConfirmBuyButtonClick,
                 true);
         }

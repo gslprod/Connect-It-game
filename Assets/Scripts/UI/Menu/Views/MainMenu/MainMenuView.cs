@@ -100,7 +100,7 @@ namespace ConnectIt.UI.Menu.Views.MainMenu
         private void OnGjApiButtonClick()
         {
             //todo
-            _framesSwitcher.SwitchTo(_menuUIDocumentMonoWrapper.GJLoginContainer);
+            _framesSwitcher.SwitchTo(_menuUIDocumentMonoWrapper.GJContainer);
         }
 
         #endregion

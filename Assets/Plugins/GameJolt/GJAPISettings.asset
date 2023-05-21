@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: GJAPISettings
   m_EditorClassIdentifier: 
   gameId: 808560
-  privateKey: 
   _autoInit: 0
   timeout: 10
   autoPing: 0
@@ -21,7 +20,7 @@ MonoBehaviour:
   signInMessage: Signed in as '{0}'
   signOutMessage: Signed out
   useCaching: 1
-  encryptionKey: "GR*0\xA7bb%hkZ88Woe"
+  encryptionKey: not using
   logLevel: 1
   secretTrophies: 
   autoConnect: 0

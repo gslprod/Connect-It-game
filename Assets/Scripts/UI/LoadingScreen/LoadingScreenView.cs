@@ -1,6 +1,7 @@
 ﻿using ConnectIt.Coroutines;
 using ConnectIt.Localization;
 using ConnectIt.UI.CommonViews;
+using ConnectIt.UI.Tools;
 using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
 using ConnectIt.Utilities.Formatters;
@@ -35,10 +36,9 @@ namespace ConnectIt.UI.LoadingScreen
         private TextKey _titleKey;
         private TextKey _messageKey;
 
+        private readonly TransitionsStopWaiter _transitionsStopWaiter = new();
         private Coroutine _delayedShowingAnimationCoroutine;
-        private Coroutine _appearAnimationCoroutine;
         private Coroutine _delayedClosingAnimationCoroutine;
-        private Coroutine _delayedDisposeCoroutine;
 
         public LoadingScreenView(
             VisualTreeAsset uiAsset,
@@ -107,11 +107,6 @@ namespace ConnectIt.UI.LoadingScreen
 
         public void Close()
         {
-            Assert.IsNull(_delayedDisposeCoroutine);
-
-            if (_appearAnimationCoroutine != null)
-                _coroutinesGlobalContainer.StopCoroutine(_appearAnimationCoroutine);
-
             _delayedClosingAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(StartClosingAnimation);
 
             Closing?.Invoke(this);
@@ -119,11 +114,10 @@ namespace ConnectIt.UI.LoadingScreen
 
         public void Dispose()
         {
-            _delayedDisposeCoroutine = null;
-
             _root.RemoveFromHierarchy();
 
             StopRunningCoroutines();
+            _transitionsStopWaiter.AbortIfWaiting();
 
             _titleLabel.Dispose();
             _messageLabel.Dispose();
@@ -138,11 +132,7 @@ namespace ConnectIt.UI.LoadingScreen
             _elementsContainer.RemoveFromClassList(ClassNamesConstants.Global.LoadingScreenContainerClosed);
             _root.RemoveFromClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
 
-            float appearAnimationLengthSec = Mathf.Max(
-                _elementsContainer.resolvedStyle.CalculateMaxTransitionLengthSec(),
-                _root.resolvedStyle.CalculateMaxTransitionLengthSec());
-
-            _appearAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(OnShowingAnimationEnded, appearAnimationLengthSec);
+            _coroutinesGlobalContainer.DelayedAction(() => _transitionsStopWaiter.AbortCurrentAndWait(OnShowingAnimationEnded, _elementsContainer, _root));
         }
 
         private void StartClosingAnimation()
@@ -152,30 +142,18 @@ namespace ConnectIt.UI.LoadingScreen
             _elementsContainer.AddToClassList(ClassNamesConstants.Global.LoadingScreenContainerClosed);
             _root.AddToClassList(ClassNamesConstants.Global.LoadingScreenRootClosed);
 
-            float closeDelaySec = Mathf.Max(
-                _elementsContainer.resolvedStyle.CalculateMaxTransitionLengthSec(),
-                _root.resolvedStyle.CalculateMaxTransitionLengthSec());
-
-            _delayedDisposeCoroutine = _coroutinesGlobalContainer.DelayedAction(Dispose, closeDelaySec);
+            _coroutinesGlobalContainer.DelayedAction(() => _transitionsStopWaiter.AbortCurrentAndWait(Dispose, _elementsContainer, _root));
         }
 
         private void OnShowingAnimationEnded()
         {
-            _appearAnimationCoroutine = null;
-
             ShowingAnimationEnded?.Invoke(this);
         }
 
         private void StopRunningCoroutines()
         {
-            if (_appearAnimationCoroutine != null)
-                _coroutinesGlobalContainer.StopCoroutine(_appearAnimationCoroutine);
-
             if (_delayedClosingAnimationCoroutine != null)
                 _coroutinesGlobalContainer.StopCoroutine(_delayedClosingAnimationCoroutine);
-
-            if (_delayedDisposeCoroutine != null)
-                _coroutinesGlobalContainer.StopCoroutine(_delayedDisposeCoroutine);
 
             if (_delayedShowingAnimationCoroutine != null)
                 _coroutinesGlobalContainer.StopCoroutine(_delayedShowingAnimationCoroutine);

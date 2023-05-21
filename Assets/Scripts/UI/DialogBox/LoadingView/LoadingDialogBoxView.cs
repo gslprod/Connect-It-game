@@ -1,4 +1,5 @@
-﻿using ConnectIt.Localization;
+﻿using ConnectIt.Coroutines;
+using ConnectIt.Localization;
 using ConnectIt.UI.CommonViews;
 using System;
 using UnityEngine.UIElements;
@@ -27,22 +28,26 @@ namespace ConnectIt.UI.DialogBox
         private readonly CustomDialogBoxView.Factory _customDialogBoxViewFactory;
         private readonly VisualTreeAsset _uiAsset;
         private readonly DefaultLocalizedLabelView.Factory _defaultLocalizedLabelViewFactory;
+        private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
         private LoadingDialogBoxViewCreationData _creationData;
         private TextKey _messageTextKey;
 
         private CustomDialogBoxView _customDialogBoxView;
         private DefaultLocalizedLabelView _messageLabelView;
+        private VisualElement _spinningElement;
 
         public LoadingDialogBoxView(
             CustomDialogBoxView.Factory customDialogBoxViewFactory,
             LoadingDialogBoxViewCreationData creationData,
             VisualTreeAsset uiAsset,
-            DefaultLocalizedLabelView.Factory defaultLocalizedLabelViewFactory)
+            DefaultLocalizedLabelView.Factory defaultLocalizedLabelViewFactory,
+            ICoroutinesGlobalContainer coroutinesGlobalContainer)
         {
             _customDialogBoxViewFactory = customDialogBoxViewFactory;
             _creationData = creationData;
             _uiAsset = uiAsset;
             _defaultLocalizedLabelViewFactory = defaultLocalizedLabelViewFactory;
+            _coroutinesGlobalContainer = coroutinesGlobalContainer;
         }
 
         public void Initialize()
@@ -52,7 +57,7 @@ namespace ConnectIt.UI.DialogBox
 
         public void Dispose()
         {
-            DisposeDisposableViews();
+            _customDialogBoxView.Dispose();
         }
 
         public void Show()
@@ -85,6 +90,8 @@ namespace ConnectIt.UI.DialogBox
             _customDialogBoxView = _customDialogBoxViewFactory.Create(customDialogBoxCreationData);
             _messageTextKey = _creationData.MessageKey;
 
+            _customDialogBoxView.Disposing += OnDialogBoxDisposing;
+
             if (_creationData.ShowImmediately)
                 Show();
 
@@ -93,15 +100,40 @@ namespace ConnectIt.UI.DialogBox
 
         private void CreateViews()
         {
+            VisualElement root = _customDialogBoxView.ContentRoot;
+
             _messageLabelView = _defaultLocalizedLabelViewFactory.Create(
                 _customDialogBoxView.ContentRoot.Q<Label>(TemplatesNameConstants.LoadingDialogBox.MessageLabel),
                 _messageTextKey);
+
+            SetupSpinning(root);
+        }
+
+        private void SetupSpinning(VisualElement root)
+        {
+            _spinningElement = root.Q<VisualElement>(TemplatesNameConstants.LoadingDialogBox.LoadingSpinningIcon);
+            _coroutinesGlobalContainer.DelayedAction(() => _spinningElement.AddToClassList(ClassNamesConstants.Global.LoadingBoxSpinningIcon360Rotated));
+            
+            _spinningElement.RegisterCallback<TransitionEndEvent>(RestartSpin);
+        }
+
+        private void RestartSpin(TransitionEndEvent endEvent)
+        {
+            _spinningElement.RemoveFromClassList(ClassNamesConstants.Global.LoadingBoxSpinningIcon360Rotated);
+            _coroutinesGlobalContainer.DelayedAction(() => _spinningElement.AddToClassList(ClassNamesConstants.Global.LoadingBoxSpinningIcon360Rotated));
         }
 
         private void DisposeDisposableViews()
         {
-            _customDialogBoxView.Dispose();
             _messageLabelView.Dispose();
+        }
+
+        private void OnDialogBoxDisposing(IDialogBoxView dialogBoxView)
+        {
+            _spinningElement.UnregisterCallback<TransitionEndEvent>(RestartSpin);
+            _customDialogBoxView.Disposing -= OnDialogBoxDisposing;
+
+            DisposeDisposableViews();
         }
 
         public class Factory : PlaceholderFactory<LoadingDialogBoxViewCreationData, LoadingDialogBoxView> { }

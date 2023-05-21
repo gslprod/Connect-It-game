@@ -22,6 +22,7 @@
             public const string LoadingBoxRootClosed = "loading-box__root--closed";
             public const string LoadingBoxContainer = "loading-box__container";
             public const string LoadingBoxContainerClosed = "loading-box__container--closed";
+            public const string LoadingBoxSpinningIcon360Rotated = "loading-box__spinning-icon--360-rotated";
 
             #endregion
 

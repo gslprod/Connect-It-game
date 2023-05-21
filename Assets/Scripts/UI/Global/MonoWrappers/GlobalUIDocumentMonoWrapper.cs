@@ -21,6 +21,11 @@ namespace ConnectIt.UI.Global.MonoWrappers
 
         private void Awake()
         {
+            //todo
+            //for some reason on android Zenject doesnt marks this object as DontDestroyOnLoad, whether this object is creating from ProjectContext
+            //in the editor playmode this problem doesnt appear
+            DontDestroyOnLoad(gameObject);
+
             _uiDocument = GetComponent<UIDocument>();
 
             _rootVE = _documentRootVE.Q<VisualElement>(NameConstants.RootName);
@@ -45,10 +50,7 @@ namespace ConnectIt.UI.Global.MonoWrappers
             if (IsBlockedInternal() == isBlock)
                 return;
 
-            if (isBlock)
-                _blockVE.RemoveFromClassList(ClassNamesConstants.GlobalView.BlockPanelDisabled);
-            else
-                _blockVE.AddToClassList(ClassNamesConstants.GlobalView.BlockPanelDisabled);
+            _blockVE.ToggleInClassList(ClassNamesConstants.GlobalView.BlockPanelDisabled);
         }
 
         private bool IsBlockedInternal()

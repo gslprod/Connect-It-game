@@ -79,11 +79,8 @@ namespace ConnectIt.ExternalServices.GameJolt
         {
             bool abort = false;
 
-            while (true)
+            while (!abort)
             {
-                if (abort)
-                    break;
-
                 GJAPI.Sessions.Ping(SessionStatus.Active, success =>
                 {
                     if (!success)
@@ -93,8 +90,6 @@ namespace ConnectIt.ExternalServices.GameJolt
                         abort = true;
                     }
                 });
-
-                Debug.Log("ping");
 
                 yield return new WaitForSecondsRealtime(15);
             }

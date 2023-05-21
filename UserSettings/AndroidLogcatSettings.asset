@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "ff55e632",
         "name": "com.GSLProduction.ConnectIt",
-        "processId": 25393,
+        "processId": 12335,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,25 +11,31 @@
         {
             "deviceId": "ff55e632",
             "name": "com.GSLProduction.ConnectIt",
-            "processId": 7566,
+            "processId": 9286,
             "exited": true
         },
         {
             "deviceId": "ff55e632",
             "name": "com.GSLProduction.ConnectIt",
-            "processId": 13115,
+            "processId": 9889,
             "exited": true
         },
         {
             "deviceId": "ff55e632",
             "name": "com.GSLProduction.ConnectIt",
-            "processId": 23655,
+            "processId": 10394,
             "exited": true
         },
         {
             "deviceId": "ff55e632",
             "name": "com.GSLProduction.ConnectIt",
-            "processId": 25393,
+            "processId": 12121,
+            "exited": true
+        },
+        {
+            "deviceId": "ff55e632",
+            "name": "com.GSLProduction.ConnectIt",
+            "processId": 12335,
             "exited": false
         }
     ],

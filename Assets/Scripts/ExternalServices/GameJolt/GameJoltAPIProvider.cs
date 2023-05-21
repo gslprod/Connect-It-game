@@ -5,15 +5,16 @@ using ConnectIt.Utilities;
 using GameJolt.API;
 using GameJolt.API.Objects;
 using System;
-using UnityEngine;
 using Zenject;
 
 namespace ConnectIt.ExternalServices.GameJolt
 {
-    public class GameJoltAPIProvider : IInitializable
+    public class GameJoltAPIProvider : IInitializable, IDisposable
     {
-        public event Action<bool> LogInAttempt;
+        public event Action<bool> UserLogInAttempt;
         public event Action<bool> UserInfoUpdateAttempt;
+        public event Action UserLogOut;
+        public event Action<bool> UserAvatarDownloadAttempt;
 
         public User User => _gjAPI.CurrentUser;
         public bool UserExistsAndLoggedIn => _gjAPI.HasSignedInUser;
@@ -40,15 +41,15 @@ namespace ConnectIt.ExternalServices.GameJolt
 
         public void Initialize()
         {
-            Application.quitting += () =>
-            {
-                if (UserExistsAndLoggedIn)
-                    LogOut();
-            };
-
             _gjAPI.Initialize(_confidentialValues.GameJoltAPIGameKey);
 
             AutoLogIn();
+        }
+
+        public void Dispose()
+        {
+            if (UserExistsAndLoggedIn)
+                LogOut();
         }
 
         public void LogIn(string name, string token, Action<bool> signedInCallback = null, Action<bool> userFetchedCallback = null)
@@ -68,15 +69,44 @@ namespace ConnectIt.ExternalServices.GameJolt
             user.SignIn(finalSignedInCallback, finalUserFetchedCallback);
         }
 
+        public void UpdateCurrentUserInfo(Action<bool> userFetchedCallback = null)
+        {
+            ThrowIfUserExistenceIs(false);
+
+            Action<bool> finalUserFetchedCallback = UserInfoUpdateCallbackHandler;
+            if (userFetchedCallback != null)
+                finalUserFetchedCallback += userFetchedCallback;
+
+            User.Get((user) => finalUserFetchedCallback(user != null));
+        }
+
+        public void DownloadCurrentUserAvatar(Action<bool> userAvatarDownloadCallback = null)
+        {
+            ThrowIfUserExistenceIs(false);
+
+            Action<bool> finalUserAvatarDownloadCallback = UserAvatarDownloadHandler;
+            if (userAvatarDownloadCallback != null)
+                finalUserAvatarDownloadCallback += userAvatarDownloadCallback;
+
+            User.DownloadAvatar(finalUserAvatarDownloadCallback);
+        }
+
         public void LogOut()
         {
             ThrowIfUserExistenceIs(false);
 
             _sessions.Close();
             User.SignOut();
+
+            UserLogOut?.Invoke();
         }
 
         #region Scores
+
+        public event Action TablesChanged { add => _scores.TablesChanged += value; remove => _scores.TablesChanged -= value; }
+        public event Action<Table> TableScoresChanged { add => _scores.TableScoresChanged += value; remove => _scores.TableScoresChanged -= value; }
+        public event Action<Table> TablePlayerScoresChanged { add => _scores.TablePlayerScoresChanged += value; remove => _scores.TablePlayerScoresChanged -= value; }
+        public event Action<Table, Score, bool> PlayerScoreAppendAttempt { add => _scores.PlayerScoreAppendAttempt += value; remove => _scores.PlayerScoreAppendAttempt -= value; }
 
         public void AppendPlayerScore(Table table, Score toAppend, Action<bool> callback = null)
         {
@@ -153,12 +183,20 @@ namespace ConnectIt.ExternalServices.GameJolt
                 _scores.LoadTables();
             }
 
-            LogInAttempt?.Invoke(success);
+            UserLogInAttempt?.Invoke(success);
         }
 
         private void UserInfoUpdateCallbackHandler(bool success)
         {
+            if (success)
+                DownloadCurrentUserAvatar();
+
             UserInfoUpdateAttempt?.Invoke(success);
+        }
+
+        private void UserAvatarDownloadHandler(bool success)
+        {
+            UserAvatarDownloadAttempt?.Invoke(success);
         }
 
         #endregion

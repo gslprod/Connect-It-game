@@ -42,7 +42,7 @@ namespace ConnectIt.UI.CommonViews
         {
             textKey.SetArgs(new object[] { _userCustomer.Wallet.Coins });
 
-            UpdateLocalization();
+            UpdateLabel();
         }
 
         public new class Factory : PlaceholderFactory<Label, CoinsView> { }

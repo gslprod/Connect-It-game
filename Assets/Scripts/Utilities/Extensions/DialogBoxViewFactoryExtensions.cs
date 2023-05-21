@@ -102,6 +102,38 @@ namespace ConnectIt.Utilities.Extensions
             return source.Create(creationData);
         }
 
+        public static DialogBoxView CreateDefaultConfirmCancelDialogBox(this DialogBoxView.Factory source,
+                VisualElement parent, TextKey titleTextKey, TextKey messageTextKey, TextKey.Factory textKeyFactory,
+                Action onConfirmClick, bool showImmediately = false)
+        {
+            DialogBoxButtonInfo cancelButtonInfo = new(
+                textKeyFactory.Create(TextKeysConstants.Common.Cancel),
+                null,
+                DialogBoxButtonType.Dismiss,
+                true);
+
+            DialogBoxButtonInfo confirmButtonInfo = new(
+                textKeyFactory.Create(TextKeysConstants.Common.Confirm),
+                onConfirmClick,
+                DialogBoxButtonType.Accept,
+                true);
+
+            DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
+            {
+                confirmButtonInfo, cancelButtonInfo
+            };
+
+            DialogBoxCreationData creationData = new(
+                parent,
+                titleTextKey,
+                messageTextKey,
+                buttonsInfo,
+                null,
+                showImmediately);
+
+            return source.Create(creationData);
+        }
+
         public static void CreateDefaultGameEndResultsDialogBox(this DialogBoxView.Factory source,
             TextKey.Factory textKeyFactory, VisualElement parent, TextKey titleTextKey, TextKey messageTextKey, GameplayLogicConfig gameplayLogicConfig,
             ILevelEndHandler levelEndHandler, bool createNextLevelButton, bool showImmediately = false)

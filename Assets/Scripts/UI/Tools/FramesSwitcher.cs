@@ -10,6 +10,8 @@ namespace ConnectIt.UI.Tools
     {
         public event Action<T> FrameSwitched;
 
+        public T Current => _currentFrameIndex < 0 ? default : _frames[_currentFrameIndex].Element;
+
         private readonly Frame<T>[] _frames;
         private readonly History<int> _switchedFramesHistory;
         private readonly Action<T> _enableAction;

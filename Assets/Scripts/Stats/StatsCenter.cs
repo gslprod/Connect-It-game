@@ -14,7 +14,7 @@ using static ConnectIt.Save.SaveProviders.SaveData.StatsSaveData;
 
 namespace ConnectIt.Stats
 {
-    public class StatsCenter : IStatsCenter, IInitializable
+    public class StatsCenter : IStatsCenter, IInitializable, IDisposable
     {
         public IEnumerable<IStatsData> StatsData => _data;
 
@@ -54,8 +54,11 @@ namespace ConnectIt.Stats
                 return;
 
             CreateMissingStatsData();
+        }
 
-            Application.quitting += SaveAllStatsData;
+        public void Dispose()
+        {
+            SaveAllStatsData();
         }
 
         public void RegisterModule(IStatsModule module)

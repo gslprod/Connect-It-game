@@ -12,7 +12,6 @@ namespace GameJolt.API
 		[SerializeField, Tooltip("The game ID. It can be found on the Game Jolt website under Dashboard > YOUR-GAME > Game API > API Settings.")]
 		private int gameId;
 
-		[SerializeField, Tooltip("The game Private Key. It can be found on the Game Jolt website under Dashboard > YOUR-GAME > Game API > API Settings.")]
 		private string privateKey;
 
 		[Header("Settings")]
@@ -38,7 +37,7 @@ namespace GameJolt.API
 		private bool useCaching = true;
 
 		[SerializeField, Tooltip("The key used to encrypt the user credentials.")]
-		private string encryptionKey = "";
+		private string encryptionKey = "not using";
 
 		[SerializeField, Tooltip("Set LogLevel for all GameJolt API log messages. Messages below this level will be discarded.")]
 		private LogHelper.LogLevel logLevel = LogHelper.LogLevel.Warning;

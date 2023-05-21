@@ -197,16 +197,11 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
             if (blocked == _viewRoot.ClassListContains(ClassNamesConstants.GameplayView.BoostElementRootUsed))
                 return;
 
+            _viewRoot.ToggleInClassList(ClassNamesConstants.GameplayView.BoostElementRootUsed);
             if (blocked)
-            {
-                _viewRoot.AddToClassList(ClassNamesConstants.GameplayView.BoostElementRootUsed);
                 _useButton.SetOnClick(OnUsedButtonClick);
-            }
             else
-            {
-                _viewRoot.RemoveFromClassList(ClassNamesConstants.GameplayView.BoostElementRootUsed);
                 _useButton.SetOnClick(OnUseButtonClick);
-            }
         }
 
         #region DescriptionButton
@@ -235,8 +230,7 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
             _dialogBoxFactory.CreateDefaultConfirmCancelDialogBox(_mainRoot,
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.ConfirmBoostUse_Title),
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.ConfirmBoostUse_Message),
-                _textKeyFactory.Create(TextKeysConstants.Common.Cancel),
-                _textKeyFactory.Create(TextKeysConstants.Common.Confirm),
+                _textKeyFactory,
                 OnConfirmUseButtonClick,
                 true);
         }
