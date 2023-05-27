@@ -1,3 +1,4 @@
+using ConnectIt.ExternalServices.GameJolt.Objects;
 using ConnectIt.Infrastructure.Factories;
 using ConnectIt.Shop.Goods;
 using ConnectIt.Stats.Data;
@@ -12,6 +13,7 @@ using ConnectIt.UI.Menu.Views.SettingsMenu;
 using ConnectIt.UI.Menu.Views.ShopMenu;
 using ConnectIt.UI.Menu.Views.StatsMenu;
 using ConnectIt.UI.Tools;
+using GameJolt.API.Objects;
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -22,6 +24,8 @@ public class MenuSceneInstaller : MonoInstaller
     [SerializeField] private VisualTreeAsset _productAsset;
     [SerializeField] private VisualTreeAsset _statsElementAsset;
     [SerializeField] private Sprite _defaultGJAvatarSprite;
+    [SerializeField] private VisualTreeAsset _gjScoreAsset;
+    [SerializeField] private VisualTreeAsset _gjScoreboardAsset;
 
     public override void InstallBindings()
     {
@@ -69,8 +73,8 @@ public class MenuSceneInstaller : MonoInstaller
 
             void BindUIViewsFactories()
             {
-                Container.BindFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, MainMenuView, MainMenuView.Factory>()
-                         .FromFactory<PrimitiveDIFactory<VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, MainMenuView>>();
+                Container.BindFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, MainMenuView, MainMenuView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, MainMenuView>>();
             }
         }
 
@@ -175,11 +179,35 @@ public class MenuSceneInstaller : MonoInstaller
             void BindGJProfileMenuViews()
             {
                 BindUIViewsFactories();
+                BindAssets();
 
                 void BindUIViewsFactories()
                 {
                     Container.BindFactory<VisualElement, VisualElement, GJProfileMenuView, GJProfileMenuView.Factory>()
                              .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, GJProfileMenuView>>();
+
+                    Container.BindFactory<TableInfo, VisualElement, VisualElement, GJScoreboardView, GJScoreboardView.Factory>()
+                             .FromFactory<PrimitiveDIFactory<TableInfo, VisualElement, VisualElement, GJScoreboardView>>();
+
+                    Container.BindFactory<ScoreInfo, VisualElement, VisualElement, GJScoreView, GJScoreView.Factory>()
+                             .FromFactory<PrimitiveDIFactory<ScoreInfo, VisualElement, VisualElement, GJScoreView>>();
+
+                    Container.BindFactory<VisualElement, VisualElement, GJScoreboardsView, GJScoreboardsView.Factory>()
+                             .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, GJScoreboardsView>>();
+
+                    Container.BindFactory<Label, GJTopPositionLabel, GJTopPositionLabel.Factory>()
+                             .FromFactory<PrimitiveDIFactory<Label, GJTopPositionLabel>>();
+                }
+
+                void BindAssets()
+                {
+                    Container.BindInstance(_gjScoreAsset)
+                             .AsCached()
+                             .WhenInjectedInto<GJScoreView>();
+
+                    Container.BindInstance(_gjScoreboardAsset)
+                             .AsCached()
+                             .WhenInjectedInto<GJScoreboardView>();
                 }
             }
         }

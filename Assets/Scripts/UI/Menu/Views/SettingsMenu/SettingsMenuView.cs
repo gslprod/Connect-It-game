@@ -18,14 +18,14 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
         private readonly FramesSwitcher<VisualElement> _framesSwitcher;
         private readonly MenuUIDocumentMonoWrapper _menuUIDocumentMonoWrapper;
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
-        private readonly DefaultLocalizedLabelView.Factory _defaultLabelViewFactory;
+        private readonly DefaultLocalizedTextElementView.Factory _defaultLabelViewFactory;
         private readonly TextKey.Factory _textKeyFactory;
         private readonly DialogBoxView.Factory _dialogBoxViewFactory;
         private readonly DefaultLocalizedButtonView.Factory _defaultLocalizedButtonViewFactory;
         private readonly ILocalizationProvider _localizationProvider;
 
         private DefaultButtonView _backButton;
-        private DefaultLocalizedLabelView _titleLabel;
+        private DefaultLocalizedTextElementView _titleLabel;
         private DefaultLocalizedButtonView _languageButton;
 
         public SettingsMenuView(VisualElement viewRoot,
@@ -33,7 +33,7 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
             FramesSwitcher<VisualElement> switcher,
             MenuUIDocumentMonoWrapper menuUIDocumentMonoWrapper,
             DefaultButtonView.Factory defaultButtonViewFactory,
-            DefaultLocalizedLabelView.Factory defaultLabelViewFactory,
+            DefaultLocalizedTextElementView.Factory defaultLabelViewFactory,
             TextKey.Factory textKeyFactory,
             DialogBoxView.Factory dialogBoxViewFactory,
             DefaultLocalizedButtonView.Factory defaultLocalizedButtonViewFactory,

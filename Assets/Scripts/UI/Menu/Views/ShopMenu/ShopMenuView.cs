@@ -17,16 +17,16 @@ namespace ConnectIt.UI.Menu.Views.StatsMenu
         private readonly FramesSwitcher<VisualElement> _framesSwitcher;
         private readonly MenuUIDocumentMonoWrapper _menuUIDocumentMonoWrapper;
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
-        private readonly DefaultLocalizedLabelView.Factory _defaultLabelViewFactory;
+        private readonly DefaultLocalizedTextElementView.Factory _defaultLabelViewFactory;
         private readonly TextKey.Factory _textKeyFactory;
         private readonly CoinsView.Factory _coinsViewFactory;
         private readonly GoodsView.Factory _goodsViewFactory;
 
         private DefaultButtonView _backButton;
-        private DefaultLocalizedLabelView _titleLabel;
+        private DefaultLocalizedTextElementView _titleLabel;
         private CoinsView _coinsView;
-        private DefaultLocalizedLabelView _coinsInfoLabel;
-        private DefaultLocalizedLabelView _goodsTitleLabel;
+        private DefaultLocalizedTextElementView _coinsInfoLabel;
+        private DefaultLocalizedTextElementView _goodsTitleLabel;
         private GoodsView _goodsView;
 
         public ShopMenuView(VisualElement viewRoot,
@@ -34,7 +34,7 @@ namespace ConnectIt.UI.Menu.Views.StatsMenu
             FramesSwitcher<VisualElement> switcher,
             MenuUIDocumentMonoWrapper menuUIDocumentMonoWrapper,
             DefaultButtonView.Factory defaultButtonViewFactory,
-            DefaultLocalizedLabelView.Factory defaultLabelViewFactory,
+            DefaultLocalizedTextElementView.Factory defaultLabelViewFactory,
             TextKey.Factory textKeyFactory,
             CoinsView.Factory coinsViewFactory,
             GoodsView.Factory goodsViewFactory)

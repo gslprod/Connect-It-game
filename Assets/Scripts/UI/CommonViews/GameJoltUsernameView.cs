@@ -6,7 +6,7 @@ using Zenject;
 
 namespace ConnectIt.UI.CommonViews
 {
-    public class GameJoltUsernameView : DefaultUniversalLabelView
+    public class GameJoltUsernameView : DefaultUniversalTextElementView
     {
         private readonly GameJoltAPIProvider _gjApiProvider;
         private readonly TextKey.Factory _textKeyFactory;

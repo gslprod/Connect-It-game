@@ -153,10 +153,9 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             };
 
             _framesSwitcher = new(frames, EnableFrame, DisableFrame);
-            _framesSwitcher.FrameSwitched += OnFrameSwitched;
             _firstFrameSwitchCoroutine = _coroutinesGlobalContainer.DelayedAction(SwitchToFirstFrame, new WaitForFrames(2));
 
-            _mainMenuView = _mainMenuViewFactory.Create(MainMenuContainer, _framesSwitcher, this);
+            _mainMenuView = _mainMenuViewFactory.Create(MainMenuContainer, _rootVE, _framesSwitcher, this);
             _selectLevelMenuView = _selectLevelMenuViewFactory.Create(SelectLevelContainer, _rootVE, _framesSwitcher, this);
             _shopMenuView = _shopMenuViewFactory.Create(ShopContainer, _rootVE, _framesSwitcher, this);
             _settingsMenuView = _settingsMenuViewFactory.Create(SettingsContainer, _rootVE, _framesSwitcher, this);
@@ -169,6 +168,8 @@ namespace ConnectIt.UI.Menu.MonoWrappers
             _firstFrameSwitchCoroutine = null;
 
             _framesSwitcher.SwitchTo(MainMenuContainer);
+
+            _framesSwitcher.FrameSwitched += OnFrameSwitched;
         }
 
         private void OnFrameSwitched(VisualElement frame)

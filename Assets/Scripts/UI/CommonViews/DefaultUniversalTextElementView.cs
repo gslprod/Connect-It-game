@@ -4,15 +4,15 @@ using Zenject;
 
 namespace ConnectIt.UI.CommonViews
 {
-    public class DefaultUniversalLabelView : DefaultLocalizedLabelView
+    public class DefaultUniversalTextElementView : DefaultLocalizedTextElementView
     {
         protected string text;
 
-        public DefaultUniversalLabelView(
-            Label label,
+        public DefaultUniversalTextElementView(
+            TextElement textElement,
             TextKey textKey,
             string text,
-            ILocalizationProvider localizationProvider) : base(label, textKey, localizationProvider)
+            ILocalizationProvider localizationProvider) : base(textElement, textKey, localizationProvider)
         {
             this.text = text;
         }
@@ -28,9 +28,9 @@ namespace ConnectIt.UI.CommonViews
             if (LocalizationEnabled)
                 base.UpdateLabel();
             else
-                label.text = text;
+                textElement.text = text;
         }
 
-        public new class Factory : PlaceholderFactory<Label, TextKey, string, DefaultUniversalLabelView> { }
+        public new class Factory : PlaceholderFactory<TextElement, TextKey, string, DefaultUniversalTextElementView> { }
     }
 }

@@ -139,21 +139,24 @@
                             </ui:VisualElement>
                             <ui:VisualElement name="gj-scroll-view-container" class="gj-api-scroll-view-container">
                                 <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" focusable="true" touch-scroll-type="Elastic" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" class="gj-api-scroll-view">
-                                    <ui:VisualElement name="gj-scroll-view-internal-container" class="gj-api-scroll-view-internal-container">
+                                    <ui:VisualElement name="gj-scroll-view-internal-container" class="gj-api-scroll-view-internal-container" style="flex-grow: 1;">
                                         <ui:VisualElement name="gj-account-info-container" class="gj-account-info-container" style="margin-bottom: 70px;">
                                             <ui:VisualElement name="username-label-container" class="gj-account-info-container__username-label-container">
                                                 <ui:Label text="Label" name="username-label" class="label highlighted-label gj-account-info-container__username-label" />
-                                                <ui:Button display-tooltip-when-elided="true" name="logout-button" class="button highlighted-label highlighted-label--logout" style="width: 110px;">
+                                                <ui:Button display-tooltip-when-elided="true" name="logout-button" class="button highlighted-label highlighted-label--logout gj-account-info-container__logout-button">
                                                     <ui:VisualElement name="logout-button-icon" class="gj-account-info-container__logout-button-icon" />
                                                 </ui:Button>
                                             </ui:VisualElement>
                                             <ui:Label text="Label" name="top-position-label" class="label highlighted-label gj-account-info-container__top-position-label highlighted-label--top-user-position" />
                                         </ui:VisualElement>
                                         <ui:VisualElement name="scores-container" class="gj-scores-container">
-                                            <ui:Label text="Label" name="scores-title" class="label highlighted-label boosts-container__title" />
-                                            <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" touch-scroll-type="Elastic" class="gj-scores-scroll-view">
-                                                <ui:VisualElement name="scores-scroll-view-container" class="scroll-view-container" />
-                                            </ui:ScrollView>
+                                            <ui:VisualElement name="scores-title-container" class="gj-scores-container__title-container">
+                                                <ui:Label text="Label" name="scores-title" class="label highlighted-label gj-scores-container__title" />
+                                                <ui:Button name="scores-change-table-button" class="button highlighted-label gj-scores-container__change-table-button">
+                                                    <ui:VisualElement name="icon" class="gj-scores-container__change-table-button-icon" style="background-image: url(&apos;project://database/Assets/2D/Sprites/UI/arrow/arrow%2064.png?fileID=21300000&amp;guid=3b48eafae0e44554aab01a765c85d59e&amp;type=3#arrow 64&apos;);" />
+                                                </ui:Button>
+                                            </ui:VisualElement>
+                                            <ui:VisualElement name="scoreboards-container" class="gj-scoreboards-container" />
                                         </ui:VisualElement>
                                     </ui:VisualElement>
                                 </ui:ScrollView>
@@ -189,6 +192,12 @@
                                                     </ui:VisualElement>
                                                 </ui:TextField>
                                             </ui:VisualElement>
+                                        </ui:VisualElement>
+                                        <ui:VisualElement name="auto-login-group" class="auto-login-container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                                            <ConnectIt.UI.CustomControls.ButtonToggle text="Toggle" name="auto-login-toggle" class="button highlighted-label button-toggle--auto-login" />
+                                            <ui:Button name="auto-login-info-button" class="button highlighted-label info-button">
+                                                <ui:VisualElement name="logout-button-icon" class="info-button__icon" />
+                                            </ui:Button>
                                         </ui:VisualElement>
                                         <ui:Button text="Button" display-tooltip-when-elided="true" name="login-button" class="button highlighted-label highlighted-label--login" />
                                     </ui:VisualElement>

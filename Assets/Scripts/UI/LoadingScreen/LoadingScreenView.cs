@@ -23,7 +23,7 @@ namespace ConnectIt.UI.LoadingScreen
         private readonly VisualTreeAsset _uiAsset;
         private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
         private readonly IFormatter _formatter;
-        private readonly DefaultLocalizedLabelView.Factory _defaultLocalizedLabelViewFactory;
+        private readonly DefaultLocalizedTextElementView.Factory _defaultLocalizedLabelViewFactory;
         private LoadingScreenCreationData _creationData;
 
         private VisualElement _parent;
@@ -31,8 +31,8 @@ namespace ConnectIt.UI.LoadingScreen
         private VisualElement _elementsContainer;
         private Custom.ProgressBar _progressBar;
         private Label _progressBarLabel;
-        private DefaultLocalizedLabelView _titleLabel;
-        private DefaultLocalizedLabelView _messageLabel;
+        private DefaultLocalizedTextElementView _titleLabel;
+        private DefaultLocalizedTextElementView _messageLabel;
         private TextKey _titleKey;
         private TextKey _messageKey;
 
@@ -45,7 +45,7 @@ namespace ConnectIt.UI.LoadingScreen
             LoadingScreenCreationData creationData,
             ICoroutinesGlobalContainer coroutinesGlobalContainer,
             IFormatter formatter,
-            DefaultLocalizedLabelView.Factory defaultLocalizedLabelViewFactory)
+            DefaultLocalizedTextElementView.Factory defaultLocalizedLabelViewFactory)
         {
             _uiAsset = uiAsset;
             _creationData = creationData;

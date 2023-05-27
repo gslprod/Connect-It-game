@@ -44,6 +44,7 @@
         public static class MenuView
         {
             public const string ContentContainerFrameClosed = "content-container__frame--closed";
+            public const string GJAccountInfoTopPositionLabelHidden = "gj-account-info-container__top-position-label--hidden";
 
             public const string LevelButtonCompleted = "level-button--completed";
             public const string LevelButtonCurrent = "level-button--current";

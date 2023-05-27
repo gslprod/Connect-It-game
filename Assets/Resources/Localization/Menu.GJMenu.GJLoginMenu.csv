@@ -4,3 +4,4 @@ Menu.GJMenu.GJLoginMenu.GJInfoLabel.Text,,"Войдите, чтобы получ
 Menu.GJMenu.GJLoginMenu.UsernameLabel.Text,,Имя пользователя
 Menu.GJMenu.GJLoginMenu.TokenLabel.Text,,Игровой токен
 Menu.GJMenu.GJLoginMenu.LoginButton.Text,,Войти
+Menu.GJMenu.GJLoginMenu.AutoLoginToggle.Text,,Автовход: {0}

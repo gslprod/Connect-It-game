@@ -1,2 +1,9 @@
 Key,English,Russian
 Menu.GJMenu.GJProfileMenu.Title,,Рекорды GameJolt
+Menu.GJMenu.GJProfileMenu.ScoresTitleLabel.Text,,Лучшие рекорды
+Menu.GJMenu.GJProfileMenu.PlayerScoreDetailedInfo,,Место: {0}\nРекорд: {1}
+Menu.GJMenu.GJProfileMenu.PlayerScoreDetailedInfo.Title,,{0}
+Menu.GJMenu.GJProfileMenu.Scoreboard.Unknown,,Неизвестно ({0})
+Menu.GJMenu.GJProfileMenu.Scoreboard.818658,,Суммарно очков
+Menu.GJMenu.GJProfileMenu.TopPositionLabel.Text.HasScore,,"Топ-{0}, рекорд: {1}"
+Menu.GJMenu.GJProfileMenu.TopPositionLabel.Text.HasNoScore,,У Вас нет рекорда в этой таблице

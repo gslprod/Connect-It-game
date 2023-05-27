@@ -1,6 +1,9 @@
-﻿using GameJolt.API.Objects;
+﻿using ConnectIt.ExternalServices.GameJolt.Objects;
+using GameJolt.API.Objects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using GJAPIScores = GameJolt.API.Scores;
 
 namespace ConnectIt.ExternalServices.GameJolt
@@ -10,48 +13,60 @@ namespace ConnectIt.ExternalServices.GameJolt
         public const int ScorePerUpdateLimit = 20;
 
         public event Action TablesChanged;
-        public event Action<Table> TableScoresChanged;
-        public event Action<Table> TablePlayerScoresChanged;
-        public event Action<Table, Score, bool> PlayerScoreAppendAttempt;
+        public event Action<TableInfo> TableScoresChanged;
+        public event Action<TableInfo> TablePlayerScoresChanged;
+        public event Action<TableInfo, Score, bool> PlayerScoreAppendAttempt;
 
-        public IReadOnlyDictionary<Table, IReadOnlyList<Score>> ScoresInTables => (IReadOnlyDictionary<Table, IReadOnlyList<Score>>)_scoresInTables;
-        public IReadOnlyDictionary<Table, IReadOnlyList<Score>> PlayerScoresInTables => (IReadOnlyDictionary<Table, IReadOnlyList<Score>>)_playerScoresInTables;
+        public IReadOnlyList<TableInfo> Tables => _tables;
+        public IReadOnlyDictionary<int, IReadOnlyList<ScoreInfo>> ScoresInTables => _scoresInTables;
+        public IReadOnlyDictionary<int, IReadOnlyList<ScoreInfo>> PlayerScoresInTables => _playerScoresInTables;
 
-        private readonly Dictionary<Table, List<Score>> _scoresInTables = new();
-        private readonly Dictionary<Table, List<Score>> _playerScoresInTables = new();
+        private readonly List<TableInfo> _tables = new();
+        private readonly Dictionary<int, IReadOnlyList<ScoreInfo>> _scoresInTables = new();
+        private readonly Dictionary<int, IReadOnlyList<ScoreInfo>> _playerScoresInTables = new();
+        private readonly Dictionary<int, List<Score>> _playerScoresInTablesWithoutRank = new();
 
-        public void AppendPlayerScore(Table table, Score toAppend, Action<bool> callback = null)
+        private bool _updatingRank;
+        private bool _gettingScore;
+        private bool _gettingTables;
+
+        public void AppendPlayerScore(TableInfo table, Score toAppend, Action<bool> callback = null)
         {
             Action<bool> finalCallback = success => AppendPlayerScoreCallbackHandler(table, toAppend, success);
             if (finalCallback != null)
                 finalCallback += callback;
 
-            GJAPIScores.Add(toAppend, table.ID, finalCallback);
+            GJAPIScores.Add(toAppend, table.GJTable.ID, finalCallback);
         }
 
-        public void UpdateScoresForTable(Table table, bool onlyPlayerScores = false)
+        public void UpdateScoresForTable(TableInfo table, bool onlyPlayerScores = false)
         {
             ClearScoresForTable(table, onlyPlayerScores);
             AddScoresForTable(table, onlyPlayerScores);
         }
 
-        public void AddScoresForTable(Table table, bool onlyPlayerScores = false)
+        public void AddScoresForTable(TableInfo table, bool onlyPlayerScores = false)
         {
-            GJAPIScores.Get(scores => GetPlayerScoresCallbackHandler(table, scores), table.ID, ScorePerUpdateLimit, true);
+            if (_gettingScore)
+                return;
+
+            _gettingScore = true;
+
+            GJAPIScores.Get(scores => GetPlayerScoresCallbackHandler(table, scores), table.GJTable.ID, ScorePerUpdateLimit, true);
 
             if (!onlyPlayerScores)
-                GJAPIScores.Get(scores => GetScoresCallbackHandler(table, scores), table.ID, ScorePerUpdateLimit);
+                GJAPIScores.Get(scores => GetScoresCallbackHandler(table, scores), table.GJTable.ID, ScorePerUpdateLimit);
         }
 
-        public void ClearScoresForTable(Table table, bool onlyPlayerScores = false)
+        public void ClearScoresForTable(TableInfo table, bool onlyPlayerScores = false)
         {
-            _playerScoresInTables.Clear();
+            ((List<ScoreInfo>)_playerScoresInTables[table.GJTable.ID]).Clear();
 
-            TablePlayerScoresChanged.Invoke(table);
+            TablePlayerScoresChanged?.Invoke(table);
 
             if (!onlyPlayerScores)
             {
-                _scoresInTables[table].Clear();
+                ((List<ScoreInfo>)_scoresInTables[table.GJTable.ID]).Clear();
 
                 TableScoresChanged?.Invoke(table);
             }
@@ -59,42 +74,110 @@ namespace ConnectIt.ExternalServices.GameJolt
 
         public void LoadTables()
         {
+            if (_gettingTables)
+                return;
+
+            _gettingTables = true;
+
             GJAPIScores.GetTables(GetTablesCallbackHandler);
         }
+
+        private void UpdatePlayerScoresRanks()
+        {
+            if (_updatingRank)
+                return;
+
+            _updatingRank = true;
+
+            UpdatePlayerScoresRanksInternal();
+        }
+
+        private void UpdatePlayerScoresRanksInternal()
+        {
+            if (_playerScoresInTablesWithoutRank.Count == 0)
+            {
+                _updatingRank = false;
+                return;
+            }
+
+            Score score = _playerScoresInTablesWithoutRank.ElementAt(0).Value[0];
+            TableInfo table = GetTableWithID(_playerScoresInTablesWithoutRank.ElementAt(0).Key);
+            GJAPIScores.GetRank(
+                score.Value,
+                table.GJTable.ID,
+                (rank) => GetRankCallbackHandler(table, score, rank));
+        }
+
+        private TableInfo GetTableWithID(int id)
+            => _tables.First(item => item.GJTable.ID == id);
 
         #region CallbackHandlers
 
         private void GetTablesCallbackHandler(Table[] tables)
         {
+            _gettingTables = false;
+
+            _tables.Clear();
             _scoresInTables.Clear();
             _playerScoresInTables.Clear();
 
             foreach (Table table in tables)
             {
-                _scoresInTables.Add(table, new List<Score>());
-                _playerScoresInTables.Add(table, new List<Score>());
+                _tables.Add(new TableInfo(table));
+                _scoresInTables.Add(table.ID, new List<ScoreInfo>());
+                _playerScoresInTables.Add(table.ID, new List<ScoreInfo>());
             }
 
             TablesChanged?.Invoke();
         }
 
-        private void GetScoresCallbackHandler(Table table, Score[] scores)
+        private void GetScoresCallbackHandler(TableInfo table, Score[] scores)
         {
-            _scoresInTables[table].AddRange(scores);
+            _gettingScore = false;
+
+            table.LastUpdated = DateTime.Now;
+
+            for (int i = 0; i < scores.Length; i++)
+                ((List<ScoreInfo>)_scoresInTables[table.GJTable.ID]).Add(new(scores[i], i + 1, table));
 
             TableScoresChanged?.Invoke(table);
         }
 
-        private void GetPlayerScoresCallbackHandler(Table table, Score[] scores)
+        private void GetPlayerScoresCallbackHandler(TableInfo table, Score[] scores)
         {
-            _playerScoresInTables[table].AddRange(scores);
+            _gettingScore = false;
 
-            TablePlayerScoresChanged?.Invoke(table);
+            table.LastUpdated = DateTime.Now;
+
+            if (scores.Length == 0)
+            {
+                TablePlayerScoresChanged?.Invoke(table);
+                return;
+            }
+
+            if (_playerScoresInTablesWithoutRank.ContainsKey(table.GJTable.ID))
+                _playerScoresInTablesWithoutRank[table.GJTable.ID].AddRange(scores);
+            else
+                _playerScoresInTablesWithoutRank.Add(table.GJTable.ID, new List<Score>(scores));
+
+            UpdatePlayerScoresRanks();
         }
 
-        private void AppendPlayerScoreCallbackHandler(Table table, Score toAppend, bool success)
+        private void AppendPlayerScoreCallbackHandler(TableInfo table, Score toAppend, bool success)
         {
             PlayerScoreAppendAttempt?.Invoke(table, toAppend, success);
+        }
+
+        private void GetRankCallbackHandler(TableInfo table, Score score, int rank)
+        {
+            _playerScoresInTablesWithoutRank[table.GJTable.ID].Remove(score);
+            if (_playerScoresInTablesWithoutRank[table.GJTable.ID].Count == 0)
+                _playerScoresInTablesWithoutRank.Remove(table.GJTable.ID);
+
+            ((List<ScoreInfo>)_playerScoresInTables[table.GJTable.ID]).Add(new(score, rank, table));
+
+            TablePlayerScoresChanged?.Invoke(table);
+            UpdatePlayerScoresRanksInternal();
         }
 
         #endregion

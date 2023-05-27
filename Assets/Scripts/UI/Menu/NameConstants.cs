@@ -28,6 +28,7 @@
             public const string ShopButton = "shop-button";
             public const string SettingsButton = "settings-button";
             public const string StatsButton = "stats-button";
+            public const string ExitButton = "exit-button";
         }
 
         public static class SelectLevelMenu
@@ -88,6 +89,8 @@
                 public const string TokenLabel = "token-title";
                 public const string TokenInputField = "token-input-field";
                 public const string LoginButton = "login-button";
+                public const string AutoLoginToggle = "auto-login-toggle";
+                public const string AutoLoginInfoButton = "auto-login-info-button";
             }
 
             public static class GJProfileMenu
@@ -97,8 +100,11 @@
                 public const string UsernameLabel = "username-label";
                 public const string LogOutButton = "logout-button";
                 public const string TopUserPositionLabel = "top-position-label";
-                public const string ScoresLabel = "scores-title";
-                public const string ScoresScrollViewContainer = "scores-scroll-view-container";
+                public const string ScoresTitleLabel = "scores-title";
+                public const string ChangeTableButton = "scores-change-table-button";
+                public const string ScoreboardsContainer = "scoreboards-container";
+                public const string ScoresContainer = "scores-container";
+                public const string GJScrollViewInternalContainer = "gj-scroll-view-internal-container";
             }
         }
     }

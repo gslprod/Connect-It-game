@@ -34,6 +34,11 @@ namespace ConnectIt.Coroutines
             return DelayedAction(action, new WaitForSeconds(delaySec));
         }
 
+        public bool IsAlive()
+        {
+            return this != null;
+        }
+
         private IEnumerator DelayedActionCoroutine(Action action, YieldInstruction delay)
         {
             yield return delay;

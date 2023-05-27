@@ -26,14 +26,14 @@ namespace ConnectIt.UI.DialogBox
         private readonly VisualTreeAsset _uiButtonAsset;
         private readonly DialogBoxButton.Factory _dialogBoxButtonFactory;
         private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
-        private readonly DefaultLocalizedLabelView.Factory _defaultLocalizedLabelViewFactory;
+        private readonly DefaultLocalizedTextElementView.Factory _defaultLocalizedLabelViewFactory;
         private CustomDialogBoxCreationData _creationData;
 
         private VisualElement _parent;
         private TemplateContainer _root;
         private VisualElement _elementsContainer;
         private VisualElement _contentRoot;
-        private DefaultLocalizedLabelView _titleLabel;
+        private DefaultLocalizedTextElementView _titleLabel;
         private TextKey _titleKey;
         private VisualElement _content;
         private VisualTreeAsset _contentAsset;
@@ -44,7 +44,7 @@ namespace ConnectIt.UI.DialogBox
         private string _additionalDialogBoxRootClosedClass;
         private string _additionalDialogBoxContainerClosedClass;
 
-        private TransitionsStopWaiter _transitionsStopWaiter = new();
+        private readonly TransitionsStopWaiter _transitionsStopWaiter = new();
         private Coroutine _delayedShowingAnimationCoroutine;
         private Coroutine _delayedClosingAnimationCoroutine;
 
@@ -54,7 +54,7 @@ namespace ConnectIt.UI.DialogBox
             CustomDialogBoxCreationData creationData,
             DialogBoxButton.Factory dialogBoxButtonFactory,
             ICoroutinesGlobalContainer coroutinesGlobalContainer,
-            DefaultLocalizedLabelView.Factory defaultLocalizedLabelViewFactory)
+            DefaultLocalizedTextElementView.Factory defaultLocalizedLabelViewFactory)
         {
             _uiAsset = uiAsset;
             _uiButtonAsset = uiButtonAsset;
@@ -120,6 +120,12 @@ namespace ConnectIt.UI.DialogBox
 
         public void Close()
         {
+            if (_delayedShowingAnimationCoroutine != null )
+            {
+                Dispose();
+                return;
+            }
+
             _createdButton?.ReceiveButtonCallback(false);
 
             _delayedClosingAnimationCoroutine = _coroutinesGlobalContainer.DelayedAction(StartClosingAnimation);
@@ -143,6 +149,8 @@ namespace ConnectIt.UI.DialogBox
         private void StartShowingAnimation()
         {
             _delayedShowingAnimationCoroutine = null;
+            if (_delayedClosingAnimationCoroutine != null)
+                return;
 
             _elementsContainer.RemoveFromClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
             _root.RemoveFromClassList(ClassNamesConstants.Global.DialogBoxRootClosed);

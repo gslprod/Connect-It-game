@@ -7,7 +7,7 @@ using Zenject;
 
 namespace ConnectIt.UI.Menu.Views
 {
-    public class VersionView : DefaultLocalizedLabelView
+    public class VersionView : DefaultLocalizedTextElementView
     {
         private readonly GameVersion _gameVersion;
         private readonly TextKey.Factory _textKeyFactory;

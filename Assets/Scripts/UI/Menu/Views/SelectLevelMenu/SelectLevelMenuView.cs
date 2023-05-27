@@ -17,12 +17,12 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
         private readonly MenuUIDocumentMonoWrapper _menuUIDocumentMonoWrapper;
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
         private readonly SelectLevelButtonsView.Factory _selectLevelButtonsViewFactory;
-        private readonly DefaultLocalizedLabelView.Factory _defaultLabelViewFactory;
+        private readonly DefaultLocalizedTextElementView.Factory _defaultLabelViewFactory;
         private readonly TextKey.Factory _textKeyFactory;
 
         private DefaultButtonView _backButton;
         private SelectLevelButtonsView _selectLevelButtonsView;
-        private DefaultLocalizedLabelView _titleLabel;
+        private DefaultLocalizedTextElementView _titleLabel;
 
         public SelectLevelMenuView(VisualElement viewRoot,
             VisualElement mainRoot,
@@ -30,7 +30,7 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
             MenuUIDocumentMonoWrapper menuUIDocumentMonoWrapper,
             DefaultButtonView.Factory defaultButtonViewFactory,
             SelectLevelButtonsView.Factory selectLevelButtonsViewFactory,
-            DefaultLocalizedLabelView.Factory defaultLabelViewFactory,
+            DefaultLocalizedTextElementView.Factory defaultLabelViewFactory,
             TextKey.Factory textKeyFactory)
         {
             _viewRoot = viewRoot;

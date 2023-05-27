@@ -1,6 +1,9 @@
 ﻿using ConnectIt.ExternalServices.GameJolt;
 using ConnectIt.Localization;
+using ConnectIt.Save.SaveProviders;
+using ConnectIt.Save.SaveProviders.SaveData;
 using ConnectIt.UI.CommonViews;
+using ConnectIt.UI.CustomControls;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.Utilities.Extensions;
 using System;
@@ -14,31 +17,37 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
         private readonly VisualElement _viewRoot;
         private readonly VisualElement _mainRoot;
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
-        private readonly DefaultLocalizedLabelView.Factory _defaultLabelViewFactory;
+        private readonly DefaultLocalizedTextElementView.Factory _defaultLabelViewFactory;
         private readonly TextKey.Factory _textKeyFactory;
         private readonly DefaultLocalizedButtonView.Factory _defaultLocalizedButtonViewFactory;
         private readonly GameJoltAPIProvider _gameJoltAPIProvider;
         private readonly LoadingDialogBoxView.Factory _loadingDialogBoxViewFactory;
         private readonly DialogBoxView.Factory _dialogBoxViewFactory;
+        private readonly DefaultLocalizedButtonToggleView.Factory _defaultLocalizedButtonToggleViewFactory;
+        private readonly IExternalServerSaveProvider _externalServerSaveProvider;
 
-        private DefaultLocalizedLabelView _titleLabel;
-        private DefaultLocalizedLabelView _gjInfoLabel;
-        private DefaultLocalizedLabelView _usernameLabel;
+        private DefaultLocalizedTextElementView _titleLabel;
+        private DefaultLocalizedTextElementView _gjInfoLabel;
+        private DefaultLocalizedTextElementView _usernameLabel;
         private TextField _usernameTextField;
-        private DefaultLocalizedLabelView _tokenLabel;
+        private DefaultLocalizedTextElementView _tokenLabel;
         private TextField _tokenTextField;
         private DefaultLocalizedButtonView _loginButton;
+        private DefaultButtonView _autoLoginInfoButton;
+        private DefaultLocalizedButtonToggleView _autoLoginToggleView;
 
         public GJLoginMenuView(
             VisualElement viewRoot,
             VisualElement mainRoot,
             DefaultButtonView.Factory defaultButtonViewFactory,
-            DefaultLocalizedLabelView.Factory defaultLabelViewFactory,
+            DefaultLocalizedTextElementView.Factory defaultLabelViewFactory,
             TextKey.Factory textKeyFactory,
             DefaultLocalizedButtonView.Factory defaultLocalizedButtonViewFactory,
             GameJoltAPIProvider gameJoltAPIProvider,
             LoadingDialogBoxView.Factory loadingDialogBoxViewFactory,
-            DialogBoxView.Factory dialogBoxViewFactory)
+            DialogBoxView.Factory dialogBoxViewFactory,
+            DefaultLocalizedButtonToggleView.Factory defaultLocalizedButtonToggleViewFactory,
+            IExternalServerSaveProvider externalServerSaveProvider)
         {
             _viewRoot = viewRoot;
             _mainRoot = mainRoot;
@@ -49,6 +58,8 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
             _gameJoltAPIProvider = gameJoltAPIProvider;
             _loadingDialogBoxViewFactory = loadingDialogBoxViewFactory;
             _dialogBoxViewFactory = dialogBoxViewFactory;
+            _defaultLocalizedButtonToggleViewFactory = defaultLocalizedButtonToggleViewFactory;
+            _externalServerSaveProvider = externalServerSaveProvider;
         }
 
         public void Initialize()
@@ -88,6 +99,14 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
                 _viewRoot.Q<Button>(NameConstants.GJMenu.GJLoginMenu.LoginButton),
                 OnLoginButtonClick,
                 _textKeyFactory.Create(TextKeysConstants.Menu.GJMenu.GJLoginMenu.LoginButton_Text));
+
+            _autoLoginInfoButton = _defaultButtonViewFactory.Create(
+                _viewRoot.Q<Button>(NameConstants.GJMenu.GJLoginMenu.AutoLoginInfoButton),
+                OnAutoLoginInfoButtonClick);
+
+            _autoLoginToggleView = _defaultLocalizedButtonToggleViewFactory.Create(
+                _viewRoot.Q<ButtonToggle>(NameConstants.GJMenu.GJLoginMenu.AutoLoginToggle),
+                _textKeyFactory.Create(TextKeysConstants.Menu.GJMenu.GJLoginMenu.AutoLoginToggle_Text));
         }
 
         private void SetupTextFields()
@@ -102,6 +121,8 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
             _usernameLabel.Dispose();
             _tokenLabel.Dispose();
             _loginButton.Dispose();
+            _autoLoginInfoButton.Dispose();
+            _autoLoginToggleView.Dispose();
         }
 
         private bool IsInputDataValid()
@@ -119,7 +140,7 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
                     _mainRoot,
                     _textKeyFactory.Create(TextKeysConstants.DialogBox.InvalidLoginInputData_Title),
                     _textKeyFactory.Create(TextKeysConstants.DialogBox.InvalidLoginInputData_Message),
-                    _textKeyFactory.Create(TextKeysConstants.Common.Close),
+                    _textKeyFactory,
                     true);
 
                 return;
@@ -139,10 +160,31 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
                 if (!success)
                     return;
 
+                if (_autoLoginToggleView.Value)
+                {
+                    ExternalServerSaveData saveData = _externalServerSaveProvider.LoadExternalServerData();
+                    saveData.Username = _usernameTextField.text;
+                    saveData.Token = _tokenTextField.text;
+                    _externalServerSaveProvider.SaveExtrenalServerData(saveData);
+                }
+
                 _tokenTextField.SetValueWithoutNotify(string.Empty);
             }
         }
 
+        #endregion
+
+        #region AutoLoginInfoButton
+
+        private void OnAutoLoginInfoButtonClick()
+        {
+            _dialogBoxViewFactory.CreateDefaultOneButtonDialogBox(
+                _mainRoot,
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.AutoLoginInfo_Title),
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.AutoLoginInfo_Message),
+                _textKeyFactory,
+                true);
+        }
 
         #endregion
 

@@ -60,6 +60,15 @@
             public const string ConfirmLogout_Title = DialogBoxBaseString + ".ConfirmLogout.Title";
             public const string ConfirmLogout_Message = DialogBoxBaseString + ".ConfirmLogout.Message";
 
+            public const string AutoLoginInfo_Title = DialogBoxBaseString + ".AutoLoginInfo.Title";
+            public const string AutoLoginInfo_Message = DialogBoxBaseString + ".AutoLoginInfo.Message";
+
+            public const string ConfirmGameExit_Title = DialogBoxBaseString + ".ConfirmGameExit.Title";
+            public const string ConfirmGameExit_Message = DialogBoxBaseString + ".ConfirmGameExit.Message";
+
+            public const string GJScoreboardChange_Title = DialogBoxBaseString + ".GJScoreboardChange.Title";
+            public const string GJScoreboardChange_Message = DialogBoxBaseString + ".GJScoreboardChange.Message";
+
             private const string DialogBoxBaseString = "DialogBox";
         }
 
@@ -78,6 +87,8 @@
             public const string Loading = CommonBaseString + ".Loading";
             public const string PleaseWait = CommonBaseString + ".PleaseWait";
             public const string Guest = CommonBaseString + ".Guest";
+            public const string On = CommonBaseString + ".On";
+            public const string Off = CommonBaseString + ".Off";
 
             private const string CommonBaseString = "Common";
         }
@@ -151,6 +162,7 @@
                     public const string UsernameLabel_Text = GJLoginMenuBaseString + ".UsernameLabel.Text";
                     public const string TokenLabel_Text = GJLoginMenuBaseString + ".TokenLabel.Text";
                     public const string LoginButton_Text = GJLoginMenuBaseString + ".LoginButton.Text";
+                    public const string AutoLoginToggle_Text = GJLoginMenuBaseString + ".AutoLoginToggle.Text";
 
                     private const string GJLoginMenuBaseString = GJMenuBaseString + ".GJLoginMenu";
                 }
@@ -158,6 +170,13 @@
                 public static class GJProfileMenu
                 {
                     public const string Title = GJProfileMenuBaseString + ".Title";
+                    public const string ScoresTitleLabel_Text = GJProfileMenuBaseString + ".ScoresTitleLabel.Text";
+                    public const string PlayerScoreDetailedInfo = GJProfileMenuBaseString + ".PlayerScoreDetailedInfo";
+                    public const string PlayerScoreDetailedInfo_Title = GJProfileMenuBaseString + ".PlayerScoreDetailedInfo.Title";
+                    public const string Scoreboard_Unknown = GJProfileMenuBaseString + ".Scoreboard.Unknown";
+                    public const string ScoreboardNamePattern = GJProfileMenuBaseString + ".Scoreboard.{0}";
+                    public const string TopPositionLabel_Text_HasScore = GJProfileMenuBaseString + ".TopPositionLabel.Text.HasScore";
+                    public const string TopPositionLabel_Text_HasNoScore = GJProfileMenuBaseString + ".TopPositionLabel.Text.HasNoScore";
 
                     private const string GJProfileMenuBaseString = GJMenuBaseString + ".GJProfileMenu";
                 }

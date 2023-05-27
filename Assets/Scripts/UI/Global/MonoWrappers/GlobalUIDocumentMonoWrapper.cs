@@ -35,9 +35,9 @@ namespace ConnectIt.UI.Global.MonoWrappers
             _blockSetter = new(SetBlockInternal, IsBlockedInternal, false);
         }
 
-        public void SetBlock(bool isPause, int priority, object source)
+        public void SetBlock(bool isBlock, int priority, object source)
         {
-            _blockSetter.SetValue(isPause, priority, source);
+            _blockSetter.SetValue(isBlock, priority, source);
         }
 
         public void ResetBlock(object source)

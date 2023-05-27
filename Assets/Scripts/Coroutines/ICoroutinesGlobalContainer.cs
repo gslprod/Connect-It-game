@@ -11,5 +11,6 @@ namespace ConnectIt.Coroutines
         Coroutine DelayedAction(Action action, YieldInstruction delay = null);
         Coroutine DelayedAction(Action action, CustomYieldInstruction delay);
         Coroutine DelayedAction(Action action, float delaySec);
+        public bool IsAlive();
     }
 }

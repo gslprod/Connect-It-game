@@ -6,7 +6,7 @@ using Zenject;
 
 namespace ConnectIt.UI.Gameplay.Views
 {
-    public class LevelView : DefaultLocalizedLabelView
+    public class LevelView : DefaultLocalizedTextElementView
     {
         private readonly GameplayLogicConfig _gameplayLogicConfig;
         private readonly TextKey.Factory _textKeyFactory;

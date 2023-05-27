@@ -66,5 +66,20 @@
             public const string NameButton = "name";
             public const string ValueLabel = "value";
         }
+
+        public static class GJScore
+        {
+            public const string PositionLabel = "gj-score-position-label";
+            public const string UsernameLabel = "gj-score-username-label";
+            public const string ValueLabel = "gj-score-value-label";
+            public const string MoreInfoButton = "gj-score-more-info-button";
+        }
+
+        public static class GJScoreboard
+        {
+            public const string ScoresScrollViewContainer = "scores-scroll-view-container";
+            public const string UpdateButton = "update-button";
+            public const string ButtonNameLabel = "title";
+        }
     }
 }

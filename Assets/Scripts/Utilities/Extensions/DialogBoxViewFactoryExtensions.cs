@@ -70,6 +70,31 @@ namespace ConnectIt.Utilities.Extensions
             return source.Create(creationData);
         }
 
+        public static DialogBoxView CreateDefaultOneButtonDialogBox(this DialogBoxView.Factory source,
+            VisualElement parent, TextKey titleTextKey, TextKey messageTextKey, TextKey.Factory textKeyFactory, bool showImmediately = false)
+        {
+            DialogBoxButtonInfo cancelButtonInfo = new(
+                textKeyFactory.Create(TextKeysConstants.Common.Close),
+                null,
+                DialogBoxButtonType.Default,
+                true);
+
+            DialogBoxButtonInfo[] buttonsInfo = new DialogBoxButtonInfo[]
+            {
+                cancelButtonInfo
+            };
+
+            DialogBoxCreationData creationData = new(
+                parent,
+                titleTextKey,
+                messageTextKey,
+                buttonsInfo,
+                null,
+                showImmediately);
+
+            return source.Create(creationData);
+        }
+
         public static DialogBoxView CreateDefaultConfirmCancelDialogBox(this DialogBoxView.Factory source,
             VisualElement parent, TextKey titleTextKey, TextKey messageTextKey, TextKey cancelButtonTextKey,
             TextKey confirmButtonTextKey, Action onConfirmClick, bool showImmediately = false)

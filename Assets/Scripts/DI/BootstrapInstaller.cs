@@ -20,6 +20,7 @@ using ConnectIt.Stats.Data;
 using ConnectIt.Stats.Modules;
 using ConnectIt.Time;
 using ConnectIt.UI.CommonViews;
+using ConnectIt.UI.CustomControls;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Global.MonoWrappers;
 using ConnectIt.UI.LoadingScreen;
@@ -207,8 +208,8 @@ namespace ConnectIt.DI.Installers
                 Container.BindFactory<Button, Action, DefaultButtonView, DefaultButtonView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Button, Action, DefaultButtonView>>();
 
-                Container.BindFactory<Label, TextKey, DefaultLocalizedLabelView, DefaultLocalizedLabelView.Factory>()
-                         .FromFactory<PrimitiveDIFactory<Label, TextKey, DefaultLocalizedLabelView>>();
+                Container.BindFactory<TextElement, TextKey, DefaultLocalizedTextElementView, DefaultLocalizedTextElementView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<TextElement, TextKey, DefaultLocalizedTextElementView>>();
 
                 Container.BindFactory<Button, Action, TextKey, DefaultLocalizedButtonView, DefaultLocalizedButtonView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Button, Action, TextKey, DefaultLocalizedButtonView>>();
@@ -222,11 +223,14 @@ namespace ConnectIt.DI.Installers
                 Container.BindFactory<Label, GameJoltUsernameView, GameJoltUsernameView.Factory>()
                          .FromFactory<PrimitiveDIFactory<Label, GameJoltUsernameView>>();
 
-                Container.BindFactory<Label, TextKey, string, DefaultUniversalLabelView, DefaultUniversalLabelView.Factory>()
-                         .FromFactory<PrimitiveDIFactory<Label, TextKey, string, DefaultUniversalLabelView>>();
+                Container.BindFactory<TextElement, TextKey, string, DefaultUniversalTextElementView, DefaultUniversalTextElementView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<TextElement, TextKey, string, DefaultUniversalTextElementView>>();
 
                 Container.BindFactory<VisualElement, Sprite, DefaultSpriteView, DefaultSpriteView.Factory>()
                          .FromFactory<PrimitiveDIFactory<VisualElement, Sprite, DefaultSpriteView>>();
+
+                Container.BindFactory<ButtonToggle, TextKey, TextKey, TextKey, DefaultLocalizedButtonToggleView, DefaultLocalizedButtonToggleView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<ButtonToggle, TextKey, TextKey, TextKey, DefaultLocalizedButtonToggleView>>();
             }
         }
 

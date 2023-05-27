@@ -41,7 +41,7 @@ namespace ConnectIt.UI.Menu.Views.GJMenu
         private FramesSwitcher<VisualElement> _localFramesSwitcher;
         private DefaultButtonView _backButton;
 
-        private TransitionsStopWaiter _transitionsStopWaiter = new();
+        private readonly TransitionsStopWaiter _transitionsStopWaiter = new();
         private Coroutine _firstFrameSwitchCoroutine;
 
         private bool _showFailMessageBox = false;
@@ -135,7 +135,6 @@ namespace ConnectIt.UI.Menu.Views.GJMenu
             };
 
             _localFramesSwitcher = new(frames, EnableFrame, DisableFrame);
-            _localFramesSwitcher.FrameSwitched += OnFrameSwitched;
             _firstFrameSwitchCoroutine = _coroutinesGlobalContainer.DelayedAction(SwitchToFirstFrame, new WaitForFrames(2));
 
             _gjLoginMenuView = _gjLoginMenuViewFactory.Create(GJLoginContainer, _mainRoot);
@@ -146,7 +145,9 @@ namespace ConnectIt.UI.Menu.Views.GJMenu
         {
             _firstFrameSwitchCoroutine = null;
 
-            _localFramesSwitcher.SwitchTo(GJLoginContainer);
+            _localFramesSwitcher.SwitchTo(_gameJoltAPIProvider.UserExistsAndLoggedIn ? GJProfileContainer : GJLoginContainer);
+
+            _localFramesSwitcher.FrameSwitched += OnFrameSwitched;
         }
 
         private void OnFrameSwitched(VisualElement frame)
@@ -212,7 +213,7 @@ namespace ConnectIt.UI.Menu.Views.GJMenu
                 _mainRoot,
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.LoginFailed_Title),
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.LoginFailed_Message),
-                _textKeyFactory.Create(TextKeysConstants.Common.Close),
+                _textKeyFactory,
                 true);
         }
 

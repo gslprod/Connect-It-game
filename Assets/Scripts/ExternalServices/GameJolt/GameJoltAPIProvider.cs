@@ -1,3 +1,4 @@
+using ConnectIt.ExternalServices.GameJolt.Objects;
 using ConnectIt.Save.SaveProviders;
 using ConnectIt.Save.SaveProviders.SaveData;
 using ConnectIt.Security.ConfidentialData;
@@ -5,6 +6,7 @@ using ConnectIt.Utilities;
 using GameJolt.API;
 using GameJolt.API.Objects;
 using System;
+using System.Collections.Generic;
 using Zenject;
 
 namespace ConnectIt.ExternalServices.GameJolt
@@ -23,7 +25,7 @@ namespace ConnectIt.ExternalServices.GameJolt
         private readonly Sessions _sessions;
         private readonly Scores _scores;
 
-        private IExternalServerSaveProvider _externalServerSaveProvider;
+        private readonly IExternalServerSaveProvider _externalServerSaveProvider;
         private readonly ConfidentialValues _confidentialValues;
 
         public GameJoltAPIProvider(GameJoltAPI gjAPI,
@@ -48,8 +50,8 @@ namespace ConnectIt.ExternalServices.GameJolt
 
         public void Dispose()
         {
-            if (UserExistsAndLoggedIn)
-                LogOut();
+            if (_gjAPI != null && UserExistsAndLoggedIn)
+                LogOut(false);
         }
 
         public void LogIn(string name, string token, Action<bool> signedInCallback = null, Action<bool> userFetchedCallback = null)
@@ -91,45 +93,62 @@ namespace ConnectIt.ExternalServices.GameJolt
             User.DownloadAvatar(finalUserAvatarDownloadCallback);
         }
 
-        public void LogOut()
+        public void LogOut(bool disableAutoLogin = true)
         {
             ThrowIfUserExistenceIs(false);
 
             _sessions.Close();
             User.SignOut();
 
+            if (disableAutoLogin)
+                ClearAutoLoginData();
+
             UserLogOut?.Invoke();
+        }
+
+        public void ClearAutoLoginData()
+        {
+            ExternalServerSaveData data = _externalServerSaveProvider.LoadExternalServerData();
+
+            data.Username = string.Empty;
+            data.Token = string.Empty;
+
+            _externalServerSaveProvider.SaveExtrenalServerData(data);
         }
 
         #region Scores
 
         public event Action TablesChanged { add => _scores.TablesChanged += value; remove => _scores.TablesChanged -= value; }
-        public event Action<Table> TableScoresChanged { add => _scores.TableScoresChanged += value; remove => _scores.TableScoresChanged -= value; }
-        public event Action<Table> TablePlayerScoresChanged { add => _scores.TablePlayerScoresChanged += value; remove => _scores.TablePlayerScoresChanged -= value; }
-        public event Action<Table, Score, bool> PlayerScoreAppendAttempt { add => _scores.PlayerScoreAppendAttempt += value; remove => _scores.PlayerScoreAppendAttempt -= value; }
+        public event Action<TableInfo> TableScoresChanged { add => _scores.TableScoresChanged += value; remove => _scores.TableScoresChanged -= value; }
+        public event Action<TableInfo> TablePlayerScoresChanged { add => _scores.TablePlayerScoresChanged += value; remove => _scores.TablePlayerScoresChanged -= value; }
+        public event Action<TableInfo, Score, bool> PlayerScoreAppendAttempt { add => _scores.PlayerScoreAppendAttempt += value; remove => _scores.PlayerScoreAppendAttempt -= value; }
 
-        public void AppendPlayerScore(Table table, Score toAppend, Action<bool> callback = null)
+        public IReadOnlyList<TableInfo> Tables => _scores.Tables;
+        public IReadOnlyDictionary<int, IReadOnlyList<ScoreInfo>> ScoresInTables => _scores.ScoresInTables;
+        public IReadOnlyDictionary<int, IReadOnlyList<ScoreInfo>> PlayerScoresInTables => _scores.PlayerScoresInTables;
+
+        public void AppendPlayerScore(TableInfo table, Score toAppend, Action<bool> callback = null)
         {
             ThrowIfUserExistenceIs(false);
 
             _scores.AppendPlayerScore(table, toAppend, callback);
         }
 
-        public void UpdateScoresForTable(Table table, bool onlyPlayerScores = false)
+        public void UpdateScoresForTable(TableInfo table, bool onlyPlayerScores = false)
         {
             ThrowIfUserExistenceIs(false);
 
             _scores.UpdateScoresForTable(table, onlyPlayerScores);
         }
 
-        public void ClearScoresForTable(Table table, bool onlyPlayerScores = false)
+        public void ClearScoresForTable(TableInfo table, bool onlyPlayerScores = false)
         {
             ThrowIfUserExistenceIs(false);
 
             _scores.ClearScoresForTable(table, onlyPlayerScores);
         }
 
-        public void AddScoresForTable(Table table, bool onlyPlayerScores = false)
+        public void AddScoresForTable(TableInfo table, bool onlyPlayerScores = false)
         {
             ThrowIfUserExistenceIs(false);
 
@@ -151,18 +170,12 @@ namespace ConnectIt.ExternalServices.GameJolt
                 return;
             }
 
-            IExternalServerSaveProvider gjAPISaveProvider = _externalServerSaveProvider;
             Action<bool> callback = success =>
             {
                 if (success)
                     return;
 
-                ExternalServerSaveData data = gjAPISaveProvider.LoadExternalServerData();
-
-                data.Username = string.Empty;
-                data.Token = string.Empty;
-
-                _externalServerSaveProvider.SaveExtrenalServerData(data);
+                ClearAutoLoginData();
             };
 
             LogIn(data.Username, data.Token, callback);

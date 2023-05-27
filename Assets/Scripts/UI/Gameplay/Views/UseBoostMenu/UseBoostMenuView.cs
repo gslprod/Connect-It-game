@@ -16,19 +16,19 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
     {
         private readonly VisualElement _viewRoot;
         private readonly VisualElement _mainRoot;
-        private readonly DefaultLocalizedLabelView.Factory _defaultLabelViewFactory;
+        private readonly DefaultLocalizedTextElementView.Factory _defaultLabelViewFactory;
         private readonly TextKey.Factory _textKeyFactory;
         private readonly ICustomer _playerCustomer;
         private readonly UseBoostElementView.Factory _useBoostElementViewFactory;
 
         private VisualElement _useBoostElementsRoot;
-        private DefaultLocalizedLabelView _infoLabel;
+        private DefaultLocalizedTextElementView _infoLabel;
         private readonly List<UseBoostElementView> _useBoostElementViews = new();
 
         public UseBoostMenuView(
             VisualElement viewRoot,
             VisualElement mainRoot,
-            DefaultLocalizedLabelView.Factory defaultLabelViewFactory,
+            DefaultLocalizedTextElementView.Factory defaultLabelViewFactory,
             TextKey.Factory textKeyFactory,
             ICustomer playerCustomer,
             UseBoostElementView.Factory useBoostElementViewFactory)

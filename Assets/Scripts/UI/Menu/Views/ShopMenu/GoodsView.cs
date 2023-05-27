@@ -1,5 +1,4 @@
 ﻿using ConnectIt.Shop;
-using ConnectIt.UI.Menu.Views.StatsMenu;
 using ConnectIt.Utilities.Extensions;
 using System;
 using System.Collections.Generic;

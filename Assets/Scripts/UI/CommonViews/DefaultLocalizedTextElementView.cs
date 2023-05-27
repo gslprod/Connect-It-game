@@ -5,20 +5,21 @@ using Zenject;
 
 namespace ConnectIt.UI.CommonViews
 {
-    public class DefaultLocalizedLabelView : IInitializable, IDisposable
+    public class DefaultLocalizedTextElementView : IInitializable, IDisposable
     {
         public bool LocalizationEnabled { get; private set; } = false;
+        public TextElement TextElement => textElement;
 
         private readonly ILocalizationProvider _localizationProvider;
 
-        protected Label label;
+        protected TextElement textElement;
         protected TextKey textKey;
 
-        public DefaultLocalizedLabelView(Label label,
+        public DefaultLocalizedTextElementView(TextElement textElement,
             TextKey textKey,
             ILocalizationProvider localizationProvider)
         {
-            this.label = label;
+            this.textElement = textElement;
             this.textKey = textKey;
             _localizationProvider = localizationProvider;
         }
@@ -38,6 +39,19 @@ namespace ConnectIt.UI.CommonViews
         public void SetArgs(params object[] args)
         {
             textKey.SetArgs(args);
+        }
+
+        public void SetTextKey(TextKey newTextKey)
+        {
+            if (LocalizationEnabled)
+                Unsubscribe();
+
+            textKey = newTextKey;
+
+            if (LocalizationEnabled)
+                Subscribe();
+
+            UpdateLabel();
         }
 
         protected void SetLocalizationEnable(bool isEnable)
@@ -60,7 +74,7 @@ namespace ConnectIt.UI.CommonViews
 
         protected virtual void UpdateLabel()
         {
-            label.text = textKey.ToString();
+            textElement.text = textKey.ToString();
         }
 
         private void OnArgsChanged(TextKey textKey)
@@ -80,6 +94,6 @@ namespace ConnectIt.UI.CommonViews
             textKey.ArgsChanged -= OnArgsChanged;
         }
 
-        public class Factory : PlaceholderFactory<Label, TextKey, DefaultLocalizedLabelView> { }
+        public class Factory : PlaceholderFactory<TextElement, TextKey, DefaultLocalizedTextElementView> { }
     }
 }

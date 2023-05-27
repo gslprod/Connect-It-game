@@ -8,7 +8,7 @@ using Zenject;
 
 namespace ConnectIt.UI.Menu.Views
 {
-    public class CompletedLevelsView : DefaultLocalizedLabelView
+    public class CompletedLevelsView : DefaultLocalizedTextElementView
     {
         private readonly TextKey.Factory _textKeyFactory;
         private readonly ILevelsPassDataProvider _levelsPassDataProvider;

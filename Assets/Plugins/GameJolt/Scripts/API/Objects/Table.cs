@@ -1,10 +1,11 @@
 ﻿using GameJolt.External.SimpleJSON;
+using System;
 
 namespace GameJolt.API.Objects {
 	/// <summary>
 	/// Table object.
 	/// </summary>
-	public sealed class Table : Base {
+	public sealed class Table : Base, IEquatable<Table> {
 		#region Fields & Properties
 		/// <summary>
 		/// Gets or sets the ID.
@@ -95,5 +96,10 @@ namespace GameJolt.API.Objects {
 		public override string ToString() {
 			return string.Format("GameJolt.API.Objects.Table: {0} - {1}", Name, ID);
 		}
-	}
+
+        public bool Equals(Table other)
+        {
+			return ID == other.ID;
+        }
+    }
 }

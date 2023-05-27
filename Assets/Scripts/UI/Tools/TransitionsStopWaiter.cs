@@ -19,14 +19,13 @@ namespace ConnectIt.UI.Tools
             Assert.ArgsIsNotNull(elementsWithTransitions, onStop);
             Assert.That(!Waiting);
 
-            _totalTransitionsCount = 0;
             _stoppedTransitionsCount = 0;
             _onTransitionStop = onStop;
             _elements = elementsWithTransitions;
 
             foreach (VisualElement element in elementsWithTransitions)
             {
-                _totalTransitionsCount += element.resolvedStyle.transitionProperty.Count();
+                element.RegisterCallback<TransitionRunEvent>(OnTransitionRun);
 
                 element.RegisterCallback<TransitionEndEvent>(OnTransitionStopped);
                 element.RegisterCallback<TransitionCancelEvent>(OnTransitionStopped);
@@ -71,12 +70,28 @@ namespace ConnectIt.UI.Tools
             _onTransitionStop();
         }
 
+        private void OnTransitionRun(TransitionRunEvent runEvent)
+        {
+            VisualElement target = runEvent.target as VisualElement;
+            if (!_elements.Contains(target))
+                return;
+
+            foreach (VisualElement element in _elements)
+            {
+                _totalTransitionsCount += element.resolvedStyle.transitionProperty.Count();
+
+                element.UnregisterCallback<TransitionRunEvent>(OnTransitionRun);
+            }
+        }
+
         private void UnregisterCallbacks()
         {
             foreach (VisualElement element in _elements)
             {
                 element.UnregisterCallback<TransitionEndEvent>(OnTransitionStopped);
                 element.UnregisterCallback<TransitionCancelEvent>(OnTransitionStopped);
+
+                element.UnregisterCallback<TransitionRunEvent>(OnTransitionRun);
             }
 
             _elements = null;

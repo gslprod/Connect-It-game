@@ -346,6 +346,6 @@ namespace GameJolt.API {
 		public bool IsSecretTrophy(int id) {
 			return secretTrophies.Contains(id);
 		}
-		#endregion
-	}
+        #endregion
+    }
 }

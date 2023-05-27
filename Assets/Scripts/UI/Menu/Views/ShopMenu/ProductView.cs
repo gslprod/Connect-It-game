@@ -19,7 +19,7 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
         private readonly VisualElement _mainRoot;
         private readonly DefaultLocalizedButtonView.Factory _defaultLocalizedButtonViewFactory;
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
-        private readonly DefaultLocalizedLabelView.Factory _defaultLabelViewFactory;
+        private readonly DefaultLocalizedTextElementView.Factory _defaultLabelViewFactory;
         private readonly TextKey.Factory _textKeyFactory;
         private readonly VisualTreeAsset _asset;
         private readonly ICustomer _playerCustomer;
@@ -27,10 +27,10 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
         private readonly DialogBoxView.Factory _dialogBoxFactory;
 
         private VisualElement _viewRoot;
-        private DefaultLocalizedLabelView _nameLabel;
-        private DefaultLocalizedLabelView _descriptionLabel;
-        private DefaultLocalizedLabelView _amountLabel;
-        private DefaultLocalizedLabelView _priceLabel;
+        private DefaultLocalizedTextElementView _nameLabel;
+        private DefaultLocalizedTextElementView _descriptionLabel;
+        private DefaultLocalizedTextElementView _amountLabel;
+        private DefaultLocalizedTextElementView _priceLabel;
         private DefaultButtonView _descriptionButton;
         private DefaultLocalizedButtonView _buyButton;
 
@@ -39,7 +39,7 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
             VisualElement creationRoot,
             VisualElement mainRoot,
             DefaultButtonView.Factory defaultButtonViewFactory,
-            DefaultLocalizedLabelView.Factory defaultLabelViewFactory,
+            DefaultLocalizedTextElementView.Factory defaultLabelViewFactory,
             TextKey.Factory textKeyFactory,
             VisualTreeAsset asset,
             ICustomer playerCustomer,
@@ -137,7 +137,7 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
             _dialogBoxFactory.CreateDefaultOneButtonDialogBox(_mainRoot,
                 _showcaseProduct.ShowcaseItem.Name,
                 _showcaseProduct.ShowcaseItem.Description,
-                _textKeyFactory.Create(TextKeysConstants.Common.Close),
+                _textKeyFactory,
                 true);
         }
 
@@ -166,7 +166,7 @@ namespace ConnectIt.UI.Menu.Views.ShopMenu
             _dialogBoxFactory.CreateDefaultOneButtonDialogBox(_mainRoot,
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.NotEnoughCoins_Title),
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.NotEnoughCoins_Message),
-                _textKeyFactory.Create(TextKeysConstants.Common.Close),
+                _textKeyFactory,
                 true);
 
             return false;

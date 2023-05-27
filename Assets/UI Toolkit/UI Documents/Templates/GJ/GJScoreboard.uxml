@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="root" class="gj-scoreboard__root content-container__frame content-container__frame--closed">
+        <ui:VisualElement name="title-container" class="gj-scoreboard__title-container">
+            <ui:Label text="Label" name="title" class="label highlighted-label gj-scoreboard__title" />
+            <ui:Button name="update-button" class="button highlighted-label gj-scoreboard__update-button">
+                <ui:VisualElement name="icon" class="gj-scoreboard__update-button-icon" />
+            </ui:Button>
+        </ui:VisualElement>
+        <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" touch-scroll-type="Elastic" class="gj-scoreboard__scroll-view">
+            <ui:VisualElement name="scores-scroll-view-container" class="scroll-view-container" />
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

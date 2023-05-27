@@ -49,7 +49,8 @@ namespace ConnectIt.ExternalServices.GameJolt
             if (_pingCoroutine == null)
                 return;
 
-            _coroutinesContainer.StopCoroutine(_pingCoroutine);
+            if (_coroutinesContainer.IsAlive())
+                _coroutinesContainer.StopCoroutine(_pingCoroutine);
         }
 
         private void OpenInternal()

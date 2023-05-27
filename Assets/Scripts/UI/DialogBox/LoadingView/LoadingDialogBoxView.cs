@@ -27,20 +27,20 @@ namespace ConnectIt.UI.DialogBox
 
         private readonly CustomDialogBoxView.Factory _customDialogBoxViewFactory;
         private readonly VisualTreeAsset _uiAsset;
-        private readonly DefaultLocalizedLabelView.Factory _defaultLocalizedLabelViewFactory;
+        private readonly DefaultLocalizedTextElementView.Factory _defaultLocalizedLabelViewFactory;
         private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
         private LoadingDialogBoxViewCreationData _creationData;
         private TextKey _messageTextKey;
 
         private CustomDialogBoxView _customDialogBoxView;
-        private DefaultLocalizedLabelView _messageLabelView;
+        private DefaultLocalizedTextElementView _messageLabelView;
         private VisualElement _spinningElement;
 
         public LoadingDialogBoxView(
             CustomDialogBoxView.Factory customDialogBoxViewFactory,
             LoadingDialogBoxViewCreationData creationData,
             VisualTreeAsset uiAsset,
-            DefaultLocalizedLabelView.Factory defaultLocalizedLabelViewFactory,
+            DefaultLocalizedTextElementView.Factory defaultLocalizedLabelViewFactory,
             ICoroutinesGlobalContainer coroutinesGlobalContainer)
         {
             _customDialogBoxViewFactory = customDialogBoxViewFactory;

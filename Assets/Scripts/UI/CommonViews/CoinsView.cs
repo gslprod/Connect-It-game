@@ -6,7 +6,7 @@ using Zenject;
 
 namespace ConnectIt.UI.CommonViews
 {
-    public class CoinsView : DefaultLocalizedLabelView
+    public class CoinsView : DefaultLocalizedTextElementView
     {
         private readonly ICustomer _userCustomer;
         private readonly TextKey.Factory _textKeyFactory;

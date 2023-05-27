@@ -25,3 +25,9 @@ DialogBox.LoginFailed.Title,,Вход не выполнен
 DialogBox.LoginFailed.Message,,"Возможно, Вы ввели неверные данные, или же сервер недоступен."
 DialogBox.ConfirmLogout.Title,,Выйти из аккаунта GameJolt?
 DialogBox.ConfirmLogout.Message,,"Все Ваши рекорды сохранятся, однако новые рекорды не будут фиксироваться в таблице до тех пор, пока Вы снова не войдете в аккаунт."
+DialogBox.AutoLoginInfo.Title,,Автовход
+DialogBox.AutoLoginInfo.Message,,Автоматически входит в аккаунт при запуске игры. Автовход отключается при выходе из аккаунта.
+DialogBox.ConfirmGameExit.Title,,Выйти из игры?
+DialogBox.ConfirmGameExit.Message,,Подтвердите выход из игры.
+DialogBox.GJScoreboardChange.Title,,Выбор таблицы рекордов
+DialogBox.GJScoreboardChange.Message,,Выберите таблицу из списка ниже.

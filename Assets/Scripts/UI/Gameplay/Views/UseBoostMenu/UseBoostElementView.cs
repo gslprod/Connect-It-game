@@ -25,7 +25,7 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
         private readonly VisualElement _mainRoot;
         private readonly DefaultLocalizedButtonView.Factory _defaultLocalizedButtonViewFactory;
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
-        private readonly DefaultLocalizedLabelView.Factory _defaultLabelViewFactory;
+        private readonly DefaultLocalizedTextElementView.Factory _defaultLabelViewFactory;
         private readonly TextKey.Factory _textKeyFactory;
         private readonly VisualTreeAsset _asset;
         private readonly ICustomer _playerCustomer;
@@ -33,11 +33,11 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
         private readonly BoostUsageContext.Factory _boostUsageContextFactory;
 
         private VisualElement _viewRoot;
-        private DefaultLocalizedLabelView _nameLabel;
-        private DefaultLocalizedLabelView _amountLabel;
+        private DefaultLocalizedTextElementView _nameLabel;
+        private DefaultLocalizedTextElementView _amountLabel;
         private DefaultButtonView _infoButton;
         private DefaultLocalizedButtonView _useButton;
-        private List<Boost> _boosts = new();
+        private readonly List<Boost> _boosts = new();
 
         private Boost _firstBoost => _boosts[0];
 
@@ -46,7 +46,7 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
             VisualElement creationRoot,
             VisualElement mainRoot,
             DefaultButtonView.Factory defaultButtonViewFactory,
-            DefaultLocalizedLabelView.Factory defaultLabelViewFactory,
+            DefaultLocalizedTextElementView.Factory defaultLabelViewFactory,
             TextKey.Factory textKeyFactory,
             VisualTreeAsset asset,
             ICustomer playerCustomer,
@@ -211,7 +211,7 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
             _dialogBoxFactory.CreateDefaultOneButtonDialogBox(_mainRoot,
                 _firstBoost.Name,
                 _firstBoost.Description,
-                _textKeyFactory.Create(TextKeysConstants.Common.Close),
+                _textKeyFactory,
                 true);
         }
 
@@ -243,7 +243,7 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
             _dialogBoxFactory.CreateDefaultOneButtonDialogBox(_mainRoot,
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.NotEnoughProductAmount_Title),
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.NotEnoughProductAmount_Message),
-                _textKeyFactory.Create(TextKeysConstants.Common.Close),
+                _textKeyFactory,
                 true);
 
             return false;
@@ -295,7 +295,7 @@ namespace ConnectIt.UI.Gameplay.Views.UseBoostMenu
             _dialogBoxFactory.CreateDefaultOneButtonDialogBox(_mainRoot,
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.BoostUsed_Title),
                 _textKeyFactory.Create(TextKeysConstants.DialogBox.BoostUsed_Message),
-                _textKeyFactory.Create(TextKeysConstants.Common.Close),
+                _textKeyFactory,
                 true);
         }
 

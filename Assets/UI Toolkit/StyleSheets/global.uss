@@ -4,6 +4,8 @@
     --blackout-color: rgba(0, 0, 0, 0.7);
     --accept-color: rgba(0, 255, 0, 0.3);
     --dismiss-color: rgba(255, 0, 0, 0.3);
+    --enabled-color: var(--accept-color);
+    --disabled-color: var(--dismiss-color);
     --login-title-color: rgba(255, 78, 0, 0.3);
     --default-button-transition-timing-function: ease-out-cubic;
     --default-button-transition-duration: 400ms;
@@ -594,4 +596,24 @@
 
 .block-panel--disabled {
     display: none;
+}
+
+.button-toggle {
+}
+
+.button-toggle--disabled {
+    background-color: var(--disabled-color);
+}
+
+.button-toggle--enabled {
+    background-color: var(--enabled-color);
+}
+
+.info-button__icon {
+    flex-grow: 1;
+    -unity-background-scale-mode: scale-to-fit;
+    background-image: url('project://database/Assets/2D/Sprites/UI/info/info%2064.png?fileID=21300000&guid=51ecaeab09efe054086c367982380461&type=3#info 64');
+}
+
+.info-button {
 }

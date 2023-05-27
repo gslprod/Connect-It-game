@@ -1,4 +1,5 @@
-﻿using ConnectIt.ExternalServices.GameJolt;
+﻿using ConnectIt.Coroutines;
+using ConnectIt.ExternalServices.GameJolt;
 using ConnectIt.UI.CommonViews;
 using System;
 using UnityEngine;
@@ -11,14 +12,17 @@ namespace ConnectIt.UI.Menu.Views
     {
         private readonly GameJoltAPIProvider _gjAPIProvider;
         private readonly Sprite _defaultSprite;
+        private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
 
         public GameJoltAvatarView(
             VisualElement element,
             GameJoltAPIProvider gjAPIProvider,
-            Sprite defaultSprite) : base(element, null)
+            Sprite defaultSprite,
+            ICoroutinesGlobalContainer coroutinesGlobalContainer) : base(element, null)
         {
             _gjAPIProvider = gjAPIProvider;
             _defaultSprite = defaultSprite;
+            _coroutinesGlobalContainer = coroutinesGlobalContainer;
         }
 
         public override void Initialize()
@@ -26,7 +30,7 @@ namespace ConnectIt.UI.Menu.Views
             _gjAPIProvider.UserAvatarDownloadAttempt += OnUserAvatarDownloadAttempt;
             _gjAPIProvider.UserLogOut += UpdateAvatar;
 
-            UpdateAvatar();
+            _coroutinesGlobalContainer.DelayedAction(UpdateAvatar);
         }
 
         private void OnUserAvatarDownloadAttempt(bool success)
@@ -49,7 +53,7 @@ namespace ConnectIt.UI.Menu.Views
                 _gjAPIProvider.User.Avatar :
                 _defaultSprite;
 
-            float elementRadius = _gjAPIProvider.UserExistsAndLoggedIn ?
+            float elementRadius = sprite != _defaultSprite ?
                 Mathf.Min(element.resolvedStyle.width, element.resolvedStyle.height) / 2 :
                 0;
 

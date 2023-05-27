@@ -24,14 +24,14 @@ namespace ConnectIt.UI.DialogBox
         private readonly VisualTreeAsset _uiButtonAsset;
         private readonly DialogBoxButton.Factory _dialogBoxButtonFactory;
         private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
-        private readonly DefaultLocalizedLabelView.Factory _defaultLocalizedLabelFactory;
+        private readonly DefaultLocalizedTextElementView.Factory _defaultLocalizedLabelFactory;
         private DialogBoxCreationData _creationData;
 
         private VisualElement _parent;
         private TemplateContainer _root;
         private VisualElement _elementsContainer;
-        private DefaultLocalizedLabelView _titleLabel;
-        private DefaultLocalizedLabelView _messageLabel;
+        private DefaultLocalizedTextElementView _titleLabel;
+        private DefaultLocalizedTextElementView _messageLabel;
         private TextKey _titleKey;
         private TextKey _messageKey;
         private DialogBoxButtonInfo[] _buttonsInfo;
@@ -48,7 +48,7 @@ namespace ConnectIt.UI.DialogBox
             DialogBoxCreationData creationData,
             DialogBoxButton.Factory dialogBoxButtonFactory,
             ICoroutinesGlobalContainer coroutinesGlobalContainer,
-            DefaultLocalizedLabelView.Factory defaultLocalizedLabelFactory)
+            DefaultLocalizedTextElementView.Factory defaultLocalizedLabelFactory)
         {
             _uiAsset = uiAsset;
             _uiButtonAsset = uiButtonAsset;
@@ -103,6 +103,12 @@ namespace ConnectIt.UI.DialogBox
 
         public void Close()
         {
+            if (_delayedShowingAnimationCoroutine != null)
+            {
+                Dispose();
+                return;
+            }
+
             foreach (var button in _createdButtons)
                 button.ReceiveButtonCallback(false);
 
@@ -129,6 +135,8 @@ namespace ConnectIt.UI.DialogBox
         private void StartShowingAnimation()
         {
             _delayedShowingAnimationCoroutine = null;
+            if (_delayedClosingAnimationCoroutine != null)
+                return;
 
             _elementsContainer.RemoveFromClassList(ClassNamesConstants.Global.DialogBoxContainerClosed);
             _root.RemoveFromClassList(ClassNamesConstants.Global.DialogBoxRootClosed);
