@@ -58,7 +58,9 @@
             public const string BackButton = "back-button";
 
             public const string SoundSlider = "sound-slider";
+            public const string SoundSliderTitleLabel = "sound-slider-label";
             public const string MusicSlider = "music-slider";
+            public const string MusicSliderTitleLabel = "music-slider-label";
             public const string HQEffectsButton = "hq-effects-button";
             public const string LanguageButton = "language-button";
 

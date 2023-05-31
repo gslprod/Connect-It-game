@@ -8,6 +8,8 @@ namespace ConnectIt.ExternalServices.GameJolt.Objects
         public Table GJTable { get; }
         public DateTime LastUpdated { get; set; }
         public bool WasUpdatedAtLeastOnce => LastUpdated != default;
+        public DateTime PlayerScoresLastUpdated { get; set; }
+        public bool PlayerScoresWasUpdatedAtLeastOnce => PlayerScoresLastUpdated != default;
 
         public TableInfo(Table table)
         {

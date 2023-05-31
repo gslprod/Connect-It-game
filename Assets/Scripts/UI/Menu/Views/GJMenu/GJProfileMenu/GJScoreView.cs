@@ -66,6 +66,8 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJProfileMenu
             _asset.CloneTree(_creationRoot);
             _viewRoot = _creationRoot.GetLastChild();
 
+            SetupAppearance();
+
             _positionLabel = _defaultUniversalTextViewFactory.Create(
                 _viewRoot.Q<Label>(TemplatesNameConstants.GJScore.PositionLabel),
                 null,
@@ -84,6 +86,15 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJProfileMenu
             _moreInfoButton = _defaultButtonViewFactory.Create(
                 _viewRoot.Q<Button>(TemplatesNameConstants.GJScore.MoreInfoButton),
                 OnMoreInfoButtonClick);
+        }
+
+        private void SetupAppearance()
+        {
+            if (_scoreToShow.Rank > 3)
+                return;
+
+            _viewRoot.AddToClassList(
+                string.Format(ClassNamesConstants.MenuView.GJScoreTopPositionPattern, _scoreToShow.Rank));
         }
 
         private void DisposeDisposableViews()

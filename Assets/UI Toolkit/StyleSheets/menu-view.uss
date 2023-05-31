@@ -10,10 +10,10 @@
     --dismiss-color: rgba(255, 0, 0, 0.3);
     --enabled-color: var(--accept-color);
     --disabled-color: var(--dismiss-color);
-    --top-1-color: rgba(255, 255, 0, 0.4);
-    --top-2-color: rgba(255, 255, 255, 0.4);
-    --top-3-color: rgba(255, 156, 0, 0.4);
-    --user-top-position-color: rgba(0, 173, 179, 0.4);
+    --top-1-color: rgba(255, 255, 0, 0.25);
+    --top-2-color: rgba(255, 255, 255, 0.25);
+    --top-3-color: rgba(255, 156, 0, 0.25);
+    --user-top-position-color: rgba(0, 173, 179, 0.3);
     flex-grow: 1;
 }
 
@@ -392,17 +392,17 @@
 .stats-scroll-view {
 }
 
-.stats-scroll-view > .scroll-view-container {
-    flex-direction: column;
-}
+    .stats-scroll-view > .scroll-view-container {
+        flex-direction: column;
+    }
 
-.stats-scroll-view > .scroll-view-container > .scroll-view-container__child {
-    margin-bottom: 20px;
-}
+        .stats-scroll-view > .scroll-view-container > .scroll-view-container__child {
+            margin-bottom: 20px;
+        }
 
-.stats-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
-    margin-bottom: 0;
-}
+        .stats-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
+            margin-bottom: 0;
+        }
 
 .stats-scroll-view-container {
     flex-grow: 1;
@@ -452,14 +452,14 @@
     padding-bottom: 60px;
 }
 
-.shop-coins-container > .highlighted-label {
-    font-size: 50px;
-}
+    .shop-coins-container > .highlighted-label {
+        font-size: 50px;
+    }
 
-.shop-coins-container > .highlighted-label--coins {
-    font-size: 85px;
-    margin-bottom: 25px;
-}
+    .shop-coins-container > .highlighted-label--coins {
+        font-size: 85px;
+        margin-bottom: 25px;
+    }
 
 .boosts-container {
     align-items: center;
@@ -475,17 +475,17 @@
     width: 100%;
 }
 
-.boosts-scroll-view > .scroll-view-container {
-    flex-direction: column;
-}
+    .boosts-scroll-view > .scroll-view-container {
+        flex-direction: column;
+    }
 
-.boosts-scroll-view > .scroll-view-container > .scroll-view-container__child {
-    margin-bottom: 20px;
-}
+        .boosts-scroll-view > .scroll-view-container > .scroll-view-container__child {
+            margin-bottom: 20px;
+        }
 
-.boosts-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
-    margin-bottom: 0;
-}
+        .boosts-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
+            margin-bottom: 0;
+        }
 
 .boost-element {
     align-items: stretch;
@@ -565,9 +565,9 @@
     flex-grow: 1;
 }
 
-.gj-api-scroll-view > .unity-scroll-view__content-and-vertical-scroll-container > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container {
-    flex-grow: 1;
-}
+    .gj-api-scroll-view > .unity-scroll-view__content-and-vertical-scroll-container > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container {
+        flex-grow: 1;
+    }
 
 .gj-api-scroll-view-container {
     flex-grow: 1;
@@ -702,17 +702,17 @@
 .gj-scoreboard__scroll-view {
 }
 
-.gj-scoreboard__scroll-view > .scroll-view-container {
-    flex-direction: column;
-}
+    .gj-scoreboard__scroll-view > .scroll-view-container {
+        flex-direction: column;
+    }
 
-.gj-scoreboard__scroll-view > .scroll-view-container > .scroll-view-container__child {
-    margin-bottom: 20px;
-}
+        .gj-scoreboard__scroll-view > .scroll-view-container > .scroll-view-container__child {
+            margin-bottom: 20px;
+        }
 
-.gj-scoreboard__scroll-view > .scroll-view-container > .scroll-view-container__child--last {
-    margin-bottom: 0;
-}
+        .gj-scoreboard__scroll-view > .scroll-view-container > .scroll-view-container__child--last {
+            margin-bottom: 0;
+        }
 
 .gj-score {
     flex-direction: row;
@@ -761,6 +761,18 @@
 
 .gj-score__child {
     margin-right: 10px;
+}
+
+.gj-score--top-1-position > .gj-score__child {
+    background-color: var(--top-1-color);
+}
+
+.gj-score--top-2-position > .gj-score__child {
+    background-color: var(--top-2-color);
+}
+
+.gj-score--top-3-position > .gj-score__child {
+    background-color: var(--top-3-color);
 }
 
 .gj-login-container {
@@ -869,9 +881,9 @@
     margin-top: 50px;
 }
 
-.gj-login-scroll-view-internal-container > .auto-login-container > .button > .info-button__icon {
-    margin-left: 7px;
-    margin-right: 7px;
-    margin-top: 7px;
-    margin-bottom: 7px;
-}
+    .gj-login-scroll-view-internal-container > .auto-login-container > .button > .info-button__icon {
+        margin-left: 7px;
+        margin-right: 7px;
+        margin-top: 7px;
+        margin-bottom: 7px;
+    }

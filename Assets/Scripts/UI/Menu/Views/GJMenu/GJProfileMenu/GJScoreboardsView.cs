@@ -82,10 +82,10 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJProfileMenu
                 _viewRoot.Q<Button>(NameConstants.GJMenu.GJProfileMenu.ChangeTableButton),
                 OnChangeTableButtonClick);
 
-            CreateScoreboardViews();
-
             _topPositionLabel = _gjTopPositionLabelViewFactory.Create(
                 _viewRoot.Q<Label>(NameConstants.GJMenu.GJProfileMenu.TopUserPositionLabel));
+
+            CreateScoreboardViews();
         }
 
         private void CreateScoreboardViews()
@@ -145,7 +145,8 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJProfileMenu
             _changeTableButtonView.Dispose();
             _topPositionLabel.Dispose();
 
-            _scoreboardsFrames.FrameSwitched += OnFrameSwitched;
+            if (_scoreboardsFrames != null)
+                _scoreboardsFrames.FrameSwitched -= OnFrameSwitched;
 
             DisposeScoreboardViews();
         }

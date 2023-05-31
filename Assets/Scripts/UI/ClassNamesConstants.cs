@@ -44,11 +44,22 @@
         public static class MenuView
         {
             public const string ContentContainerFrameClosed = "content-container__frame--closed";
-            public const string GJAccountInfoTopPositionLabelHidden = "gj-account-info-container__top-position-label--hidden";
+
+            #region SelectLevel
 
             public const string LevelButtonCompleted = "level-button--completed";
             public const string LevelButtonCurrent = "level-button--current";
             public const string LevelButtonSkipped = "level-button--skipped";
+
+            #endregion
+
+            #region GJ
+
+            public const string GJAccountInfoTopPositionLabelHidden = "gj-account-info-container__top-position-label--hidden";
+
+            public const string GJScoreTopPositionPattern = "gj-score--top-{0}-position";
+
+            #endregion
         }
 
         public static class GameplayView

@@ -2,6 +2,7 @@ using ConnectIt.ExternalServices.GameJolt.Objects;
 using ConnectIt.Infrastructure.Factories;
 using ConnectIt.Shop.Goods;
 using ConnectIt.Stats.Data;
+using ConnectIt.UI.CustomControls;
 using ConnectIt.UI.Menu.MonoWrappers;
 using ConnectIt.UI.Menu.Views;
 using ConnectIt.UI.Menu.Views.GJMenu;
@@ -138,6 +139,9 @@ public class MenuSceneInstaller : MonoInstaller
             {
                 Container.BindFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SettingsMenuView, SettingsMenuView.Factory>()
                          .FromFactory<PrimitiveDIFactory<VisualElement, VisualElement, FramesSwitcher<VisualElement>, MenuUIDocumentMonoWrapper, SettingsMenuView>>();
+
+                Container.BindFactory<ProgressBarSlider, OSTVolumeSliderView, OSTVolumeSliderView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<ProgressBarSlider, OSTVolumeSliderView>>();
             }
         }
 

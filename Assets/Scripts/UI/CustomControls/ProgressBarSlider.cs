@@ -59,9 +59,20 @@ namespace ConnectIt.UI.CustomControls
             this.RegisterValueChangedCallback(OnValueChanged);
         }
 
+        public override void SetValueWithoutNotify(float newValue)
+        {
+            base.SetValueWithoutNotify(newValue);
+            UpdateProgressBarValue();
+        }
+
+        private void UpdateProgressBarValue()
+        {
+            _progressBar.value = value;
+        }
+
         private void OnValueChanged(ChangeEvent<float> changeEvent)
         {
-            _progressBar.value = changeEvent.newValue;
+            UpdateProgressBarValue();
         }
 
         private void UpdateProgressBar()

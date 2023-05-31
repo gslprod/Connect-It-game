@@ -1,10 +1,12 @@
 ﻿using ConnectIt.ExternalServices.GameJolt.Objects;
+using ConnectIt.Utilities.Extensions;
 using GameJolt.API.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using GJAPIScores = GameJolt.API.Scores;
+using GJAPI = GameJolt.API.GameJoltAPI;
 
 namespace ConnectIt.ExternalServices.GameJolt
 {
@@ -100,8 +102,17 @@ namespace ConnectIt.ExternalServices.GameJolt
                 return;
             }
 
+            int tableID = _playerScoresInTablesWithoutRank.ElementAt(0).Key;
             Score score = _playerScoresInTablesWithoutRank.ElementAt(0).Value[0];
-            TableInfo table = GetTableWithID(_playerScoresInTablesWithoutRank.ElementAt(0).Key);
+            TableInfo table = GetTableWithID(tableID);
+
+            int index = _scoresInTables[tableID].FindIndex(item => item.GJScore.UserID == GJAPI.Instance.CurrentUser.ID);
+            if (index >= 0)
+            {
+                GetRankCallbackHandler(table, score, _scoresInTables[tableID][index].Rank);
+                return;
+            }
+
             GJAPIScores.GetRank(
                 score.Value,
                 table.GJTable.ID,
@@ -116,6 +127,9 @@ namespace ConnectIt.ExternalServices.GameJolt
         private void GetTablesCallbackHandler(Table[] tables)
         {
             _gettingTables = false;
+
+            if (!GJAPI.Instance.HasSignedInUser)
+                return;
 
             _tables.Clear();
             _scoresInTables.Clear();
@@ -135,6 +149,9 @@ namespace ConnectIt.ExternalServices.GameJolt
         {
             _gettingScore = false;
 
+            if (!GJAPI.Instance.HasSignedInUser)
+                return;
+
             table.LastUpdated = DateTime.Now;
 
             for (int i = 0; i < scores.Length; i++)
@@ -147,7 +164,10 @@ namespace ConnectIt.ExternalServices.GameJolt
         {
             _gettingScore = false;
 
-            table.LastUpdated = DateTime.Now;
+            if (!GJAPI.Instance.HasSignedInUser)
+                return;
+
+            table.PlayerScoresLastUpdated = DateTime.Now;
 
             if (scores.Length == 0)
             {
@@ -165,11 +185,20 @@ namespace ConnectIt.ExternalServices.GameJolt
 
         private void AppendPlayerScoreCallbackHandler(TableInfo table, Score toAppend, bool success)
         {
+            if (!GJAPI.Instance.HasSignedInUser)
+                return;
+
+            if (success)
+                UpdateScoresForTable(table, true);
+
             PlayerScoreAppendAttempt?.Invoke(table, toAppend, success);
         }
 
         private void GetRankCallbackHandler(TableInfo table, Score score, int rank)
         {
+            if (!GJAPI.Instance.HasSignedInUser)
+                return;
+
             _playerScoresInTablesWithoutRank[table.GJTable.ID].Remove(score);
             if (_playerScoresInTablesWithoutRank[table.GJTable.ID].Count == 0)
                 _playerScoresInTablesWithoutRank.Remove(table.GJTable.ID);

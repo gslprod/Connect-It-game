@@ -140,6 +140,7 @@
                 public const string Title = SettingsMenuBaseString + ".Title";
 
                 public const string LanguageButton_Text = SettingsMenuBaseString + ".LanguageButton.Text";
+                public const string MusicSlider_Text = SettingsMenuBaseString + ".MusicSlider.Text";
 
                 private const string SettingsMenuBaseString = MenuBaseString + ".SettingsMenu";
             }

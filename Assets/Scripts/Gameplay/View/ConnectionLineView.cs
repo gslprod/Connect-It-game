@@ -61,7 +61,7 @@ namespace ConnectIt.Gameplay.View
 
             _lineRenderer.positionCount = usingTilesCount;
 
-            for (int i = 0; i < _connectionLineModel.UsingTiles.Count(); i++)
+            for (int i = 0; i < usingTilesCount; i++)
             {
                 Vector3 position = _connectionLineModel.UsingTiles.ElementAt(i).Tile.GetWorldPosition();
 

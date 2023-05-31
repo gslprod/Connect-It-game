@@ -1,5 +1,6 @@
 ﻿using ConnectIt.Localization;
 using ConnectIt.UI.CommonViews;
+using ConnectIt.UI.CustomControls;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Menu.MonoWrappers;
 using ConnectIt.UI.Tools;
@@ -23,10 +24,12 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
         private readonly DialogBoxView.Factory _dialogBoxViewFactory;
         private readonly DefaultLocalizedButtonView.Factory _defaultLocalizedButtonViewFactory;
         private readonly ILocalizationProvider _localizationProvider;
+        private readonly OSTVolumeSliderView.Factory _ostVolumeSliderViewFactory;
 
         private DefaultButtonView _backButton;
         private DefaultLocalizedTextElementView _titleLabel;
         private DefaultLocalizedButtonView _languageButton;
+        private OSTVolumeSliderView _ostVolumeSliderView;
 
         public SettingsMenuView(VisualElement viewRoot,
             VisualElement mainRoot,
@@ -37,7 +40,8 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
             TextKey.Factory textKeyFactory,
             DialogBoxView.Factory dialogBoxViewFactory,
             DefaultLocalizedButtonView.Factory defaultLocalizedButtonViewFactory,
-            ILocalizationProvider localizationProvider)
+            ILocalizationProvider localizationProvider,
+            OSTVolumeSliderView.Factory ostVolumeSliderViewFactory)
         {
             _viewRoot = viewRoot;
             _mainRoot = mainRoot;
@@ -49,6 +53,7 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
             _dialogBoxViewFactory = dialogBoxViewFactory;
             _defaultLocalizedButtonViewFactory = defaultLocalizedButtonViewFactory;
             _localizationProvider = localizationProvider;
+            _ostVolumeSliderViewFactory = ostVolumeSliderViewFactory;
         }
 
         public void Initialize()
@@ -74,6 +79,9 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
                 _viewRoot.Q<Button>(NameConstants.SettingsMenu.LanguageButton),
                 OnLanguageButtonClick,
                 _textKeyFactory.Create(TextKeysConstants.Menu.SettingsMenu.LanguageButton_Text));
+
+            _ostVolumeSliderView = _ostVolumeSliderViewFactory.Create(
+                _viewRoot.Q<ProgressBarSlider>(NameConstants.SettingsMenu.MusicSlider));
         }
 
         private void DisposeDisposableViews()
@@ -81,6 +89,7 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
             _backButton.Dispose();
             _titleLabel.Dispose();
             _languageButton.Dispose();
+            _ostVolumeSliderView.Dispose();
         }
 
         #region BackButton

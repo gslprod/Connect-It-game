@@ -90,3 +90,14 @@ MonoBehaviour:
   _placeholderConfidentialValues: {fileID: 11400000, guid: fefac51c6ccebf149a246e37dd60af47, type: 2}
   _gameJoltAPIPrefab: {fileID: 11422090, guid: 7a2e587034d846647b593aa159d7ed8d, type: 3}
   _loadingDialogBoxAsset: {fileID: 9197481963319205126, guid: 0217ba00d5a20474380cc9b226e2d8f1, type: 3}
+  _audioSourceMonoWrapper: {fileID: 2034917095190445169, guid: 3a58e458c0238f448a0e1200eb6689c8, type: 3}
+  _ostList:
+  - _targetScene: 0
+    _randomPlayOrder: 0
+    _playingClips:
+    - {fileID: 8300000, guid: cc03dd42bf3b18c4aaa9985092c11183, type: 3}
+  - _targetScene: 1
+    _randomPlayOrder: 0
+    _playingClips:
+    - {fileID: 8300000, guid: c31e4ee0996a1d547be07d766c483c74, type: 3}
+  _mixer: {fileID: 24100000, guid: 1beb4e9b09ad8f749b081f44dbb6ab47, type: 2}

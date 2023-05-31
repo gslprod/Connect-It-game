@@ -1,7 +1,9 @@
+using ConnectIt.Audio.OST;
 using ConnectIt.Config;
 using ConnectIt.Config.ScriptableObjects;
 using ConnectIt.Coroutines;
 using ConnectIt.ExternalServices.GameJolt;
+using ConnectIt.ExternalServices.GameJolt.Fixators.Scores;
 using ConnectIt.Gameplay.Data;
 using ConnectIt.Infrastructure.Factories;
 using ConnectIt.Localization;
@@ -30,6 +32,7 @@ using GameJolt.API;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 using Zenject;
 
@@ -52,6 +55,9 @@ namespace ConnectIt.DI.Installers
         [SerializeField] private ConfidentialValuesSO _placeholderConfidentialValues;
         [SerializeField] private GameJoltAPI _gameJoltAPIPrefab;
         [SerializeField] private VisualTreeAsset _loadingDialogBoxAsset;
+        [SerializeField] private OSTAudioSourceMonoWrapper _audioSourceMonoWrapper;
+        [SerializeField] private SceneOSTPlayInfo[] _ostList;
+        [SerializeField] private AudioMixer _mixer;
 
         public override void InstallBindings()
         {
@@ -78,10 +84,37 @@ namespace ConnectIt.DI.Installers
             BindStats();
             BindConfidentialData();
             BindGameJoltAPI();
+            BindAudio();
+        }
+
+        private void BindAudio()
+        {
+            Container.BindInstance(_mixer)
+                     .AsSingle();
+
+            BindOST();
+
+            void BindOST()
+            {
+                Container.BindInterfacesAndSelfTo<OSTPlayer>()
+                         .AsSingle()
+                         .NonLazy();
+
+                Container.Bind<OSTAudioSourceMonoWrapper>()
+                         .FromComponentInNewPrefab(_audioSourceMonoWrapper)
+                         .AsSingle()
+                         .WhenInjectedInto<OSTPlayer>();
+
+                Container.BindInstance(_ostList)
+                         .AsCached()
+                         .WhenInjectedInto<OSTPlayer>();
+            }
         }
 
         private void BindGameJoltAPI()
         {
+            BindFixators();
+
             Container.Bind<GameJoltAPI>()
                      .FromComponentInNewPrefab(_gameJoltAPIPrefab)
                      .AsSingle();
@@ -94,6 +127,13 @@ namespace ConnectIt.DI.Installers
 
             Container.BindInterfacesAndSelfTo<ExternalServices.GameJolt.Scores>()
                      .AsSingle();
+
+            void BindFixators()
+            {
+                Container.BindInterfacesTo<TotalScoresFixator>()
+                         .AsSingle()
+                         .NonLazy();
+            }
         }
 
         private void BindConfidentialData()

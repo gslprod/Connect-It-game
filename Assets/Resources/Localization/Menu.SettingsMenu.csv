@@ -1,3 +1,4 @@
 Key,English,Russian
 Menu.SettingsMenu.Title,,Настройки
 Menu.SettingsMenu.LanguageButton.Text,,Язык
+Menu.SettingsMenu.MusicSlider.Text,,Музыка: {0}
