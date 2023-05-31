@@ -1,4 +1,6 @@
-﻿using ConnectIt.Gameplay.Data;
+﻿using ConnectIt.Audio.Sounds;
+using ConnectIt.Config;
+using ConnectIt.Gameplay.Data;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.Utilities;
 using System;
@@ -17,7 +19,9 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
         public SelectLevelButtonView(Button button,
             int level,
             Action<int> onClick,
-            ILevelsPassDataProvider levelsPassDataProvider) : base(button, () => onClick(level))
+            ILevelsPassDataProvider levelsPassDataProvider,
+            SoundsPlayer soundsPlayer,
+            AudioConfig audioConfig) : base(button, () => onClick(level), soundsPlayer, audioConfig)
         {
             _level = level;
             _levelsPassDataProvider = levelsPassDataProvider;

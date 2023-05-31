@@ -1,4 +1,6 @@
-﻿using ConnectIt.Config;
+﻿using ConnectIt.Audio.Sounds;
+using ConnectIt.Config;
+using ConnectIt.Config.Wrappers;
 using ConnectIt.Gameplay.Model;
 using System.Linq;
 using UnityEngine;
@@ -10,15 +12,23 @@ namespace ConnectIt.Gameplay.View
     {
         private ConnectionLine _connectionLineModel;
         private GameplayViewConfig _gameplayViewConfig;
+        private SoundsPlayer _soundsPlayer;
+        private AudioConfig _audioConfig;
+        private ConnectionLineViewSounds _sounds => _audioConfig.ConnectionLineViewSounds;
 
         private LineRenderer _lineRenderer;
 
         [Inject]
-        public void Constructor(ConnectionLine model,
-            GameplayViewConfig gameplayViewConfig)
+        public void Constructor(
+            ConnectionLine model,
+            GameplayViewConfig gameplayViewConfig,
+            SoundsPlayer soundsPlayer,
+            AudioConfig audioConfig)
         {
             _connectionLineModel = model;
             _gameplayViewConfig = gameplayViewConfig;
+            _soundsPlayer = soundsPlayer;
+            _audioConfig = audioConfig;
         }
 
         private void Awake()
@@ -80,6 +90,8 @@ namespace ConnectIt.Gameplay.View
         private void OnUsingTilesChanged(ConnectionLine line)
         {
             UpdateView();
+
+            _soundsPlayer.Play(line.ConnectionCompleted ? _sounds.Completing : _sounds.Expanding, SoundMixerGroup.Gameplay);
         }
 
         private void OnModelDisposing(ConnectionLine obj)

@@ -25,11 +25,13 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
         private readonly DefaultLocalizedButtonView.Factory _defaultLocalizedButtonViewFactory;
         private readonly ILocalizationProvider _localizationProvider;
         private readonly OSTVolumeSliderView.Factory _ostVolumeSliderViewFactory;
+        private readonly SoundsVolumeSliderView.Factory _soundsVolumeSliderViewFactory;
 
         private DefaultButtonView _backButton;
         private DefaultLocalizedTextElementView _titleLabel;
         private DefaultLocalizedButtonView _languageButton;
         private OSTVolumeSliderView _ostVolumeSliderView;
+        private SoundsVolumeSliderView _soundsVolumeSliderView;
 
         public SettingsMenuView(VisualElement viewRoot,
             VisualElement mainRoot,
@@ -41,7 +43,8 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
             DialogBoxView.Factory dialogBoxViewFactory,
             DefaultLocalizedButtonView.Factory defaultLocalizedButtonViewFactory,
             ILocalizationProvider localizationProvider,
-            OSTVolumeSliderView.Factory ostVolumeSliderViewFactory)
+            OSTVolumeSliderView.Factory ostVolumeSliderViewFactory,
+            SoundsVolumeSliderView.Factory soundsVolumeSliderViewFactory)
         {
             _viewRoot = viewRoot;
             _mainRoot = mainRoot;
@@ -54,6 +57,7 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
             _defaultLocalizedButtonViewFactory = defaultLocalizedButtonViewFactory;
             _localizationProvider = localizationProvider;
             _ostVolumeSliderViewFactory = ostVolumeSliderViewFactory;
+            _soundsVolumeSliderViewFactory = soundsVolumeSliderViewFactory;
         }
 
         public void Initialize()
@@ -82,6 +86,9 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
 
             _ostVolumeSliderView = _ostVolumeSliderViewFactory.Create(
                 _viewRoot.Q<ProgressBarSlider>(NameConstants.SettingsMenu.MusicSlider));
+
+            _soundsVolumeSliderView = _soundsVolumeSliderViewFactory.Create(
+                _viewRoot.Q<ProgressBarSlider>(NameConstants.SettingsMenu.SoundSlider));
         }
 
         private void DisposeDisposableViews()
@@ -90,6 +97,7 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
             _titleLabel.Dispose();
             _languageButton.Dispose();
             _ostVolumeSliderView.Dispose();
+            _soundsVolumeSliderView.Dispose();
         }
 
         #region BackButton

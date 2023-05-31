@@ -1,4 +1,5 @@
 using ConnectIt.Audio.OST;
+using ConnectIt.Audio.Sounds;
 using ConnectIt.Config;
 using ConnectIt.Config.ScriptableObjects;
 using ConnectIt.Coroutines;
@@ -55,9 +56,10 @@ namespace ConnectIt.DI.Installers
         [SerializeField] private ConfidentialValuesSO _placeholderConfidentialValues;
         [SerializeField] private GameJoltAPI _gameJoltAPIPrefab;
         [SerializeField] private VisualTreeAsset _loadingDialogBoxAsset;
-        [SerializeField] private OSTAudioSourceMonoWrapper _audioSourceMonoWrapper;
-        [SerializeField] private SceneOSTPlayInfo[] _ostList;
+        [SerializeField] private OSTAudioSourceMonoWrapper _ostAudioSourceMonoWrapper;
         [SerializeField] private AudioMixer _mixer;
+        [SerializeField] private SoundsAudioSourceMonoWrapper _soundsAudioSourceMonoWrapper;
+        [SerializeField] private AudioConfigSO _audioConfig;
 
         public override void InstallBindings()
         {
@@ -93,6 +95,19 @@ namespace ConnectIt.DI.Installers
                      .AsSingle();
 
             BindOST();
+            BindSounds();
+
+            void BindSounds()
+            {
+                Container.BindInterfacesAndSelfTo<SoundsPlayer>()
+                         .AsSingle()
+                         .NonLazy();
+
+                Container.Bind<SoundsAudioSourceMonoWrapper>()
+                         .FromComponentInNewPrefab(_soundsAudioSourceMonoWrapper)
+                         .AsSingle()
+                         .WhenInjectedInto<SoundsPlayer>();
+            }
 
             void BindOST()
             {
@@ -101,12 +116,8 @@ namespace ConnectIt.DI.Installers
                          .NonLazy();
 
                 Container.Bind<OSTAudioSourceMonoWrapper>()
-                         .FromComponentInNewPrefab(_audioSourceMonoWrapper)
+                         .FromComponentInNewPrefab(_ostAudioSourceMonoWrapper)
                          .AsSingle()
-                         .WhenInjectedInto<OSTPlayer>();
-
-                Container.BindInstance(_ostList)
-                         .AsCached()
                          .WhenInjectedInto<OSTPlayer>();
             }
         }
@@ -390,6 +401,14 @@ namespace ConnectIt.DI.Installers
             BindGameplayConfig();
             BindGameVersionConfig();
             BindShopConfig();
+            BindAudioConfig();
+
+            void BindAudioConfig()
+            {
+                Container.Bind<AudioConfig>()
+                         .AsSingle()
+                         .WithArguments(_audioConfig);
+            }
 
             void BindGameplayConfig()
             {

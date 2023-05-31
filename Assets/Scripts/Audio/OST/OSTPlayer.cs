@@ -1,4 +1,6 @@
-﻿using ConnectIt.Save.SaveProviders;
+﻿using ConnectIt.Config;
+using ConnectIt.Config.Wrappers;
+using ConnectIt.Save.SaveProviders;
 using ConnectIt.Save.SaveProviders.SaveData;
 using ConnectIt.Scenes;
 using ConnectIt.Utilities;
@@ -26,7 +28,7 @@ namespace ConnectIt.Audio.OST
         }
 
         private readonly OSTAudioSourceMonoWrapper _audioSourceMonoWrapper;
-        private readonly SceneOSTPlayInfo[] _ostToPlay;
+        private readonly AudioConfig _audioConfig;
         private readonly IScenesLoader _scenesLoader;
         private readonly ISettingsSaveProvider _settingsSaveProvider;
         private readonly AudioMixer _mixer;
@@ -36,13 +38,13 @@ namespace ConnectIt.Audio.OST
 
         public OSTPlayer(
             OSTAudioSourceMonoWrapper audioSourceMonoWrapper,
-            SceneOSTPlayInfo[] ostToPlay,
+            AudioConfig audioConfig,
             IScenesLoader scenesLoader,
             ISettingsSaveProvider settingsSaveProvider,
             AudioMixer mixer)
         {
             _audioSourceMonoWrapper = audioSourceMonoWrapper;
-            _ostToPlay = ostToPlay;
+            _audioConfig = audioConfig;
             _scenesLoader = scenesLoader;
             _settingsSaveProvider = settingsSaveProvider;
             _mixer = mixer;
@@ -90,11 +92,11 @@ namespace ConnectIt.Audio.OST
 
         private bool TryStartPlayingOSTInScene(SceneType type)
         {
-            int index = _ostToPlay.FindIndex(item => item.TargetScene == type);
+            int index = _audioConfig.OSTList.FindIndex(item => item.TargetScene == type);
             if (index < 0)
                 return false;
 
-            SceneOSTPlayInfo playInfo = _ostToPlay[index];
+            SceneOSTPlayInfo playInfo = _audioConfig.OSTList[index];
             if (playInfo.PlayingClips.Length == 0)
                 return false;
 

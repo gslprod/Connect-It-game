@@ -1,4 +1,6 @@
-﻿using ConnectIt.Localization;
+﻿using ConnectIt.Audio.Sounds;
+using ConnectIt.Config;
+using ConnectIt.Localization;
 using ConnectIt.Shop.Customer;
 using ConnectIt.Shop.Customer.Wallet;
 using System;
@@ -16,7 +18,9 @@ namespace ConnectIt.UI.CommonViews
             Action onClick,
             ILocalizationProvider localizationProvider,
             ICustomer userCustomer,
-            TextKey.Factory textKeyFactory) : base(button, onClick, null, localizationProvider)
+            TextKey.Factory textKeyFactory,
+            SoundsPlayer soundsPlayer,
+            AudioConfig audioConfig) : base(button, onClick, null, localizationProvider, soundsPlayer, audioConfig)
         {
             _userCustomer = userCustomer;
             _textKeyFactory = textKeyFactory;

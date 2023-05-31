@@ -1,4 +1,6 @@
-﻿using ConnectIt.Localization;
+﻿using ConnectIt.Audio.Sounds;
+using ConnectIt.Config;
+using ConnectIt.Localization;
 using System;
 using UnityEngine.UIElements;
 using Zenject;
@@ -14,7 +16,9 @@ namespace ConnectIt.UI.CommonViews
         public DefaultLocalizedButtonView(Button button,
             Action onClick,
             TextKey textKey,
-            ILocalizationProvider localizationProvider) : base(button, onClick)
+            ILocalizationProvider localizationProvider,
+            SoundsPlayer soundsPlayer,
+            AudioConfig audioConfig) : base(button, onClick, soundsPlayer, audioConfig)
         {
             this.textKey = textKey;
             _localizationProvider = localizationProvider;

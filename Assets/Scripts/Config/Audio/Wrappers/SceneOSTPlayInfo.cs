@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace ConnectIt.Audio.OST
+namespace ConnectIt.Config.Wrappers
 {
     [Serializable]
     public class SceneOSTPlayInfo

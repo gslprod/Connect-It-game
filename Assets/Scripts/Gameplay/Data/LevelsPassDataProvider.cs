@@ -51,11 +51,11 @@ namespace ConnectIt.Gameplay.Data
 
             savedData.PassState = dataToSave.PassState;
 
-            if (dataToSave.Score >= savedData.Score)
-            {
+            if (dataToSave.Score > savedData.Score)
                 savedData.Score = dataToSave.Score;
+
+            if (dataToSave.PassTimeSec > savedData.PassTimeSec)
                 savedData.PassTimeSec = dataToSave.PassTimeSec;
-            }
 
             if (dataToSave.TotalEarnedCoins > savedData.TotalEarnedCoins)
                 savedData.TotalEarnedCoins = dataToSave.TotalEarnedCoins;

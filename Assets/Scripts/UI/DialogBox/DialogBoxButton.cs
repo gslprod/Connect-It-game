@@ -1,4 +1,7 @@
-﻿using ConnectIt.Localization;
+﻿using ConnectIt.Audio.Sounds;
+using ConnectIt.Config;
+using ConnectIt.Config.ScriptableObjects;
+using ConnectIt.Localization;
 using ConnectIt.Utilities;
 using System;
 using UnityEngine.UIElements;
@@ -11,21 +14,28 @@ namespace ConnectIt.UI.DialogBox
         private readonly ILocalizationProvider _localizationProvider;
         private readonly Button _button;
         private readonly IDialogBoxView _dialogBoxView;
+        private readonly SoundsPlayer _soundsPlayer;
+        private readonly AudioConfig _audioConfig;
         private DialogBoxButtonInfo _buttonInfo;
 
         private TextKey _titleKey;
         private Action _onClick;
         private bool _receivesButtonCallback = false;
 
-        public DialogBoxButton(ILocalizationProvider localizationProvider,
+        public DialogBoxButton(
+            ILocalizationProvider localizationProvider,
             DialogBoxButtonInfo buttonInfo,
             Button button,
-            IDialogBoxView dialogBoxView)
+            IDialogBoxView dialogBoxView,
+            SoundsPlayer soundsPlayer,
+            AudioConfig audioConfig)
         {
             _localizationProvider = localizationProvider;
             _buttonInfo = buttonInfo;
             _button = button;
             _dialogBoxView = dialogBoxView;
+            _soundsPlayer = soundsPlayer;
+            _audioConfig = audioConfig;
         }
 
         public void Initialize()
@@ -87,6 +97,8 @@ namespace ConnectIt.UI.DialogBox
         private void OnButtonClick()
         {
             _onClick?.Invoke();
+
+            _soundsPlayer.Play(_audioConfig.Click, SoundMixerGroup.UI);
         }
 
         private void OnTitleKeyArgsChanged(TextKey obj)

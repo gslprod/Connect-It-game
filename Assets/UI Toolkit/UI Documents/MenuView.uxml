@@ -79,7 +79,6 @@
                                 <ConnectIt.UI.CustomControls.ProgressBarSlider value="4.67" high-value="100" low-value="0" name="music-slider" class="settings-scroll-view-internal-container__child">
                                     <ui:Label text="Label" name="music-slider-label" picking-mode="Ignore" class="label setting__label progress-bar-slider__label" />
                                 </ConnectIt.UI.CustomControls.ProgressBarSlider>
-                                <ui:Button text="Button" name="hq-effects-button" class="button highlighted-label label settings-scroll-view-internal-container__child setting__label" />
                                 <ui:Button text="Button" name="language-button" class="button highlighted-label label settings-scroll-view-internal-container__child settings-scroll-view-internal-container__child--last setting__label language-button" />
                             </ui:VisualElement>
                         </ui:ScrollView>

@@ -1,4 +1,4 @@
-﻿using ConnectIt.Audio.OST;
+﻿using ConnectIt.Audio.Sounds;
 using ConnectIt.Localization;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.CustomControls;
@@ -9,36 +9,36 @@ using Zenject;
 
 namespace ConnectIt.UI.Menu.Views.SettingsMenu
 {
-    public class OSTVolumeSliderView : IInitializable, IDisposable
+    public class SoundsVolumeSliderView : IInitializable, IDisposable
     {
         private readonly ProgressBarSlider _silder;
-        private readonly OSTPlayer _ostPlayer;
+        private readonly SoundsPlayer _soundsPlayer;
         private readonly DefaultLocalizedTextElementView.Factory _defaultLocalizedTextElementViewFactory;
         private readonly TextKey.Factory _textKeyFactory;
 
         private DefaultLocalizedTextElementView _titleView;
 
-        public OSTVolumeSliderView(
+        public SoundsVolumeSliderView(
             ProgressBarSlider silder,
-            OSTPlayer ostPlayer,
+            SoundsPlayer soundsPlayer,
             DefaultLocalizedTextElementView.Factory defaultLocalizedTextElementViewFactory,
             TextKey.Factory textKeyFactory)
         {
             _silder = silder;
-            _ostPlayer = ostPlayer;
+            _soundsPlayer = soundsPlayer;
             _defaultLocalizedTextElementViewFactory = defaultLocalizedTextElementViewFactory;
             _textKeyFactory = textKeyFactory;
         }
 
         public void Initialize()
         {
-            _ostPlayer.VolumeChanged += OnVolumeChanged;
+            _soundsPlayer.VolumeChanged += OnVolumeChanged;
             _silder.RegisterValueChangedCallback(OnValueChanged);
             _silder.RegisterCallback<PointerCaptureOutEvent>(OnPointerCaptureOut);
 
             _titleView = _defaultLocalizedTextElementViewFactory.Create(
-                _silder.Q<Label>(NameConstants.SettingsMenu.MusicSliderTitleLabel),
-                _textKeyFactory.Create(TextKeysConstants.Menu.SettingsMenu.MusicSlider_Text)); 
+                _silder.Q<Label>(NameConstants.SettingsMenu.SoundSliderTitleLabel),
+                _textKeyFactory.Create(TextKeysConstants.Menu.SettingsMenu.SoundsSlider_Text));
 
             _silder.highValue = 100f;
             _silder.lowValue = 0f;
@@ -47,7 +47,7 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
 
         public void Dispose()
         {
-            _ostPlayer.VolumeChanged -= OnVolumeChanged;
+            _soundsPlayer.VolumeChanged -= OnVolumeChanged;
             _silder.UnregisterValueChangedCallback(OnValueChanged);
             _silder.UnregisterCallback<PointerCaptureOutEvent>(OnPointerCaptureOut);
 
@@ -56,9 +56,9 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
 
         private void UpdateValue()
         {
-            _silder.SetValueWithoutNotify(_ostPlayer.VolumePercents);
+            _silder.SetValueWithoutNotify(_soundsPlayer.VolumePercents);
 
-            _titleView.SetArgs(new object[] { _ostPlayer.VolumePercents });
+            _titleView.SetArgs(new object[] { _soundsPlayer.VolumePercents });
         }
 
         private void OnVolumeChanged()
@@ -68,14 +68,14 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
 
         private void OnValueChanged(ChangeEvent<float> changeEvent)
         {
-            _ostPlayer.SetVolumePercent(changeEvent.newValue, false);
+            _soundsPlayer.SetVolumePercent(changeEvent.newValue, false);
         }
 
         private void OnPointerCaptureOut(PointerCaptureOutEvent pointerUpEvent)
         {
-            _ostPlayer.SetVolumePercent(_silder.value);
+            _soundsPlayer.SetVolumePercent(_silder.value);
         }
 
-        public class Factory : PlaceholderFactory<ProgressBarSlider, OSTVolumeSliderView> { }
+        public class Factory : PlaceholderFactory<ProgressBarSlider, SoundsVolumeSliderView> { }
     }
 }

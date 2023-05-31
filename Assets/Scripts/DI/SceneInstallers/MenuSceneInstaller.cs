@@ -142,6 +142,9 @@ public class MenuSceneInstaller : MonoInstaller
 
                 Container.BindFactory<ProgressBarSlider, OSTVolumeSliderView, OSTVolumeSliderView.Factory>()
                          .FromFactory<PrimitiveDIFactory<ProgressBarSlider, OSTVolumeSliderView>>();
+
+                Container.BindFactory<ProgressBarSlider, SoundsVolumeSliderView, SoundsVolumeSliderView.Factory>()
+                         .FromFactory<PrimitiveDIFactory<ProgressBarSlider, SoundsVolumeSliderView>>();
             }
         }
 

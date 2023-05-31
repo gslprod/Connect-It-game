@@ -1,8 +1,10 @@
-﻿using ConnectIt.Utilities;
+﻿using ConnectIt.Config;
+using ConnectIt.Utilities;
 using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace ConnectIt.Audio.OST
 {
@@ -12,7 +14,9 @@ namespace ConnectIt.Audio.OST
         public bool Playing => _audioSource.isPlaying;
 
         private AudioSource _audioSource;
-        private readonly float _fadeDurationSec = 1f;
+        private AudioConfig _audioConfig;
+        private float _fadeDurationSec => _audioConfig.FadeDurationSec;
+        private AnimationCurve _fadeCurve => _audioConfig.FadeCurve;
 
         private Coroutine _waitForClipEndCoroutine;
 
@@ -24,6 +28,13 @@ namespace ConnectIt.Audio.OST
             DontDestroyOnLoad(gameObject);
 
             _audioSource = GetComponent<AudioSource>();
+        }
+
+        [Inject]
+        public void Constructor(
+            AudioConfig audioConfig)
+        {
+            _audioConfig = audioConfig;
         }
 
         public void Play(AudioClip clip, bool loop = false)
@@ -43,7 +54,8 @@ namespace ConnectIt.Audio.OST
 
         private void Stop(bool onlyFade)
         {
-            Tween tween = _audioSource.DOFade(0f, _fadeDurationSec);
+            Tween tween = _audioSource.DOFade(0f, _fadeDurationSec)
+                                      .SetEase(_fadeCurve);
             if (!onlyFade)
                 tween.OnComplete(OnStopFadeCompleted);
 
@@ -63,7 +75,8 @@ namespace ConnectIt.Audio.OST
             _audioSource.clip = clip;
             _audioSource.loop = loop;
             _audioSource.volume = 0f;
-            _audioSource.DOFade(1f, _fadeDurationSec);
+            _audioSource.DOFade(1f, _fadeDurationSec)
+                        .SetEase(_fadeCurve);
 
             _audioSource.Play();
             if (!loop)
@@ -75,7 +88,10 @@ namespace ConnectIt.Audio.OST
             Stop(true);
 
             _audioSource.loop = loop;
-            _audioSource.DOFade(1f, _fadeDurationSec).SetDelay(_fadeDurationSec).OnStart(() => OnPreviousClipFaded(clip));
+            _audioSource.DOFade(1f, _fadeDurationSec)
+                        .SetDelay(_fadeDurationSec)
+                        .SetEase(_fadeCurve)
+                        .OnStart(() => OnPreviousClipFaded(clip));
             
             if (!loop)
                 _waitForClipEndCoroutine = StartCoroutine(WaitForClipEnd(clip, true));

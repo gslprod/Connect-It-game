@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ConnectIt.Audio.Sounds;
+using ConnectIt.Config;
+using System;
 using UnityEngine.UIElements;
 using Zenject;
 
@@ -8,14 +10,20 @@ namespace ConnectIt.UI.CommonViews
     {
         public bool RecievesClickCallback { get; private set; } = true;
 
+        protected readonly SoundsPlayer soundsPlayer;
+        protected readonly AudioConfig audioConfig;
         protected readonly Button button;
         protected Action onClick;
 
         public DefaultButtonView(Button button,
-            Action onClick)
+            Action onClick,
+            SoundsPlayer soundsPlayer,
+            AudioConfig audioConfig)
         {
             this.button = button;
             this.onClick = onClick;
+            this.soundsPlayer = soundsPlayer;
+            this.audioConfig = audioConfig;
         }
 
         public virtual void Initialize()
@@ -59,6 +67,8 @@ namespace ConnectIt.UI.CommonViews
         private void OnButtonClicked()
         {
             onClick?.Invoke();
+
+            soundsPlayer.Play(audioConfig.Click, SoundMixerGroup.UI);
         }
 
         public class Factory : PlaceholderFactory<Button, Action, DefaultButtonView> { }

@@ -11,11 +11,13 @@ namespace ConnectIt.Save.SaveProviders.SaveData
 
         [SerializeField] internal SupportedLanguages Language;
         [SerializeField] internal float OSTVolumePercents;
+        [SerializeField] internal float SoundsVolumePercents;
 
         public SettingsSaveData()
         {
             Language = SupportedLanguages.None;
-            OSTVolumePercents = 50f;
+            OSTVolumePercents = 70f;
+            SoundsVolumePercents = 70f;
         }
 
         public SettingsSaveData Clone()
@@ -23,6 +25,7 @@ namespace ConnectIt.Save.SaveProviders.SaveData
 
         public bool Equals(SettingsSaveData other)
             => Language == other.Language &&
-            OSTVolumePercents == other.OSTVolumePercents;
+            OSTVolumePercents == other.OSTVolumePercents &&
+            SoundsVolumePercents == other.SoundsVolumePercents;
     }
 }
