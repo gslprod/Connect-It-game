@@ -4,6 +4,7 @@
     {
         public static class Initializable
         {
+            public const int ErrorHandler = -50;
             public const int FileSaver = -20;
             public const int GameSaveProvider = -15;
             public const int PortViewFromModelSpawner = -10;

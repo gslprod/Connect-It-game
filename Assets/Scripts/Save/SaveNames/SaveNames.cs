@@ -1,11 +1,12 @@
-﻿using ConnectIt.Shop.Goods;
+﻿using ConnectIt.Save.SaveProviders.SaveData;
+using ConnectIt.Shop.Goods;
 using ConnectIt.Shop.Goods.Boosts;
 using ConnectIt.Stats.Data;
 using ConnectIt.Utilities;
 using System;
 using System.Linq;
 
-namespace ConnectIt.Save.SaveNames
+namespace ConnectIt.Save.Names
 {
     public static class SaveNames
     {
@@ -22,7 +23,15 @@ namespace ConnectIt.Save.SaveNames
             #region StatsData
             new ItemName(typeof(IStatsData), "StatsData"),
             new ItemName(typeof(ApplicationRunningTimeStatsData), "ApplicationRunningTime", typeof(IStatsData)),
-            new ItemName(typeof(MovesCountStatsData), "MovesCount", typeof(IStatsData))
+            new ItemName(typeof(MovesCountStatsData), "MovesCount", typeof(IStatsData)),
+            #endregion
+
+            #region SaveData
+            new ItemName(typeof(GameplaySaveData), "GameplaySaveData"),
+            new ItemName(typeof(ShopSaveData), "ShopSaveData"),
+            new ItemName(typeof(StatsSaveData), "StatsSaveData"),
+            new ItemName(typeof(ExternalServerSaveData), "ExternalServerSaveData"),
+            new ItemName(typeof(SettingsSaveData), "SettingsSaveData")
             #endregion
         };
 

@@ -76,12 +76,12 @@
 }
 
 .boost-element__amount-label {
-    flex-grow: 0;
+    flex-grow: 1;
     flex-shrink: 1;
 }
 
 .boost-element__use-button {
-    flex-grow: 1;
+    flex-grow: 1000;
     background-color: var(--accept-color);
     min-width: 200px;
     flex-shrink: 1;

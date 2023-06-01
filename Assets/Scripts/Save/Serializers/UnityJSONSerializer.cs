@@ -5,7 +5,7 @@ namespace ConnectIt.Save.Serializers
 {
     public class UnityJSONSerializer : ISerializer
     {
-        private const bool _prettyPrint = true;
+        private const bool _prettyPrint = false;
 
         public object Deserialize(string serializedObj, Type objType)
         {

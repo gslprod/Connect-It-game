@@ -6,7 +6,9 @@ namespace ConnectIt.Security.ConfidentialData
     public class ConfidentialValuesSO : ScriptableObject
     {
         internal string GameJoltAPIGameKey => _gameJoltAPIGameKey;
+        internal string EncryptionKey => _encryptionKey;
 
         [SerializeField] private string _gameJoltAPIGameKey;
+        [SerializeField] private string _encryptionKey;
     }
 }

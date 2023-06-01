@@ -392,17 +392,17 @@
 .stats-scroll-view {
 }
 
-    .stats-scroll-view > .scroll-view-container {
-        flex-direction: column;
-    }
+.stats-scroll-view > .scroll-view-container {
+    flex-direction: column;
+}
 
-        .stats-scroll-view > .scroll-view-container > .scroll-view-container__child {
-            margin-bottom: 20px;
-        }
+.stats-scroll-view > .scroll-view-container > .scroll-view-container__child {
+    margin-bottom: 20px;
+}
 
-        .stats-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
-            margin-bottom: 0;
-        }
+.stats-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
+    margin-bottom: 0;
+}
 
 .stats-scroll-view-container {
     flex-grow: 1;
@@ -452,14 +452,14 @@
     padding-bottom: 60px;
 }
 
-    .shop-coins-container > .highlighted-label {
-        font-size: 50px;
-    }
+.shop-coins-container > .highlighted-label {
+    font-size: 50px;
+}
 
-    .shop-coins-container > .highlighted-label--coins {
-        font-size: 85px;
-        margin-bottom: 25px;
-    }
+.shop-coins-container > .highlighted-label--coins {
+    font-size: 85px;
+    margin-bottom: 25px;
+}
 
 .boosts-container {
     align-items: center;
@@ -475,17 +475,17 @@
     width: 100%;
 }
 
-    .boosts-scroll-view > .scroll-view-container {
-        flex-direction: column;
-    }
+.boosts-scroll-view > .scroll-view-container {
+    flex-direction: column;
+}
 
-        .boosts-scroll-view > .scroll-view-container > .scroll-view-container__child {
-            margin-bottom: 20px;
-        }
+.boosts-scroll-view > .scroll-view-container > .scroll-view-container__child {
+    margin-bottom: 20px;
+}
 
-        .boosts-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
-            margin-bottom: 0;
-        }
+.boosts-scroll-view > .scroll-view-container > .scroll-view-container__child--last {
+    margin-bottom: 0;
+}
 
 .boost-element {
     align-items: stretch;
@@ -530,16 +530,18 @@
     font-size: 50px;
     margin-right: 10px;
     flex-shrink: 1;
+    flex-grow: 1;
 }
 
 .boost-element__price-label {
     font-size: 50px;
     margin-right: 10px;
     flex-shrink: 1;
+    flex-grow: 1;
 }
 
 .boost-element__buy-button {
-    flex-grow: 1;
+    flex-grow: 1000;
     font-size: 50px;
     background-color: var(--accept-color);
     flex-shrink: 1;
@@ -565,9 +567,9 @@
     flex-grow: 1;
 }
 
-    .gj-api-scroll-view > .unity-scroll-view__content-and-vertical-scroll-container > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container {
-        flex-grow: 1;
-    }
+.gj-api-scroll-view > .unity-scroll-view__content-and-vertical-scroll-container > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container {
+    flex-grow: 1;
+}
 
 .gj-api-scroll-view-container {
     flex-grow: 1;
@@ -652,6 +654,7 @@
 .gj-scores-container__title {
     font-size: 45px;
     margin-right: 5px;
+    flex-shrink: 1;
 }
 
 .gj-scores-container__change-table-button {
@@ -679,7 +682,7 @@
 }
 
 .gj-scoreboard__title-container {
-    align-self: flex-start;
+    align-self: stretch;
     flex-direction: row;
     margin-bottom: 20px;
 }
@@ -687,6 +690,7 @@
 .gj-scoreboard__title {
     font-size: 45px;
     margin-right: 5px;
+    flex-shrink: 1
 }
 
 .gj-scoreboard__update-button {
@@ -702,17 +706,17 @@
 .gj-scoreboard__scroll-view {
 }
 
-    .gj-scoreboard__scroll-view > .scroll-view-container {
-        flex-direction: column;
-    }
+.gj-scoreboard__scroll-view > .scroll-view-container {
+    flex-direction: column;
+}
 
-        .gj-scoreboard__scroll-view > .scroll-view-container > .scroll-view-container__child {
-            margin-bottom: 20px;
-        }
+.gj-scoreboard__scroll-view > .scroll-view-container > .scroll-view-container__child {
+    margin-bottom: 20px;
+}
 
-        .gj-scoreboard__scroll-view > .scroll-view-container > .scroll-view-container__child--last {
-            margin-bottom: 0;
-        }
+.gj-scoreboard__scroll-view > .scroll-view-container > .scroll-view-container__child--last {
+    margin-bottom: 0;
+}
 
 .gj-score {
     flex-direction: row;
@@ -881,9 +885,9 @@
     margin-top: 50px;
 }
 
-    .gj-login-scroll-view-internal-container > .auto-login-container > .button > .info-button__icon {
-        margin-left: 7px;
-        margin-right: 7px;
-        margin-top: 7px;
-        margin-bottom: 7px;
-    }
+.gj-login-scroll-view-internal-container > .auto-login-container > .button > .info-button__icon {
+    margin-left: 7px;
+    margin-right: 7px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}

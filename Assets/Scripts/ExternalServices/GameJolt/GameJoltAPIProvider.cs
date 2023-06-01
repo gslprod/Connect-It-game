@@ -113,7 +113,7 @@ namespace ConnectIt.ExternalServices.GameJolt
             data.Username = string.Empty;
             data.Token = string.Empty;
 
-            _externalServerSaveProvider.SaveExtrenalServerData(data);
+            _externalServerSaveProvider.SaveExternalServerData(data);
         }
 
         #region Scores

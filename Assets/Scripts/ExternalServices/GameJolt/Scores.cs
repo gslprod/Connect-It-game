@@ -4,9 +4,8 @@ using GameJolt.API.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using GJAPIScores = GameJolt.API.Scores;
 using GJAPI = GameJolt.API.GameJoltAPI;
+using GJAPIScores = GameJolt.API.Scores;
 
 namespace ConnectIt.ExternalServices.GameJolt
 {
@@ -29,8 +28,9 @@ namespace ConnectIt.ExternalServices.GameJolt
         private readonly Dictionary<int, List<Score>> _playerScoresInTablesWithoutRank = new();
 
         private bool _updatingRank;
-        private bool _gettingScore;
         private bool _gettingTables;
+        private List<int> _gettingScoreForTables = new();
+        private List<int> _gettingPlayerScoreForTables = new();
 
         public void AppendPlayerScore(TableInfo table, Score toAppend, Action<bool> callback = null)
         {
@@ -43,35 +43,31 @@ namespace ConnectIt.ExternalServices.GameJolt
 
         public void UpdateScoresForTable(TableInfo table, bool onlyPlayerScores = false)
         {
-            ClearScoresForTable(table, onlyPlayerScores);
+            ClearScoresForTable(table, onlyPlayerScores, false);
             AddScoresForTable(table, onlyPlayerScores);
         }
 
         public void AddScoresForTable(TableInfo table, bool onlyPlayerScores = false)
         {
-            if (_gettingScore)
+            if (_gettingScoreForTables.Contains(table.GJTable.ID))
                 return;
 
-            _gettingScore = true;
-
-            GJAPIScores.Get(scores => GetPlayerScoresCallbackHandler(table, scores), table.GJTable.ID, ScorePerUpdateLimit, true);
+            if (!_gettingPlayerScoreForTables.Contains(table.GJTable.ID))
+            {
+                _gettingPlayerScoreForTables.Add(table.GJTable.ID);
+                GJAPIScores.Get(scores => GetPlayerScoresCallbackHandler(table, scores), table.GJTable.ID, ScorePerUpdateLimit, true);
+            }
 
             if (!onlyPlayerScores)
+            {
+                _gettingScoreForTables.Add(table.GJTable.ID);
                 GJAPIScores.Get(scores => GetScoresCallbackHandler(table, scores), table.GJTable.ID, ScorePerUpdateLimit);
+            }
         }
 
         public void ClearScoresForTable(TableInfo table, bool onlyPlayerScores = false)
         {
-            ((List<ScoreInfo>)_playerScoresInTables[table.GJTable.ID]).Clear();
-
-            TablePlayerScoresChanged?.Invoke(table);
-
-            if (!onlyPlayerScores)
-            {
-                ((List<ScoreInfo>)_scoresInTables[table.GJTable.ID]).Clear();
-
-                TableScoresChanged?.Invoke(table);
-            }
+            ClearScoresForTable(table, onlyPlayerScores, true);
         }
 
         public void LoadTables()
@@ -82,6 +78,23 @@ namespace ConnectIt.ExternalServices.GameJolt
             _gettingTables = true;
 
             GJAPIScores.GetTables(GetTablesCallbackHandler);
+        }
+
+
+        private void ClearScoresForTable(TableInfo table, bool onlyPlayerScores, bool invokeEvents)
+        {
+            ((List<ScoreInfo>)_playerScoresInTables[table.GJTable.ID]).Clear();
+
+            if (invokeEvents)
+                TablePlayerScoresChanged?.Invoke(table);
+
+            if (!onlyPlayerScores)
+            {
+                ((List<ScoreInfo>)_scoresInTables[table.GJTable.ID]).Clear();
+
+                if (invokeEvents)
+                    TableScoresChanged?.Invoke(table);
+            }
         }
 
         private void UpdatePlayerScoresRanks()
@@ -147,7 +160,7 @@ namespace ConnectIt.ExternalServices.GameJolt
 
         private void GetScoresCallbackHandler(TableInfo table, Score[] scores)
         {
-            _gettingScore = false;
+            _gettingScoreForTables.Remove(table.GJTable.ID);
 
             if (!GJAPI.Instance.HasSignedInUser)
                 return;
@@ -162,7 +175,7 @@ namespace ConnectIt.ExternalServices.GameJolt
 
         private void GetPlayerScoresCallbackHandler(TableInfo table, Score[] scores)
         {
-            _gettingScore = false;
+            _gettingPlayerScoreForTables.Remove(table.GJTable.ID);
 
             if (!GJAPI.Instance.HasSignedInUser)
                 return;

@@ -31,3 +31,11 @@ DialogBox.ConfirmGameExit.Title,,Выйти из игры?
 DialogBox.ConfirmGameExit.Message,,Подтвердите выход из игры.
 DialogBox.GJScoreboardChange.Title,,Выбор таблицы рекордов
 DialogBox.GJScoreboardChange.Message,,Выберите таблицу из списка ниже.
+DialogBox.SaveLoadError.Title,,Ошибка загрузки сохранения
+DialogBox.SaveLoadError.Message,,"Возможно, сохранения повреждены, или же приложению не удается получить доступ к файлам сохранения. Выберите действие, которое необходимо совершить. Техническая информация: {0}"
+DialogBox.SaveLoadError.DoNothingButton.Text,,Ничего не предпринимать и закрыть игру
+DialogBox.SaveLoadError.EraseDataButton.Text,,Сбросить сохранения
+DialogBox.ConfirmSaveErasing.Title,,Сброс сохранения
+DialogBox.ConfirmSaveErasing.Message,,"Это приведет к потере всего Вашего прогресса в данной игре. Однако, это действие избавит Вас от ошибки загрузки сохранения."
+DialogBox.DataSaveError.Title,,Ошибка сохранения данных
+DialogBox.DataSaveError.Message,,"Возможно, приложению не удается получить доступ к памяти Вашего устройства. Техническая информация: {0}"

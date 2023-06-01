@@ -100,7 +100,10 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
 
             ScoreInfo bestPlayerScore = playerScores[0];
             if (bestPlayerScore.GJScore.Value >= _totalScore)
+            {
+                SaveFixedScore(bestPlayerScore.GJScore.Value);
                 return;
+            }
 
             FixScoreInTable(table);
         }
@@ -108,6 +111,9 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
         private void FixScoreInTable(TableInfo table)
         {
             int intScore = (int)Mathf.Clamp(_totalScore, int.MinValue, int.MaxValue);
+            if (intScore == 0)
+                return;
+
             Score score = new(
                 intScore,
                 intScore.ToString(),
@@ -122,6 +128,11 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
             if (!success)
                 return;
 
+            SaveFixedScore(intScore);
+        }
+
+        private void SaveFixedScore(int intScore)
+        {
             ExternalServerSaveData saveData = _externalServerSaveProvider.LoadExternalServerData();
             saveData.FixedScores ??= new();
             int index = saveData.FixedScores.FindIndex(item => item.TableID == GJConstants.TableID.TotalScores);
@@ -135,7 +146,7 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
                     BestFixedScore = intScore
                 });
 
-            _externalServerSaveProvider.SaveExtrenalServerData(saveData);
+            _externalServerSaveProvider.SaveExternalServerData(saveData);
         }
     }
 }

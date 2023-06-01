@@ -288,6 +288,9 @@
 .dialog-box__message-label {
     font-size: 42px;
     -unity-text-align: upper-center;
+}
+
+.dialog-box__message-label-scroll-view {
     margin-bottom: 20px;
 }
 

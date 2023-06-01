@@ -1,7 +1,7 @@
 ﻿using ConnectIt.Utilities;
 using System;
 
-namespace ConnectIt.Save.SaveNames
+namespace ConnectIt.Save.Names
 {
     public struct ItemName
     {

@@ -42,6 +42,13 @@ namespace ConnectIt.Save.Savers
             }
         }
 
+        public void Delete(string saveKey)
+        {
+            string path = GetFullSaveFilePath(saveKey);
+
+            File.Delete(path);
+        }
+
         private string GetFullSaveFilePath(string fileName)
             => _savePath + Path.DirectorySeparatorChar + fileName + _saveFileExtension;
     }

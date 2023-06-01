@@ -7,7 +7,7 @@ namespace ConnectIt.Save.SaveProviders
     {
         event Action ExternalServerSaveDataChanged;
 
-        void SaveExtrenalServerData(ExternalServerSaveData saveData);
+        void SaveExternalServerData(ExternalServerSaveData saveData);
         ExternalServerSaveData LoadExternalServerData();
     }
 }

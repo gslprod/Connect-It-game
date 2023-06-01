@@ -21,15 +21,15 @@ MonoBehaviour:
     _randomPlayOrder: 0
     _playingClips:
     - {fileID: 8300000, guid: c31e4ee0996a1d547be07d766c483c74, type: 3}
-  _fadeDurationSec: 1.5
+  _fadeDurationSec: 1.2
   _fadeCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -47,5 +47,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _connectionLineViewSounds:
-    _expanding: {fileID: 8300000, guid: 01f726fdee7eed64e8cc14c496f1860d, type: 3}
+    _expanding: {fileID: 8300000, guid: 91268824a37730b45b6eba5fc192add5, type: 3}
     _completing: {fileID: 8300000, guid: 90872929e1092ec4196118a487998bde, type: 3}
+  _click: {fileID: 8300000, guid: fb0e13ef6ef88fe43ae1152c903395d1, type: 3}

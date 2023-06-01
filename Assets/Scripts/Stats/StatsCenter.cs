@@ -1,5 +1,5 @@
 ﻿using ConnectIt.Coroutines;
-using ConnectIt.Save.SaveNames;
+using ConnectIt.Save.Names;
 using ConnectIt.Save.SaveProviders;
 using ConnectIt.Save.SaveProviders.SaveData;
 using ConnectIt.Stats.Data;

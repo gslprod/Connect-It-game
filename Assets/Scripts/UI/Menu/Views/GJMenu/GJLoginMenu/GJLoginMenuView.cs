@@ -165,7 +165,7 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
                     ExternalServerSaveData saveData = _externalServerSaveProvider.LoadExternalServerData();
                     saveData.Username = _usernameTextField.text;
                     saveData.Token = _tokenTextField.text;
-                    _externalServerSaveProvider.SaveExtrenalServerData(saveData);
+                    _externalServerSaveProvider.SaveExternalServerData(saveData);
                 }
 
                 _tokenTextField.SetValueWithoutNotify(string.Empty);

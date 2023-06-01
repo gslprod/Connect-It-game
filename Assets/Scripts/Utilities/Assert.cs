@@ -6,103 +6,103 @@ namespace ConnectIt.Utilities
     {
         private const string DefaultMessage = "Validation failed";
 
-        public static void ThatArgIs(bool condition)
+        public static void ThatArgIs(bool condition, string message = null)
         {
             if (!condition)
-                ThrowArgEx();
+                ThrowArgEx(message);
         }
 
-        public static void ThatArgIs(bool condition1, bool condition2)
+        public static void ThatArgIs(bool condition1, bool condition2, string message = null)
         {
             ThatArgIs(condition1);
             ThatArgIs(condition2);
         }
 
-        public static void ArgIsNotNull(object arg)
+        public static void ArgIsNotNull(object arg, string message = null)
         {
             if (arg == null)
-                ThrowNullArgEx();
+                ThrowNullArgEx(message);
         }
 
-        public static void ArgsIsNotNull(object arg1, object arg2)
+        public static void ArgsIsNotNull(object arg1, object arg2, string message = null)
         {
-            ArgIsNotNull(arg1);
-            ArgIsNotNull(arg2);
+            ArgIsNotNull(arg1, message);
+            ArgIsNotNull(arg2, message);
         }
 
-        public static void ArgsIsNotNull(object arg1, object arg2, object arg3)
+        public static void ArgsIsNotNull(object arg1, object arg2, object arg3, string message = null)
         {
-            ArgIsNotNull(arg1);
-            ArgIsNotNull(arg2);
-            ArgIsNotNull(arg3);
+            ArgIsNotNull(arg1, message);
+            ArgIsNotNull(arg2, message);
+            ArgIsNotNull(arg3, message);
         }
 
-        public static void ArgsIsNotNull(object arg1, object arg2, object arg3, object arg4)
+        public static void ArgsIsNotNull(object arg1, object arg2, object arg3, object arg4, string message = null)
         {
-            ArgIsNotNull(arg1);
-            ArgIsNotNull(arg2);
-            ArgIsNotNull(arg3);
-            ArgIsNotNull(arg4);
+            ArgIsNotNull(arg1, message);
+            ArgIsNotNull(arg2, message);
+            ArgIsNotNull(arg3, message);
+            ArgIsNotNull(arg4, message);
         }
 
-        public static void That(bool condition)
+        public static void That(bool condition, string message = null)
         {
             if (!condition)
-                ThrowInvalidOperationEx();
+                ThrowInvalidOperationEx(message);
         }
 
-        public static void That(bool condition1, bool condition2)
+        public static void That(bool condition1, bool condition2, string message = null)
         {
-            That(condition1);
-            That(condition2);
+            That(condition1, message);
+            That(condition2, message);
         }
 
-        public static void IsNotNull(object arg)
+        public static void IsNotNull(object arg, string message = null)
         {
             if (arg == null)
-                ThrowInvalidOperationEx();
+                ThrowInvalidOperationEx(message);
         }
 
-        public static void IsNotNull(object arg1, object arg2)
+        public static void IsNotNull(object arg1, object arg2, string message = null)
         {
-            IsNotNull(arg1);
-            IsNotNull(arg2);
+            IsNotNull(arg1, message);
+            IsNotNull(arg2, message);
         }
 
-        public static void IsNull(object arg)
+        public static void IsNull(object arg, string message = null)
         {
             if (arg != null)
-                ThrowInvalidOperationEx();
+                ThrowInvalidOperationEx(message);
         }
 
-        public static Exception GetFailException()
+        public static Exception GetFailException(string message = null)
         {
-            return CreateInvalidOperationEx();
+            return CreateInvalidOperationEx(message);
         }
 
-        public static void Fail()
+        public static void Fail(string message = null)
         {
-            ThrowInvalidOperationEx();
+            ThrowInvalidOperationEx(message);
         }
 
-        private static void ThrowNullArgEx()
+        private static void ThrowNullArgEx(string message)
         {
-            throw new ArgumentNullException(DefaultMessage);
+            throw new ArgumentNullException(string.IsNullOrEmpty(message) ? DefaultMessage : message);
         }
 
-        private static void ThrowArgEx()
+        private static void ThrowArgEx(string message)
         {
-            throw new ArgumentException(DefaultMessage);
+            throw new ArgumentException(string.IsNullOrEmpty(message) ? DefaultMessage : message);
         }
 
-        private static void ThrowInvalidOperationEx()
+        private static void ThrowInvalidOperationEx(string message)
         {
-            throw new InvalidOperationException(DefaultMessage);
+            throw new InvalidOperationException(string.IsNullOrEmpty(message) ? DefaultMessage : message);
         }
 
-        private static InvalidOperationException CreateInvalidOperationEx()
+        private static InvalidOperationException CreateInvalidOperationEx(string message)
         {
-            return new InvalidOperationException(DefaultMessage);
+            return new InvalidOperationException(string.IsNullOrEmpty(message) ? DefaultMessage : message);
         }
     }
 }

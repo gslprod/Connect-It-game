@@ -3,6 +3,7 @@ using ConnectIt.Audio.Sounds;
 using ConnectIt.Config;
 using ConnectIt.Config.ScriptableObjects;
 using ConnectIt.Coroutines;
+using ConnectIt.ErrorHandling;
 using ConnectIt.ExternalServices.GameJolt;
 using ConnectIt.ExternalServices.GameJolt.Fixators.Scores;
 using ConnectIt.Gameplay.Data;
@@ -14,6 +15,7 @@ using ConnectIt.Save.Serializers;
 using ConnectIt.Scenes;
 using ConnectIt.Scenes.Switchers;
 using ConnectIt.Security.ConfidentialData;
+using ConnectIt.Security.Encryption;
 using ConnectIt.Shop.Customer;
 using ConnectIt.Shop.Customer.Storage;
 using ConnectIt.Shop.Customer.Wallet;
@@ -87,6 +89,31 @@ namespace ConnectIt.DI.Installers
             BindConfidentialData();
             BindGameJoltAPI();
             BindAudio();
+            BindEncryptor();
+            BindKeyGenerator();
+            BindErrorHandling();
+        }
+
+        private void BindErrorHandling()
+        {
+            Container.BindInterfacesTo<SaveErrorHandler>()
+                     .AsSingle();
+
+            Container.BindInitializableExecutionOrder<SaveErrorHandler>(ExecutionOrderConstants.Initializable.ErrorHandler);
+        }
+
+        private void BindKeyGenerator()
+        {
+            Container.Bind<IKeyGenerator>()
+                     .To<SimpleKeyGenerator>()
+                     .AsSingle();
+        }
+
+        private void BindEncryptor()
+        {
+            Container.Bind<ISymmetricEncryptor>()
+                     .To<SymmetricEncryptor>()
+                     .AsSingle();
         }
 
         private void BindAudio()
@@ -227,7 +254,7 @@ namespace ConnectIt.DI.Installers
 
         private void BindSave()
         {
-            Container.BindInterfacesTo<GameSaveProvider>()
+            Container.BindInterfacesAndSelfTo<GameSaveProvider>()
                      .AsSingle();
 
             Container.BindInitializableExecutionOrder<GameSaveProvider>(ExecutionOrderConstants.Initializable.GameSaveProvider);

@@ -69,6 +69,17 @@
             public const string GJScoreboardChange_Title = DialogBoxBaseString + ".GJScoreboardChange.Title";
             public const string GJScoreboardChange_Message = DialogBoxBaseString + ".GJScoreboardChange.Message";
 
+            public const string SaveLoadError_Title = DialogBoxBaseString + ".SaveLoadError.Title";
+            public const string SaveLoadError_Message = DialogBoxBaseString + ".SaveLoadError.Message";
+            public const string SaveLoadError_DoNothingButton_Text = DialogBoxBaseString + ".SaveLoadError.DoNothingButton.Text";
+            public const string SaveLoadError_EraseDataButton_Text = DialogBoxBaseString + ".SaveLoadError.EraseDataButton.Text";
+
+            public const string ConfirmSaveErasing_Title = DialogBoxBaseString + ".ConfirmSaveErasing.Title";
+            public const string ConfirmSaveErasing_Message = DialogBoxBaseString + ".ConfirmSaveErasing.Message";
+
+            public const string DataSaveError_Title = DialogBoxBaseString + ".DataSaveError.Title";
+            public const string DataSaveError_Message = DialogBoxBaseString + ".DataSaveError.Message";
+
             private const string DialogBoxBaseString = "DialogBox";
         }
 
