@@ -32,11 +32,11 @@ namespace ConnectIt.Gameplay.Tools.Calculators
             LevelRewardData rewardData = GetDataAndValidate();
 
             RewardByTime[] rewardsByTime = rewardData.RewardsByTime;
-            int timeRangeStartIndex = rewardsByTime.FindIndex(
+            int timeRangeStartIndex = rewardsByTime.FindIndexLast(
                 key => key.TimeKeySec <= _gameplayTimeProvider.ElapsedTimeSec);
 
             RewardByMoves[] rewardsByMoves = rewardData.RewardsByMoves;
-            int moveRangeStartIndex = rewardsByMoves.FindIndex(
+            int moveRangeStartIndex = rewardsByMoves.FindIndexLast(
                 key => key.MoveCountKey <= _gameStateObserver.MovesCount);
 
             float timeMultiplier = CalculateTimeMultiplier(rewardsByTime, timeRangeStartIndex);
@@ -94,7 +94,7 @@ namespace ConnectIt.Gameplay.Tools.Calculators
         }
 
         private long FinalCalculation(long scoresBaseReward, float timeMultiplier, float movesMultiplier)
-            => Convert.ToInt64(timeMultiplier * movesMultiplier * scoresBaseReward);
+            => (long)Mathf.Round(timeMultiplier * movesMultiplier * scoresBaseReward);
 
         private LevelRewardData GetDataAndValidate()
         {

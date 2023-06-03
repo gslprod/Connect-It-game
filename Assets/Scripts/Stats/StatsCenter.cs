@@ -24,14 +24,20 @@ namespace ConnectIt.Stats
         private readonly List<IStatsData> _data = new();
         private readonly Type[] _statsDataTypesToCreate = new Type[]
         {
+            typeof(FirstLaunchedVersionStatsData),
             typeof(ApplicationRunningTimeStatsData),
-            typeof(MovesCountStatsData)
+            typeof(MovesCountStatsData),
+            typeof(TotalEarnedCoinsStatsData),
+            typeof(TotalReceivedItemsCountStatsData)
         };
 
         private readonly IStatsSaveProvider _saveProvider;
         private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
         private readonly ApplicationRunningTimeStatsData.Factory _applicationRunningTimeStatsDataFactory;
         private readonly MovesCountStatsData.Factory _movesCountStatsDataFactory;
+        private readonly TotalEarnedCoinsStatsData.Factory _totalEarnedCoinsStatsDataFactory;
+        private readonly TotalReceivedItemsCountStatsData.Factory _totalReceivedItemsCountStatsDataFactory;
+        private readonly FirstLaunchedVersionStatsData.Factory _firstLaunchedVersionStatsDataFactory;
 
         private bool _oftenUpdatingDataSavingRequested = false;
         private bool _savingRequested = false;
@@ -40,12 +46,18 @@ namespace ConnectIt.Stats
             IStatsSaveProvider saveProvider,
             ICoroutinesGlobalContainer coroutinesGlobalContainer,
             ApplicationRunningTimeStatsData.Factory applicationRunningTimeStatsDataFactory,
-            MovesCountStatsData.Factory movesCountStatsDataFactory)
+            MovesCountStatsData.Factory movesCountStatsDataFactory,
+            TotalEarnedCoinsStatsData.Factory totalEarnedCoinsStatsDataFactory,
+            TotalReceivedItemsCountStatsData.Factory totalReceivedItemsCountStatsDataFactory,
+            FirstLaunchedVersionStatsData.Factory firstLaunchedVersionStatsDataFactory)
         {
             _saveProvider = saveProvider;
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
             _applicationRunningTimeStatsDataFactory = applicationRunningTimeStatsDataFactory;
             _movesCountStatsDataFactory = movesCountStatsDataFactory;
+            _totalEarnedCoinsStatsDataFactory = totalEarnedCoinsStatsDataFactory;
+            _totalReceivedItemsCountStatsDataFactory = totalReceivedItemsCountStatsDataFactory;
+            _firstLaunchedVersionStatsDataFactory = firstLaunchedVersionStatsDataFactory;
         }
 
         public void Initialize()
@@ -231,6 +243,15 @@ namespace ConnectIt.Stats
 
             if (type == typeof(MovesCountStatsData))
                 return _movesCountStatsDataFactory.Create();
+
+            if (type == typeof(TotalEarnedCoinsStatsData))
+                return _totalEarnedCoinsStatsDataFactory.Create();
+
+            if (type == typeof(TotalReceivedItemsCountStatsData))
+                return _totalReceivedItemsCountStatsDataFactory.Create();
+
+            if (type == typeof(FirstLaunchedVersionStatsData))
+                return _firstLaunchedVersionStatsDataFactory.Create();
 
             throw Assert.GetFailException();
         }

@@ -9,6 +9,8 @@ namespace ConnectIt.Shop.Customer.Storage
         IEnumerable<IProduct> Items { get; }
 
         event Action<IStorage> ItemsChanged;
+        event Action<IStorage, IProduct> ItemAdded;
+        event Action<IStorage, IProduct> ItemRemoved;
 
         void AddItem(IProduct item);
         int GetProductCountOfType<T>(bool onlySameType = false) where T : IProduct;

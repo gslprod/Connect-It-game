@@ -196,11 +196,29 @@ namespace ConnectIt.DI.Installers
 
                 Container.BindFactory<MovesCountStatsData, MovesCountStatsData.Factory>()
                          .FromFactory<PrimitiveDIFactory<MovesCountStatsData>>();
+
+                Container.BindFactory<TotalEarnedCoinsStatsData, TotalEarnedCoinsStatsData.Factory>()
+                         .FromFactory<PrimitiveDIFactory<TotalEarnedCoinsStatsData>>();
+
+                Container.BindFactory<TotalReceivedItemsCountStatsData, TotalReceivedItemsCountStatsData.Factory>()
+                         .FromFactory<PrimitiveDIFactory<TotalReceivedItemsCountStatsData>>();
+
+                Container.BindFactory<FirstLaunchedVersionStatsData, FirstLaunchedVersionStatsData.Factory>()
+                         .FromFactory<PrimitiveDIFactory<FirstLaunchedVersionStatsData>>();
             }
 
             void BindStatsModules()
             {
                 Container.BindInterfacesTo<ApplicationRunningTimeStatsModule>()
+                         .AsSingle();
+
+                Container.BindInterfacesTo<TotalEarnedCoinsStatsModule>()
+                         .AsSingle();
+
+                Container.BindInterfacesTo<TotalReceivedItemsCountStatsModule>()
+                         .AsSingle();
+
+                Container.BindInterfacesTo<FirstLaunchedVersionStatsModule>()
                          .AsSingle();
             }
         }

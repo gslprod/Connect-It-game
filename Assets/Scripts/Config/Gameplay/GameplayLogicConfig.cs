@@ -13,7 +13,7 @@ namespace ConnectIt.Config
         public LevelRewardData[] LevelsRewardData => _configSO.LevelRewardData;
 
         //todo
-        private int _currentLevel = 10;
+        private int _currentLevel = 1;
 
         private readonly GameplayLogicConfigSO _configSO;
 

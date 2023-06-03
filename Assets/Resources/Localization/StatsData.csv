@@ -1,0 +1,16 @@
+Key,English,Russian
+StatsData.ApplicationRunningTime.Name,,Время работы приложения
+StatsData.ApplicationRunningTime.Description,,"Показывает, сколько времени была запущена эта игра."
+StatsData.ApplicationRunningTime.Value,,{0} ч {1} мин
+StatsData.MovesCount.Name,,Количество ходов
+StatsData.MovesCount.Description,,"Показывает количество ходов, совершенных во время прохождения уровней. Ход совершается при создании любой соединительной линии, в том числе незавершенной."
+StatsData.MovesCount.Value,,{0}
+StatsData.TotalEarnedCoins.Name,,Всего получено монет
+StatsData.TotalEarnedCoins.Description,,"Показывает количество монет, полученных за все время игры."
+StatsData.TotalEarnedCoins.Value,,{0}
+StatsData.TotalReceivedItemsCount.Name,,Всего получено предметов
+StatsData.TotalReceivedItemsCount.Description,,"Показывает количество предметов, полученных за все время игры."
+StatsData.TotalReceivedItemsCount.Value,,{0}
+StatsData.FirstLaunchedVersion.Name,,Играете с версии
+StatsData.FirstLaunchedVersion.Description,,"Показывает первую версию игры, которая была запущена на данном устройстве."
+StatsData.FirstLaunchedVersion.Value,,{0}

@@ -1,7 +1,13 @@
-﻿using ConnectIt.ExternalServices.GameJolt.Objects;
+﻿using ConnectIt.Config;
+using ConnectIt.ExternalServices.GameJolt.Objects;
 using ConnectIt.Gameplay.Data;
+using ConnectIt.Localization;
 using ConnectIt.Save.SaveProviders;
 using ConnectIt.Save.SaveProviders.SaveData;
+using ConnectIt.Shop.Customer;
+using ConnectIt.Shop.Goods.Boosts;
+using ConnectIt.Stats;
+using ConnectIt.Stats.Data;
 using GameJolt.API.Objects;
 using System;
 using System.Collections.Generic;
@@ -16,17 +22,29 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
         private readonly GameJoltAPIProvider _gjApiProvider;
         private readonly ILevelsPassDataProvider _levelsPassDataProvider;
         private readonly IExternalServerSaveProvider _externalServerSaveProvider;
+        private readonly GameVersion _version;
+        private readonly ICustomer _playerCustomer;
+        private readonly IStatsCenter _statsCenter;
+        private readonly ISettingsSaveProvider _settingsSaveProvider;
 
         private long _totalScore;
 
         public TotalScoresFixator(
             GameJoltAPIProvider gjApiProvider,
             ILevelsPassDataProvider levelsPassDataProvider,
-            IExternalServerSaveProvider externalServerSaveProvider)
+            IExternalServerSaveProvider externalServerSaveProvider,
+            GameVersion version,
+            ICustomer playerCustomer,
+            IStatsCenter statsCenter,
+            ISettingsSaveProvider settingsSaveProvider)
         {
             _gjApiProvider = gjApiProvider;
             _levelsPassDataProvider = levelsPassDataProvider;
             _externalServerSaveProvider = externalServerSaveProvider;
+            _version = version;
+            _playerCustomer = playerCustomer;
+            _statsCenter = statsCenter;
+            _settingsSaveProvider = settingsSaveProvider;
         }
 
         public void Initialize()
@@ -118,11 +136,50 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
                 intScore,
                 intScore.ToString(),
                 "",
-                "");
+                Uri.EscapeDataString(CollectExtraData()));
 
             _gjApiProvider.AppendPlayerScore(table, score, success => OnScoreFixAttempt(success, intScore));
         }
 
+        private string CollectExtraData()
+        {
+            string version = _version.GetVersion();
+
+            int totalLevels = _levelsPassDataProvider.LevelDataArray.Count();
+            int passedLevels = _levelsPassDataProvider.LevelDataArray.Count(item => item.Passed);
+            int skippedLevels = _levelsPassDataProvider.LevelDataArray.Count(item => item.Skipped);
+            int notCompletedLevels = _levelsPassDataProvider.LevelDataArray.Count(item => item.NotCompleted);
+
+            long coins = _playerCustomer.Wallet.Coins;
+            int storageItemsTotal = _playerCustomer.Storage.Items.Count();
+            int skipLevelBoostsCount = _playerCustomer.Storage.GetProductCountOfType<SkipLevelBoost>();
+
+            string firstVersion = _statsCenter.GetData<FirstLaunchedVersionStatsData>().RawValue;
+            double runningTimeSec = _statsCenter.GetData<ApplicationRunningTimeStatsData>().RawValue;
+            TimeSpan runningTime = TimeSpan.FromSeconds(runningTimeSec);
+            long movesCount = _statsCenter.GetData<MovesCountStatsData>().RawValue;
+            long totalEarnedCoins = _statsCenter.GetData<TotalEarnedCoinsStatsData>().RawValue;
+            long totalReceivedItemsCount = _statsCenter.GetData<TotalReceivedItemsCountStatsData>().RawValue;
+
+            SettingsSaveData settingsSaveData = _settingsSaveProvider.LoadSettingsData();
+            SupportedLanguages language = settingsSaveData.Language;
+            float ostVolume = settingsSaveData.OSTVolumePercents;
+            float soundsVolume = settingsSaveData.SoundsVolumePercents;
+
+            return
+                $"Version: {version}\n" +
+                $"Levels:\n" +
+                $"Total: {totalLevels} | Passed: {passedLevels} | Skipped: {skippedLevels} | Not completed: {notCompletedLevels}\n" +
+                $"Coins: {coins}\n" +
+                $"Storage items:\n" +
+                $"Total: {storageItemsTotal} | Skip level boost: {skipLevelBoostsCount}\n" +
+                $"Stats:\n" +
+                $"First version: {firstVersion} | Running time: {runningTime:hh\\:mm\\:ss\\.fff} | Moves count: {movesCount} | " +
+                $"Total earned coins: {totalEarnedCoins} | Total received items count: {totalReceivedItemsCount}\n" +
+                $"Settings:\n" +
+                $"Language: {language} | OST: {ostVolume} | Sounds: {soundsVolume}";
+        }
+        
         private void OnScoreFixAttempt(bool success, int intScore)
         {
             if (!success)

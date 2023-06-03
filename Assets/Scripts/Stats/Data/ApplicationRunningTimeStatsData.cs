@@ -38,6 +38,9 @@ namespace ConnectIt.Stats.Data
         private TextKey _value;
         private TimeSpan _rawValue = TimeSpan.Zero;
 
+        private int _lastTotalHours;
+        private int _lastMinutes;
+
         public ApplicationRunningTimeStatsData(
             TextKey.Factory textKeyFactory)
         {
@@ -46,9 +49,9 @@ namespace ConnectIt.Stats.Data
 
         public void Initialize()
         {
-            _name = _textKeyFactory.Create(TextKeysConstants.Items.StatsData_ApplicationRunningTime_Name);
-            _description = _textKeyFactory.Create(TextKeysConstants.Items.StatsData_ApplicationRunningTime_Description);
-            _value = _textKeyFactory.Create(TextKeysConstants.Items.StatsData_ApplicationRunningTime_Value);
+            _name = _textKeyFactory.Create(TextKeysConstants.StatsData.ApplicationRunningTime_Name);
+            _description = _textKeyFactory.Create(TextKeysConstants.StatsData.ApplicationRunningTime_Description);
+            _value = _textKeyFactory.Create(TextKeysConstants.StatsData.ApplicationRunningTime_Value);
 
             UpdateValue();
         }
@@ -64,16 +67,24 @@ namespace ConnectIt.Stats.Data
 
         private static TimeSpan CreateTimeSpanBySeconds(double sec)
         {
-            return new TimeSpan(Convert.ToInt64(TimeSpan.TicksPerSecond * sec));
+            return new TimeSpan((long)Math.Round(TimeSpan.TicksPerSecond * sec));
         }
 
         private void UpdateValue()
         {
+            int currentTotalHours = (int)_rawValue.TotalHours;
+
+            if (_lastMinutes == _rawValue.Minutes && _lastTotalHours == currentTotalHours)
+                return;
+
             _value.SetArgs(new object[]
             {
-                string.Format("{0:0}", _rawValue.TotalHours),
+                currentTotalHours,
                 _rawValue.Minutes
             });
+
+            _lastMinutes = _rawValue.Minutes;
+            _lastTotalHours = currentTotalHours;
 
             ValueChanged?.Invoke(this);
         }

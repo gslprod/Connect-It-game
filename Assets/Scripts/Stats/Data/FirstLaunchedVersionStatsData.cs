@@ -6,16 +6,16 @@ using Zenject;
 
 namespace ConnectIt.Stats.Data
 {
-    public class MovesCountStatsData : StatsDataBase<long>, IInitializable
+    public class FirstLaunchedVersionStatsData : StatsDataBase<string>, IInitializable
     {
         public override event Action<IStatsData> ValueChanged;
-        public override event Action<StatsDataBase<long>> RawValueChanged;
+        public override event Action<StatsDataBase<string>> RawValueChanged;
 
         public override TextKey Name => _name;
         public override TextKey Description => _description;
         public override TextKey Value => _value;
         public override bool OftenUpdating => false;
-        public override long RawValue
+        public override string RawValue
         {
             get
             {
@@ -23,7 +23,7 @@ namespace ConnectIt.Stats.Data
             }
             set
             {
-                Assert.ThatArgIs(value >= 0);
+                Assert.ArgIsNotNull(value);
 
                 _rawValue = value;
                 RawValueChanged?.Invoke(this);
@@ -36,9 +36,9 @@ namespace ConnectIt.Stats.Data
         private TextKey _name;
         private TextKey _description;
         private TextKey _value;
-        private long _rawValue;
+        private string _rawValue;
 
-        public MovesCountStatsData(
+        public FirstLaunchedVersionStatsData(
             TextKey.Factory textKeyFactory)
         {
             _textKeyFactory = textKeyFactory;
@@ -46,19 +46,10 @@ namespace ConnectIt.Stats.Data
 
         public void Initialize()
         {
-            _name = _textKeyFactory.Create(TextKeysConstants.StatsData.MovesCount_Name);
-            _description = _textKeyFactory.Create(TextKeysConstants.StatsData.MovesCount_Description);
-            _value = _textKeyFactory.Create(TextKeysConstants.StatsData.MovesCount_Value);
+            _name = _textKeyFactory.Create(TextKeysConstants.StatsData.FirstLaunchedVersion_Name);
+            _description = _textKeyFactory.Create(TextKeysConstants.StatsData.FirstLaunchedVersion_Description);
+            _value = _textKeyFactory.Create(TextKeysConstants.StatsData.FirstLaunchedVersion_Value);
 
-            UpdateValue();
-        }
-
-        public void InscreaseRawValue(long value)
-        {
-            Assert.ThatArgIs(value >= 0);
-
-            _rawValue += value;
-            RawValueChanged?.Invoke(this);
             UpdateValue();
         }
 
@@ -72,6 +63,6 @@ namespace ConnectIt.Stats.Data
             ValueChanged?.Invoke(this);
         }
 
-        public class Factory : PlaceholderFactory<MovesCountStatsData> { }
+        public class Factory : PlaceholderFactory<FirstLaunchedVersionStatsData> { }
     }
 }

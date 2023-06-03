@@ -11,6 +11,7 @@
     {
         public bool Passed => PassState == PassStates.Passed;
         public bool NotCompleted => PassState == PassStates.NotCompleted;
+        public bool Skipped => PassState == PassStates.Skipped;
 
         public int Id;
         public PassStates PassState;

@@ -6,13 +6,19 @@ namespace ConnectIt.Shop.Customer.Wallet
     public class Wallet : IWallet
     {
         public event Action<IWallet> CoinsChanged;
+        public event Action<IWallet, long> CoinsAdded;
+        public event Action<IWallet, long> CoinsWithdrawn;
 
         public long Coins { get; protected set; }
 
         public void Add(long coins)
         {
+            Assert.ThatArgIs(coins >= 0);
+
             Coins += coins;
+
             CoinsChanged?.Invoke(this);
+            CoinsAdded?.Invoke(this, coins);
         }
 
         public void Withdraw(long coins)
@@ -37,7 +43,9 @@ namespace ConnectIt.Shop.Customer.Wallet
         private void Remove(long coins)
         {
             Coins -= coins;
+
             CoinsChanged?.Invoke(this);
+            CoinsWithdrawn?.Invoke(this, coins);
         }
 
         protected void InvokeCoinsChangedEvent()

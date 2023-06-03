@@ -6,7 +6,7 @@ using Zenject;
 
 namespace ConnectIt.Stats.Data
 {
-    public class MovesCountStatsData : StatsDataBase<long>, IInitializable
+    public class TotalReceivedItemsCountStatsData : StatsDataBase<long>, IInitializable
     {
         public override event Action<IStatsData> ValueChanged;
         public override event Action<StatsDataBase<long>> RawValueChanged;
@@ -38,7 +38,7 @@ namespace ConnectIt.Stats.Data
         private TextKey _value;
         private long _rawValue;
 
-        public MovesCountStatsData(
+        public TotalReceivedItemsCountStatsData(
             TextKey.Factory textKeyFactory)
         {
             _textKeyFactory = textKeyFactory;
@@ -46,18 +46,18 @@ namespace ConnectIt.Stats.Data
 
         public void Initialize()
         {
-            _name = _textKeyFactory.Create(TextKeysConstants.StatsData.MovesCount_Name);
-            _description = _textKeyFactory.Create(TextKeysConstants.StatsData.MovesCount_Description);
-            _value = _textKeyFactory.Create(TextKeysConstants.StatsData.MovesCount_Value);
+            _name = _textKeyFactory.Create(TextKeysConstants.StatsData.TotalReceivedItemsCount_Name);
+            _description = _textKeyFactory.Create(TextKeysConstants.StatsData.TotalReceivedItemsCount_Description);
+            _value = _textKeyFactory.Create(TextKeysConstants.StatsData.TotalReceivedItemsCount_Value);
 
             UpdateValue();
         }
 
-        public void InscreaseRawValue(long value)
+        public void InscreaseRawValue(long coins)
         {
-            Assert.ThatArgIs(value >= 0);
+            Assert.ThatArgIs(coins >= 0);
 
-            _rawValue += value;
+            _rawValue += coins;
             RawValueChanged?.Invoke(this);
             UpdateValue();
         }
@@ -72,6 +72,6 @@ namespace ConnectIt.Stats.Data
             ValueChanged?.Invoke(this);
         }
 
-        public class Factory : PlaceholderFactory<MovesCountStatsData> { }
+        public class Factory : PlaceholderFactory<TotalReceivedItemsCountStatsData> { }
     }
 }

@@ -24,6 +24,9 @@ namespace ConnectIt.Save.Names
             new ItemName(typeof(IStatsData), "StatsData"),
             new ItemName(typeof(ApplicationRunningTimeStatsData), "ApplicationRunningTime", typeof(IStatsData)),
             new ItemName(typeof(MovesCountStatsData), "MovesCount", typeof(IStatsData)),
+            new ItemName(typeof(TotalEarnedCoinsStatsData), "TotalEarnedCoins", typeof(IStatsData)),
+            new ItemName(typeof(TotalReceivedItemsCountStatsData), "TotalReceivedItemsCount", typeof(IStatsData)),
+            new ItemName(typeof(FirstLaunchedVersionStatsData), "FirstLaunchedVersion", typeof(IStatsData)),
             #endregion
 
             #region SaveData

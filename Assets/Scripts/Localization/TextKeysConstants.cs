@@ -197,18 +197,35 @@
 
         }
 
+        public static class StatsData
+        {
+            public const string ApplicationRunningTime_Name = StatsDataBaseString + ".ApplicationRunningTime.Name";
+            public const string ApplicationRunningTime_Description = StatsDataBaseString + ".ApplicationRunningTime.Description";
+            public const string ApplicationRunningTime_Value = StatsDataBaseString + ".ApplicationRunningTime.Value";
+
+            public const string MovesCount_Name = StatsDataBaseString + ".MovesCount.Name";
+            public const string MovesCount_Description = StatsDataBaseString + ".MovesCount.Description";
+            public const string MovesCount_Value = StatsDataBaseString + ".MovesCount.Value";
+
+            public const string TotalEarnedCoins_Name = StatsDataBaseString + ".TotalEarnedCoins.Name";
+            public const string TotalEarnedCoins_Description = StatsDataBaseString + ".TotalEarnedCoins.Description";
+            public const string TotalEarnedCoins_Value = StatsDataBaseString + ".TotalEarnedCoins.Value";
+
+            public const string TotalReceivedItemsCount_Name = StatsDataBaseString + ".TotalReceivedItemsCount.Name";
+            public const string TotalReceivedItemsCount_Description = StatsDataBaseString + ".TotalReceivedItemsCount.Description";
+            public const string TotalReceivedItemsCount_Value = StatsDataBaseString + ".TotalReceivedItemsCount.Value";
+
+            public const string FirstLaunchedVersion_Name = StatsDataBaseString + ".FirstLaunchedVersion.Name";
+            public const string FirstLaunchedVersion_Description = StatsDataBaseString + ".FirstLaunchedVersion.Description";
+            public const string FirstLaunchedVersion_Value = StatsDataBaseString + ".FirstLaunchedVersion.Value";
+
+            private const string StatsDataBaseString = "StatsData";
+        }
+
         public static class Items
         {
             public const string Boosts_SkipLevel_Name = ItemsBaseString + ".Product.Boost.SkipLevel.Name";
             public const string Boosts_SkipLevel_Description = ItemsBaseString + ".Product.Boost.SkipLevel.Description";
-
-            public const string StatsData_ApplicationRunningTime_Name = ItemsBaseString + ".StatsData.ApplicationRunningTime.Name";
-            public const string StatsData_ApplicationRunningTime_Description = ItemsBaseString + ".StatsData.ApplicationRunningTime.Description";
-            public const string StatsData_ApplicationRunningTime_Value = ItemsBaseString + ".StatsData.ApplicationRunningTime.Value";
-
-            public const string StatsData_MovesCount_Name = ItemsBaseString + ".StatsData.MovesCount.Name";
-            public const string StatsData_MovesCount_Description = ItemsBaseString + ".StatsData.MovesCount.Description";
-            public const string StatsData_MovesCount_Value = ItemsBaseString + ".StatsData.MovesCount.Value";
 
             private const string ItemsBaseString = "Items";
         }

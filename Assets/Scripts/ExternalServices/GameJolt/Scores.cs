@@ -202,7 +202,7 @@ namespace ConnectIt.ExternalServices.GameJolt
                 return;
 
             if (success)
-                UpdateScoresForTable(table, true);
+                UpdateScoresForTable(table);
 
             PlayerScoreAppendAttempt?.Invoke(table, toAppend, success);
         }

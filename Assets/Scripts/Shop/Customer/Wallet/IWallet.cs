@@ -5,6 +5,8 @@ namespace ConnectIt.Shop.Customer.Wallet
     public interface IWallet
     {
         event Action<IWallet> CoinsChanged;
+        event Action<IWallet, long> CoinsAdded;
+        event Action<IWallet, long> CoinsWithdrawn;
 
         long Coins { get; }
 

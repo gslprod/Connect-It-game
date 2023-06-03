@@ -10,6 +10,8 @@ namespace ConnectIt.Shop.Customer.Storage
     public class Storage : IStorage
     {
         public event Action<IStorage> ItemsChanged;
+        public event Action<IStorage, IProduct> ItemAdded;
+        public event Action<IStorage, IProduct> ItemRemoved;
 
         public IEnumerable<IProduct> Items => items;
 
@@ -23,6 +25,7 @@ namespace ConnectIt.Shop.Customer.Storage
             AddItemWithoutNotify(item);
 
             ItemsChanged?.Invoke(this);
+            ItemAdded?.Invoke(this, item);
         }
 
         public void RemoveItem(IProduct item)
@@ -32,6 +35,7 @@ namespace ConnectIt.Shop.Customer.Storage
             RemoveItemWithoutNotify(item);
 
             ItemsChanged?.Invoke(this);
+            ItemRemoved?.Invoke(this, item);
         }
 
         public int GetProductCountOfType<T>(bool onlySameType = false) where T : IProduct
