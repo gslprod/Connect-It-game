@@ -1,4 +1,6 @@
-﻿using ConnectIt.Localization;
+﻿using ConnectIt.Audio.Sounds;
+using ConnectIt.Config;
+using ConnectIt.Localization;
 using ConnectIt.UI.CustomControls;
 using ConnectIt.Utilities.Extensions;
 using UnityEngine.UIElements;
@@ -12,6 +14,8 @@ namespace ConnectIt.UI.CommonViews
 
         private readonly TextKey.Factory _textKeyFactory;
 
+        protected readonly SoundsPlayer soundsPlayer;
+        protected readonly AudioConfig audioConfig;
         protected TextKey enabledTextKey;
         protected TextKey disabledTextKey;
         protected ButtonToggle toggle;
@@ -22,12 +26,16 @@ namespace ConnectIt.UI.CommonViews
             TextKey enabledTextKey,
             TextKey disabledTextKey,
             ILocalizationProvider localizationProvider,
-            TextKey.Factory textKeyFactory) : base(toggle, textKey, localizationProvider)
+            TextKey.Factory textKeyFactory,
+            SoundsPlayer soundsPlayer,
+            AudioConfig audioConfig) : base(toggle, textKey, localizationProvider)
         {
             this.toggle = toggle;
             this.enabledTextKey = enabledTextKey;
             this.disabledTextKey = disabledTextKey;
             _textKeyFactory = textKeyFactory;
+            this.soundsPlayer = soundsPlayer;
+            this.audioConfig = audioConfig;
         }
 
         public override void Initialize()
@@ -51,6 +59,8 @@ namespace ConnectIt.UI.CommonViews
         private void ToggleValueChanged(ChangeEvent<bool> changeEvent)
         {
             UpdateArgs(changeEvent.newValue);
+
+            soundsPlayer.Play(audioConfig.Click, SoundMixerGroup.UI);
         }
 
         private void UpdateArgs(bool toggleValue)

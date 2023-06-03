@@ -31,4 +31,7 @@ MonoBehaviour:
     _color: {r: 0.3372549, g: 0.09803922, b: 0.64705884, a: 1}
   - _compatibilityIndex: 9
     _color: {r: 0.09803922, g: 0.17254902, b: 0.6509804, a: 1}
-  _levelCompleteProgressTitleFormat: '{0}%'
+  _cameraSettings:
+    _sizePadding: 0.4
+    _minSize: 4
+    _maxSize: 20

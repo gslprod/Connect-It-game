@@ -13,6 +13,7 @@ namespace ConnectIt.Gameplay.Model
     {
         public event Action<Tile, TileLayer> OnTileBaseChanged;
         public IEnumerable<Tile> Tiles => _tiles;
+        public Bounds MapLocalBounds => GetTilemapOnLayer(TileLayer.Map).localBounds;
 
         private readonly TilemapLayerSet[] _maps;
         private readonly TileBaseAndObjectInfoSet[] _spriteAndObjectTypeSets;

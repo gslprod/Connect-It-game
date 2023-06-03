@@ -123,7 +123,7 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
                 _textKeyFactory.Create(TextKeysConstants.Gameplay.WinMenu_Content,
                     new object[]
                     {
-                        _formatter.FormatGameplayElapsedTime(_gameplayTimeProvider.ElapsedTime),
+                        _formatter.FormatDetailedGameplayElapsedTime(_gameplayTimeProvider.ElapsedTime),
                         _score,
                         _gainedCoins
                     }),

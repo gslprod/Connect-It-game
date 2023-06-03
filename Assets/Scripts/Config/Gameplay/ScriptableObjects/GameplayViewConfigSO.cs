@@ -10,8 +10,10 @@ namespace ConnectIt.Config.ScriptableObjects
     public class GameplayViewConfigSO : ScriptableObject
     {
         public List<ColorByCompatibilityIndexSet> ColorsByIndeces => _colorsByIndeces;
+        public CameraSettings CameraSettings => _cameraSettings;
 
         [SerializeField] private List<ColorByCompatibilityIndexSet> _colorsByIndeces;
+        [SerializeField] private CameraSettings _cameraSettings;
 
         private void OnEnable()
         {

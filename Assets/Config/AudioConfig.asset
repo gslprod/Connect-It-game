@@ -28,18 +28,18 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -49,4 +49,6 @@ MonoBehaviour:
   _connectionLineViewSounds:
     _expanding: {fileID: 8300000, guid: 91268824a37730b45b6eba5fc192add5, type: 3}
     _completing: {fileID: 8300000, guid: 90872929e1092ec4196118a487998bde, type: 3}
+    _creating: {fileID: 8300000, guid: 91268824a37730b45b6eba5fc192add5, type: 3}
+    _destroying: {fileID: 8300000, guid: 90872929e1092ec4196118a487998bde, type: 3}
   _click: {fileID: 8300000, guid: fb0e13ef6ef88fe43ae1152c903395d1, type: 3}

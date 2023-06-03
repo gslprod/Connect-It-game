@@ -7,6 +7,7 @@ namespace ConnectIt.Utilities.Formatters
     {
         private string _gameplayLevelProgressTitleFormat => _config.GameplayLevelProgressTitleFormat;
         private string _gameplayElapsedTimeFormat => _config.GameplayElapsedTimeFormat;
+        private string _detailedGameplayElapsedTimeFormat => _config.DetailedGameplayElapsedTimeFormat;
         private string _sceneLoadingProgressTitleFormat => _config.SceneLoadingProgressTitleFormat;
         private string _versionFormat => _config.VersionFormat;
 
@@ -25,6 +26,11 @@ namespace ConnectIt.Utilities.Formatters
         public string FormatGameplayElapsedTime(TimeSpan time)
         {
             return time.ToString(_gameplayElapsedTimeFormat);
+        }
+
+        public string FormatDetailedGameplayElapsedTime(TimeSpan time)
+        {
+            return time.ToString(_detailedGameplayElapsedTimeFormat);
         }
 
         public string FormatSceneLoadingProgress(float progress)

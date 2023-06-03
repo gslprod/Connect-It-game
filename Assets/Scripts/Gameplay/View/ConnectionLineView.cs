@@ -41,6 +41,8 @@ namespace ConnectIt.Gameplay.View
             _connectionLineModel.Disposing += OnModelDisposing;
 
             UpdateColor();
+
+            _soundsPlayer.Play(_sounds.Creating, SoundMixerGroup.Gameplay);
         }
 
         private void OnEnable()
@@ -96,6 +98,8 @@ namespace ConnectIt.Gameplay.View
 
         private void OnModelDisposing(ConnectionLine obj)
         {
+            _soundsPlayer.Play(_sounds.Destroying, SoundMixerGroup.Gameplay);
+
             Destroy(gameObject);
         }
 

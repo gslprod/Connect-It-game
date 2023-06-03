@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameplayLevelProgressTitleFormat: '{0}%'
   _gameplayElapsedTimeFormat: mm\:ss
+  _detailedGameplayElapsedTimeFormat: mm\:ss\.fff
   _sceneLoadingProgressTitleFormat: '{0}%'
   _versionFormat: '{0} {1}'

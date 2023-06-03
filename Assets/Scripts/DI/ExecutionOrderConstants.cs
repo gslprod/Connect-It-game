@@ -10,6 +10,7 @@
             public const int PortViewFromModelSpawner = -10;
             public const int ConnectionLineViewFromModelSpawner = -10;
             public const int CreatedPortsRegistrator = -10;
+            public const int CameraSetup = 10;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace ConnectIt.Config.ScriptableObjects
     {
         public string GameplayLevelProgressTitleFormat => _gameplayLevelProgressTitleFormat;
         public string GameplayElapsedTimeFormat => _gameplayElapsedTimeFormat;
+        public string DetailedGameplayElapsedTimeFormat => _detailedGameplayElapsedTimeFormat;
         public string SceneLoadingProgressTitleFormat => _sceneLoadingProgressTitleFormat;
         public string VersionFormat => _versionFormat;
 
@@ -15,8 +16,11 @@ namespace ConnectIt.Config.ScriptableObjects
         [Tooltip("Gameplay Level Progress Title Format")]
         [SerializeField] private string _gameplayLevelProgressTitleFormat;
 
-        [Tooltip("Gameplay Elapsed Time Format. s - sec, m - min, h - hour")]
+        [Tooltip("Gameplay Elapsed Time Format. f - ms, s - sec, m - min, h - hour")]
         [SerializeField] private string _gameplayElapsedTimeFormat;
+
+        [Tooltip("Detailed Gameplay Elapsed Time Format. f - ms, s - sec, m - min, h - hour")]
+        [SerializeField] private string _detailedGameplayElapsedTimeFormat;
 
         [Header("Global")]
 

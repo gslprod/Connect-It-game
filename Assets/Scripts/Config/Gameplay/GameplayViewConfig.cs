@@ -8,15 +8,15 @@ namespace ConnectIt.Config
 {
     public class GameplayViewConfig
     {
-        private List<ColorByCompatibilityIndexSet> _colorsByIndeces;
+        public CameraSettings CameraSettings => _configSO.CameraSettings;
+
+        private List<ColorByCompatibilityIndexSet> _colorsByIndeces => _configSO.ColorsByIndeces;
 
         private readonly GameplayViewConfigSO _configSO;
 
         public GameplayViewConfig(GameplayViewConfigSO configSO)
         {
             _configSO = configSO;
-
-            SetValuesFromSO();
         }
 
         public Color GetColorByCompatibilityIndex(int compatibilityIndex)
@@ -25,11 +25,6 @@ namespace ConnectIt.Config
             Assert.That(foundIndex >= 0);
 
             return _colorsByIndeces[foundIndex].Color;
-        }
-
-        private void SetValuesFromSO()
-        {
-            _colorsByIndeces = _configSO.ColorsByIndeces;
         }
     }
 }

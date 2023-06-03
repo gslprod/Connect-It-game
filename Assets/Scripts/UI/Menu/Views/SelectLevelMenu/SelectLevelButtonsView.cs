@@ -152,7 +152,7 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
                 {
                     PassStates.Passed => new object[]
                     {
-                        _formatter.FormatGameplayElapsedTime(TimeSpan.FromSeconds(levelData.PassTimeSec)),
+                        _formatter.FormatDetailedGameplayElapsedTime(TimeSpan.FromSeconds(levelData.PassTimeSec)),
                         levelData.Score
                     },
 

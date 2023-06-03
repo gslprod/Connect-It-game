@@ -50,7 +50,7 @@ namespace ConnectIt.DI.Installers
             BindGameStateObserver();
             BindUIViews();
             BindTime();
-            BindLevelLoader();
+            BindLevelLoading();
             BindPauseService();
             BindUIDocumentMonoWrapper();
             BindGameStateHandlers();
@@ -155,11 +155,16 @@ namespace ConnectIt.DI.Installers
                      .AsSingle();
         }
 
-        private void BindLevelLoader()
+        private void BindLevelLoading()
         {
             Container.Bind<LevelContentLoader>()
                      .AsSingle()
                      .WithArguments(_tilemapsMonoWrapperPrefabs);
+
+            Container.BindInterfacesTo<CameraSetup>()
+                     .AsSingle();
+
+            Container.BindInitializableExecutionOrder<CameraSetup>(ExecutionOrderConstants.Initializable.CameraSetup);
         }
 
         private void BindTime()

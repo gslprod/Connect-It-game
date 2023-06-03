@@ -54,7 +54,7 @@ namespace ConnectIt.Gameplay.Data
             if (dataToSave.Score > savedData.Score)
                 savedData.Score = dataToSave.Score;
 
-            if (dataToSave.PassTimeSec > savedData.PassTimeSec)
+            if (savedData.PassTimeSec == 0 || dataToSave.PassTimeSec < savedData.PassTimeSec)
                 savedData.PassTimeSec = dataToSave.PassTimeSec;
 
             if (dataToSave.TotalEarnedCoins > savedData.TotalEarnedCoins)
