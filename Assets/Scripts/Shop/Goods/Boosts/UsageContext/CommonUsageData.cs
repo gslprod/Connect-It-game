@@ -3,10 +3,5 @@
     public class CommonUsageData
     {
         public Boost UsedBoost;
-
-        public CommonUsageData()
-        {
-            
-        }
     }
 }

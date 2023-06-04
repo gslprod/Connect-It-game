@@ -7,6 +7,8 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
     {
         event Action Won;
 
+        float ProgressPercentsToWin { get; set; }
+
         void Win();
 
         public class Factory : PlaceholderFactory<IWinHandler> { }

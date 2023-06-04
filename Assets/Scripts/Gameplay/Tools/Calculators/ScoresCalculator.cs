@@ -94,7 +94,7 @@ namespace ConnectIt.Gameplay.Tools.Calculators
         }
 
         private long FinalCalculation(long scoresBaseReward, float timeMultiplier, float movesMultiplier)
-            => (long)Mathf.Round(timeMultiplier * movesMultiplier * scoresBaseReward);
+            => (long)Mathf.Round(timeMultiplier * movesMultiplier * scoresBaseReward * _gameStateObserver.GameCompleteProgressPercents / 100);
 
         private LevelRewardData GetDataAndValidate()
         {

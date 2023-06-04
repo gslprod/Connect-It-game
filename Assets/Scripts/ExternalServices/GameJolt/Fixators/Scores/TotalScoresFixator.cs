@@ -74,7 +74,8 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
             if (!_gjApiProvider.UserExistsAndLoggedIn)
                 return;
 
-            _totalScore = _levelsPassDataProvider.LevelDataArray.Sum(data => data.Score);
+            _totalScore = _levelsPassDataProvider.LevelDataArray
+                .Sum(item => item.FullyPassed ? item.Score : 0);
 
             ExternalServerSaveData saveData = _externalServerSaveProvider.LoadExternalServerData();
             int? index = saveData.FixedScores?.FindIndex(item => item.TableID == GJConstants.TableID.TotalScores);
@@ -145,14 +146,23 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
         {
             string version = _version.GetVersion();
 
-            int totalLevels = _levelsPassDataProvider.LevelDataArray.Count();
-            int passedLevels = _levelsPassDataProvider.LevelDataArray.Count(item => item.Passed);
-            int skippedLevels = _levelsPassDataProvider.LevelDataArray.Count(item => item.Skipped);
-            int notCompletedLevels = _levelsPassDataProvider.LevelDataArray.Count(item => item.NotCompleted);
+            IEnumerable<LevelData> levelDataArray = _levelsPassDataProvider.LevelDataArray;
+            int totalLevels = levelDataArray.Count();
+            int passedLevels = levelDataArray.Count(item => item.Passed);
+            int fullyPassedLevels = levelDataArray.Count(item => item.FullyPassed);
+            int skippedLevels = levelDataArray.Count(item => item.Skipped);
+            int notCompletedLevels = levelDataArray.Count(item => item.NotCompleted);
+            float passTimeSumSec = levelDataArray.Sum(item => item.PassTimeSec);
+            TimeSpan passTimeSum = TimeSpan.FromSeconds(passTimeSumSec);
+            long allScoresSum = levelDataArray.Sum(item => item.Score);
+
+            ExternalServerSaveData externalServerSaveData = _externalServerSaveProvider.LoadExternalServerData();
+            int bestSavedFixedScore = externalServerSaveData.FixedScores.First(item => item.TableID == GJConstants.TableID.TotalScores).BestFixedScore;
 
             long coins = _playerCustomer.Wallet.Coins;
             int storageItemsTotal = _playerCustomer.Storage.Items.Count();
             int skipLevelBoostsCount = _playerCustomer.Storage.GetProductCountOfType<SkipLevelBoost>();
+            int simplifyLevelBoostsCount = _playerCustomer.Storage.GetProductCountOfType<SimplifyLevelBoost>();
 
             string firstVersion = _statsCenter.GetData<FirstLaunchedVersionStatsData>().RawValue;
             double runningTimeSec = _statsCenter.GetData<ApplicationRunningTimeStatsData>().RawValue;
@@ -168,11 +178,16 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
 
             return
                 $"Version: {version}\n" +
+                $"Best saved score: {bestSavedFixedScore}\n" +
                 $"Levels:\n" +
-                $"Total: {totalLevels} | Passed: {passedLevels} | Skipped: {skippedLevels} | Not completed: {notCompletedLevels}\n" +
+                $"Total: {totalLevels} | Passed: {passedLevels} | Fully passed: {fullyPassedLevels} | Skipped: {skippedLevels} |" +
+                $"Not completed: {notCompletedLevels} | All scores sum: {allScoresSum} | " +
+                $"Pass time sum: {passTimeSum:hh\\:mm\\:ss\\.fff}\n" +
                 $"Coins: {coins}\n" +
                 $"Storage items:\n" +
-                $"Total: {storageItemsTotal} | Skip level boost: {skipLevelBoostsCount}\n" +
+                $"Total: {storageItemsTotal}\n" +
+                $"Boosts:\n" +
+                $"Skip level: {skipLevelBoostsCount} | Simplify level: {simplifyLevelBoostsCount}\n" +
                 $"Stats:\n" +
                 $"First version: {firstVersion} | Running time: {runningTime:hh\\:mm\\:ss\\.fff} | Moves count: {movesCount} | " +
                 $"Total earned coins: {totalEarnedCoins} | Total received items count: {totalReceivedItemsCount}\n" +

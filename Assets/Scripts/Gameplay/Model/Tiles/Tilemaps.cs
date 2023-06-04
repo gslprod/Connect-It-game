@@ -40,6 +40,14 @@ namespace ConnectIt.Gameplay.Model
             CreateObjectsOnMap();
         }
 
+        public void Dispose()
+        {
+            foreach (var tile in _tiles)
+            {
+                tile.Dispose();
+            }
+        }
+
         public Tile GetTileAtWorldPosition(Vector3 worldPosition)
         {
             Assert.That(TryGetTileAtWorldPosition(worldPosition, out Tile found));
@@ -100,14 +108,6 @@ namespace ConnectIt.Gameplay.Model
             Tilemap tilemap = GetTilemapOnLayer(layer);
 
             return tilemap.GetTile<T>(tile.LocationInTileMap);
-        }
-
-        public void Dispose()
-        {
-            foreach (var tile in _tiles)
-            {
-                tile.Dispose();
-            }
         }
 
         private void Validate(TilemapLayerSet[] maps)

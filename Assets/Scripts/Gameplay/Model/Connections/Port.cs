@@ -13,7 +13,7 @@ namespace ConnectIt.Gameplay.Model
         public TileUser UsingTile { get; private set; }
 
         private readonly Tile _position;
-        private int _compatibilityIndex;
+        private readonly int _compatibilityIndex;
         private readonly ICreatedObjectNotifier<Port> _createdPortNotifier;
 
         public Port(Tile position,

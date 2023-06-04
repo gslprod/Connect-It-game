@@ -97,6 +97,10 @@ namespace ConnectIt.DI.Installers
             Container.BindFactory<CommonUsageData, SkipLevelBoostUsageContext, SkipLevelBoostUsageContext.Factory>()
                      .FromFactory<PrimitiveDIFactory<CommonUsageData, SkipLevelBoostUsageContext>>()
                      .WhenInjectedInto<BoostUsageContextFactory>();
+
+            Container.BindFactory<CommonUsageData, SimplifyLevelBoostUsageContext, SimplifyLevelBoostUsageContext.Factory>()
+                     .FromFactory<PrimitiveDIFactory<CommonUsageData, SimplifyLevelBoostUsageContext>>()
+                     .WhenInjectedInto<BoostUsageContextFactory>();
         }
 
         private void BindGameStateHandlers()

@@ -37,7 +37,7 @@ namespace ConnectIt.Gameplay.Tools.Calculators
             if (rewardData.CoinsDependsOnScores)
             {
                 float result = _scoresCalculator.Calculate() * ((float)rewardData.CoinsBaseReward / rewardData.ScoresBaseReward);
-                return Convert.ToInt64(result);
+                return (long)Mathf.Round(result);
             }
 
             RewardByTime[] rewardsByTime = rewardData.RewardsByTime;
@@ -103,7 +103,7 @@ namespace ConnectIt.Gameplay.Tools.Calculators
         }
 
         private long FinalCalculation(long scoresBaseReward, float timeMultiplier, float movesMultiplier)
-            => (long)Mathf.Round(timeMultiplier * movesMultiplier * scoresBaseReward);
+            => (long)Mathf.Round(timeMultiplier * movesMultiplier * scoresBaseReward * _gameStateObserver.GameCompleteProgressPercents / 100);
 
         private LevelRewardData GetDataAndValidate()
         {

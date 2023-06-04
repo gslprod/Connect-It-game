@@ -235,6 +235,9 @@ namespace ConnectIt.DI.Installers
                 {
                     Container.BindFactory<SkipLevelBoost, SkipLevelBoost.Factory>()
                              .FromFactory<PrimitiveDIFactory<SkipLevelBoost>>();
+
+                    Container.BindFactory<SimplifyLevelBoost, SimplifyLevelBoost.Factory>()
+                             .FromFactory<PrimitiveDIFactory<SimplifyLevelBoost>>();
                 }
             }
         }

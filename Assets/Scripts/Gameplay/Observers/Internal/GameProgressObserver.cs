@@ -70,9 +70,16 @@ namespace ConnectIt.Gameplay.Observers.Internal
         public void Dispose()
         {
             _levelEndHandler.LevelEnded -= OnLevelEnded;
+
+            Unsubscribe();
         }
 
         private void OnLevelEnded(LevelEndReason reason)
+        {
+            Unsubscribe();
+        }
+
+        private void Unsubscribe()
         {
             foreach (var tile in _tilemaps.Tiles)
             {

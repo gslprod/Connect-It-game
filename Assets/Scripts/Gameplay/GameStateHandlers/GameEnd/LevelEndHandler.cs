@@ -20,6 +20,7 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
         public event Action<LevelEndReason> LevelEnded;
 
         public LevelEndReason EndReason { get; private set; } = LevelEndReason.None;
+        public float ProgressPercentsToWin { get => _winHandler.ProgressPercentsToWin; set => _winHandler.ProgressPercentsToWin = value; }
 
         private readonly IRestartHandler.Factory _restartHandlerFactory;
         private readonly IWinHandler.Factory _winHandlerFactory;

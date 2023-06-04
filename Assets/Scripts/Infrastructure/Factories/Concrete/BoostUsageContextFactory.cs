@@ -9,13 +9,16 @@ namespace ConnectIt.Infrastructure.Factories.Concrete
     {
         private readonly BoostUsageContext.Factory _boostUsageContextFactory;
         private readonly SkipLevelBoostUsageContext.Factory _skipLevelBoostUsageContextFactory;
+        private readonly SimplifyLevelBoostUsageContext.Factory _simplifyLevelBoostUsageContextFactory;
 
         public BoostUsageContextFactory(
             BoostUsageContext.Factory boostUsageContextFactory,
-            SkipLevelBoostUsageContext.Factory skipLevelBoostUsageContextFactory)
+            SkipLevelBoostUsageContext.Factory skipLevelBoostUsageContextFactory,
+            SimplifyLevelBoostUsageContext.Factory simplifyLevelBoostUsageContextFactory)
         {
             _boostUsageContextFactory = boostUsageContextFactory;
             _skipLevelBoostUsageContextFactory = skipLevelBoostUsageContextFactory;
+            _simplifyLevelBoostUsageContextFactory = simplifyLevelBoostUsageContextFactory;
         }
 
         public BoostUsageContext Create(CommonUsageData param)
@@ -24,7 +27,10 @@ namespace ConnectIt.Infrastructure.Factories.Concrete
 
             if (boostType == typeof(SkipLevelBoost))
                 return _skipLevelBoostUsageContextFactory.Create(param);
-            
+
+            if (boostType == typeof(SimplifyLevelBoost))
+                return _simplifyLevelBoostUsageContextFactory.Create(param);
+
             return _boostUsageContextFactory.Create(param);
         }
     }

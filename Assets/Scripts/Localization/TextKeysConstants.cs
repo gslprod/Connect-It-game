@@ -224,8 +224,11 @@
 
         public static class Items
         {
-            public const string Boosts_SkipLevel_Name = ItemsBaseString + ".Product.Boost.SkipLevel.Name";
-            public const string Boosts_SkipLevel_Description = ItemsBaseString + ".Product.Boost.SkipLevel.Description";
+            public const string Product_Boost_SkipLevel_Name = ItemsBaseString + ".Product.Boost.SkipLevel.Name";
+            public const string Product_Boost_SkipLevel_Description = ItemsBaseString + ".Product.Boost.SkipLevel.Description";
+
+            public const string Product_Boost_SimplifyLevel_Name = ItemsBaseString + ".Product.Boost.SimplifyLevel.Name";
+            public const string Product_Boost_SimplifyLevel_Description = ItemsBaseString + ".Product.Boost.SimplifyLevel.Description";
 
             private const string ItemsBaseString = "Items";
         }

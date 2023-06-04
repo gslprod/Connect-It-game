@@ -5,7 +5,7 @@ using Zenject;
 
 namespace ConnectIt.Shop.Goods.Boosts
 {
-    public class SkipLevelBoost : Boost
+    public class SimplifyLevelBoost : Boost
     {
         public override TextKey Name => _nameTextKey;
         public override TextKey Description => _descriptionTextKey;
@@ -15,7 +15,7 @@ namespace ConnectIt.Shop.Goods.Boosts
         private TextKey _nameTextKey;
         private TextKey _descriptionTextKey;
 
-        public SkipLevelBoost(
+        public SimplifyLevelBoost(
             TextKey.Factory textKeyFactory)
         {
             _textKeyFactory = textKeyFactory;
@@ -25,21 +25,19 @@ namespace ConnectIt.Shop.Goods.Boosts
         {
             base.Initialize();
 
-            _nameTextKey = _textKeyFactory.Create(TextKeysConstants.Items.Product_Boost_SkipLevel_Name);
-            _descriptionTextKey = _textKeyFactory.Create(TextKeysConstants.Items.Product_Boost_SkipLevel_Description);
+            _nameTextKey = _textKeyFactory.Create(TextKeysConstants.Items.Product_Boost_SimplifyLevel_Name);
+            _descriptionTextKey = _textKeyFactory.Create(TextKeysConstants.Items.Product_Boost_SimplifyLevel_Description);
         }
 
         public override void Use(BoostUsageContext usageContext)
         {
             base.Use(usageContext);
 
-            SkipLevelBoostUsageContext skipLevelUsageContext = (SkipLevelBoostUsageContext)usageContext;
-            
-            skipLevelUsageContext.LevelEndHandler.SkipLevel();
+            SimplifyLevelBoostUsageContext skipLevelUsageContext = (SimplifyLevelBoostUsageContext)usageContext;
 
-            Dispose();
+            skipLevelUsageContext.LevelEndHandler.ProgressPercentsToWin = 80f;
         }
 
-        public class Factory : PlaceholderFactory<SkipLevelBoost> { }
+        public class Factory : PlaceholderFactory<SimplifyLevelBoost> { }
     }
 }

@@ -7,6 +7,7 @@ using ConnectIt.Utilities;
 using ConnectIt.Utilities.Formatters;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
 
@@ -152,6 +153,7 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
                 {
                     PassStates.Passed => new object[]
                     {
+                        Mathf.FloorToInt(levelData.PassLevelProgress),
                         _formatter.FormatDetailedGameplayElapsedTime(TimeSpan.FromSeconds(levelData.PassTimeSec)),
                         levelData.Score
                     },

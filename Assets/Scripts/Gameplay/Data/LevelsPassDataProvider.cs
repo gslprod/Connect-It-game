@@ -1,6 +1,7 @@
 ﻿using ConnectIt.Config;
 using ConnectIt.Save.SaveProviders;
 using ConnectIt.Save.SaveProviders.SaveData;
+using ConnectIt.Stats.Data;
 using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
 using System;
@@ -35,7 +36,7 @@ namespace ConnectIt.Gameplay.Data
             if (TryLoadLevelData())
                 return;
 
-            CreateLevelData();
+            CreateMissingLevelData();
             SaveDataArray();
         }
 
@@ -51,11 +52,22 @@ namespace ConnectIt.Gameplay.Data
 
             savedData.PassState = dataToSave.PassState;
 
-            if (dataToSave.Score > savedData.Score)
-                savedData.Score = dataToSave.Score;
+            if (dataToSave.PassLevelProgress >= savedData.PassLevelProgress)
+            {
+                if (dataToSave.PassLevelProgress > savedData.PassLevelProgress ||
+                    savedData.PassTimeSec == 0f ||
+                    dataToSave.PassTimeSec < savedData.PassTimeSec)
 
-            if (savedData.PassTimeSec == 0 || dataToSave.PassTimeSec < savedData.PassTimeSec)
-                savedData.PassTimeSec = dataToSave.PassTimeSec;
+                    savedData.PassTimeSec = dataToSave.PassTimeSec;
+
+                if (dataToSave.PassLevelProgress > savedData.PassLevelProgress ||
+                    dataToSave.Score > savedData.Score)
+
+                    savedData.Score = dataToSave.Score;
+
+                if (dataToSave.PassLevelProgress > savedData.PassLevelProgress)
+                    savedData.PassLevelProgress = dataToSave.PassLevelProgress;
+            }
 
             if (dataToSave.TotalEarnedCoins > savedData.TotalEarnedCoins)
                 savedData.TotalEarnedCoins = dataToSave.TotalEarnedCoins;
@@ -97,7 +109,8 @@ namespace ConnectIt.Gameplay.Data
                     PassState = levelData.PassState,
                     Score = levelData.Score,
                     TotalEarnedCoins = levelData.TotalEarnedCoins,
-                    PassTimeSec = levelData.PassTimeSec
+                    PassTimeSec = levelData.PassTimeSec,
+                    PassLevelProgress = levelData.PassLevelProgress
                 };
 
                 levelPassSaveData[i] = saveData;
@@ -125,21 +138,32 @@ namespace ConnectIt.Gameplay.Data
                     PassState = levelSaveData.PassState,
                     Score = levelSaveData.Score,
                     TotalEarnedCoins = levelSaveData.TotalEarnedCoins,
-                    PassTimeSec = levelSaveData.PassTimeSec
+                    PassTimeSec = levelSaveData.PassTimeSec,
+                    PassLevelProgress = levelSaveData.PassLevelProgress
                 };
 
                 _levelDataArray[i] = levelData;
             }
 
+            if (_levelDataArray.Length < _gameplayLogicConfig.MaxAvailableLevel)
+                CreateMissingLevelData();
+
             return true;
         }
 
-        private void CreateLevelData()
+        private void CreateMissingLevelData()
         {
+            LevelData[] oldArray = _levelDataArray;
             _levelDataArray = new LevelData[_gameplayLogicConfig.MaxAvailableLevel];
 
             for (int i = 0; i < _levelDataArray.Length; i++)
-                _levelDataArray[i] = new LevelData(i + 1);
+            {
+                bool oldElementExists = oldArray != null && i < oldArray.Length;
+
+                _levelDataArray[i] = oldElementExists ? oldArray[i] : new LevelData(i + 1);
+            }
+
+            SaveDataArray();
         }
 
         private void ValidateData(LevelData data)

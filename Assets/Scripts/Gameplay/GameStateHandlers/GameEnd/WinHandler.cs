@@ -8,6 +8,7 @@ using ConnectIt.Localization;
 using ConnectIt.Shop.Customer;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Gameplay.MonoWrappers;
+using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
 using ConnectIt.Utilities.Formatters;
 using System;
@@ -19,6 +20,18 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
     public class WinHandler : IWinHandler, IInitializable, IDisposable
     {
         public event Action Won;
+
+        public float ProgressPercentsToWin
+        {
+            get => _progressPercentsToWin;
+            set
+            {
+                Assert.ThatArgIs(value >= 0f, value <= 100f);
+
+                _progressPercentsToWin = value;
+                TryWin();
+            }
+        }
 
         private readonly IGameStateObserver _gameStateObserver;
         private readonly GameplayUIDocumentMonoWrapper _gameplayUIDocumentMonoWrapper;
@@ -37,6 +50,7 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
         private long _totalEarnedCoins;
         private long _gainedCoins;
         private long _score;
+        private float _progressPercentsToWin = 100f;
 
         public WinHandler(
             IGameStateObserver gameStateObserver,
@@ -94,9 +108,10 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
             LevelData levelData = new(_gameplayLogicConfig.CurrentLevel)
             {
                 PassState = PassStates.Passed,
-                Score = _scoresCalculator.Calculate(),
+                Score = _score,
                 TotalEarnedCoins = _totalEarnedCoins,
-                PassTimeSec = _gameplayTimeProvider.ElapsedTimeSec
+                PassTimeSec = _gameplayTimeProvider.ElapsedTimeSec,
+                PassLevelProgress = _gameStateObserver.GameCompleteProgressPercents
             };
             _levelsPassDataProvider.SaveData(levelData);
 
@@ -107,10 +122,10 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
 
         private void TryWin()
         {
-            if (_gameStateObserver.GameCompleteProgressPercents != 100f)
+            if (_gameStateObserver.GameCompleteProgressPercents < ProgressPercentsToWin)
                 return;
 
-            _coroutinesGlobalContainer.DelayedAction(Win);
+            Win();
         }
 
         private void ShowResults()
@@ -124,6 +139,7 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
                     new object[]
                     {
                         _formatter.FormatDetailedGameplayElapsedTime(_gameplayTimeProvider.ElapsedTime),
+                        Mathf.FloorToInt(_gameStateObserver.GameCompleteProgressPercents),
                         _score,
                         _gainedCoins
                     }),

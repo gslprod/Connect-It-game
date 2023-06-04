@@ -6,8 +6,12 @@ namespace ConnectIt.Config.ScriptableObjects
     public class ShopConfigSO : ScriptableObject
     {
         public long SkipLevelBoostPrice => _skipLevelBoostPrice;
+        public long SimplifyLevelBoostPrice => _simplifyLevelBoostPrice;
 
         [Tooltip("Skip Level Boost Price")]
         [SerializeField] private long _skipLevelBoostPrice;
+
+        [Tooltip("Simplify Level Boost Price")]
+        [SerializeField] private long _simplifyLevelBoostPrice;
     }
 }

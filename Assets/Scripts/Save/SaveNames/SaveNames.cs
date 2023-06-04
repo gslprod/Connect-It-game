@@ -18,6 +18,7 @@ namespace ConnectIt.Save.Names
             new ItemName(typeof(IProduct), "Product"),
             new ItemName(typeof(Boost), "Boost", typeof(IProduct)),
             new ItemName(typeof(SkipLevelBoost), "SkipLevel", typeof(Boost)),
+            new ItemName(typeof(SimplifyLevelBoost), "SimplifyLevel", typeof(Boost)),
             #endregion
 
             #region StatsData

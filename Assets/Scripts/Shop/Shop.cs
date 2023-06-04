@@ -17,22 +17,26 @@ namespace ConnectIt.Shop
 
         private List<ShowcaseProduct<IProduct>> _goods;
 
-        private readonly SkipLevelBoost.Factory _skipLevelBoostFactory;
         private readonly ShopConfig _config;
+        private readonly SkipLevelBoost.Factory _skipLevelBoostFactory;
+        private readonly SimplifyLevelBoost.Factory _simplifyLevelBoostFactory;
 
         public Shop(
+            ShopConfig config,
             SkipLevelBoost.Factory skipLevelBoostFactory,
-            ShopConfig config)
+            SimplifyLevelBoost.Factory simplifyLevelBoostFactory)
         {
-            _skipLevelBoostFactory = skipLevelBoostFactory;
             _config = config;
+            _skipLevelBoostFactory = skipLevelBoostFactory;
+            _simplifyLevelBoostFactory = simplifyLevelBoostFactory;
         }
 
         public void Initialize()
         {
             _goods = new List<ShowcaseProduct<IProduct>>()
             {
-                new(_skipLevelBoostFactory.Create(), _config.SkipLevelBoostPrice, _skipLevelBoostFactory.Create)
+                new(_skipLevelBoostFactory.Create(), _config.SkipLevelBoostPrice, _skipLevelBoostFactory.Create),
+                new(_simplifyLevelBoostFactory.Create(), _config.SimplifyLevelBoostPrice, _simplifyLevelBoostFactory.Create)
             };
         }
 

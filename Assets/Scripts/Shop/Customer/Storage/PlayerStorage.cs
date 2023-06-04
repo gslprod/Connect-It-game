@@ -16,13 +16,16 @@ namespace ConnectIt.Shop.Customer.Storage
     {
         private readonly IShopSaveProvider _saveProvider;
         private readonly SkipLevelBoost.Factory _skipLevelBoostFactory;
+        private readonly SimplifyLevelBoost.Factory _simplifyLevelBoostFactory;
 
         public PlayerStorage(
             IShopSaveProvider saveProvider,
-            SkipLevelBoost.Factory skipLevelBoostFactory)
+            SkipLevelBoost.Factory skipLevelBoostFactory,
+            SimplifyLevelBoost.Factory simplifyLevelBoostFactory)
         {
             _saveProvider = saveProvider;
             _skipLevelBoostFactory = skipLevelBoostFactory;
+            _simplifyLevelBoostFactory = simplifyLevelBoostFactory;
         }
 
         public void Initialize()
@@ -90,6 +93,9 @@ namespace ConnectIt.Shop.Customer.Storage
 
             if (type == typeof(SkipLevelBoost))
                 return _skipLevelBoostFactory.Create();
+
+            if (type == typeof(SimplifyLevelBoost))
+                return _simplifyLevelBoostFactory.Create();
 
             throw Assert.GetFailException();
         }

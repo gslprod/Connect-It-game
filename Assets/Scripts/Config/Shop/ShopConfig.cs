@@ -5,6 +5,7 @@ namespace ConnectIt.Config
     public class ShopConfig
     {
         public long SkipLevelBoostPrice => _configSO.SkipLevelBoostPrice;
+        public long SimplifyLevelBoostPrice => _configSO.SimplifyLevelBoostPrice;
 
         private readonly ShopConfigSO _configSO;
 
