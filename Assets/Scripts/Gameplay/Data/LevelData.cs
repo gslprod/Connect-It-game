@@ -13,6 +13,8 @@
         public bool NotCompleted => PassState == PassStates.NotCompleted;
         public bool Skipped => PassState == PassStates.Skipped;
         public bool FullyPassed => Passed && PassLevelProgress == 100f;
+        public bool FullyPassedWithoutBoosts => FullyPassed && !BoostsUsed;
+        public bool PassedWithoutBoosts => Passed && !BoostsUsed;
 
         public int Id;
         public PassStates PassState;
@@ -20,6 +22,7 @@
         public long TotalEarnedCoins;
         public float PassTimeSec;
         public float PassLevelProgress;
+        public bool BoostsUsed;
 
         public LevelData(int id)
         {
@@ -29,6 +32,7 @@
             TotalEarnedCoins = 0;
             PassTimeSec = 0f;
             PassLevelProgress = 0f;
+            BoostsUsed = false;
         }
     }
 }

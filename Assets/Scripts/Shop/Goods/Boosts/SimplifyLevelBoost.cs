@@ -33,9 +33,9 @@ namespace ConnectIt.Shop.Goods.Boosts
         {
             base.Use(usageContext);
 
-            SimplifyLevelBoostUsageContext skipLevelUsageContext = (SimplifyLevelBoostUsageContext)usageContext;
+            SimplifyLevelBoostUsageContext context = (SimplifyLevelBoostUsageContext)usageContext;
 
-            skipLevelUsageContext.LevelEndHandler.ProgressPercentsToWin = 80f;
+            context.LevelEndHandler.ProgressPercentsToWin = 80f;
         }
 
         public class Factory : PlaceholderFactory<SimplifyLevelBoost> { }

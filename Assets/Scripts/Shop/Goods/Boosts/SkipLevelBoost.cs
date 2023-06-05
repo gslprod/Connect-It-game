@@ -33,9 +33,9 @@ namespace ConnectIt.Shop.Goods.Boosts
         {
             base.Use(usageContext);
 
-            SkipLevelBoostUsageContext skipLevelUsageContext = (SkipLevelBoostUsageContext)usageContext;
-            
-            skipLevelUsageContext.LevelEndHandler.SkipLevel();
+            SkipLevelBoostUsageContext context = (SkipLevelBoostUsageContext)usageContext;
+
+            context.LevelEndHandler.SkipLevel();
 
             Dispose();
         }

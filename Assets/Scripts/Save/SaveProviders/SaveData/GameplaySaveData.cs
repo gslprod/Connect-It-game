@@ -59,6 +59,7 @@ namespace ConnectIt.Save.SaveProviders.SaveData
             [SerializeField] internal long TotalEarnedCoins;
             [SerializeField] internal float PassTimeSec;
             [SerializeField] internal float PassLevelProgress;
+            [SerializeField] internal bool BoostsUsed;
 
             public bool Equals(LevelPassSaveData other)
                 => Id == other.Id &&
@@ -66,7 +67,8 @@ namespace ConnectIt.Save.SaveProviders.SaveData
                 Score == other.Score &&
                 TotalEarnedCoins == other.TotalEarnedCoins &&
                 PassTimeSec == other.PassTimeSec &&
-                PassLevelProgress == other.PassLevelProgress;
+                PassLevelProgress == other.PassLevelProgress &&
+                BoostsUsed == other.BoostsUsed;
 
             public LevelPassSaveData Clone()
                 => (LevelPassSaveData)MemberwiseClone();

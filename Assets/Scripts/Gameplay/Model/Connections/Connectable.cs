@@ -5,16 +5,31 @@ namespace ConnectIt.Gameplay.Model
 {
     public class Connectable : IConnectable
     {
+
         public event Action<Connectable> ConnectionChanged;
 
         public bool HasConnection => Connection != null;
 
         public Connection Connection { get; private set; }
         public int CompatibilityIndex { get; }
+        public bool AllowIncompatibleConnections
+        {
+            get => _allowIncompatibleConnections;
+            set
+            {
+                if (_allowIncompatibleConnections == value)
+                    return;
 
-        public Connectable(int compatibilityIndex)
+                _allowIncompatibleConnections = value;
+            }
+        }
+
+        private bool _allowIncompatibleConnections;
+
+        public Connectable(int compatibilityIndex, bool allowIncompatibleConnections = false)
         {
             CompatibilityIndex = compatibilityIndex;
+            _allowIncompatibleConnections = allowIncompatibleConnections;
         }
 
         public void SetConnection(Connection connection)
@@ -62,9 +77,13 @@ namespace ConnectIt.Gameplay.Model
         {
             Assert.ArgIsNotNull(other);
 
+            bool compatible =
+                CompatibilityIndex == other.CompatibilityIndex ||
+                AllowIncompatibleConnections && other.AllowIncompatibleConnections;
+
             return
                 this != other &&
-                CompatibilityIndex == other.CompatibilityIndex;
+                compatible;
         }
 
         public void Dispose()

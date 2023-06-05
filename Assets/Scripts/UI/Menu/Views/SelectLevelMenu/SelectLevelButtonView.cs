@@ -1,6 +1,7 @@
 ﻿using ConnectIt.Audio.Sounds;
 using ConnectIt.Config;
 using ConnectIt.Gameplay.Data;
+using ConnectIt.Localization;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.Utilities;
 using System;
@@ -56,8 +57,12 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
             else
                 newClass = levelData.PassState switch
                 {
+                    PassStates.Passed =>
+                        levelData.BoostsUsed ?
+                        ClassNamesConstants.MenuView.LevelButtonCompletedWithBoosts :
+                        ClassNamesConstants.MenuView.LevelButtonCompleted,
+
                     PassStates.NotCompleted => ClassNamesConstants.MenuView.LevelButtonCurrent,
-                    PassStates.Passed => ClassNamesConstants.MenuView.LevelButtonCompleted,
                     PassStates.Skipped => ClassNamesConstants.MenuView.LevelButtonSkipped,
 
                     _ => throw Assert.GetFailException(),

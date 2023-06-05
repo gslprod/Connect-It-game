@@ -7,6 +7,7 @@ namespace ConnectIt.Gameplay.Model
         Connection Connection { get; }
         bool HasConnection { get; }
         int CompatibilityIndex { get; }
+        bool AllowIncompatibleConnections { get; set; }
 
         void SetConnection(Connection connection);
         void ResetConnection();

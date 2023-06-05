@@ -317,6 +317,10 @@
     background-color: var(--completed-level-color);
 }
 
+.level-button--completed-with-boosts {
+    background-color: rgba(0, 255, 155, 0.3);
+}
+
 .level-button--current {
     background-color: var(--current-level-color);
 }
@@ -463,6 +467,7 @@
 
 .boosts-container {
     align-items: center;
+    max-height: 1200px;
 }
 
 .boosts-container__title {

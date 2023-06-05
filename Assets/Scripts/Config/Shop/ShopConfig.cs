@@ -6,6 +6,7 @@ namespace ConnectIt.Config
     {
         public long SkipLevelBoostPrice => _configSO.SkipLevelBoostPrice;
         public long SimplifyLevelBoostPrice => _configSO.SimplifyLevelBoostPrice;
+        public long AllowIncompatibleConnectionsBoostPrice => _configSO.AllowIncompatibleConnectionsBoostPrice;
 
         private readonly ShopConfigSO _configSO;
 

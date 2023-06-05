@@ -20,15 +20,18 @@ namespace ConnectIt.Shop
         private readonly ShopConfig _config;
         private readonly SkipLevelBoost.Factory _skipLevelBoostFactory;
         private readonly SimplifyLevelBoost.Factory _simplifyLevelBoostFactory;
+        private readonly AllowIncompatibleConnectionsBoost.Factory _allowIncompatibleConnectionsBoostFactory;
 
         public Shop(
             ShopConfig config,
             SkipLevelBoost.Factory skipLevelBoostFactory,
-            SimplifyLevelBoost.Factory simplifyLevelBoostFactory)
+            SimplifyLevelBoost.Factory simplifyLevelBoostFactory,
+            AllowIncompatibleConnectionsBoost.Factory allowIncompatibleConnectionsBoostFactory)
         {
             _config = config;
             _skipLevelBoostFactory = skipLevelBoostFactory;
             _simplifyLevelBoostFactory = simplifyLevelBoostFactory;
+            _allowIncompatibleConnectionsBoostFactory = allowIncompatibleConnectionsBoostFactory;
         }
 
         public void Initialize()
@@ -36,7 +39,8 @@ namespace ConnectIt.Shop
             _goods = new List<ShowcaseProduct<IProduct>>()
             {
                 new(_skipLevelBoostFactory.Create(), _config.SkipLevelBoostPrice, _skipLevelBoostFactory.Create),
-                new(_simplifyLevelBoostFactory.Create(), _config.SimplifyLevelBoostPrice, _simplifyLevelBoostFactory.Create)
+                new(_simplifyLevelBoostFactory.Create(), _config.SimplifyLevelBoostPrice, _simplifyLevelBoostFactory.Create),
+                new(_allowIncompatibleConnectionsBoostFactory.Create(), _config.AllowIncompatibleConnectionsBoostPrice, _allowIncompatibleConnectionsBoostFactory.Create)
             };
         }
 

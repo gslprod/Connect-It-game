@@ -205,6 +205,9 @@ namespace ConnectIt.DI.Installers
 
                 Container.BindFactory<FirstLaunchedVersionStatsData, FirstLaunchedVersionStatsData.Factory>()
                          .FromFactory<PrimitiveDIFactory<FirstLaunchedVersionStatsData>>();
+
+                Container.BindFactory<BoostsUsageCountStatsData, BoostsUsageCountStatsData.Factory>()
+                         .FromFactory<PrimitiveDIFactory<BoostsUsageCountStatsData>>();
             }
 
             void BindStatsModules()
@@ -238,6 +241,9 @@ namespace ConnectIt.DI.Installers
 
                     Container.BindFactory<SimplifyLevelBoost, SimplifyLevelBoost.Factory>()
                              .FromFactory<PrimitiveDIFactory<SimplifyLevelBoost>>();
+
+                    Container.BindFactory<AllowIncompatibleConnectionsBoost, AllowIncompatibleConnectionsBoost.Factory>()
+                             .FromFactory<PrimitiveDIFactory<AllowIncompatibleConnectionsBoost>>();
                 }
             }
         }

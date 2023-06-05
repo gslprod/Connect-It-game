@@ -65,6 +65,7 @@ namespace ConnectIt.Gameplay.View
         private void UpdateView()
         {
             UpdateLineVerticles();
+            UpdateColor();
         }
 
         private void UpdateLineVerticles()
@@ -83,10 +84,14 @@ namespace ConnectIt.Gameplay.View
 
         private void UpdateColor()
         {
-            Color mainColor = _gameplayViewConfig.GetColorByCompatibilityIndex(_connectionLineModel.CompatibilityIndex);
+            Color startColor = _gameplayViewConfig.GetColorByCompatibilityIndex(_connectionLineModel.FirstCompatibilityIndex);
+            Color endColor = _gameplayViewConfig.GetColorByCompatibilityIndex(
+                _connectionLineModel.ConnectionCompleted ? 
+                _connectionLineModel.SecondCompatibilityIndex :
+                _connectionLineModel.FirstCompatibilityIndex); 
 
-            _lineRenderer.startColor = mainColor;
-            _lineRenderer.endColor = mainColor;
+            _lineRenderer.startColor = startColor;
+            _lineRenderer.endColor = endColor;
         }
 
         private void OnUsingTilesChanged(ConnectionLine line)

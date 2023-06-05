@@ -1,7 +1,6 @@
 ﻿using ConnectIt.Config;
 using ConnectIt.Save.SaveProviders;
 using ConnectIt.Save.SaveProviders.SaveData;
-using ConnectIt.Stats.Data;
 using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
 using System;
@@ -50,6 +49,9 @@ namespace ConnectIt.Gameplay.Data
             if (savedData.Passed && !dataToSave.Passed)
                 return;
 
+            if (savedData.PassedWithoutBoosts && !dataToSave.PassedWithoutBoosts)
+                return;
+
             savedData.PassState = dataToSave.PassState;
 
             if (dataToSave.PassLevelProgress >= savedData.PassLevelProgress)
@@ -66,7 +68,10 @@ namespace ConnectIt.Gameplay.Data
                     savedData.Score = dataToSave.Score;
 
                 if (dataToSave.PassLevelProgress > savedData.PassLevelProgress)
+                {
+                    savedData.BoostsUsed = dataToSave.BoostsUsed;
                     savedData.PassLevelProgress = dataToSave.PassLevelProgress;
+                }
             }
 
             if (dataToSave.TotalEarnedCoins > savedData.TotalEarnedCoins)
@@ -110,7 +115,8 @@ namespace ConnectIt.Gameplay.Data
                     Score = levelData.Score,
                     TotalEarnedCoins = levelData.TotalEarnedCoins,
                     PassTimeSec = levelData.PassTimeSec,
-                    PassLevelProgress = levelData.PassLevelProgress
+                    PassLevelProgress = levelData.PassLevelProgress,
+                    BoostsUsed = levelData.BoostsUsed
                 };
 
                 levelPassSaveData[i] = saveData;
@@ -139,7 +145,8 @@ namespace ConnectIt.Gameplay.Data
                     Score = levelSaveData.Score,
                     TotalEarnedCoins = levelSaveData.TotalEarnedCoins,
                     PassTimeSec = levelSaveData.PassTimeSec,
-                    PassLevelProgress = levelSaveData.PassLevelProgress
+                    PassLevelProgress = levelSaveData.PassLevelProgress,
+                    BoostsUsed = levelSaveData.BoostsUsed
                 };
 
                 _levelDataArray[i] = levelData;
@@ -172,6 +179,7 @@ namespace ConnectIt.Gameplay.Data
             Assert.ThatArgIs(data.PassTimeSec >= 0);
             Assert.ThatArgIs(data.Score >= 0);
             Assert.ThatArgIs(data.TotalEarnedCoins >= 0);
+            Assert.ThatArgIs(data.PassLevelProgress >= 0, data.PassLevelProgress <= 100);
         }
     }
 }

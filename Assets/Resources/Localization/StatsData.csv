@@ -14,3 +14,6 @@ StatsData.TotalReceivedItemsCount.Value,,{0}
 StatsData.FirstLaunchedVersion.Name,,Играете с версии
 StatsData.FirstLaunchedVersion.Description,,"Показывает первую версию игры, которая была запущена на данном устройстве."
 StatsData.FirstLaunchedVersion.Value,,{0}
+StatsData.BoostsUsageCount.Name,,Использовано преимуществ
+StatsData.BoostsUsageCount.Description,,"Показывает, сколько раз Вы применяли преимущества во время прохождения уровней."
+StatsData.BoostsUsageCount.Value,,{0}

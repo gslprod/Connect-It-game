@@ -48,6 +48,7 @@
             #region SelectLevel
 
             public const string LevelButtonCompleted = "level-button--completed";
+            public const string LevelButtonCompletedWithBoosts = "level-button--completed-with-boosts";
             public const string LevelButtonCurrent = "level-button--current";
             public const string LevelButtonSkipped = "level-button--skipped";
 

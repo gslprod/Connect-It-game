@@ -138,8 +138,12 @@ namespace ConnectIt.UI.Menu.Views.SelectLevelMenu
             else
                 stringTextKey = levelData.PassState switch
                 {
+                    PassStates.Passed =>
+                        levelData.BoostsUsed ?
+                        TextKeysConstants.Menu.SelectLevelMenu.ChoosenLevelInfo_Content_Completed_WithBoosts :
+                        TextKeysConstants.Menu.SelectLevelMenu.ChoosenLevelInfo_Content_Completed,
+
                     PassStates.NotCompleted => TextKeysConstants.Menu.SelectLevelMenu.ChoosenLevelInfo_Content_NotCompleted,
-                    PassStates.Passed => TextKeysConstants.Menu.SelectLevelMenu.ChoosenLevelInfo_Content_Completed,
                     PassStates.Skipped => TextKeysConstants.Menu.SelectLevelMenu.ChoosenLevelInfo_Content_Skipped,
 
                     _ => throw Assert.GetFailException(),

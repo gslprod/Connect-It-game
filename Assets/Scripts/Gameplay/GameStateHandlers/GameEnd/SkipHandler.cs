@@ -1,5 +1,6 @@
 ﻿using ConnectIt.Config;
 using ConnectIt.Gameplay.Data;
+using ConnectIt.Gameplay.Observers;
 using ConnectIt.Localization;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Gameplay.MonoWrappers;
@@ -18,6 +19,7 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
         private readonly GameplayUIDocumentMonoWrapper _gameplayUIDocumentMonoWrapper;
         private readonly TextKey.Factory _textKeyFactory;
         private readonly DialogBoxView.Factory _dialogBoxFactory;
+        private readonly IGameStateObserver _gameStateObserver;
 
         public SkipHandler(
             ILevelEndHandler levelEndHandler,
@@ -25,7 +27,8 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
             GameplayUIDocumentMonoWrapper gameplayUIDocumentMonoWrapper,
             TextKey.Factory textKeyFactory,
             DialogBoxView.Factory dialogBoxFactory,
-            ILevelsPassDataProvider levelsPassDataProvider)
+            ILevelsPassDataProvider levelsPassDataProvider,
+            IGameStateObserver gameStateObserver)
         {
             _levelEndHandler = levelEndHandler;
             _gameplayLogicConfig = gameplayLogicConfig;
@@ -33,6 +36,7 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
             _textKeyFactory = textKeyFactory;
             _dialogBoxFactory = dialogBoxFactory;
             _levelsPassDataProvider = levelsPassDataProvider;
+            _gameStateObserver = gameStateObserver;
         }
 
         public void Dispose()
@@ -44,7 +48,8 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
         {
             LevelData levelData = new(_gameplayLogicConfig.CurrentLevel)
             {
-                PassState = PassStates.Skipped
+                PassState = PassStates.Skipped,
+                BoostsUsed = _gameStateObserver.AnyBoostWasUsed
             };
             _levelsPassDataProvider.SaveData(levelData);
 

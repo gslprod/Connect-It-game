@@ -6,12 +6,14 @@ using ConnectIt.Gameplay.Time;
 using ConnectIt.Gameplay.Tools.Calculators;
 using ConnectIt.Localization;
 using ConnectIt.Shop.Customer;
+using ConnectIt.Shop.Goods.Boosts;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Gameplay.MonoWrappers;
 using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
 using ConnectIt.Utilities.Formatters;
 using System;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -111,7 +113,8 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
                 Score = _score,
                 TotalEarnedCoins = _totalEarnedCoins,
                 PassTimeSec = _gameplayTimeProvider.ElapsedTimeSec,
-                PassLevelProgress = _gameStateObserver.GameCompleteProgressPercents
+                PassLevelProgress = _gameStateObserver.GameCompleteProgressPercents,
+                BoostsUsed = _gameStateObserver.AnyBoostWasUsed
             };
             _levelsPassDataProvider.SaveData(levelData);
 
@@ -130,11 +133,19 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
 
         private void ShowResults()
         {
+            TextKey titleTextKey = _textKeyFactory.Create(
+                _gameStateObserver.AnyBoostWasUsed ?
+                TextKeysConstants.Gameplay.WinMenu_Title_BoostsUsed :
+                TextKeysConstants.Gameplay.WinMenu_Title,
+                new object[]
+                {
+                    _gameplayLogicConfig.CurrentLevel
+                });
+
             _dialogBoxFactory.CreateDefaultGameEndResultsDialogBox(
                 _textKeyFactory,
                 _gameplayUIDocumentMonoWrapper.Root,
-                _textKeyFactory.Create(TextKeysConstants.Gameplay.WinMenu_Title,
-                    new object[] { _gameplayLogicConfig.CurrentLevel }),
+                titleTextKey,
                 _textKeyFactory.Create(TextKeysConstants.Gameplay.WinMenu_Content,
                     new object[]
                     {

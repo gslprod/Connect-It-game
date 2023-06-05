@@ -8,6 +8,7 @@
             public const string PauseMenu_Continue = GameplayBaseString + ".PauseMenu.Continue";
             public const string PauseMenu_Exit = GameplayBaseString + ".PauseMenu.Exit";
             public const string WinMenu_Title = GameplayBaseString + ".WinMenu.Title";
+            public const string WinMenu_Title_BoostsUsed = GameplayBaseString + ".WinMenu.Title.BoostsUsed";
             public const string WinMenu_Content = GameplayBaseString + ".WinMenu.Content";
             public const string UseBoostButton_Text = GameplayBaseString + ".UseBoostButton.Text";
             public const string UseBoostMenu_Title = GameplayBaseString + ".UseBoostMenu.Title";
@@ -128,6 +129,7 @@
 
                 public const string ChoosenLevelInfo_Title = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Title";
                 public const string ChoosenLevelInfo_Content_Completed = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Content.Completed";
+                public const string ChoosenLevelInfo_Content_Completed_WithBoosts = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Content.Completed.WithBoosts";
                 public const string ChoosenLevelInfo_Content_NotCompleted = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Content.NotCompleted";
                 public const string ChoosenLevelInfo_Content_NotAvailable = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Content.NotAvailable";
                 public const string ChoosenLevelInfo_Content_Skipped = SelectLevelMenuBaseString + ".ChoosenLevelInfo.Content.Skipped";
@@ -219,6 +221,10 @@
             public const string FirstLaunchedVersion_Description = StatsDataBaseString + ".FirstLaunchedVersion.Description";
             public const string FirstLaunchedVersion_Value = StatsDataBaseString + ".FirstLaunchedVersion.Value";
 
+            public const string BoostsUsageCount_Name = StatsDataBaseString + ".BoostsUsageCount.Name";
+            public const string BoostsUsageCount_Description = StatsDataBaseString + ".BoostsUsageCount.Description";
+            public const string BoostsUsageCount_Value = StatsDataBaseString + ".BoostsUsageCount.Value";
+
             private const string StatsDataBaseString = "StatsData";
         }
 
@@ -229,6 +235,9 @@
 
             public const string Product_Boost_SimplifyLevel_Name = ItemsBaseString + ".Product.Boost.SimplifyLevel.Name";
             public const string Product_Boost_SimplifyLevel_Description = ItemsBaseString + ".Product.Boost.SimplifyLevel.Description";
+
+            public const string Product_Boost_AllowIncompatibleConnections_Name = ItemsBaseString + ".Product.Boost.AllowIncompatibleConnections.Name";
+            public const string Product_Boost_AllowIncompatibleConnections_Description = ItemsBaseString + ".Product.Boost.AllowIncompatibleConnections.Description";
 
             private const string ItemsBaseString = "Items";
         }

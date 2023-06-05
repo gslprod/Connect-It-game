@@ -47,7 +47,7 @@ namespace ConnectIt.DI.Installers
             BindGameplayInput();
             BindConnectionLine();
             BindPort();
-            BindGameStateObserver();
+            BindGameStateObservers();
             BindUIViews();
             BindTime();
             BindLevelLoading();
@@ -66,6 +66,9 @@ namespace ConnectIt.DI.Installers
             void BindStatsModules()
             {
                 Container.BindInterfacesTo<MovesCountStatsModule>()
+                         .AsSingle();
+
+                Container.BindInterfacesTo<BoostsUsageCountStatsModule>()
                          .AsSingle();
             }
         }
@@ -86,6 +89,9 @@ namespace ConnectIt.DI.Installers
 
         private void BindBoostUsageContexts()
         {
+            Container.BindInterfacesTo<CreatedObjectNotifier<BoostUsageContext>>()
+                     .AsSingle();
+
             Container.BindFactory<CommonUsageData, BoostUsageContext, BoostUsageContext.Factory>()
                      .FromFactory<BoostUsageContextFactory>()
                      .WhenNotInjectedInto<BoostUsageContextFactory>();
@@ -100,6 +106,10 @@ namespace ConnectIt.DI.Installers
 
             Container.BindFactory<CommonUsageData, SimplifyLevelBoostUsageContext, SimplifyLevelBoostUsageContext.Factory>()
                      .FromFactory<PrimitiveDIFactory<CommonUsageData, SimplifyLevelBoostUsageContext>>()
+                     .WhenInjectedInto<BoostUsageContextFactory>();
+
+            Container.BindFactory<CommonUsageData, AllowIncompatibleConnectionsBoostUsageContext, AllowIncompatibleConnectionsBoostUsageContext.Factory>()
+                     .FromFactory<PrimitiveDIFactory<CommonUsageData, AllowIncompatibleConnectionsBoostUsageContext>>()
                      .WhenInjectedInto<BoostUsageContextFactory>();
         }
 
@@ -232,7 +242,7 @@ namespace ConnectIt.DI.Installers
             }
         }
 
-        private void BindGameStateObserver()
+        private void BindGameStateObservers()
         {
             Container.BindInterfacesTo<GameStateObserver>()
                      .AsSingle();
@@ -241,6 +251,9 @@ namespace ConnectIt.DI.Installers
                      .AsSingle();
 
             Container.BindInterfacesAndSelfTo<MovesObserver>()
+                     .AsSingle();
+
+            Container.BindInterfacesAndSelfTo<UsedBoostsObserver>()
                      .AsSingle();
         }
 

@@ -13,7 +13,8 @@ namespace ConnectIt.Gameplay.Model
         public event Action<ConnectionLine> UsingTilesChanged;
 
         public IEnumerable<TileUser> UsingTiles => _usingTiles;
-        public int CompatibilityIndex => _connection.First.CompatibilityIndex;
+        public int FirstCompatibilityIndex => _connection.First.CompatibilityIndex;
+        public int SecondCompatibilityIndex => _connection.Second.CompatibilityIndex;
         public bool ConnectionCompleted => _connection.ConnectionCompleted;
 
         private readonly List<TileUser> _usingTiles = new();

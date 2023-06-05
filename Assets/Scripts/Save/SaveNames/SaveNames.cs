@@ -19,6 +19,7 @@ namespace ConnectIt.Save.Names
             new ItemName(typeof(Boost), "Boost", typeof(IProduct)),
             new ItemName(typeof(SkipLevelBoost), "SkipLevel", typeof(Boost)),
             new ItemName(typeof(SimplifyLevelBoost), "SimplifyLevel", typeof(Boost)),
+            new ItemName(typeof(AllowIncompatibleConnectionsBoost), "AllowIncompatibleConnections", typeof(Boost)),
             #endregion
 
             #region StatsData
@@ -28,6 +29,7 @@ namespace ConnectIt.Save.Names
             new ItemName(typeof(TotalEarnedCoinsStatsData), "TotalEarnedCoins", typeof(IStatsData)),
             new ItemName(typeof(TotalReceivedItemsCountStatsData), "TotalReceivedItemsCount", typeof(IStatsData)),
             new ItemName(typeof(FirstLaunchedVersionStatsData), "FirstLaunchedVersion", typeof(IStatsData)),
+            new ItemName(typeof(BoostsUsageCountStatsData), "BoostsUsageCount", typeof(IStatsData)),
             #endregion
 
             #region SaveData

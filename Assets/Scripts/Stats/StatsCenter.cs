@@ -28,7 +28,8 @@ namespace ConnectIt.Stats
             typeof(ApplicationRunningTimeStatsData),
             typeof(MovesCountStatsData),
             typeof(TotalEarnedCoinsStatsData),
-            typeof(TotalReceivedItemsCountStatsData)
+            typeof(TotalReceivedItemsCountStatsData),
+            typeof(BoostsUsageCountStatsData)
         };
 
         private readonly IStatsSaveProvider _saveProvider;
@@ -38,6 +39,7 @@ namespace ConnectIt.Stats
         private readonly TotalEarnedCoinsStatsData.Factory _totalEarnedCoinsStatsDataFactory;
         private readonly TotalReceivedItemsCountStatsData.Factory _totalReceivedItemsCountStatsDataFactory;
         private readonly FirstLaunchedVersionStatsData.Factory _firstLaunchedVersionStatsDataFactory;
+        private readonly BoostsUsageCountStatsData.Factory _boostsUsageCountStatsDataFactory;
 
         private bool _oftenUpdatingDataSavingRequested = false;
         private bool _savingRequested = false;
@@ -49,7 +51,8 @@ namespace ConnectIt.Stats
             MovesCountStatsData.Factory movesCountStatsDataFactory,
             TotalEarnedCoinsStatsData.Factory totalEarnedCoinsStatsDataFactory,
             TotalReceivedItemsCountStatsData.Factory totalReceivedItemsCountStatsDataFactory,
-            FirstLaunchedVersionStatsData.Factory firstLaunchedVersionStatsDataFactory)
+            FirstLaunchedVersionStatsData.Factory firstLaunchedVersionStatsDataFactory,
+            BoostsUsageCountStatsData.Factory boostsUsageCountStatsDataFactory)
         {
             _saveProvider = saveProvider;
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
@@ -58,6 +61,7 @@ namespace ConnectIt.Stats
             _totalEarnedCoinsStatsDataFactory = totalEarnedCoinsStatsDataFactory;
             _totalReceivedItemsCountStatsDataFactory = totalReceivedItemsCountStatsDataFactory;
             _firstLaunchedVersionStatsDataFactory = firstLaunchedVersionStatsDataFactory;
+            _boostsUsageCountStatsDataFactory = boostsUsageCountStatsDataFactory;
         }
 
         public void Initialize()
@@ -252,6 +256,9 @@ namespace ConnectIt.Stats
 
             if (type == typeof(FirstLaunchedVersionStatsData))
                 return _firstLaunchedVersionStatsDataFactory.Create();
+
+            if (type == typeof(BoostsUsageCountStatsData))
+                return _boostsUsageCountStatsDataFactory.Create();
 
             throw Assert.GetFailException();
         }

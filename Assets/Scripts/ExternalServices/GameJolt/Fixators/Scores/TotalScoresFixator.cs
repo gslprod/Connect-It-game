@@ -5,6 +5,7 @@ using ConnectIt.Localization;
 using ConnectIt.Save.SaveProviders;
 using ConnectIt.Save.SaveProviders.SaveData;
 using ConnectIt.Shop.Customer;
+using ConnectIt.Shop.Customer.Storage;
 using ConnectIt.Shop.Goods.Boosts;
 using ConnectIt.Stats;
 using ConnectIt.Stats.Data;
@@ -75,7 +76,7 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
                 return;
 
             _totalScore = _levelsPassDataProvider.LevelDataArray
-                .Sum(item => item.FullyPassed ? item.Score : 0);
+                .Sum(item => item.FullyPassedWithoutBoosts ? item.Score : 0);
 
             ExternalServerSaveData saveData = _externalServerSaveProvider.LoadExternalServerData();
             int? index = saveData.FixedScores?.FindIndex(item => item.TableID == GJConstants.TableID.TotalScores);
@@ -149,7 +150,8 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
             IEnumerable<LevelData> levelDataArray = _levelsPassDataProvider.LevelDataArray;
             int totalLevels = levelDataArray.Count();
             int passedLevels = levelDataArray.Count(item => item.Passed);
-            int fullyPassedLevels = levelDataArray.Count(item => item.FullyPassed);
+            int passedWithBoosts = levelDataArray.Count(item => item.Passed && item.BoostsUsed);
+            int fullyPassedWithoutBoostsLevels = levelDataArray.Count(item => item.FullyPassedWithoutBoosts);
             int skippedLevels = levelDataArray.Count(item => item.Skipped);
             int notCompletedLevels = levelDataArray.Count(item => item.NotCompleted);
             float passTimeSumSec = levelDataArray.Sum(item => item.PassTimeSec);
@@ -160,9 +162,11 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
             int bestSavedFixedScore = externalServerSaveData.FixedScores.First(item => item.TableID == GJConstants.TableID.TotalScores).BestFixedScore;
 
             long coins = _playerCustomer.Wallet.Coins;
-            int storageItemsTotal = _playerCustomer.Storage.Items.Count();
-            int skipLevelBoostsCount = _playerCustomer.Storage.GetProductCountOfType<SkipLevelBoost>();
-            int simplifyLevelBoostsCount = _playerCustomer.Storage.GetProductCountOfType<SimplifyLevelBoost>();
+            IStorage playerStorage = _playerCustomer.Storage;
+            int storageItemsTotal = playerStorage.Items.Count();
+            int skipLevelBoostsCount = playerStorage.GetProductCountOfType<SkipLevelBoost>();
+            int simplifyLevelBoostsCount = playerStorage.GetProductCountOfType<SimplifyLevelBoost>();
+            int allowIncompatibleConnectionsBoostsCount = playerStorage.GetProductCountOfType<AllowIncompatibleConnectionsBoost>();
 
             string firstVersion = _statsCenter.GetData<FirstLaunchedVersionStatsData>().RawValue;
             double runningTimeSec = _statsCenter.GetData<ApplicationRunningTimeStatsData>().RawValue;
@@ -170,6 +174,7 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
             long movesCount = _statsCenter.GetData<MovesCountStatsData>().RawValue;
             long totalEarnedCoins = _statsCenter.GetData<TotalEarnedCoinsStatsData>().RawValue;
             long totalReceivedItemsCount = _statsCenter.GetData<TotalReceivedItemsCountStatsData>().RawValue;
+            long boostsUsageCount = _statsCenter.GetData<BoostsUsageCountStatsData>().RawValue;
 
             SettingsSaveData settingsSaveData = _settingsSaveProvider.LoadSettingsData();
             SupportedLanguages language = settingsSaveData.Language;
@@ -180,17 +185,20 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
                 $"Version: {version}\n" +
                 $"Best saved score: {bestSavedFixedScore}\n" +
                 $"Levels:\n" +
-                $"Total: {totalLevels} | Passed: {passedLevels} | Fully passed: {fullyPassedLevels} | Skipped: {skippedLevels} |" +
-                $"Not completed: {notCompletedLevels} | All scores sum: {allScoresSum} | " +
+                $"Total: {totalLevels} | Passed: {passedLevels} | Passed with boosts: {passedWithBoosts} | " +
+                $"Fully passed without boosts: {fullyPassedWithoutBoostsLevels} | " +
+                $"Skipped: {skippedLevels} | Not completed: {notCompletedLevels} | All scores sum: {allScoresSum} | " +
                 $"Pass time sum: {passTimeSum:hh\\:mm\\:ss\\.fff}\n" +
                 $"Coins: {coins}\n" +
                 $"Storage items:\n" +
                 $"Total: {storageItemsTotal}\n" +
                 $"Boosts:\n" +
-                $"Skip level: {skipLevelBoostsCount} | Simplify level: {simplifyLevelBoostsCount}\n" +
+                $"Skip level: {skipLevelBoostsCount} | Simplify level: {simplifyLevelBoostsCount} | " +
+                $"Allow incompatible connections: {allowIncompatibleConnectionsBoostsCount}\n" +
                 $"Stats:\n" +
                 $"First version: {firstVersion} | Running time: {runningTime:hh\\:mm\\:ss\\.fff} | Moves count: {movesCount} | " +
-                $"Total earned coins: {totalEarnedCoins} | Total received items count: {totalReceivedItemsCount}\n" +
+                $"Total earned coins: {totalEarnedCoins} | Total received items count: {totalReceivedItemsCount} | " +
+                $"Boosts usage count: {boostsUsageCount}\n" +
                 $"Settings:\n" +
                 $"Language: {language} | OST: {ostVolume} | Sounds: {soundsVolume}";
         }
