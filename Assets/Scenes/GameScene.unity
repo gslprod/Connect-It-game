@@ -1013,6 +1013,8 @@ MonoBehaviour:
   Sheets:
   - Name: Gameplay
     Id: 0
+  - Name: Gameplay.Tutorial
+    Id: 1964043417
   - Name: DialogBox
     Id: 785304901
   - Name: Common

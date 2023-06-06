@@ -18,6 +18,26 @@
             public const string SkipMenu_Content = GameplayBaseString + ".SkipMenu.Content";
 
             private const string GameplayBaseString = "Gameplay";
+
+            public class Tutorial
+            {
+                public const string Common_NextButton_Text = TutorialBaseString + ".Common.NextButton.Text";
+                public const string Common_SkipButton_Text = TutorialBaseString + ".Common.SkipButton.Text";
+                public const string Common_СompleteButton_Text = TutorialBaseString + ".Common.СompleteButton.Text";
+
+                public const string ConfirmSkipDialogBox_Title = TutorialBaseString + ".ConfirmSkipDialogBox.Title";
+                public const string ConfirmSkipDialogBox_Message = TutorialBaseString + ".ConfirmSkipDialogBox.Message";
+
+                public const string Introductory_WelcomeDialogBox_Title = TutorialBaseString + ".Introductory.WelcomeDialogBox.Title";
+                public const string Introductory_WelcomeDialogBox_Message = TutorialBaseString + ".Introductory.WelcomeDialogBox.Message";
+                public const string Introductory_ConectionsDialogBox_Title = TutorialBaseString + ".Introductory.ConectionsDialogBox.Title";
+                public const string Introductory_ConectionsDialogBox_Message = TutorialBaseString + ".Introductory.ConectionsDialogBox.Message";
+
+                public const string RemoveConnections_MainDialogBox_Title = TutorialBaseString + ".RemoveConnections.MainDialogBox.Title";
+                public const string RemoveConnections_MainDialogBox_Message = TutorialBaseString + ".RemoveConnections.MainDialogBox.Message";
+
+                private const string TutorialBaseString = GameplayBaseString + ".Tutorial";
+            }
         }
 
         public static class DialogBox

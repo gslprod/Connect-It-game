@@ -1,0 +1,12 @@
+Key,English,Russian
+Gameplay.Tutorial.Common.NextButton.Text,,Далее
+Gameplay.Tutorial.Common.SkipButton.Text,,Пропустить
+Gameplay.Tutorial.Common.СompleteButton.Text,,Завершить
+Gameplay.Tutorial.ConfirmSkipDialogBox.Title,,Пропустить обучение?
+Gameplay.Tutorial.ConfirmSkipDialogBox.Message,,Подтвердите пропуск обучения.
+Gameplay.Tutorial.Introductory.WelcomeDialogBox.Title,,Добро пожаловать!
+Gameplay.Tutorial.Introductory.WelcomeDialogBox.Message,,"Цель данной игры очень проста - соединить все порты (окружности) с помощью соединительных линий, при этом заполнив этой линией все свободные ячейки. Прогресс уровня можно отслеживать с помощью индикатора, который расположен внизу по центру. Как только он будет полностью заполнен (равен 100%), уровень будет пройден!"
+Gameplay.Tutorial.Introductory.ConectionsDialogBox.Title,,Соединение портов
+Gameplay.Tutorial.Introductory.ConectionsDialogBox.Message,,"Чтобы начать создавать соединительную линию, поместите палец на любой из портов, и, продолжая его удерживать, переместите палец на свободную ячейку.\nЧтобы соединить два порта, проведите к ней по свободным ячейкам соединительную линию. Обратите внимание: соединять можно только совместимые между собой порты (порты являются совместимыми, если они имеют одинаковый цвет)."
+Gameplay.Tutorial.RemoveConnections.MainDialogBox.Title,,Удаление соединительных линий
+Gameplay.Tutorial.RemoveConnections.MainDialogBox.Message,,"Если Вы соединили два порта, но затем поняли, что сделали это неправильно, Вы можете легко удалить соединительную линию. Для этого удерживайте ее в течении 1 секунды. После того, как линия будет удалена, палец можно отпустить."

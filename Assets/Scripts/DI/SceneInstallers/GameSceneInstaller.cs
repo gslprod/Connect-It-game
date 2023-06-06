@@ -9,6 +9,8 @@ using ConnectIt.Gameplay.Observers.Internal;
 using ConnectIt.Gameplay.Pause;
 using ConnectIt.Gameplay.Time;
 using ConnectIt.Gameplay.Tools.Calculators;
+using ConnectIt.Gameplay.TutorialsSystem;
+using ConnectIt.Gameplay.TutorialsSystem.Tutorials;
 using ConnectIt.Gameplay.View;
 using ConnectIt.Infrastructure.CreatedObjectNotifiers;
 using ConnectIt.Infrastructure.Dispose;
@@ -57,6 +59,25 @@ namespace ConnectIt.DI.Installers
             BindBoostUsageContexts();
             BindTools();
             BindStats();
+            BindTutorialsSystem();
+        }
+
+        private void BindTutorialsSystem()
+        {
+            Container.Bind<ITutorialsStarter>()
+                     .To<TutorialsStarter>()
+                     .AsSingle();
+
+            BindTutorials();
+
+            void BindTutorials()
+            {
+                Container.BindInterfacesTo<IntroductoryTutorial>()
+                         .AsSingle();
+
+                Container.BindInterfacesTo<RemoveConnectionsTutorial>()
+                         .AsSingle();
+            }
         }
 
         private void BindStats()
