@@ -40,7 +40,8 @@
                             <ui:VisualElement name="exit-button-icon" class="round-button__icon round-button__icon--exit" />
                         </ui:Button>
                     </ui:VisualElement>
-                    <ui:Instance template="DevLogoContainer" name="DevLogoContainer" picking-mode="Ignore" class="dev-logo-container" />
+                    <ui:Instance template="DevLogoContainer" name="DevLogoContainer" picking-mode="Ignore" class="dev-logo-container dev-logo-container--main-menu" />
+                    <ui:Button name="credits-button" text="Text" class="main-menu__credits-button button highlighted-label" />
                 </ui:VisualElement>
                 <ui:VisualElement name="select-level-container" class="select-level-container content-container__frame content-container__frame--closed">
                     <ui:VisualElement name="title-container" class="title-container">
@@ -74,7 +75,7 @@
                         <ui:ScrollView scroll-deceleration-rate="0.2" elasticity="0.2" focusable="true" touch-scroll-type="Elastic" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Hidden" class="settings-scroll-view">
                             <ui:VisualElement name="settings-scroll-view-internal-container" class="settings-scroll-view-internal-container">
                                 <ConnectIt.UI.CustomControls.ProgressBarSlider value="40" high-value="100" low-value="0" name="sound-slider" class="settings-scroll-view-internal-container__child">
-                                    <ui:Label text="Label" display-tooltip-when-elided="false" name="sound-slider-label" picking-mode="Ignore" class="label setting__label progress-bar-slider__label" />
+                                    <ui:Label text="Label" name="sound-slider-label" picking-mode="Ignore" class="label setting__label progress-bar-slider__label" />
                                 </ConnectIt.UI.CustomControls.ProgressBarSlider>
                                 <ConnectIt.UI.CustomControls.ProgressBarSlider value="4.67" high-value="100" low-value="0" name="music-slider" class="settings-scroll-view-internal-container__child">
                                     <ui:Label text="Label" name="music-slider-label" picking-mode="Ignore" class="label setting__label progress-bar-slider__label" />
@@ -142,7 +143,7 @@
                                         <ui:VisualElement name="gj-account-info-container" class="gj-account-info-container" style="margin-bottom: 70px;">
                                             <ui:VisualElement name="username-label-container" class="gj-account-info-container__username-label-container">
                                                 <ui:Label text="Label" name="username-label" class="label highlighted-label gj-account-info-container__username-label" />
-                                                <ui:Button display-tooltip-when-elided="true" name="logout-button" class="button highlighted-label highlighted-label--logout gj-account-info-container__logout-button">
+                                                <ui:Button name="logout-button" class="button highlighted-label highlighted-label--logout gj-account-info-container__logout-button">
                                                     <ui:VisualElement name="logout-button-icon" class="gj-account-info-container__logout-button-icon" />
                                                 </ui:Button>
                                             </ui:VisualElement>
@@ -198,7 +199,7 @@
                                                 <ui:VisualElement name="logout-button-icon" class="info-button__icon" />
                                             </ui:Button>
                                         </ui:VisualElement>
-                                        <ui:Button text="Button" display-tooltip-when-elided="true" name="login-button" class="button highlighted-label highlighted-label--login" />
+                                        <ui:Button text="Button" name="login-button" class="button highlighted-label highlighted-label--login" />
                                     </ui:VisualElement>
                                 </ui:ScrollView>
                             </ui:VisualElement>

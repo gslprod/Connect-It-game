@@ -81,6 +81,9 @@
             public const string DataSaveError_Title = DialogBoxBaseString + ".DataSaveError.Title";
             public const string DataSaveError_Message = DialogBoxBaseString + ".DataSaveError.Message";
 
+            public const string Credits_Title = DialogBoxBaseString + ".Credits.Title";
+            public const string Credits_Message = DialogBoxBaseString + ".Credits.Message";
+
             private const string DialogBoxBaseString = "DialogBox";
         }
 
@@ -122,6 +125,13 @@
             public const string CoinsLabel_Text = MenuBaseString + ".CoinsLabel.Text";
 
             private const string MenuBaseString = "Menu";
+
+            public static class MainMenu
+            {
+                public const string CreditsButton_Text = MainMenuBaseString + ".CreditsButton.Text";
+
+                private const string MainMenuBaseString = MenuBaseString + ".MainMenu";
+            }
 
             public static class SelectLevelMenu
             {

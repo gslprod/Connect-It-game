@@ -114,6 +114,17 @@
     height: 100%;
 }
 
+.main-menu__credits-button {
+    align-self: center;
+    position: absolute;
+    bottom: 10px;
+    font-size: 50px;
+}
+
+.dev-logo-container--main-menu {
+    bottom: 85px;
+}
+
 .main-menu-buttons-container {
     align-items: center;
 }
@@ -695,7 +706,7 @@
 .gj-scoreboard__title {
     font-size: 45px;
     margin-right: 5px;
-    flex-shrink: 1
+    flex-shrink: 1;
 }
 
 .gj-scoreboard__update-button {

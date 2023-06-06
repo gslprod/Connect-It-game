@@ -1,3 +1,4 @@
+using ConnectIt.Config;
 using ConnectIt.Localization;
 using ConnectIt.UI.CommonViews;
 using ConnectIt.UI.DialogBox;
@@ -20,6 +21,8 @@ namespace ConnectIt.UI.Menu.Views.MainMenu
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
         private readonly DialogBoxView.Factory _dialogBoxViewFactory;
         private readonly TextKey.Factory _textKeyFactory;
+        private readonly DefaultLocalizedButtonView.Factory _defaultLocalizedButtonViewFactory;
+        private readonly GameVersion _gameVersion;
 
         private DefaultButtonView _playButtonView;
         private DefaultButtonView _settingsButtonView;
@@ -27,6 +30,7 @@ namespace ConnectIt.UI.Menu.Views.MainMenu
         private DefaultButtonView _gjApiButtonView;
         private DefaultButtonView _statsButtonView;
         private DefaultButtonView _exitButtonView;
+        private DefaultButtonView _creditsButtonView;
 
         public MainMenuView(
             VisualElement viewRoot,
@@ -35,7 +39,9 @@ namespace ConnectIt.UI.Menu.Views.MainMenu
             MenuUIDocumentMonoWrapper menuUIDocumentMonoWrapper,
             DefaultButtonView.Factory defaultButtonViewFactory,
             DialogBoxView.Factory dialogBoxViewFactory,
-            TextKey.Factory textKeyFactory)
+            TextKey.Factory textKeyFactory,
+            DefaultLocalizedButtonView.Factory localizedButtonViewFactory,
+            GameVersion gameVersion)
         {
             _viewRoot = viewRoot;
             _mainRoot = mainRoot;
@@ -44,6 +50,8 @@ namespace ConnectIt.UI.Menu.Views.MainMenu
             _defaultButtonViewFactory = defaultButtonViewFactory;
             _dialogBoxViewFactory = dialogBoxViewFactory;
             _textKeyFactory = textKeyFactory;
+            _defaultLocalizedButtonViewFactory = localizedButtonViewFactory;
+            _gameVersion = gameVersion;
         }
 
         public void Initialize()
@@ -75,6 +83,11 @@ namespace ConnectIt.UI.Menu.Views.MainMenu
 
             _exitButtonView = _defaultButtonViewFactory.Create
                 (_viewRoot.Q<Button>(NameConstants.MainMenu.ExitButton), OnExitButtonClick);
+
+            _creditsButtonView = _defaultLocalizedButtonViewFactory.Create(
+                _viewRoot.Q<Button>(NameConstants.MainMenu.CreditsButton),
+                OnCreditsButtonClick,
+                _textKeyFactory.Create(TextKeysConstants.Menu.MainMenu.CreditsButton_Text));
         }
 
         private void DisposeDisposableViews()
@@ -85,6 +98,7 @@ namespace ConnectIt.UI.Menu.Views.MainMenu
             _gjApiButtonView.Dispose();
             _statsButtonView.Dispose();
             _exitButtonView.Dispose();
+            _creditsButtonView.Dispose();
         }
 
         #region PlayButton
@@ -148,6 +162,24 @@ namespace ConnectIt.UI.Menu.Views.MainMenu
         private void OnConfirmExitClick()
         {
             Application.Quit();
+        }
+
+        #endregion
+
+        #region CreditsButton
+
+        private void OnCreditsButtonClick()
+        {
+            _dialogBoxViewFactory.CreateDefaultOneButtonDialogBox(
+                _mainRoot,
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.Credits_Title),
+                _textKeyFactory.Create(TextKeysConstants.DialogBox.Credits_Message,
+                new object[]
+                {
+                    _gameVersion.GetVersion()
+                }),
+                _textKeyFactory,
+                true);
         }
 
         #endregion

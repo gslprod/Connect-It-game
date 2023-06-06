@@ -29,6 +29,7 @@
             public const string SettingsButton = "settings-button";
             public const string StatsButton = "stats-button";
             public const string ExitButton = "exit-button";
+            public const string CreditsButton = "credits-button";
         }
 
         public static class SelectLevelMenu

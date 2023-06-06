@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 633a1e559e42a744a86015adcd398b1a, type: 3}
   m_Name: ShopConfig
   m_EditorClassIdentifier: 
-  _skipLevelBoostPrice: 0
+  _skipLevelBoostPrice: 250
+  _simplifyLevelBoostPrice: 150
+  _allowIncompatibleConnectionsPrice: 200
