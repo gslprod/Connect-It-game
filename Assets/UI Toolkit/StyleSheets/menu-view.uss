@@ -121,6 +121,24 @@
     font-size: 50px;
 }
 
+.main-menu__game-logo {
+    width: 312px;
+    height: 312px;
+    background-image: url('project://database/Assets/2D/Sprites/UI/game%20logo/game%20logo%20312.png?fileID=2800000&guid=972d6e11e5a5d704a8e95c5251e33cc3&type=3#game logo 312');
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.main-menu__game-logo-label {
+    font-size: 60px;
+}
+
+.main-menu__game-logo-container {
+    align-self: center;
+    position: absolute;
+    top: 30px;
+    align-items: center;
+}
+
 .dev-logo-container--main-menu {
     bottom: 85px;
 }

@@ -59,7 +59,7 @@ namespace ConnectIt.UI.Menu.Views
         }
 
         private int GetLastCompletedLevel()
-            => _levelsPassDataProvider.TryGetLastCompletedLevelData(out LevelData levelData) ? levelData.Id : _gameplayLogicConfig.MaxAvailableLevel;
+            => _levelsPassDataProvider.TryGetLastCompletedLevelData(out LevelData levelData) ? levelData.Id : 0;
 
         public new class Factory : PlaceholderFactory<Label, CompletedLevelsView> { }
     }

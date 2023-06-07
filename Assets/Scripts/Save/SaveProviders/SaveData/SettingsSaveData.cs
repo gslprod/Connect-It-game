@@ -16,8 +16,8 @@ namespace ConnectIt.Save.SaveProviders.SaveData
         public SettingsSaveData()
         {
             Language = SupportedLanguages.None;
-            OSTVolumePercents = 70f;
-            SoundsVolumePercents = 70f;
+            OSTVolumePercents = 80f;
+            SoundsVolumePercents = 80f;
         }
 
         public SettingsSaveData Clone()

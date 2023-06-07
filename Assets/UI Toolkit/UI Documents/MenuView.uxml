@@ -18,6 +18,10 @@
             </ui:VisualElement>
             <ui:VisualElement name="content-container" class="content-container">
                 <ui:VisualElement name="main-menu-container" class="main-menu-container content-container__frame content-container__frame--closed">
+                    <ui:VisualElement name="game-logo-container" class="main-menu__game-logo-container">
+                        <ui:Label text="Connect It!" name="game-name" class="main-menu__game-logo-label label highlighted-label" />
+                        <ui:VisualElement name="game-logo" class="main-menu__game-logo" />
+                    </ui:VisualElement>
                     <ui:VisualElement name="buttons-container" class="main-menu-buttons-container">
                         <ui:Button name="play-button" class="button round-button round-button--play">
                             <ui:VisualElement name="play-button-icon" class="round-button__icon round-button__icon--play" />

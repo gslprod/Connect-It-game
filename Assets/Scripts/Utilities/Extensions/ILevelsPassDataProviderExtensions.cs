@@ -10,10 +10,10 @@ namespace ConnectIt.Utilities.Extensions
             levelData = default;
 
             int index = source.LevelDataArray.FindIndex(element => element.NotCompleted);
-            if (index <= 0)
+            if (index == 0)
                 return false;
 
-            levelData = source.LevelDataArray.ElementAt(index - 1);
+            levelData = index < 0 ? source.LevelDataArray.Last() : source.LevelDataArray.ElementAt(index - 1);
             return true;
         }
     }
