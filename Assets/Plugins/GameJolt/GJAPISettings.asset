@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9badd6626894dc459f92a91d0bd95fa, type: 3}
   m_Name: GJAPISettings
   m_EditorClassIdentifier: 
-  gameId: 808560
+  gameId: 813494
   _autoInit: 0
   timeout: 10
   autoPing: 0

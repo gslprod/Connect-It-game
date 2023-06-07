@@ -1,7 +1,7 @@
 Key,English,Russian
-Items.Product.Boost.SkipLevel.Name,,Пропуск уровня
-Items.Product.Boost.SkipLevel.Description,,Пропускает любой уровень. Благодаря этому открывается следующий уровень.
-Items.Product.Boost.SimplifyLevel.Name,,Упрощение уровня
-Items.Product.Boost.SimplifyLevel.Description,,"Меняет игровые правила, позволяя пройти уровень при 80% прогрессе вместо 100%. При этом количество вознаграждений, полученных по итогу пройденного уровня, будет также уменьшено, а полученные очки не учитываются в таблицах рекордов."
-Items.Product.Boost.AllowIncompatibleConnections.Name,,Включение несовместимых соединений
-Items.Product.Boost.AllowIncompatibleConnections.Description,,"Меняет игровые правила, позволяя соединять несовместимые между собой порты. Это значит, что Вы сможете соединять порты разных цветов. Полученные после прохождения уровня очки не учитываются в таблицах рекордов."
+Items.Product.Boost.SkipLevel.Name,Level skip,Пропуск уровня
+Items.Product.Boost.SkipLevel.Description,Skips any level. This opens up the next level.,Пропускает любой уровень. Благодаря этому открывается следующий уровень.
+Items.Product.Boost.SimplifyLevel.Name,Level simplification,Упрощение уровня
+Items.Product.Boost.SimplifyLevel.Description,"Changes the game rules, allowing you to complete the level with 80% progress instead of 100%. Also, the number of rewards received after completing the level will also be reduced, and the scores received are not taken into account in the highscores tables.","Меняет игровые правила, позволяя пройти уровень при 80% прогрессе вместо 100%. При этом количество вознаграждений, полученных по итогу пройденного уровня, будет также уменьшено, а полученные очки не учитываются в таблицах рекордов."
+Items.Product.Boost.AllowIncompatibleConnections.Name,Enabling incompatible connections,Включение несовместимых соединений
+Items.Product.Boost.AllowIncompatibleConnections.Description,Changes the game rules by allowing you to connect incompatible ports. This means that you can connect ports of different colors. Scores received after passing the level are not taken into account in the highscores tables.,"Меняет игровые правила, позволяя соединять несовместимые между собой порты. Это значит, что Вы сможете соединять порты разных цветов. Полученные после прохождения уровня очки не учитываются в таблицах рекордов."

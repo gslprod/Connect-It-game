@@ -1,6 +1,6 @@
 Key,English,Russian
-Menu.ShopMenu.Title,,Внутриигровой магазин
-Menu.ShopMenu.CoinsInfoLabel.Text,,Зарабатывайте монеты за качественное прохождение уровней
-Menu.ShopMenu.GoodsTitleLabel.Text,,Покупаемые предметы
-Menu.ShopMenu.Product.PriceLabel.Text,,{0} монет
-Menu.ShopMenu.Product.AmountLabel.Text,,{0} шт
+Menu.ShopMenu.Title,In-game shop,Внутриигровой магазин
+Menu.ShopMenu.CoinsInfoLabel.Text,Earn coins for completing levels,Зарабатывайте монеты за качественное прохождение уровней
+Menu.ShopMenu.GoodsTitleLabel.Text,Items to buy,Покупаемые предметы
+Menu.ShopMenu.Product.PriceLabel.Text,{0} coins,{0} монет
+Menu.ShopMenu.Product.AmountLabel.Text,x{0},{0} шт

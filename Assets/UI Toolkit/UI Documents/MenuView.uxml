@@ -204,6 +204,7 @@
                                             </ui:Button>
                                         </ui:VisualElement>
                                         <ui:Button text="Button" name="login-button" class="button highlighted-label highlighted-label--login" />
+                                        <ui:Label text="Label" name="register-label" class="label label--gj-register" />
                                     </ui:VisualElement>
                                 </ui:ScrollView>
                             </ui:VisualElement>

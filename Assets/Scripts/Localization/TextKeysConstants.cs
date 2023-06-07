@@ -208,6 +208,7 @@
                     public const string TokenLabel_Text = GJLoginMenuBaseString + ".TokenLabel.Text";
                     public const string LoginButton_Text = GJLoginMenuBaseString + ".LoginButton.Text";
                     public const string AutoLoginToggle_Text = GJLoginMenuBaseString + ".AutoLoginToggle.Text";
+                    public const string RegisterLabel_Text = GJLoginMenuBaseString + ".RegisterLabel.Text";
 
                     private const string GJLoginMenuBaseString = GJMenuBaseString + ".GJLoginMenu";
                 }

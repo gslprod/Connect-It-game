@@ -37,7 +37,7 @@ namespace ConnectIt.Gameplay.LevelLoading
 
             camera.orthographicSize = Mathf.Clamp(unclampedSize, settings.MinSize, settings.MaxSize);
 
-            Vector3 cameraPos = mapBounds.center;
+            Vector3 cameraPos = mapBounds.center - _tilemaps.CellGap / 2;
             cameraPos.z = camera.transform.position.z;
 
             camera.transform.position = cameraPos;

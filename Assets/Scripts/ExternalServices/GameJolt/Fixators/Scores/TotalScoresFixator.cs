@@ -159,7 +159,8 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
             long allScoresSum = levelDataArray.Sum(item => item.Score);
 
             ExternalServerSaveData externalServerSaveData = _externalServerSaveProvider.LoadExternalServerData();
-            int bestSavedFixedScore = externalServerSaveData.FixedScores.First(item => item.TableID == GJConstants.TableID.TotalScores).BestFixedScore;
+            int bestSavedFixedScore = (externalServerSaveData.FixedScores?.FirstOrDefault(
+                item => item.TableID == GJConstants.TableID.TotalScores)?.BestFixedScore).GetValueOrDefault(0);
 
             long coins = _playerCustomer.Wallet.Coins;
             IStorage playerStorage = _playerCustomer.Storage;

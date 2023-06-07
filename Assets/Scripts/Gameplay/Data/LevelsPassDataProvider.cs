@@ -54,7 +54,14 @@ namespace ConnectIt.Gameplay.Data
 
             savedData.PassState = dataToSave.PassState;
 
-            if (dataToSave.PassLevelProgress >= savedData.PassLevelProgress)
+            if (dataToSave.PassedWithoutBoosts && !savedData.PassedWithoutBoosts)
+            {
+                savedData.PassTimeSec = dataToSave.PassTimeSec;
+                savedData.Score = dataToSave.Score;
+                savedData.BoostsUsed = dataToSave.BoostsUsed;
+                savedData.PassLevelProgress = dataToSave.PassLevelProgress;
+            }
+            else if (dataToSave.PassLevelProgress >= savedData.PassLevelProgress)
             {
                 if (dataToSave.PassLevelProgress > savedData.PassLevelProgress ||
                     savedData.PassTimeSec == 0f ||

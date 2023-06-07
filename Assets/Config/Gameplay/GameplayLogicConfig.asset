@@ -62,7 +62,7 @@ MonoBehaviour:
       _scoresRewardMultiplier: 0.7
       _coinsRewardMultiplier: 0
     _scoresBaseReward: 1400
-    _coinsBaseReward: 140
+    _coinsBaseReward: 110
     _coinsDependsOnScores: 1
   - _level: 3
     _rewardsByTime:
@@ -86,7 +86,7 @@ MonoBehaviour:
       _scoresRewardMultiplier: 0.7
       _coinsRewardMultiplier: 0
     _scoresBaseReward: 1500
-    _coinsBaseReward: 150
+    _coinsBaseReward: 120
     _coinsDependsOnScores: 1
   - _level: 4
     _rewardsByTime:
@@ -116,7 +116,7 @@ MonoBehaviour:
       _scoresRewardMultiplier: 0.7
       _coinsRewardMultiplier: 0
     _scoresBaseReward: 2000
-    _coinsBaseReward: 200
+    _coinsBaseReward: 140
     _coinsDependsOnScores: 1
   - _level: 5
     _rewardsByTime:
@@ -143,7 +143,7 @@ MonoBehaviour:
       _scoresRewardMultiplier: 0.7
       _coinsRewardMultiplier: 0
     _scoresBaseReward: 2200
-    _coinsBaseReward: 220
+    _coinsBaseReward: 160
     _coinsDependsOnScores: 1
   - _level: 6
     _rewardsByTime:
@@ -176,7 +176,7 @@ MonoBehaviour:
       _scoresRewardMultiplier: 0.7
       _coinsRewardMultiplier: 0
     _scoresBaseReward: 3000
-    _coinsBaseReward: 300
+    _coinsBaseReward: 200
     _coinsDependsOnScores: 1
   - _level: 7
     _rewardsByTime:
@@ -209,7 +209,7 @@ MonoBehaviour:
       _scoresRewardMultiplier: 0.7
       _coinsRewardMultiplier: 0
     _scoresBaseReward: 3500
-    _coinsBaseReward: 350
+    _coinsBaseReward: 230
     _coinsDependsOnScores: 1
   - _level: 8
     _rewardsByTime:
@@ -239,7 +239,7 @@ MonoBehaviour:
       _scoresRewardMultiplier: 0.7
       _coinsRewardMultiplier: 0
     _scoresBaseReward: 3600
-    _coinsBaseReward: 360
+    _coinsBaseReward: 200
     _coinsDependsOnScores: 1
   - _level: 9
     _rewardsByTime:
@@ -272,7 +272,7 @@ MonoBehaviour:
       _scoresRewardMultiplier: 0.7
       _coinsRewardMultiplier: 0
     _scoresBaseReward: 4000
-    _coinsBaseReward: 400
+    _coinsBaseReward: 250
     _coinsDependsOnScores: 1
   - _level: 10
     _rewardsByTime:
@@ -305,5 +305,5 @@ MonoBehaviour:
       _scoresRewardMultiplier: 0.7
       _coinsRewardMultiplier: 0
     _scoresBaseReward: 5000
-    _coinsBaseReward: 500
+    _coinsBaseReward: 300
     _coinsDependsOnScores: 1

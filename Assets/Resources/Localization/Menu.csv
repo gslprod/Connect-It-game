@@ -1,4 +1,4 @@
 Key,English,Russian
-Menu.VersionLabel.Text,,Версия: {0}
-Menu.CompletedLevelsLabel.Text,,Уровень: {0}/{1}
-Menu.CoinsLabel.Text,,{0} монет
+Menu.VersionLabel.Text,Version: {0},Версия: {0}
+Menu.CompletedLevelsLabel.Text,Level: {0}/{1},Уровень: {0}/{1}
+Menu.CoinsLabel.Text,{0} coins,{0} монет

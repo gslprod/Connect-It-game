@@ -4,7 +4,7 @@
     {
         public static class TableID
         {
-            public const int TotalScores = 818658;
+            public const int TotalScores = 823635;
         }
     }
 }

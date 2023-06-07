@@ -41,7 +41,7 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
                 _textKeyFactory.Create(TextKeysConstants.Menu.SettingsMenu.MusicSlider_Text)); 
 
             _silder.highValue = 100f;
-            _silder.lowValue = 0f;
+            _silder.lowValue = 0.01f;
             UpdateValue();
         }
 
@@ -58,7 +58,7 @@ namespace ConnectIt.UI.Menu.Views.SettingsMenu
         {
             _silder.SetValueWithoutNotify(_ostPlayer.VolumePercents);
 
-            _titleView.SetArgs(new object[] { _ostPlayer.VolumePercents });
+            _titleView.SetArgs(new object[] { _ostPlayer.VolumePercents.ToString("0.#") });
         }
 
         private void OnVolumeChanged()

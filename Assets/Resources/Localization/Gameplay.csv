@@ -3,11 +3,11 @@ Gameplay.LevelLabel.Text,Level {0},Уровень {0}
 Gameplay.PauseMenu.Continue,Continue,Продолжить
 Gameplay.PauseMenu.Exit,Exit to main menu,Выйти в главное меню
 Gameplay.WinMenu.Title,Level {0} passed!,Уровень {0} пройден!
-Gameplay.WinMenu.Title.BoostsUsed,,Уровень {0} пройден с использованием преимуществ.
-Gameplay.WinMenu.Content,,Время: {0}\nПрогресс: {1}%\nОчки: {2}\nПолучено монет: {3}
-Gameplay.UseBoostButton.Text,,Использовать преимущество
-Gameplay.UseBoostMenu.Title,,Меню использования преимуществ
-Gameplay.UseBoostMenu.InfoLabel.Text,,"Выберите преимущество, которое Вы хотите использовать."
-Gameplay.UseBoostMenu.UseBoostElement.AmountLabel.Text,,{0} шт
+Gameplay.WinMenu.Title.BoostsUsed,Level {0} passed using boosts.,Уровень {0} пройден с использованием преимуществ.
+Gameplay.WinMenu.Content,Time: {0}\nProgress: {1}%\nScore: {2}\nCoins earned: {3},Время: {0}\nПрогресс: {1}%\nОчки: {2}\nПолучено монет: {3}
+Gameplay.UseBoostButton.Text,Use boost,Использовать преимущество
+Gameplay.UseBoostMenu.Title,Boosts menu,Меню использования преимуществ
+Gameplay.UseBoostMenu.InfoLabel.Text,Select the boost you want to use.,"Выберите преимущество, которое Вы хотите использовать."
+Gameplay.UseBoostMenu.UseBoostElement.AmountLabel.Text,x{0},{0} шт
 Gameplay.SkipMenu.Title,Level {0} skipped,Уровень {0} пропущен
-Gameplay.SkipMenu.Content,,Очки и монеты не начислены. Вы можете вернуться к прохождению этого уровня в любое время.
+Gameplay.SkipMenu.Content,Scores and coins are not received. You can return to this level at any time.,Очки и монеты не начислены. Вы можете вернуться к прохождению этого уровня в любое время.

@@ -1,16 +1,16 @@
 Key,English,Russian
-Common.Confirm,,Подтвердить
-Common.Cancel,,Отменить
-Common.Play,,Играть
-Common.Buy,,Купить
-Common.Close,,Закрыть
-Common.Description,,Описание
-Common.Use,,Использовать
-Common.NextLevel,,Следующий уровень
-Common.RestartLevel,,Перезапустить уровень
-Common.MainMenu,,Главное меню
-Common.Loading,,Загрузка...
-Common.PleaseWait,,"Пожалуйста, подождите."
-Common.Guest,,Гость
-Common.On,,Вкл
-Common.Off,,Выкл
+Common.Confirm,Confirm,Подтвердить
+Common.Cancel,Cancel,Отменить
+Common.Play,Play,Играть
+Common.Buy,Buy,Купить
+Common.Close,Close,Закрыть
+Common.Description,Description,Описание
+Common.Use,Use,Использовать
+Common.NextLevel,Next level,Следующий уровень
+Common.RestartLevel,Restart level,Перезапустить уровень
+Common.MainMenu,Main menu,Главное меню
+Common.Loading,Loading...,Загрузка...
+Common.PleaseWait,Please wait.,"Пожалуйста, подождите."
+Common.Guest,Guest,Гость
+Common.On,On,Вкл
+Common.Off,Off,Выкл

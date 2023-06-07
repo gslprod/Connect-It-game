@@ -38,8 +38,8 @@ namespace ConnectIt.Stats.Data
         private TextKey _value;
         private TimeSpan _rawValue = TimeSpan.Zero;
 
-        private int _lastTotalHours;
-        private int _lastMinutes;
+        private int _lastTotalHours = -1;
+        private int _lastMinutes = -1;
 
         public ApplicationRunningTimeStatsData(
             TextKey.Factory textKeyFactory)

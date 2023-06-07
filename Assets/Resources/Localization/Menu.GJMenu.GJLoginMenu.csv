@@ -1,7 +1,8 @@
 Key,English,Russian
-Menu.GJMenu.GJLoginMenu.Title,,Вход в аккаунт GameJolt
-Menu.GJMenu.GJLoginMenu.GJInfoLabel.Text,,"Войдите, чтобы получить доступ к таблице рекордов"
-Menu.GJMenu.GJLoginMenu.UsernameLabel.Text,,Имя пользователя
-Menu.GJMenu.GJLoginMenu.TokenLabel.Text,,Игровой токен
-Menu.GJMenu.GJLoginMenu.LoginButton.Text,,Войти
-Menu.GJMenu.GJLoginMenu.AutoLoginToggle.Text,,Автовход: {0}
+Menu.GJMenu.GJLoginMenu.Title,GameJolt account login,Вход в аккаунт GameJolt
+Menu.GJMenu.GJLoginMenu.GJInfoLabel.Text,Login to access the highscores tables,"Войдите, чтобы получить доступ к таблицам рекордов"
+Menu.GJMenu.GJLoginMenu.UsernameLabel.Text,Username,Имя пользователя
+Menu.GJMenu.GJLoginMenu.TokenLabel.Text,Game token,Игровой токен
+Menu.GJMenu.GJLoginMenu.LoginButton.Text,Login,Войти
+Menu.GJMenu.GJLoginMenu.AutoLoginToggle.Text,Auto login: {0},Автовход: {0}
+Menu.GJMenu.GJLoginMenu.RegisterLabel.Text,"Don't have a GameJolt account?\n<style=""gj-reg-link"">Register now! ↗</style>\nIt's free.","Нет аккаунта в GameJolt?\n<style=""gj-reg-link"">Зарегистрируйся сейчас! ↗</style>\nЭто бесплатно."

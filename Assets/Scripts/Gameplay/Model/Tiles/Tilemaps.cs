@@ -14,6 +14,7 @@ namespace ConnectIt.Gameplay.Model
         public event Action<Tile, TileLayer> OnTileBaseChanged;
         public IEnumerable<Tile> Tiles => _tiles;
         public Bounds MapLocalBounds => GetTilemapOnLayer(TileLayer.Map).localBounds;
+        public Vector3 CellGap => GetTilemapOnLayer(TileLayer.Map).cellGap;
 
         private readonly TilemapLayerSet[] _maps;
         private readonly TileBaseAndObjectInfoSet[] _spriteAndObjectTypeSets;
@@ -21,6 +22,7 @@ namespace ConnectIt.Gameplay.Model
 
         private readonly Dictionary<int, int> _xCoordinateArrayPointers = new();
         private Tile[] _tiles;
+        private Tilemap _cachedMapTilemap;
 
         public Tilemaps(TilemapLayerSet[] maps,
             TileBaseAndObjectInfoSet[] spriteAndObjectTypeSets,
@@ -252,7 +254,9 @@ namespace ConnectIt.Gameplay.Model
 
         private bool TryGetTilemapOnLayer(TileLayer layer, out Tilemap tilemap)
         {
-            tilemap = FindSetByLayer(layer)?.Tilemap;
+            tilemap = layer == TileLayer.Map ?
+                _cachedMapTilemap = _cachedMapTilemap != null ? _cachedMapTilemap : FindSetByLayer(layer)?.Tilemap :
+                FindSetByLayer(layer)?.Tilemap;
 
             return tilemap != null;
         }

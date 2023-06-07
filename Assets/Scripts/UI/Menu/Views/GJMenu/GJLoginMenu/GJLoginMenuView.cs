@@ -17,7 +17,7 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
         private readonly VisualElement _viewRoot;
         private readonly VisualElement _mainRoot;
         private readonly DefaultButtonView.Factory _defaultButtonViewFactory;
-        private readonly DefaultLocalizedTextElementView.Factory _defaultLabelViewFactory;
+        private readonly DefaultLocalizedTextElementView.Factory _defaultLocalizedTextElementViewFactory;
         private readonly TextKey.Factory _textKeyFactory;
         private readonly DefaultLocalizedButtonView.Factory _defaultLocalizedButtonViewFactory;
         private readonly GameJoltAPIProvider _gameJoltAPIProvider;
@@ -35,12 +35,13 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
         private DefaultLocalizedButtonView _loginButton;
         private DefaultButtonView _autoLoginInfoButton;
         private DefaultLocalizedButtonToggleView _autoLoginToggleView;
+        private DefaultLocalizedTextElementView _registerLabel;
 
         public GJLoginMenuView(
             VisualElement viewRoot,
             VisualElement mainRoot,
             DefaultButtonView.Factory defaultButtonViewFactory,
-            DefaultLocalizedTextElementView.Factory defaultLabelViewFactory,
+            DefaultLocalizedTextElementView.Factory defaultLocalizedTextElementViewFactory,
             TextKey.Factory textKeyFactory,
             DefaultLocalizedButtonView.Factory defaultLocalizedButtonViewFactory,
             GameJoltAPIProvider gameJoltAPIProvider,
@@ -52,7 +53,7 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
             _viewRoot = viewRoot;
             _mainRoot = mainRoot;
             _defaultButtonViewFactory = defaultButtonViewFactory;
-            _defaultLabelViewFactory = defaultLabelViewFactory;
+            _defaultLocalizedTextElementViewFactory = defaultLocalizedTextElementViewFactory;
             _textKeyFactory = textKeyFactory;
             _defaultLocalizedButtonViewFactory = defaultLocalizedButtonViewFactory;
             _gameJoltAPIProvider = gameJoltAPIProvider;
@@ -75,21 +76,21 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
 
         private void CreateViews()
         {
-            _titleLabel = _defaultLabelViewFactory.Create(
+            _titleLabel = _defaultLocalizedTextElementViewFactory.Create(
                 _viewRoot.Q<Label>(NameConstants.GJMenu.GJLoginMenu.TitleLabel),
                 _textKeyFactory.Create(TextKeysConstants.Menu.GJMenu.GJLoginMenu.Title));
 
-            _gjInfoLabel = _defaultLabelViewFactory.Create(
+            _gjInfoLabel = _defaultLocalizedTextElementViewFactory.Create(
                 _viewRoot.Q<Label>(NameConstants.GJMenu.GJLoginMenu.GJInfoLabel),
                 _textKeyFactory.Create(TextKeysConstants.Menu.GJMenu.GJLoginMenu.GJInfoLabel_Text));
 
-            _usernameLabel = _defaultLabelViewFactory.Create(
+            _usernameLabel = _defaultLocalizedTextElementViewFactory.Create(
                 _viewRoot.Q<Label>(NameConstants.GJMenu.GJLoginMenu.UsernameLabel),
                 _textKeyFactory.Create(TextKeysConstants.Menu.GJMenu.GJLoginMenu.UsernameLabel_Text));
 
             _usernameTextField = _viewRoot.Q<TextField>(NameConstants.GJMenu.GJLoginMenu.UsernameInputField);
 
-            _tokenLabel = _defaultLabelViewFactory.Create(
+            _tokenLabel = _defaultLocalizedTextElementViewFactory.Create(
                 _viewRoot.Q<Label>(NameConstants.GJMenu.GJLoginMenu.TokenLabel),
                 _textKeyFactory.Create(TextKeysConstants.Menu.GJMenu.GJLoginMenu.TokenLabel_Text));
 
@@ -107,6 +108,10 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
             _autoLoginToggleView = _defaultLocalizedButtonToggleViewFactory.Create(
                 _viewRoot.Q<ButtonToggle>(NameConstants.GJMenu.GJLoginMenu.AutoLoginToggle),
                 _textKeyFactory.Create(TextKeysConstants.Menu.GJMenu.GJLoginMenu.AutoLoginToggle_Text));
+
+            _registerLabel = _defaultLocalizedTextElementViewFactory.Create(
+                _viewRoot.Q<Label>(NameConstants.GJMenu.GJLoginMenu.RegisterLabel),
+                _textKeyFactory.Create(TextKeysConstants.Menu.GJMenu.GJLoginMenu.RegisterLabel_Text));
         }
 
         private void SetupTextFields()
@@ -123,6 +128,7 @@ namespace ConnectIt.UI.Menu.Views.GJMenu.GJLoginMenu
             _loginButton.Dispose();
             _autoLoginInfoButton.Dispose();
             _autoLoginToggleView.Dispose();
+            _registerLabel.Dispose();
         }
 
         private bool IsInputDataValid()

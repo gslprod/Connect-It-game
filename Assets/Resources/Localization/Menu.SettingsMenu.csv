@@ -1,5 +1,5 @@
 Key,English,Russian
-Menu.SettingsMenu.Title,,Настройки
-Menu.SettingsMenu.LanguageButton.Text,,Язык
-Menu.SettingsMenu.MusicSlider.Text,,Музыка: {0}%
-Menu.SettingsMenu.SoundsSlider.Text,,Звуки: {0}%
+Menu.SettingsMenu.Title,Settings,Настройки
+Menu.SettingsMenu.LanguageButton.Text,Language,Язык
+Menu.SettingsMenu.MusicSlider.Text,Music: {0}%,Музыка: {0}%
+Menu.SettingsMenu.SoundsSlider.Text,Sounds: {0}%,Звуки: {0}%

@@ -1,19 +1,16 @@
 ﻿using ConnectIt.Config;
-using ConnectIt.Coroutines;
 using ConnectIt.Gameplay.Data;
 using ConnectIt.Gameplay.Observers;
 using ConnectIt.Gameplay.Time;
 using ConnectIt.Gameplay.Tools.Calculators;
 using ConnectIt.Localization;
 using ConnectIt.Shop.Customer;
-using ConnectIt.Shop.Goods.Boosts;
 using ConnectIt.UI.DialogBox;
 using ConnectIt.UI.Gameplay.MonoWrappers;
 using ConnectIt.Utilities;
 using ConnectIt.Utilities.Extensions;
 using ConnectIt.Utilities.Formatters;
 using System;
-using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -40,7 +37,6 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
         private readonly TextKey.Factory _textKeyFactory;
         private readonly DialogBoxView.Factory _dialogBoxFactory;
         private readonly GameplayLogicConfig _gameplayLogicConfig;
-        private readonly ICoroutinesGlobalContainer _coroutinesGlobalContainer;
         private readonly ILevelsPassDataProvider _levelsPassDataProvider;
         private readonly IGameplayTimeProvider _gameplayTimeProvider;
         private readonly IFormatter _formatter;
@@ -60,7 +56,6 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
             TextKey.Factory textKeyFactory,
             DialogBoxView.Factory dialogBoxFactory,
             GameplayLogicConfig gameplayLogicConfig,
-            ICoroutinesGlobalContainer coroutinesGlobalContainer,
             ILevelsPassDataProvider levelsPassDataProvider,
             IGameplayTimeProvider gameplayTimeProvider,
             IFormatter formatter,
@@ -74,7 +69,6 @@ namespace ConnectIt.Gameplay.GameStateHandlers.GameEnd
             _textKeyFactory = textKeyFactory;
             _dialogBoxFactory = dialogBoxFactory;
             _gameplayLogicConfig = gameplayLogicConfig;
-            _coroutinesGlobalContainer = coroutinesGlobalContainer;
             _levelsPassDataProvider = levelsPassDataProvider;
             _gameplayTimeProvider = gameplayTimeProvider;
             _formatter = formatter;

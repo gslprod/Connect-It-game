@@ -909,6 +909,14 @@
     flex-shrink: 1;
 }
 
+.label--gj-register {
+    font-size: 45px;
+}
+
+.gj-login-scroll-view-internal-container > .label--gj-register {
+    margin-top: 20px;
+}
+
 .gj-login-scroll-view-internal-container > .auto-login-container > .button-toggle--auto-login {
     flex-grow: 1;
     margin-right: 10px;

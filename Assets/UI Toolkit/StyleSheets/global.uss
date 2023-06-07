@@ -267,7 +267,7 @@
     transition-property: opacity, scale, rotate;
     transition-duration: var(--default-transition-duration), var(--default-transition-duration), var(--default-transition-duration);
     transition-timing-function: var(--default-transition-timing-function), var(--default-transition-timing-function), var(--default-transition-timing-function);
-    max-height: 70%;
+    max-height: 80%;
 }
 
 .dialog-box__container--closed {

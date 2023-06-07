@@ -94,6 +94,7 @@
                 public const string LoginButton = "login-button";
                 public const string AutoLoginToggle = "auto-login-toggle";
                 public const string AutoLoginInfoButton = "auto-login-info-button";
+                public const string RegisterLabel = "register-label";
             }
 
             public static class GJProfileMenu

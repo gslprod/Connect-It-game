@@ -17,8 +17,8 @@ namespace ConnectIt.Audio.OST
     {
         public event Action VolumeChanged;
 
-        public float VolumePercents => Mathf.InverseLerp(-80, 20, Volume) * 100;
-        public float Volume
+        public float VolumePercents => Mathf.Pow(10, VolumeDb/20) * 100;
+        public float VolumeDb
         {
             get
             {
@@ -65,9 +65,9 @@ namespace ConnectIt.Audio.OST
             _audioSourceMonoWrapper.PlayingEnded -= OnPlayingEnded;
         }
 
-        public void SetVolume(float newVolume, bool save = true)
+        public void SetVolumeDb(float newVolume, bool save = true)
         {
-            if (newVolume == Volume && !save)
+            if (newVolume == VolumeDb && !save)
                 return;
 
             Assert.ThatArgIs(newVolume <= 20, newVolume >= -80);
@@ -85,9 +85,11 @@ namespace ConnectIt.Audio.OST
 
         public void SetVolumePercent(float newVolumePercent, bool save = true)
         {
-            float volume = Mathf.Lerp(-80, 20, newVolumePercent / 100);
+            float normalizedVolume = Mathf.Clamp(newVolumePercent / 100, 0.0001f, 1);
 
-            SetVolume(volume, save);
+            float volumeDb = Mathf.Log10(normalizedVolume) * 20;
+
+            SetVolumeDb(volumeDb, save);
         }
 
         private bool TryStartPlayingOSTInScene(SceneType type)

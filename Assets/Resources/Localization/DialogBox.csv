@@ -1,43 +1,43 @@
 Key,English,Russian
-DialogBox.QuitLevelConfirm.Title,,Закрыть уровень?
-DialogBox.QuitLevelConfirm.Message,,Ваш прогресс по текущему уровню будет потерян.
-DialogBox.RestartLevelConfirm.Title,,Перезапустить уровень?
-DialogBox.RestartLevelConfirm.Message,,Ваш прогресс по текущему уровню будет потерян.
-DialogBox.LevelPaused.Title,,Игра на паузе
-DialogBox.LevelPaused.Message,,Вы можете продолжить играть в любой момент.
-DialogBox.NotEnoughCoins.Title,,Недостаточно монет
-DialogBox.NotEnoughCoins.Message,,Для покупки данного предмета у Вас недостаточно монет.
-DialogBox.ConfirmBuy.Title,,Подтверждение покупки
-DialogBox.ConfirmBuy.Message,,"Ваш баланс монет будет уменьшен, а выбранный предмет будет Вам начислен. После покупки вы сможете воспользоваться купленным предметом."
-DialogBox.NotEnoughProductAmount.Title,,Недостаточное количество предмета
-DialogBox.NotEnoughProductAmount.Message,,Для совершения действия у Вас недостаточное количество данного предмета.
-DialogBox.ConfirmBoostUse.Title,,Подтверждение использования преимущества
-DialogBox.ConfirmBoostUse.Message,,"Если после использования преимущества Вы не сможете пройти уровень, оно будет возращено на Ваш аккаунт."
-DialogBox.BoostUsed.Title,,Использовано
-DialogBox.BoostUsed.Message,,Это преимущество уже было использовано в данном уровне. Повторное использование недоступно.
-DialogBox.LanguageChange.Title,,Смена языка
-DialogBox.LanguageChange.Message,,Выберите язык из списка ниже.
-DialogBox.LoadingBox.GJLogin.Title,,Вход в аккаунт GameJolt...
-DialogBox.LoadingBox.GJLogin.Message,,"Ожидаем ответ от сервера. Пожалуйста, подождите."
-DialogBox.InvalidLoginInputData.Title,,Введены некорректные данные
-DialogBox.InvalidLoginInputData.Message,,"Пожалуйста, перепроверьте введенные данные."
-DialogBox.LoginFailed.Title,,Вход не выполнен
-DialogBox.LoginFailed.Message,,"Возможно, Вы ввели неверные данные, или же сервер недоступен."
-DialogBox.ConfirmLogout.Title,,Выйти из аккаунта GameJolt?
-DialogBox.ConfirmLogout.Message,,"Все Ваши рекорды сохранятся, однако новые рекорды не будут фиксироваться в таблице до тех пор, пока Вы снова не войдете в аккаунт."
-DialogBox.AutoLoginInfo.Title,,Автовход
-DialogBox.AutoLoginInfo.Message,,Автоматически входит в аккаунт при запуске игры. Автовход отключается при выходе из аккаунта.
-DialogBox.ConfirmGameExit.Title,,Выйти из игры?
-DialogBox.ConfirmGameExit.Message,,Подтвердите выход из игры.
-DialogBox.GJScoreboardChange.Title,,Выбор таблицы рекордов
-DialogBox.GJScoreboardChange.Message,,Выберите таблицу из списка ниже.
-DialogBox.SaveLoadError.Title,,Ошибка загрузки сохранения
-DialogBox.SaveLoadError.Message,,"Возможно, сохранения повреждены, или же приложению не удается получить доступ к файлам сохранения. Выберите действие, которое необходимо совершить. Техническая информация: {0}"
-DialogBox.SaveLoadError.DoNothingButton.Text,,Ничего не предпринимать и закрыть игру
-DialogBox.SaveLoadError.EraseDataButton.Text,,Сбросить сохранения
-DialogBox.ConfirmSaveErasing.Title,,Сброс сохранения
-DialogBox.ConfirmSaveErasing.Message,,"Это приведет к потере всего Вашего прогресса в данной игре. Однако, это действие избавит Вас от ошибки загрузки сохранения. После сброса игра закроется."
-DialogBox.DataSaveError.Title,,Ошибка сохранения данных
-DialogBox.DataSaveError.Message,,"Возможно, приложению не удается получить доступ к памяти Вашего устройства. Техническая информация: {0}"
-DialogBox.Credits.Title,,Об игре
-DialogBox.Credits.Message,,"Разрабочик: <style=""gslprod-link"">GSL Prod. ↗</style>\n2023, версия {0}\n<style=""game-page-link"">Страница игры на GameJolt ↗</style>\nИгра разработана в рамках учебного выпускного проекта.\nВыражаю благодарность всему преподавательскому составу колледжа. Особые благодарности выражаю куратору, руководителю и нормоконтролеру моего диплома, зав. отделением, одногруппникам.\nСпасибо вам за все :)"
+DialogBox.QuitLevelConfirm.Title,Close level?,Закрыть уровень?
+DialogBox.QuitLevelConfirm.Message,Your progress on the current level will be lost.,Ваш прогресс по текущему уровню будет потерян.
+DialogBox.RestartLevelConfirm.Title,Restart level?,Перезапустить уровень?
+DialogBox.RestartLevelConfirm.Message,Your progress on the current level will be lost.,Ваш прогресс по текущему уровню будет потерян.
+DialogBox.LevelPaused.Title,Game paused,Игра на паузе
+DialogBox.LevelPaused.Message,You can continue playing at any time.,Вы можете продолжить играть в любой момент.
+DialogBox.NotEnoughCoins.Title,Not enough coins,Недостаточно монет
+DialogBox.NotEnoughCoins.Message,You don't have enough coins to buy this item.,Для покупки данного предмета у Вас недостаточно монет.
+DialogBox.ConfirmBuy.Title,Confirm your purchase,Подтверждение покупки
+DialogBox.ConfirmBuy.Message,"Your coin balance will be reduced, and you will receive the selected item. You will be able to use this item after purchase.","Ваш баланс монет будет уменьшен, а выбранный предмет будет Вам начислен. После покупки вы сможете воспользоваться купленным предметом."
+DialogBox.NotEnoughProductAmount.Title,Not enough item,Недостаточное количество предмета
+DialogBox.NotEnoughProductAmount.Message,You do not have enough of this item to perform the action.,Для совершения действия у Вас недостаточное количество данного предмета.
+DialogBox.ConfirmBoostUse.Title,Boost usage confirmation,Подтверждение использования преимущества
+DialogBox.ConfirmBoostUse.Message,The boost will be returned to your account if after using it you will not be able to pass the level.,"Если после использования преимущества Вы не сможете пройти уровень, оно будет возращено на Ваш аккаунт."
+DialogBox.BoostUsed.Title,Used,Использовано
+DialogBox.BoostUsed.Message,This boost has already been used in this level. Reuse is not available.,Это преимущество уже было использовано в данном уровне. Повторное использование недоступно.
+DialogBox.LanguageChange.Title,Language switching,Смена языка
+DialogBox.LanguageChange.Message,Select a language from the list below.,Выберите язык из списка ниже.
+DialogBox.LoadingBox.GJLogin.Title,Logging into GameJolt account...,Вход в аккаунт GameJolt...
+DialogBox.LoadingBox.GJLogin.Message,Waiting for a response from the server. Please wait.,"Ожидаем ответ от сервера. Пожалуйста, подождите."
+DialogBox.InvalidLoginInputData.Title,Incorrect data entered,Введены некорректные данные
+DialogBox.InvalidLoginInputData.Message,Please recheck the entered data.,"Пожалуйста, перепроверьте введенные данные."
+DialogBox.LoginFailed.Title,Login failed,Вход не выполнен
+DialogBox.LoginFailed.Message,"You may have entered incorrect data, or the server is unavailable.","Возможно, Вы ввели неверные данные, или же сервер недоступен."
+DialogBox.ConfirmLogout.Title,Log out of GameJolt account?,Выйти из аккаунта GameJolt?
+DialogBox.ConfirmLogout.Message,"All your highscores will be saved, however, new highscores will not be saved in the table until you log in to your account again.","Все Ваши рекорды сохранятся, однако новые рекорды не будут фиксироваться в таблице до тех пор, пока Вы снова не войдете в аккаунт."
+DialogBox.AutoLoginInfo.Title,Auto login,Автовход
+DialogBox.AutoLoginInfo.Message,Automatically logged into the account when starting the game. Autologin will be disabled when you log out of your account.,Автоматически входит в аккаунт при запуске игры. Автовход отключается при выходе из аккаунта.
+DialogBox.ConfirmGameExit.Title,Quit the game?,Выйти из игры?
+DialogBox.ConfirmGameExit.Message,Confirm exit from the game.,Подтвердите выход из игры.
+DialogBox.GJScoreboardChange.Title,Highscore table selection,Выбор таблицы рекордов
+DialogBox.GJScoreboardChange.Message,Select a table from the list below.,Выберите таблицу из списка ниже.
+DialogBox.SaveLoadError.Title,Save load error,Ошибка загрузки сохранения
+DialogBox.SaveLoadError.Message,"The saves may be corrupted, or the application may not be able to access the save files. Select the action to take. Technical information: {0}","Возможно, сохранения повреждены, или же приложению не удается получить доступ к файлам сохранения. Выберите действие, которое необходимо совершить. Техническая информация: {0}"
+DialogBox.SaveLoadError.DoNothingButton.Text,Do nothing and close the game,Ничего не предпринимать и закрыть игру
+DialogBox.SaveLoadError.EraseDataButton.Text,Reset saves,Сбросить сохранения
+DialogBox.ConfirmSaveErasing.Title,Reset saves,Сброс сохранения
+DialogBox.ConfirmSaveErasing.Message,"This will result in the loss of all your progress in this game. However, this action will remove the save load error. The game will close after the reset.","Это приведет к потере всего Вашего прогресса в данной игре. Однако, это действие избавит Вас от ошибки загрузки сохранения. После сброса игра закроется."
+DialogBox.DataSaveError.Title,Save data error,Ошибка сохранения данных
+DialogBox.DataSaveError.Message,The game may not be able to access your device's memory. Technical information: {0},"Возможно, приложению не удается получить доступ к памяти Вашего устройства. Техническая информация: {0}"
+DialogBox.Credits.Title,About,Об игре
+DialogBox.Credits.Message,"Developer: <style=""gslprod-link"">GSL Prod. ↗</style>\n2023, version {0}\n<style=""game-page-link"">GameJolt game page ↗</style>\nThis application is open source. Check it out in the <style=""github-repo-link"">GitHub repository ↗</style>\nThe game was developed as part of final graduation project.\nThank you to all college staff and classmates for everything :)","Разрабочик: <style=""gslprod-link"">GSL Prod. ↗</style>\n2023, версия {0}\n<style=""game-page-link"">Страница игры на GameJolt ↗</style>\nЭто приложение имеет открытый исходный код. Ознакомится с ним можно в \n<style=""github-repo-link"">репозитории GitHub ↗</style>\nИгра разработана в рамках учебного выпускного проекта.\nВыражаю благодарность всему преподавательскому составу колледжа. Особые благодарности выражаю куратору, руководителю и нормоконтролеру моего диплома, зав. отделением, зав. кафедры, одногруппникам.\nСпасибо вам за все :)"

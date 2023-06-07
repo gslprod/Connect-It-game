@@ -1,8 +1,8 @@
 Key,English,Russian
-Menu.SelectLevelMenu.ChoosenLevelInfo.Title,,Уровень {0}
-Menu.SelectLevelMenu.ChoosenLevelInfo.Content.Completed,,Пройден!\nПрогресс: {0}%\nЛучшее время: {1}\nРекорд по очкам: {2}
-Menu.SelectLevelMenu.ChoosenLevelInfo.Content.Completed.WithBoosts,,Пройден с использованием преимуществ.\nПрогресс: {0}%\nЛучшее время: {1}\nРекорд по очкам: {2}
-Menu.SelectLevelMenu.ChoosenLevelInfo.Content.NotCompleted,,Не пройден. Вы можете начать проходить этот уровень.
-Menu.SelectLevelMenu.ChoosenLevelInfo.Content.NotAvailable,,"Недоступен. Чтобы приступить к этому уровню, пройдите или пропустите прошлые."
-Menu.SelectLevelMenu.ChoosenLevelInfo.Content.Skipped,,Пропущен. Вы можете начать проходить этот уровень.
-Menu.SelectLevelMenu.Title,,Выбор уровня
+Menu.SelectLevelMenu.ChoosenLevelInfo.Title,Level {0},Уровень {0}
+Menu.SelectLevelMenu.ChoosenLevelInfo.Content.Completed,Passed!\nMax progress: {0}%\nBest time: {1}\nHighscore: {2},Пройден!\nМаксимальный прогресс: {0}%\nЛучшее время: {1}\nРекорд по очкам: {2}
+Menu.SelectLevelMenu.ChoosenLevelInfo.Content.Completed.WithBoosts,Passed using boosts.\nMax progress: {0}%\nBest time: {1}\nHighscore: {2},Пройден с использованием преимуществ.\nМаксимальный прогресс: {0}%\nЛучшее время: {1}\nРекорд по очкам: {2}
+Menu.SelectLevelMenu.ChoosenLevelInfo.Content.NotCompleted,Not completed. You can start playing this level.,Не пройден. Вы можете начать проходить этот уровень.
+Menu.SelectLevelMenu.ChoosenLevelInfo.Content.NotAvailable,"Not available. To access this level, complete or skip the previous ones.","Недоступен. Чтобы приступить к этому уровню, пройдите или пропустите прошлые."
+Menu.SelectLevelMenu.ChoosenLevelInfo.Content.Skipped,Skipped. You can start playing this level.,Пропущен. Вы можете начать проходить этот уровень.
+Menu.SelectLevelMenu.Title,Level selection,Выбор уровня

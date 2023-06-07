@@ -1,9 +1,9 @@
 Key,English,Russian
-Menu.GJMenu.GJProfileMenu.Title,,Рекорды GameJolt
-Menu.GJMenu.GJProfileMenu.ScoresTitleLabel.Text,,Лучшие рекорды
-Menu.GJMenu.GJProfileMenu.PlayerScoreDetailedInfo,,Место: {0}\nРекорд: {1}
-Menu.GJMenu.GJProfileMenu.PlayerScoreDetailedInfo.Title,,{0}
-Menu.GJMenu.GJProfileMenu.Scoreboard.Unknown,,Неизвестно ({0})
-Menu.GJMenu.GJProfileMenu.Scoreboard.818658,,Суммарно очков
-Menu.GJMenu.GJProfileMenu.TopPositionLabel.Text.HasScore,,"Топ-{0}, рекорд: {1}"
-Menu.GJMenu.GJProfileMenu.TopPositionLabel.Text.HasNoScore,,У Вас нет рекорда в этой таблице
+Menu.GJMenu.GJProfileMenu.Title,GameJolt highscores,Рекорды GameJolt
+Menu.GJMenu.GJProfileMenu.ScoresTitleLabel.Text,Best highscores,Лучшие рекорды
+Menu.GJMenu.GJProfileMenu.PlayerScoreDetailedInfo,Place: {0}\nHighscore: {1},Место: {0}\nРекорд: {1}
+Menu.GJMenu.GJProfileMenu.PlayerScoreDetailedInfo.Title,{0},{0}
+Menu.GJMenu.GJProfileMenu.Scoreboard.Unknown,Unknown ({0}),Неизвестно ({0})
+Menu.GJMenu.GJProfileMenu.Scoreboard.823635,Total scores,Суммарно очков
+Menu.GJMenu.GJProfileMenu.TopPositionLabel.Text.HasScore,"Top-{0}, highscore: {1}","Топ-{0}, рекорд: {1}"
+Menu.GJMenu.GJProfileMenu.TopPositionLabel.Text.HasNoScore,You don't have a highscore in this table,У Вас нет рекорда в этой таблице
