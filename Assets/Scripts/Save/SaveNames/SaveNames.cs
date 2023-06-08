@@ -30,6 +30,10 @@ namespace ConnectIt.Save.Names
             new ItemName(typeof(TotalReceivedItemsCountStatsData), "TotalReceivedItemsCount", typeof(IStatsData)),
             new ItemName(typeof(FirstLaunchedVersionStatsData), "FirstLaunchedVersion", typeof(IStatsData)),
             new ItemName(typeof(BoostsUsageCountStatsData), "BoostsUsageCount", typeof(IStatsData)),
+            new ItemName(typeof(PassedLevelsScoreSumStatsData), "PassedLevelsScoreSum", typeof(IStatsData)),
+            new ItemName(typeof(PassedWithoutBoostsLevelsScoreSumStatsData), "PassedWithoutBoostsLevelsScoreSum", typeof(IStatsData)),
+            new ItemName(typeof(PassedLevelsTimeSumStatsData), "PassedLevelsTimeSum", typeof(IStatsData)),
+            new ItemName(typeof(PassedWithoutBoostsLevelsTimeSumStatsData), "PassedWithoutBoostsLevelsTimeSum", typeof(IStatsData)),
             #endregion
 
             #region SaveData

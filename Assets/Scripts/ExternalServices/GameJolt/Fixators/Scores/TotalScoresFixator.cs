@@ -154,9 +154,6 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
             int fullyPassedWithoutBoostsLevels = levelDataArray.Count(item => item.FullyPassedWithoutBoosts);
             int skippedLevels = levelDataArray.Count(item => item.Skipped);
             int notCompletedLevels = levelDataArray.Count(item => item.NotCompleted);
-            float passTimeSumSec = levelDataArray.Sum(item => item.PassTimeSec);
-            TimeSpan passTimeSum = TimeSpan.FromSeconds(passTimeSumSec);
-            long allScoresSum = levelDataArray.Sum(item => item.Score);
 
             ExternalServerSaveData externalServerSaveData = _externalServerSaveProvider.LoadExternalServerData();
             int bestSavedFixedScore = (externalServerSaveData.FixedScores?.FirstOrDefault(
@@ -176,6 +173,12 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
             long totalEarnedCoins = _statsCenter.GetData<TotalEarnedCoinsStatsData>().RawValue;
             long totalReceivedItemsCount = _statsCenter.GetData<TotalReceivedItemsCountStatsData>().RawValue;
             long boostsUsageCount = _statsCenter.GetData<BoostsUsageCountStatsData>().RawValue;
+            long passedLevelsScoreSum = _statsCenter.GetData<PassedLevelsScoreSumStatsData>().RawValue;
+            long passedWithoutBoostsLevelsScoreSum = _statsCenter.GetData<PassedWithoutBoostsLevelsScoreSumStatsData>().RawValue;
+            double passedLevelsTimeSumSec = _statsCenter.GetData<PassedLevelsTimeSumStatsData>().RawValue;
+            TimeSpan passedLevelsTimeSum = TimeSpan.FromSeconds(passedLevelsTimeSumSec);
+            double passedWithoutBoostsLevelsTimeSumSec = _statsCenter.GetData<PassedWithoutBoostsLevelsTimeSumStatsData>().RawValue;
+            TimeSpan passedWithoutBoostsLevelsTimeSum = TimeSpan.FromSeconds(passedWithoutBoostsLevelsTimeSumSec);
 
             SettingsSaveData settingsSaveData = _settingsSaveProvider.LoadSettingsData();
             SupportedLanguages language = settingsSaveData.Language;
@@ -188,8 +191,7 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
                 $"Levels:\n" +
                 $"Total: {totalLevels} | Passed: {passedLevels} | Passed with boosts: {passedWithBoosts} | " +
                 $"Fully passed without boosts: {fullyPassedWithoutBoostsLevels} | " +
-                $"Skipped: {skippedLevels} | Not completed: {notCompletedLevels} | All scores sum: {allScoresSum} | " +
-                $"Pass time sum: {passTimeSum:hh\\:mm\\:ss\\.fff}\n" +
+                $"Skipped: {skippedLevels} | Not completed: {notCompletedLevels}\n" +
                 $"Coins: {coins}\n" +
                 $"Storage items:\n" +
                 $"Total: {storageItemsTotal}\n" +
@@ -198,8 +200,11 @@ namespace ConnectIt.ExternalServices.GameJolt.Fixators.Scores
                 $"Allow incompatible connections: {allowIncompatibleConnectionsBoostsCount}\n" +
                 $"Stats:\n" +
                 $"First version: {firstVersion} | Running time: {runningTime:hh\\:mm\\:ss\\.fff} | Moves count: {movesCount} | " +
-                $"Total earned coins: {totalEarnedCoins} | Total received items count: {totalReceivedItemsCount} | " +
-                $"Boosts usage count: {boostsUsageCount}\n" +
+                $"Total earned coins: {totalEarnedCoins} | Total received items count: {totalReceivedItemsCount} | \n" +
+                $"Boosts usage count: {boostsUsageCount} | Passed levels score sum: {passedLevelsScoreSum} | " +
+                $"Passed without boosts levels score sum: {passedWithoutBoostsLevelsScoreSum} | \n" +
+                $"Passed levels time sum: {passedLevelsTimeSumSec:hh\\:mm\\:ss\\.fff} | " +
+                $"Passed without boosts levels time sum: {passedWithoutBoostsLevelsTimeSum:hh\\:mm\\:ss\\.fff}\n" +
                 $"Settings:\n" +
                 $"Language: {language} | OST: {ostVolume} | Sounds: {soundsVolume}";
         }

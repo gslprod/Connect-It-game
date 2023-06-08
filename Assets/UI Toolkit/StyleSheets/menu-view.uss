@@ -450,13 +450,13 @@
 .stats-row__name-label {
     -unity-text-align: middle-center;
     max-width: 700px;
-    font-size: 50px;
+    font-size: 42px;
 }
 
 .stats-row__value-label {
     -unity-text-align: middle-center;
     max-width: 300px;
-    font-size: 50px;
+    font-size: 42px;
 }
 
 .shop-container {

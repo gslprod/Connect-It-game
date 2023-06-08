@@ -256,6 +256,22 @@
             public const string BoostsUsageCount_Description = StatsDataBaseString + ".BoostsUsageCount.Description";
             public const string BoostsUsageCount_Value = StatsDataBaseString + ".BoostsUsageCount.Value";
 
+            public const string PassedLevelsScoreSum_Name = StatsDataBaseString + ".PassedLevelsScoreSum.Name";
+            public const string PassedLevelsScoreSum_Description = StatsDataBaseString + ".PassedLevelsScoreSum.Description";
+            public const string PassedLevelsScoreSum_Value = StatsDataBaseString + ".PassedLevelsScoreSum.Value";
+
+            public const string PassedWithoutBoostsLevelsScoreSum_Name = StatsDataBaseString + ".PassedWithoutBoostsLevelsScoreSum.Name";
+            public const string PassedWithoutBoostsLevelsScoreSum_Description = StatsDataBaseString + ".PassedWithoutBoostsLevelsScoreSum.Description";
+            public const string PassedWithoutBoostsLevelsScoreSum_Value = StatsDataBaseString + ".PassedWithoutBoostsLevelsScoreSum.Value";
+
+            public const string PassedLevelsTimeSum_Name = StatsDataBaseString + ".PassedLevelsTimeSum.Name";
+            public const string PassedLevelsTimeSum_Description = StatsDataBaseString + ".PassedLevelsTimeSum.Description";
+            public const string PassedLevelsTimeSum_Value = StatsDataBaseString + ".PassedLevelsTimeSum.Value";
+
+            public const string PassedWithoutBoostsLevelsTimeSum_Name = StatsDataBaseString + ".PassedWithoutBoostsLevelsTimeSum.Name";
+            public const string PassedWithoutBoostsLevelsTimeSum_Description = StatsDataBaseString + ".PassedWithoutBoostsLevelsTimeSum.Description";
+            public const string PassedWithoutBoostsLevelsTimeSum_Value = StatsDataBaseString + ".PassedWithoutBoostsLevelsTimeSum.Value";
+
             private const string StatsDataBaseString = "StatsData";
         }
 

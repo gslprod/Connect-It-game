@@ -17,3 +17,15 @@ StatsData.FirstLaunchedVersion.Value,{0},{0}
 StatsData.BoostsUsageCount.Name,Used boosts,Использовано преимуществ
 StatsData.BoostsUsageCount.Description,The number of uses of boosts during the completion of levels.,"Показывает, сколько раз Вы применяли преимущества во время прохождения уровней."
 StatsData.BoostsUsageCount.Value,{0},{0}
+StatsData.PassedLevelsScoreSum.Name,Scores sum,Сумма очков
+StatsData.PassedLevelsScoreSum.Description,The sum of the highest scores for all passed levels.,Показывает сумму наибольших очков по абсолютно всем пройденным уровням.
+StatsData.PassedLevelsScoreSum.Value,{0},{0}
+StatsData.PassedWithoutBoostsLevelsScoreSum.Name,Scores sum (without boosts),Сумма очков (без преимуществ)
+StatsData.PassedWithoutBoostsLevelsScoreSum.Description,The sum of the highest scores for passed levels that did not use boosts.,"Показывает сумму наибольших очков по пройденным уровням, в которых не использовались преимущества."
+StatsData.PassedWithoutBoostsLevelsScoreSum.Value,{0},{0}
+StatsData.PassedLevelsTimeSum.Name,Time sum,Сумма времени
+StatsData.PassedLevelsTimeSum.Description,The sum of the fastest passage times for all passed levels.,Показывает сумму наименьшего времени прохождения по абсолютно всем пройденным уровням.
+StatsData.PassedLevelsTimeSum.Value,{0},{0}
+StatsData.PassedWithoutBoostsLevelsTimeSum.Name,Time sum (without boosts),Сумма времени (без преимуществ)
+StatsData.PassedWithoutBoostsLevelsTimeSum.Description,The sum of the fastest passage times for passed levels that did not use boosts.,"Показывает сумму наименьшего времени прохождения по пройденным уровням, в которых не использовались преимущества."
+StatsData.PassedWithoutBoostsLevelsTimeSum.Value,{0},{0}

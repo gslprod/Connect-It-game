@@ -29,7 +29,11 @@ namespace ConnectIt.Stats
             typeof(MovesCountStatsData),
             typeof(TotalEarnedCoinsStatsData),
             typeof(TotalReceivedItemsCountStatsData),
-            typeof(BoostsUsageCountStatsData)
+            typeof(BoostsUsageCountStatsData),
+            typeof(PassedLevelsScoreSumStatsData),
+            typeof(PassedWithoutBoostsLevelsScoreSumStatsData),
+            typeof(PassedLevelsTimeSumStatsData),
+            typeof(PassedWithoutBoostsLevelsTimeSumStatsData),
         };
 
         private readonly IStatsSaveProvider _saveProvider;
@@ -40,6 +44,10 @@ namespace ConnectIt.Stats
         private readonly TotalReceivedItemsCountStatsData.Factory _totalReceivedItemsCountStatsDataFactory;
         private readonly FirstLaunchedVersionStatsData.Factory _firstLaunchedVersionStatsDataFactory;
         private readonly BoostsUsageCountStatsData.Factory _boostsUsageCountStatsDataFactory;
+        private readonly PassedLevelsScoreSumStatsData.Factory _passedLevelsScoreSumStatsDataFactory;
+        private readonly PassedWithoutBoostsLevelsScoreSumStatsData.Factory _passedWithoutBoostsLevelsScoreSumStatsDataFactory;
+        private readonly PassedLevelsTimeSumStatsData.Factory _passedLevelsTimeSumStatsDataFactory;
+        private readonly PassedWithoutBoostsLevelsTimeSumStatsData.Factory _passedWithoutBoostsLevelsTimeSumStatsDataFactory;
 
         private bool _oftenUpdatingDataSavingRequested = false;
         private bool _savingRequested = false;
@@ -52,7 +60,11 @@ namespace ConnectIt.Stats
             TotalEarnedCoinsStatsData.Factory totalEarnedCoinsStatsDataFactory,
             TotalReceivedItemsCountStatsData.Factory totalReceivedItemsCountStatsDataFactory,
             FirstLaunchedVersionStatsData.Factory firstLaunchedVersionStatsDataFactory,
-            BoostsUsageCountStatsData.Factory boostsUsageCountStatsDataFactory)
+            BoostsUsageCountStatsData.Factory boostsUsageCountStatsDataFactory,
+            PassedLevelsScoreSumStatsData.Factory passedLevelsScoreSumStatsDataFactory,
+            PassedWithoutBoostsLevelsScoreSumStatsData.Factory passedWithoutBoostsLevelsScoreSumStatsDataFactory,
+            PassedLevelsTimeSumStatsData.Factory passedLevelsTimeSumStatsDataFactory,
+            PassedWithoutBoostsLevelsTimeSumStatsData.Factory passedWithoutBoostsLevelsTimeSumStatsDataFactory)
         {
             _saveProvider = saveProvider;
             _coroutinesGlobalContainer = coroutinesGlobalContainer;
@@ -62,6 +74,10 @@ namespace ConnectIt.Stats
             _totalReceivedItemsCountStatsDataFactory = totalReceivedItemsCountStatsDataFactory;
             _firstLaunchedVersionStatsDataFactory = firstLaunchedVersionStatsDataFactory;
             _boostsUsageCountStatsDataFactory = boostsUsageCountStatsDataFactory;
+            _passedLevelsScoreSumStatsDataFactory = passedLevelsScoreSumStatsDataFactory;
+            _passedWithoutBoostsLevelsScoreSumStatsDataFactory = passedWithoutBoostsLevelsScoreSumStatsDataFactory;
+            _passedLevelsTimeSumStatsDataFactory = passedLevelsTimeSumStatsDataFactory;
+            _passedWithoutBoostsLevelsTimeSumStatsDataFactory = passedWithoutBoostsLevelsTimeSumStatsDataFactory;
         }
 
         public void Initialize()
@@ -259,6 +275,18 @@ namespace ConnectIt.Stats
 
             if (type == typeof(BoostsUsageCountStatsData))
                 return _boostsUsageCountStatsDataFactory.Create();
+
+            if (type == typeof(PassedLevelsScoreSumStatsData))
+                return _passedLevelsScoreSumStatsDataFactory.Create();
+
+            if (type == typeof(PassedWithoutBoostsLevelsScoreSumStatsData))
+                return _passedWithoutBoostsLevelsScoreSumStatsDataFactory.Create();
+
+            if (type == typeof(PassedLevelsTimeSumStatsData))
+                return _passedLevelsTimeSumStatsDataFactory.Create();
+
+            if (type == typeof(PassedWithoutBoostsLevelsTimeSumStatsData))
+                return _passedWithoutBoostsLevelsTimeSumStatsDataFactory.Create();
 
             throw Assert.GetFailException();
         }

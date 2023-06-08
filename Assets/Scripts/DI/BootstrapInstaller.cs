@@ -208,6 +208,18 @@ namespace ConnectIt.DI.Installers
 
                 Container.BindFactory<BoostsUsageCountStatsData, BoostsUsageCountStatsData.Factory>()
                          .FromFactory<PrimitiveDIFactory<BoostsUsageCountStatsData>>();
+
+                Container.BindFactory<PassedLevelsScoreSumStatsData, PassedLevelsScoreSumStatsData.Factory>()
+                         .FromFactory<PrimitiveDIFactory<PassedLevelsScoreSumStatsData>>();
+
+                Container.BindFactory<PassedWithoutBoostsLevelsScoreSumStatsData, PassedWithoutBoostsLevelsScoreSumStatsData.Factory>()
+                         .FromFactory<PrimitiveDIFactory<PassedWithoutBoostsLevelsScoreSumStatsData>>();
+
+                Container.BindFactory<PassedLevelsTimeSumStatsData, PassedLevelsTimeSumStatsData.Factory>()
+                         .FromFactory<PrimitiveDIFactory<PassedLevelsTimeSumStatsData>>();
+
+                Container.BindFactory<PassedWithoutBoostsLevelsTimeSumStatsData, PassedWithoutBoostsLevelsTimeSumStatsData.Factory>()
+                         .FromFactory<PrimitiveDIFactory<PassedWithoutBoostsLevelsTimeSumStatsData>>();
             }
 
             void BindStatsModules()
@@ -222,6 +234,9 @@ namespace ConnectIt.DI.Installers
                          .AsSingle();
 
                 Container.BindInterfacesTo<FirstLaunchedVersionStatsModule>()
+                         .AsSingle();
+
+                Container.BindInterfacesTo<LevelsStatsModule>()
                          .AsSingle();
             }
         }
