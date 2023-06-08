@@ -13,16 +13,18 @@ I create it in order to test my skills on:
 - Using Dependency Injection (Zenject Framework).
 - Writing clean (readable and maintainable) code.
 - Using Version Control System (Git).
-- Using some plugins: DoTween, UIToolkit, SimpleLocalization (partially).
+- Using some plugins: UIToolkit, DoTween, New Input System, SimpleLocalization (partially).
 - Using MV* Patterns.
 
 Project lifecycle:
 - Start: March 16, 2023
 - Deadline: May-June, 2023
+- End: June 7, 2023
+- Release: June, 2023
 
-**Project is still on development. When the game is ready, I'll release it on [GameJolt](https://gamejolt.com/@GSL_Production).**
+**Project completed. [GameJolt game page.](https://gamejolt.com/games/connect-it/813494)**
 
 ## Licence info
-The project is presented for informational purposes only. If you would like to use the material from this project in any way, please contact me.
+The project is presented for informational purposes only. If you would like to use the materials from this project in any way, please contact me.
 
 All rights reserved.
