@@ -20,7 +20,7 @@ Project lifecycle:
 - Start: March 16, 2023
 - Deadline: May-June, 2023
 - End: June 7, 2023
-- Release: June, 2023
+- Release: June 9, 2023
 
 **Project completed. [GameJolt game page.](https://gamejolt.com/games/connect-it/813494)**
 
